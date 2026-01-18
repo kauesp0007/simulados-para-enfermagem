@@ -1,0 +1,203 @@
+/* ========================================
+   VARIABLES - Design System
+   ======================================== */
+
+:root {
+    /* Nova Cor Principal (#1A3E74) - Brand Colors */
+    --brand-primary: #1A3E74;
+    --brand-secondary: #102a52;
+    --brand-accent: #f59e0b;
+    
+    /* Cores Primárias (Baseadas na nova cor principal) */
+    --color-primary-50: #eef2ff;
+    --color-primary-100: #e0e7ff;
+    --color-primary-200: #c7d2fe;
+    --color-primary-300: #a5b4fc;
+    --color-primary-400: #818cf8;
+    --color-primary-500: #6366f1;
+    --color-primary-600: #4f46e5;
+    --color-primary-700: #4338ca;
+    --color-primary-800: #3730a3;
+    --color-primary-900: #312e81;
+
+    /* Variações da marca azul (#1A3E74) */
+    --color-brand-50: #e8eef7;
+    --color-brand-100: #c5d6ea;
+    --color-brand-200: #9fbadd;
+    --color-brand-300: #789dcf;
+    --color-brand-400: #5a85c5;
+    --color-brand-500: #1A3E74;
+    --color-brand-600: #15325c;
+    --color-brand-700: #102a52;
+    --color-brand-800: #0a1f3b;
+    --color-brand-900: #061524;
+
+    /* Cor primária padrão (alias para brand) */
+    --color-primary: #1A3E74;
+    --color-primary-light: #5a85c5;
+    --color-primary-dark: #0a1f3b;
+
+    /* Cores de Acento */
+    --color-accent-50: #f0f9ff;
+    --color-accent-100: #e0f2fe;
+    --color-accent-200: #bae6fd;
+    --color-accent-300: #7dd3fc;
+    --color-accent-400: #38bdf8;
+    --color-accent-500: #0ea5e9;
+    --color-accent-600: #0284c7;
+    --color-accent-700: #0369a1;
+    --color-accent-800: #075985;
+    --color-accent-900: #0c4a6e;
+
+    /* Cores Semânticas - Success */
+    --color-success-50: #f0fdf4;
+    --color-success-100: #dcfce7;
+    --color-success-200: #bbf7d0;
+    --color-success-300: #86efac;
+    --color-success-400: #4ade80;
+    --color-success-500: #22c55e;
+    --color-success-600: #16a34a;
+    --color-success-700: #15803d;
+    --color-success-800: #166534;
+    --color-success-900: #14532d;
+
+    /* Cores Semânticas - Warning */
+    --color-warning-50: #fffbeb;
+    --color-warning-100: #fef3c7;
+    --color-warning-200: #fde68a;
+    --color-warning-300: #fcd34d;
+    --color-warning-400: #fbbf24;
+    --color-warning-500: #f59e0b;
+    --color-warning-600: #d97706;
+    --color-warning-700: #b45309;
+    --color-warning-800: #92400e;
+    --color-warning-900: #78350f;
+
+    /* Cores Semânticas - Error */
+    --color-error-50: #fef2f2;
+    --color-error-100: #fee2e2;
+    --color-error-200: #fecaca;
+    --color-error-300: #fca5a5;
+    --color-error-400: #f87171;
+    --color-error-500: #ef4444;
+    --color-error-600: #dc2626;
+    --color-error-700: #b91c1c;
+    --color-error-800: #991b1b;
+    --color-error-900: #7f1d1d;
+
+    /* Cores Semânticas - Info */
+    --color-info-50: #eff6ff;
+    --color-info-100: #dbeafe;
+    --color-info-200: #bfdbfe;
+    --color-info-300: #93c5fd;
+    --color-info-400: #60a5fa;
+    --color-info-500: #3b82f6;
+    --color-info-600: #2563eb;
+    --color-info-700: #1d4ed8;
+    --color-info-800: #1e40af;
+    --color-info-900: #1e3a8a;
+
+    /* Cores Neutras - Light Theme */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-hover: #e2e8f0;
+
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-tertiary: #94a3b8;
+    --text-inverse: #ffffff;
+
+    --border-light: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --border-dark: #94a3b8;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+    /* Cores do Sidebar - Light */
+    --sidebar-bg: #ffffff;
+    --sidebar-border: #e2e8f0;
+    --sidebar-hover: #f1f5f9;
+    --sidebar-active: #ecfeff;
+    --sidebar-text: #334155;
+    --sidebar-text-muted: #94a3b8;
+
+    /* Cores do Card - Light */
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+
+    /* Variáveis de Transição */
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 300ms ease;
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Z-Index Scale */
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-modal-backdrop: 300;
+    --z-modal: 400;
+    --z-popover: 500;
+    --z-tooltip: 600;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --bg-hover: #475569;
+
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #64748b;
+    --text-inverse: #0f172a;
+
+    --border-light: #334155;
+    --border-medium: #475569;
+    --border-dark: #64748b;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+
+    --sidebar-bg: #1e293b;
+    --sidebar-border: #334155;
+    --sidebar-hover: #334155;
+    --sidebar-active: #0e749020;
+    --sidebar-text: #e2e8f0;
+    --sidebar-text-muted: #64748b;
+
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+}
+
+/* Cores por Tipo de Concurso */
+--exam-enfermeiro: #0891b2;
+--exam-tecnico: #7c3aed;
+--exam-auxiliar: #059669;
+--exam-geral: #6366f1;
+
+/* Cores por Nível de Domínio */
+--mastery-iniciante: #94a3b8;
+--mastery-basico: #3b82f6;
+--mastery-intermediario: #f59e0b;
+--mastery-avancado: #f97316;
+--mastery-expert: #22c55e;
+
+/* Cores por Status de Fase */
+--phase-pendente: #94a3b8;
+--phase-em_andamento: #3b82f6;
+--phase-concluido: #22c55e;
