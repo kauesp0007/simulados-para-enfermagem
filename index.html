@@ -2,659 +2,1266 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Enfermagem Concurseira - Portal integrado com questões, mapas mentais, simulados e ferramentas para concurseiros de enfermagem">
     <meta name="theme-color" content="#1A3E74">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Calculadoras de Enfermagem">
-    <meta name="description" content="Sua carreira em Enfermagem começa aqui. Simulados, calculadoras e ferramentas clínicas.">
-    
-    <title>Sua Carreira em Enfermagem | Plataforma Integrada</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="robots" content="index; follow">
+    <link rel="canonical" href="https://enfermagem-concurseira.com.br/">
 
-    <!-- Fontes Google -->
+    <title>Enfermagem Concurseira - Portal Integrado</title>
+
+    <!-- ========================================
+         STYLESHEETS - Sistema de Design
+         ======================================== -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/accessibility.css">
+    <link rel="stylesheet" href="assets/css/pages.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Ícones FontAwesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <!-- CSS Externos do Projeto Original -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
-
-    <!-- Three.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* =========================================
-           ESTILOS LOCAIS DA LANDING PAGE
-           ========================================= */
         :root {
-            --color-primary: #1A3E74;
-            --color-accent: #00bcd4;
-            --bg-main-header: #ffffff;
-            --text-main: #1f2937;
+            --brand-primary: #1A3E74;
+            --brand-secondary: #102a52;
+            --brand-accent: #f59e0b;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
         }
 
-        /* Reset e Base */
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; color: var(--text-main); background-color: #f4f6f9; position: relative; }
-        h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
-        
-        /* Acessibilidade - Skip Link */
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-primary); color: white; padding: 8px; z-index: 100000; transition: top 0.3s; }
-        .skip-link:focus { top: 0; }
-        
-        /* --- LOADER GLOBAL --- */
-        #loader-global { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200000; transition: opacity 0.5s ease; }
-        .loader-image { background-color: #ffffff; margin-bottom: 30px; max-width: 180px; height: auto; position: relative; z-index: 2; }
-        .loader-dots { display: flex; gap: 8px; align-items: center; justify-content: center; position: relative; z-index: 2; }
-        .loader-dot { width: 10px; height: 10px; background: #1A3E74; border-radius: 50%; opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
-        .loader-dot:nth-child(1) { animation-delay: 0s; }
-        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
-        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
-        
-        /* Animação SVG do Preloader */
-        .loader-svg-bg { position: absolute; top: -100px; left: 0; width: 100%; height: calc(100% + 200px); z-index: 1; pointer-events: none; }
-        .loader-svg-bg svg { width: 100%; height: 100%; opacity: 0.6; }
-        .svg-curve { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; will-change: stroke-dashoffset; }
-        .svg-curve-1 { stroke: #1A3E74; stroke-width: 2; animation: drawPath 3s ease-in-out forwards; }
-        .svg-curve-2 { stroke: #00bcd4; stroke-width: 2; animation: drawPath 3s ease-in-out 0.5s forwards, pulseGlow 4s ease-in-out 3s infinite; }
-        @keyframes drawPath { 0% { stroke-dashoffset: 1000; opacity: 0; } 10% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0.8; } }
-        @keyframes pulseGlow { 0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 2px rgba(0, 188, 212, 0.3)); } 50% { opacity: 0.9; filter: drop-shadow(0 0 8px rgba(0, 188, 212, 0.6)); } }
-
-        /* --- BACKGROUND CANVAS --- */
-        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #ffffff 0%, #f0f4f8 100%); }
-        
-        .page-wrapper { width: 100%; max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; position: relative; z-index: 1; }
-
-        /* =========================================
-           HERO SECTION (Compacta)
-           ========================================= */
-        .hero-section { 
-            min-height: 70vh; /* Reduzido de 85vh para 70vh */
-            display: flex; 
-            align-items: center; 
-            margin-bottom: 2rem; /* Reduzido */
-            margin-top: 1rem; 
-        }
-        
-        .hero-grid { 
-            display: grid; 
-            grid-template-columns: 0.8fr 1.2fr; 
-            gap: 3rem; 
-            align-items: center; 
-            width: 100%; 
-        }
-        
-        .hero-text { text-align: left; }
-        
-        h1 { 
-            font-size: 2.8rem; /* Reduzido de 3.5rem para 2.8rem */
-            line-height: 1.1; 
-            color: #0f172a; 
-            font-weight: 800; 
-            margin-bottom: 1rem; 
-            letter-spacing: -0.02em; 
-        }
-        
-        .highlight { color: var(--color-primary); display: block; }
-        @media (min-width: 768px) { .highlight { display: inline; } }
-        
-        p.subtitle { 
-            font-family: 'Inter', sans-serif; 
-            font-size: 1.05rem; /* Reduzido levemente */
-            color: #64748b; 
-            line-height: 1.5; 
-            margin-bottom: 1.5rem; /* Reduzido de 2rem */
-            max-width: 500px; 
-            font-weight: 400; 
-        }
-
-        /* Botão */
-        .button-group { display: flex; justify-content: flex-start; width: 100%; margin-bottom: 1rem; }
-        .btn { font-family: 'Inter', sans-serif; display: inline-flex; align-items: center; justify-content: center; padding: 0.9rem 2rem; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; text-decoration: none; border: none; box-shadow: 0 4px 6px -1px rgba(30, 58, 102, 0.1); }
-        .btn-primary { background-color: var(--color-primary); color: #ffffff; }
-        .btn-primary:hover { background-color: #152c4f; transform: translateY(-4px); box-shadow: 0 10px 25px -3px rgba(30, 58, 102, 0.25); }
-        .btn svg { margin-right: 10px; width: 20px; height: 20px; }
-
-        /* --- DISCLAIMER COMPACTO (Botão i) --- */
-        .compact-disclaimer {
+        body {
+            background-color: #f8fafc;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
             display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-top: 0.5rem;
-            position: relative; /* Para posicionar o tooltip */
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        .info-btn {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #e2e8f0;
-            color: var(--color-primary);
-            border: none;
-            font-size: 0.75rem;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif !important;
+        }
+
+        #main-wrapper {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 1.5rem;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -5px rgba(26, 62, 116, 0.25);
+            margin-bottom: 3.5rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 2.75rem;
             font-weight: 800;
-            font-family: 'Nunito Sans', sans-serif;
-            cursor: help;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-text {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 1rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            text-decoration: none;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+            border-color: var(--brand-primary);
+        }
+
+        .card-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: #eef2ff;
+            color: var(--brand-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, background 0.3s;
         }
 
-        .info-btn:hover {
-            background: var(--color-primary);
+        .resource-card:hover .card-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--brand-primary);
             color: white;
-            transform: scale(1.1);
         }
 
-        /* Tooltip (Balão de informação) */
-        .disclaimer-tooltip {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: 120%; /* Aparece acima do botão */
-            left: 0;
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 12px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            width: 280px;
-            font-size: 0.75rem;
-            color: #475569;
-            line-height: 1.4;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            transform: translateY(10px);
-            z-index: 20;
-            pointer-events: none; /* Evita flicker */
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
         }
 
-        .disclaimer-tooltip::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 15px; /* Alinhado com o ícone */
-            border-width: 6px;
-            border-style: solid;
-            border-color: white transparent transparent transparent;
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            flex-grow: 1;
         }
 
-        /* Lógica de Hover para mostrar tooltip */
-        .info-btn:hover + .disclaimer-tooltip,
-        .compact-disclaimer:hover .disclaimer-tooltip {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .tooltip-warning {
-            display: block;
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px solid #f1f5f9;
-            color: #dc2626;
+        .btn-action {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
             font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* Mega Frame Visual (CORRIGIDO) */
-        .mega-image-frame { 
-            position: relative; 
-            border: 2px solid var(--color-primary); 
-            border-radius: 0 30px 0 30px; 
-            box-shadow: 0 4px 12px rgba(26, 62, 116, 0.15), 0 2px 6px rgba(26, 62, 116, 0.1); 
-            background: var(--bg-main-header); 
-            transition: all 0.3s ease; 
-            width: 100%; 
-            max-width: 100%; 
-            margin: 0 auto; 
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: white;
         }
-        .mega-image-frame:hover { box-shadow: 0 8px 24px rgba(26, 62, 116, 0.2), 0 4px 8px rgba(26, 62, 116, 0.15); border-color: var(--color-accent); }
-        
-        .mega-image-container { 
-            border-radius: 0 28px 0 28px; 
-            overflow: hidden; 
-            padding: 8px; 
-            background: var(--bg-main-header); 
-        }
-        
-        .frame-image-container { 
-            width: 100%; 
-            height: auto; 
-            min-height: 300px; /* Reduzido levemente para acompanhar hero menor */
-            aspect-ratio: 16 / 10; 
-            position: relative; 
-            overflow: hidden; 
-            border-radius: 0 22px 0 22px; 
-            border: 1px solid rgba(26, 62, 116, 0.2); 
-            background-color: #e2e8f0; 
-        }
-        
-        .frame-image-container img.slide { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            object-position: center; 
-            transition: opacity 1s ease-in-out, transform 0.5s ease; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            opacity: 0; 
-            border-radius: 0 22px 0 22px; 
-            z-index: 0;
-        }
-        
-        .frame-image-container img.slide.active { 
-            opacity: 1; 
-            z-index: 5; 
-        }
-        
-        .mega-image-frame:hover .frame-image-container img.slide.active { transform: scale(1.04); }
-        
-        .slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; background: rgba(255, 255, 255, 0.8); padding: 6px 10px; border-radius: 20px; backdrop-filter: blur(4px); }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: all 0.3s; }
-        .dot.active { background: var(--color-primary); transform: scale(1.2); }
 
-        /* Features Section */
-        .features-container { padding: 3rem 0; /* Mais compacto */ }
-        .section-title { text-align: center; margin-bottom: 2.5rem; }
-        .section-title h2 { font-size: 2rem; color: var(--color-primary); font-weight: 700; margin-bottom: 0.5rem; }
-        .section-title p { color: #64748b; }
-        .category-block { margin-bottom: 3rem; }
-        .category-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
-        .category-header h3 { font-size: 1.4rem; color: #334155; margin: 0; }
-        .category-icon { background: #e0e7ff; color: var(--color-primary); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        
-        .glass-effect { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.8); }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        .feature-card { border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; height: 100%; }
-        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); background: #ffffff; border-color: var(--color-primary); }
-        .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
-        .card-header i { color: var(--color-primary); font-size: 1.1rem; }
-        .card-header h4 { font-weight: 600; color: #1f2937; font-size: 1.1rem; margin: 0; }
-        .feature-card p { color: #64748b; font-size: 0.95rem; line-height: 1.5; margin: 0; }
-
-        /* Responsividade */
-        @media (max-width: 992px) {
-            .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .hero-text { text-align: center; order: 1; }
-            .mega-image-frame { order: 2; width: 100%; }
-            .frame-image-container { height: auto; aspect-ratio: 16/10; }
-            .button-group { justify-content: center; }
-            .compact-disclaimer { justify-content: center; } /* Centraliza no mobile */
-            p.subtitle { margin-left: auto; margin-right: auto; }
+        .btn-primary:hover {
+            background-color: var(--brand-secondary);
+            box-shadow: 0 4px 12px rgba(26, 62, 116, 0.4);
         }
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .hero-section { min-height: auto; padding-top: 1rem; }
+
+        .btn-outline-white {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.6);
+            color: white;
+        }
+
+        .btn-outline-white:hover {
+            background: white;
+            color: var(--brand-primary);
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 3rem 1.5rem;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .resources-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
         }
     </style>
 </head>
-<body class="light-mode">
-
-    <!-- LOADER GLOBAL -->
-    <div id="loader-global">
-        <div class="loader-svg-bg">
-            <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="none">
-                <path class="svg-curve svg-curve-1" d="M-100,250 C300,150 600,400 1500,300" fill="none" stroke="#1A3E74" stroke-width="2" />
-                <path class="svg-curve svg-curve-2" d="M-100,500 C400,400 800,650 1600,450" fill="none" stroke="#00bcd4" stroke-width="2" />
-            </svg>
+<body>
+    <!-- ========================================
+         LOADING SCREEN
+         ======================================== -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <h2>Enfermagem Concurseira</h2>
+            <p>Carregando...</p>
+            <p id="loading-status">Inicializando...</p>
         </div>
-        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Calculadoras de Enfermagem" class="loader-image">
-        <div class="loader-dots">
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-        </div>
-        <p style="margin-top:25px; color:#1A3E74; font-weight:600; font-size:0.95rem; letter-spacing: 0.3px; position: relative; z-index: 2;">Carregando Plataforma...</p>
     </div>
 
-    <!-- BACKGROUND CANVAS -->
-    <div id="canvas-container"></div>
+    <!-- ========================================
+         HEADER
+         ======================================== -->
+    <header class="main-header" id="main-header" role="banner">
+        <div class="header-container">
+            <a href="#dashboard" class="site-logo" aria-label="Enfermagem Concurseira - Início">
+                <div class="logo-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="10" fill="#1A3E74"/>
+                        <path d="M20 10C15.6 10 12 13.6 12 18C12 20.9 13.2 22.9 15 25V30H25V25C26.8 22.9 28 20.9 28 18C28 13.6 24.4 10 20 10Z" fill="white"/>
+                        <path d="M17 15H23V17H17V15Z" fill="white"/>
+                    </svg>
+                </div>
+                <div class="site-title">
+                    <h1>Enfermagem</h1>
+                    <span>Concurseira</span>
+                </div>
+            </a>
 
-    <!-- SKIP LINK -->
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+            <nav class="main-nav" aria-label="Navegação principal">
+                <ul class="nav-list" id="main-nav-list">
+                    <li class="nav-item">
+                        <a href="#dashboard" class="nav-link" data-page="dashboard">
+                            <i class="fas fa-home"></i>
+                            <span>Início</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#questions" class="nav-link" data-page="questions">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Questões</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contests" class="nav-link" data-page="contests">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Concursos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#library" class="nav-link" data-page="library">
+                            <i class="fas fa-book"></i>
+                            <span>Biblioteca</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#data" class="nav-link" data-page="data">
+                            <i class="fas fa-database"></i>
+                            <span>Dados</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-    <!-- PLACEHOLDERS MODULARES (Serão preenchidos via JS) -->
-    <header id="header-v2-container" role="banner"></header>
-    
-    <aside id="accessibility-v2-container" role="complementary"></aside>
+            <div class="header-actions">
+                <button type="button" id="theme-toggle" class="theme-btn" aria-label="Alternar tema">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button type="button" id="accessibility-toggle" class="accessibility-btn" aria-label="Acessibilidade">
+                    <i class="fas fa-universal-access"></i>
+                </button>
+                <button type="button" id="menu-toggle" class="menu-toggle" aria-label="Menu">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </div>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <div class="page-wrapper">
-        <main id="main-content">
+        <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+            <nav class="mobile-nav">
+                <ul class="mobile-nav-list">
+                    <li><a href="#dashboard"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="#questions"><i class="fas fa-clipboard-list"></i> Questões</a></li>
+                    <li><a href="#quizzes"><i class="fas fa-stopwatch"></i> Simulados</a></li>
+                    <li><a href="#contests"><i class="fas fa-calendar-alt"></i> Concursos</a></li>
+                    <li><a href="#mindmaps"><i class="fas fa-brain"></i> Mapas Mentais</a></li>
+                    <li><a href="#pomodoro"><i class="fas fa-clock"></i> Anti-Stress</a></li>
+                    <li><a href="#performance"><i class="fas fa-chart-line"></i> Desempenho</a></li>
+                    <li><a href="#library"><i class="fas fa-book"></i> Biblioteca</a></li>
+                    <li><a href="#data"><i class="fas fa-database"></i> Dados</a></li>
+                    <li><a href="#admin"><i class="fas fa-cog"></i> Admin</a></li>
+                    <li><a href="#settings"><i class="fas fa-sliders-h"></i> Configurações</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========================================
+         ACCESSIBILITY CONTAINER
+         ======================================== -->
+    <div id="accessibility-container"></div>
+
+    <!-- ========================================
+         MAIN CONTENT (SPA)
+         ======================================== -->
+    <main id="main-wrapper">
+        <div class="content-container">
             
-            <!-- HERO SECTION -->
-            <section class="hero-section">
-                <div class="hero-grid">
-                    
-                    <!-- Coluna 1 -->
-                    <div class="hero-text">
-                        <h1>
-                            Profissional de enfermagem<br>
-                            sua Aprovação Começa<br>
-                            <span class="highlight">agora Mesmo</span>
-                        </h1>
-                        
-                        <p class="subtitle">
-                            Potencialize seus estudos com a plataforma definitiva para concursos. Sem burocracia, acesse simulados, calculadoras e conteúdos exclusivos.
+            <!-- HOME PAGE - Hero & Resources -->
+            <section id="page-home">
+                <div class="hero-banner">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-sparkles"></i> Portal Integrado
+                        </div>
+                        <h1 class="hero-title">Enfermagem Concurseira</h1>
+                        <p class="hero-text">
+                            Potencialize sua carreira com a plataforma definitiva. Questões comentadas, 
+                            mapas mentais e simulados para concurseiros de enfermagem.
                         </p>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="#questions" class="btn-action btn-outline-white" style="background: white; color: var(--brand-primary);">
+                                <i class="fas fa-play"></i> Começar Agora
+                            </a>
+                            <a href="#library" class="btn-action btn-outline-white">
+                                <i class="fas fa-info-circle"></i> Biblioteca
+                            </a>
+                        </div>
+                    </div>
+                    <i class="fas fa-heartbeat" style="position: absolute; right: -40px; bottom: -60px; font-size: 320px; opacity: 0.08; transform: rotate(-20deg); pointer-events: none;"></i>
+                </div>
 
-                        <div class="button-group">
-                            <button class="btn btn-primary" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Acessar plataforma
+                <div class="resources-grid">
+                    <a href="#questions" class="resource-card" data-page="questions">
+                        <div class="card-icon-wrapper">
+                            <span class="material-icons-round">quiz</span>
+                        </div>
+                        <h3 class="card-title">Banco de Questões</h3>
+                        <p class="card-desc">
+                            Acesse milhares de questões de provas anteriores, filtradas por banca, ano e especialidade.
+                        </p>
+                        <span class="btn-action btn-primary">
+                            Acessar <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <a href="#library" class="resource-card" data-page="library">
+                        <div class="card-icon-wrapper">
+                            <span class="material-icons-round">psychology</span>
+                        </div>
+                        <h3 class="card-title">Mapas Mentais</h3>
+                        <p class="card-desc">
+                            Memorize conteúdos complexos de forma visual. Resumos de SUS, Ética e Farmacologia.
+                        </p>
+                        <span class="btn-action btn-primary">
+                            Ver Mapas <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <a href="#quizzes" class="resource-card" data-page="quizzes">
+                        <div class="card-icon-wrapper">
+                            <span class="material-icons-round">timer</span>
+                        </div>
+                        <h3 class="card-title">Simulados</h3>
+                        <p class="card-desc">
+                            Teste seus conhecimentos com simulados cronometrados e receba análises de desempenho.
+                        </p>
+                        <span class="btn-action btn-primary">
+                            Criar Simulado <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <a href="#contests" class="resource-card" data-page="contests">
+                        <div class="card-icon-wrapper">
+                            <span class="material-icons-round">event</span>
+                        </div>
+                        <h3 class="card-title">Concursos</h3>
+                        <p class="card-desc">
+                            Fique por dentro dos editais e datas de provas para concursos de enfermagem.
+                        </p>
+                        <span class="btn-action btn-primary">
+                            Ver Concursos <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <a href="#pomodoro" class="resource-card" data-page="pomodoro">
+                        <div class="card-icon-wrapper">
+                            <span class="material-icons-round">self_improvement</span>
+                        </div>
+                        <h3 class="card-title">Anti-Stress</h3>
+                        <p class="card-desc">
+                            Técnicas de relaxamento, meditação guiada e método Pomodoro para seus estudos.
+                        </p>
+                        <span class="btn-action btn-primary">
+                            Relaxar <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <a href="#performance" class="resource-card" data-page="performance">
+                        <div class="card-icon-wrapper">
+                            <span class="material-icons-round">leaderboard</span>
+                        </div>
+                        <h3 class="card-title">Meu Desempenho</h3>
+                        <p class="card-desc">
+                            Acompanhe sua evolução, ganhe badges e compare seu progresso com outros concurseiros.
+                        </p>
+                        <span class="btn-action btn-primary">
+                            Ver Stats <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- QUESTIONS PAGE -->
+            <section id="page-questions" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Banco de Questões</h1>
+                    <p class="page-subtitle">Pratique com questões de concursos anteriores</p>
+                </div>
+                
+                <div class="filter-bar">
+                    <select id="filter-area" class="filter-select">
+                        <option value="">Todas as Áreas</option>
+                        <option value="enfermagem-basica">Enfermagem Básica</option>
+                        <option value="sus">Sistema Único de Saúde</option>
+                        <option value="etica">Ética e Legislação</option>
+                        <option value="farmaco">Farmacologia</option>
+                        <option value="urgencia">Urgência e Emergência</option>
+                        <option value="cc">Centro Cirúrgico</option>
+                        <option value="uti">UTI</option>
+                    </select>
+                    <select id="filter-banca" class="filter-select">
+                        <option value="">Todas as Bancas</option>
+                        <option value="fcc">FCC</option>
+                        <option value="cespe">CESPE/UnB</option>
+                        <option value="cesgranrio">CESGRANRIO</option>
+                        <option value="ibade">IBADE</option>
+                        <option value="vunesp">VUNESP</option>
+                    </select>
+                    <select id="filter-level" class="filter-select">
+                        <option value="">Todos os Níveis</option>
+                        <option value="facil">Fácil</option>
+                        <option value="medio">Médio</option>
+                        <option value="dificil">Difícil</option>
+                    </select>
+                    <input type="text" id="search-question" class="filter-input" placeholder="Buscar questão...">
+                    <button class="btn btn-primary" onclick="QuestionsApp.filter()">
+                        <i class="fas fa-search"></i> Filtrar
+                    </button>
+                </div>
+
+                <div id="questions-container" class="questions-list">
+                    <!-- Questões serão carregadas aqui -->
+                </div>
+
+                <div class="pagination" id="questions-pagination">
+                    <!-- Paginação -->
+                </div>
+            </section>
+
+            <!-- QUIZ PAGE -->
+            <section id="page-quizzes" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Simulados</h1>
+                    <p class="page-subtitle">Teste seus conhecimentos com cronômetro</p>
+                </div>
+
+                <div class="quiz-config">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-cog"></i> Configurar Simulado</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Quantidade de Questões</label>
+                                <input type="number" id="quiz-count" value="10" min="5" max="50">
+                            </div>
+                            <div class="form-group">
+                                <label>Tempo por Questão (segundos)</label>
+                                <input type="number" id="quiz-time" value="60" min="30" max="120">
+                            </div>
+                            <div class="form-group">
+                                <label>Área</label>
+                                <select id="quiz-area">
+                                    <option value="mixed">Mista</option>
+                                    <option value="enfermagem-basica">Enfermagem Básica</option>
+                                    <option value="sus">SUS</option>
+                                    <option value="etica">Ética</option>
+                                    <option value="farmaco">Farmacologia</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary btn-lg" onclick="QuizApp.start()">
+                                <i class="fas fa-play"></i> Iniciar Simulado
                             </button>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- DISCLAIMER COMPACTO -->
-                        <div class="compact-disclaimer">
-                            <i class="fas fa-lock" style="font-size: 0.75rem;"></i>
-                            <span>Dados salvos no seu navegador.</span>
-                            
-                            <!-- Botão (i) com Tooltip -->
-                            <button class="info-btn" aria-label="Mais informações">i</button>
-                            
-                            <!-- Tooltip Escondido -->
-                            <div class="disclaimer-tooltip">
-                                <strong>Política de Armazenamento:</strong><br>
-                                Utilizamos Cookies e LocalStorage para salvar seu progresso sem necessidade de login.
-                                <span class="tooltip-warning">
-                                    <i class="fas fa-exclamation-triangle"></i> Atenção: Limpar o cache do navegador ou usar o modo anônimo apagará seus dados permanentemente.
-                                </span>
+                <div id="quiz-active" style="display: none;">
+                    <div class="quiz-timer-bar">
+                        <div class="quiz-timer-progress" id="quiz-timer-progress"></div>
+                        <span id="quiz-timer-text">00:00</span>
+                    </div>
+                    <div class="quiz-progress-info">
+                        Questão <span id="quiz-current">1</span> de <span id="quiz-total">10</span>
+                    </div>
+                    <div class="card quiz-question-card">
+                        <div class="card-body">
+                            <div id="quiz-question-text" class="quiz-question-text"></div>
+                            <div id="quiz-options" class="quiz-options"></div>
+                        </div>
+                    </div>
+                    <div class="quiz-actions">
+                        <button class="btn btn-secondary" onclick="QuizApp.skip()" id="btn-quiz-skip">
+                            Pular <i class="fas fa-forward"></i>
+                        </button>
+                        <button class="btn btn-primary" onclick="QuizApp.next()" id="btn-quiz-next">
+                            Confirmar <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" style="display: none;">
+                    <div class="quiz-results-summary">
+                        <div class="result-circle">
+                            <span id="quiz-score">0</span>%
+                        </div>
+                        <h2>Resultado do Simulado</h2>
+                        <p>Você acertou <span id="quiz-correct">0</span> de <span id="quiz-total-questions">10</span> questões</p>
+                    </div>
+                    <div class="quiz-results-details" id="quiz-results-details">
+                        <!-- Detalhes das respostas -->
+                    </div>
+                    <div class="quiz-results-actions">
+                        <button class="btn btn-primary" onclick="QuizApp.review()">
+                            <i class="fas fa-search"></i> Revisar Respostas
+                        </button>
+                        <button class="btn btn-secondary" onclick="QuizApp.reset()">
+                            <i class="fas fa-redo"></i> Novo Simulado
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTESTS PAGE -->
+            <section id="page-contests" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Concursos</h1>
+                    <p class="page-subtitle">Acompanhe editais e datas de provas</p>
+                </div>
+
+                <div class="contests-tabs">
+                    <button class="tab-btn active" onclick="ContestsApp.switchTab('upcoming')">Próximos</button>
+                    <button class="tab-btn" onclick="ContestsApp.switchTab('my')">Meus Concursos</button>
+                    <button class="tab-btn" onclick="ContestsApp.switchTab('past')">Encerrados</button>
+                </div>
+
+                <div id="contests-upcoming" class="contests-list">
+                    <!-- Concursos serão carregados aqui -->
+                </div>
+
+                <div id="contests-my" class="contests-list" style="display: none;">
+                    <!-- Meus concursos -->
+                </div>
+
+                <div id="contests-past" class="contests-list" style="display: none;">
+                    <!-- Concursos encerrados -->
+                </div>
+            </section>
+
+            <!-- LIBRARY PAGE -->
+            <section id="page-library" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Biblioteca & Mapas Mentais</h1>
+                    <p class="page-subtitle">Materiais de estudo e resumos visuais</p>
+                </div>
+
+                <div class="library-tabs">
+                    <button class="tab-btn active" onclick="LibraryApp.switchTab('mindmaps')">Mapas Mentais</button>
+                    <button class="tab-btn" onclick="LibraryApp.switchTab('materials')">Materiais</button>
+                    <button class="tab-btn" onclick="LibraryApp.switchTab('favorites')">Favoritos</button>
+                </div>
+
+                <div id="library-mindmaps" class="mindmaps-grid">
+                    <!-- Mapas mentais serão carregados aqui -->
+                </div>
+
+                <div id="library-materials" class="materials-list" style="display: none;">
+                    <!-- Materiais -->
+                </div>
+
+                <div id="library-favorites" class="favorites-list" style="display: none;">
+                    <!-- Favoritos -->
+                </div>
+            </section>
+
+            <!-- POMODORO PAGE -->
+            <section id="page-pomodoro" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Anti-Stress & Pomodoro</h1>
+                    <p class="page-subtitle">Técnicas de estudo e relaxamento</p>
+                </div>
+
+                <div class="pomodoro-container">
+                    <div class="pomodoro-modes">
+                        <button class="mode-btn active" data-mode="pomodoro" onclick="PomodoroApp.setMode('pomodoro')">Pomodoro</button>
+                        <button class="mode-btn" data-mode="short" onclick="PomodoroApp.setMode('short')">Pausa Curta</button>
+                        <button class="mode-btn" data-mode="long" onclick="PomodoroApp.setMode('long')">Pausa Longa</button>
+                    </div>
+
+                    <div class="pomodoro-timer-display" id="pomodoro-timer">
+                        25:00
+                    </div>
+
+                    <div class="pomodoro-controls">
+                        <button class="btn btn-primary btn-lg" id="pomodoro-start" onclick="PomodoroApp.start()">
+                            <i class="fas fa-play"></i> Iniciar
+                        </button>
+                        <button class="btn btn-secondary btn-lg" id="pomodoro-pause" onclick="PomodoroApp.pause()" style="display: none;">
+                            <i class="fas fa-pause"></i> Pausar
+                        </button>
+                        <button class="btn btn-ghost btn-lg" id="pomodoro-reset" onclick="PomodoroApp.reset()">
+                            <i class="fas fa-redo"></i> Reiniciar
+                        </button>
+                    </div>
+
+                    <div class="pomodoro-stats">
+                        <div class="pomodoro-stat">
+                            <span class="stat-value" id="pomodoro-sessions">0</span>
+                            <span class="stat-label">Sessões Hoje</span>
+                        </div>
+                        <div class="pomodoro-stat">
+                            <span class="stat-value" id="pomodoro-focus">0min</span>
+                            <span class="stat-label">Tempo Focado</span>
+                        </div>
+                    </div>
+
+                    <div class="relax-section">
+                        <h3><i class="fas fa-spa"></i> Exercícios de Relaxamento</h3>
+                        <div class="relax-exercises">
+                            <button class="relax-btn" onclick="RelaxApp.start('breathing')">
+                                <span class="relax-icon">🌬️</span>
+                                <span>Respiração 4-7-8</span>
+                            </button>
+                            <button class="relax-btn" onclick="RelaxApp.start('eyes')">
+                                <span class="relax-icon">👁️</span>
+                                <span>Relaxamento Ocular</span>
+                            </button>
+                            <button class="relax-btn" onclick="RelaxApp.start('meditation')">
+                                <span class="relax-icon">🧘</span>
+                                <span>Meditação Guiada</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PERFORMANCE PAGE -->
+            <section id="page-performance" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Meu Desempenho</h1>
+                    <p class="page-subtitle">Acompanhe sua evolução e conquistas</p>
+                </div>
+
+                <div class="performance-overview">
+                    <div class="stat-card large">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-level">1</span>
+                            <span class="stat-label">Nível</span>
+                        </div>
+                        <div class="stat-xp">
+                            <div class="xp-bar">
+                                <div class="xp-fill" id="xp-bar-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="xp-text"><span id="xp-current">0</span> / <span id="xp-needed">100</span> XP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-icon cyan">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="stat-questions">0</div>
+                            <div class="stat-card-label">Questões Respondidas</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon green">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="stat-accuracy">0%</div>
+                            <div class="stat-card-label">Taxa de Acerto</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon orange">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="stat-streak">0</div>
+                            <div class="stat-card-label">Dias Seguidos</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon purple">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="stat-time">0h</div>
+                            <div class="stat-card-label">Tempo Total</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="badges-section">
+                    <h3><i class="fas fa-medal"></i> Conquistas</h3>
+                    <div class="badges-grid" id="badges-container">
+                        <!-- Badges serão carregados aqui -->
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <h3><i class="fas fa-chart-line"></i> Histórico de Estudos</h3>
+                    <div class="history-chart" id="history-chart">
+                        <!-- Gráfico será renderizado aqui -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- DATA PAGE -->
+            <section id="page-data" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Gerenciamento de Dados</h1>
+                    <p class="page-subtitle">Sincronize conteúdo via GitHub e gerencie dados locais</p>
+                </div>
+
+                <div class="data-tabs">
+                    <button class="tab-btn active" onclick="DataApp.switchTab('sync')">Sincronização</button>
+                    <button class="tab-btn" onclick="DataApp.switchTab('import')">Importar</button>
+                    <button class="tab-btn" onclick="DataApp.switchTab('export')">Exportar</button>
+                    <button class="tab-btn" onclick="DataApp.switchTab('status')">Status</button>
+                </div>
+
+                <!-- Sync Tab -->
+                <div id="data-sync" class="data-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sync-alt"></i> Sincronização com GitHub</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-status">
+                                <div class="status-item">
+                                    <span class="status-label">Versão atual:</span>
+                                    <span class="status-value" id="data-current-version">Carregando...</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Última verificação:</span>
+                                    <span class="status-value" id="data-last-check">Nunca</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Última sincronização:</span>
+                                    <span class="status-value" id="data-last-sync">Nunca</span>
+                                </div>
+                            </div>
+
+                            <div class="data-actions">
+                                <button class="btn btn-primary" onclick="DataApp.checkForUpdates()" id="btn-check-updates">
+                                    <i class="fas fa-search"></i> Verificar Atualizações
+                                </button>
+                                <button class="btn btn-success" onclick="DataApp.syncAll()" id="btn-sync-all" disabled>
+                                    <i class="fas fa-download"></i> Sincronizar Tudo
+                                </button>
+                            </div>
+
+                            <div id="update-notification" class="update-banner" style="display: none;">
+                                <div class="update-info">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                    <div>
+                                        <strong>Nova versão disponível: <span id="update-version"></span></strong>
+                                        <p id="update-changes"></p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success" onclick="DataApp.syncAll()">
+                                    Atualizar Agora
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Coluna 2: Slider Visual (CORRIGIDO COM FALLBACK) -->
-                    <div class="mega-image-frame glowing-frame" id="heroSliderFrame">
-                        <div class="mega-image-container">
-                            <div class="frame-image-container">
-                                <!-- Adicionado onerror para fallback caso a imagem do github falhe -->
-                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-welcome.webp" 
-                                     class="slide active" 
-                                     alt="Bem vindo"
-                                     onerror="this.src='https://placehold.co/800x500/1A3E74/FFFFFF?text=Imagem+Indisponivel'">
-                                
-                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-nanda-tools.webp" 
-                                     class="slide" 
-                                     alt="Ferramentas Nanda"
-                                     onerror="this.src='https://placehold.co/800x500/1A3E74/FFFFFF?text=Ferramentas+Nanda'">
-                                
-                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-simulator-tools.webp" 
-                                     class="slide" 
-                                     alt="Simuladores"
-                                     onerror="this.src='https://placehold.co/800x500/1A3E74/FFFFFF?text=Simuladores'">
-                                
-                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-library-tools.webp" 
-                                     class="slide" 
-                                     alt="Biblioteca"
-                                     onerror="this.src='https://placehold.co/800x500/1A3E74/FFFFFF?text=Biblioteca'">
-                                
-                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-notification-tools.webp" 
-                                     class="slide" 
-                                     alt="Notificações"
-                                     onerror="this.src='https://placehold.co/800x500/1A3E74/FFFFFF?text=Notificações'">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-cog"></i> Configurações de Sync</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Sincronização Automática</span>
+                                    <span class="setting-desc">Verificar atualizações automaticamente a cada hora</span>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="setting-autosync" checked onchange="DataApp.toggleAutoSync(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>URL do Repositório</label>
+                                <input type="text" id="repo-url" placeholder="https://github.com/usuario/repositorio" onchange="DataApp.updateRepoUrl(this.value)">
+                                <small>Formato: https://github.com/usuario/enfermagem-concurseira</small>
                             </div>
                         </div>
-                        <div class="slider-dots" id="sliderDots">
-                            <span class="dot active" onclick="changeSlide(0)"></span>
-                            <span class="dot" onclick="changeSlide(1)"></span>
-                            <span class="dot" onclick="changeSlide(2)"></span>
-                            <span class="dot" onclick="changeSlide(3)"></span>
-                            <span class="dot" onclick="changeSlide(4)"></span>
+                    </div>
+                </div>
+
+                <!-- Import Tab -->
+                <div id="data-import" class="data-content" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-file-import"></i> Importar Dados</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="import-area" id="import-drop-zone">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Arraste e solte um arquivo JSON aqui ou</p>
+                                <label class="btn btn-secondary">
+                                    Selecionar Arquivo
+                                    <input type="file" accept=".json" style="display: none;" onchange="DataApp.handleFileImport(this)">
+                                </label>
+                            </div>
+                            <div class="import-options">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="import-questions" checked>
+                                    Questões
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="import-contests" checked>
+                                    Concursos
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="import-quizzes" checked>
+                                    Provas
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="import-flashcards" checked>
+                                    Flashcards
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="import-library" checked>
+                                    Biblioteca
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Tab -->
+                <div id="data-export" class="data-content" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-file-export"></i> Exportar Dados</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Baixe todos os seus dados locais em formato JSON. Você pode usar este arquivo para fazer backup ou transferir seus dados para outro dispositivo.</p>
+                            <div class="export-options">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="export-questions" checked>
+                                    Questões
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="export-contests" checked>
+                                    Concursos
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="export-quizzes" checked>
+                                    Provas
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="export-flashcards" checked>
+                                    Flashcards
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="export-library" checked>
+                                    Biblioteca
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="export-stats" checked>
+                                    Estatísticas
+                                </label>
+                            </div>
+                            <button class="btn btn-primary" onclick="DataApp.exportData()">
+                                <i class="fas fa-download"></i> Baixar JSON
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Tab -->
+                <div id="data-status" class="data-content" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-info-circle"></i> Status do Sistema</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats-grid" id="data-stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-card-icon blue">
+                                        <i class="fas fa-clipboard-list"></i>
+                                    </div>
+                                    <div class="stat-card-content">
+                                        <div class="stat-card-value" id="stat-questions-count">0</div>
+                                        <div class="stat-card-label">Questões</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-card-icon green">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                    <div class="stat-card-content">
+                                        <div class="stat-card-value" id="stat-contests-count">0</div>
+                                        <div class="stat-card-label">Concursos</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-card-icon orange">
+                                        <i class="fas fa-stopwatch"></i>
+                                    </div>
+                                    <div class="stat-card-content">
+                                        <div class="stat-card-value" id="stat-quizzes-count">0</div>
+                                        <div class="stat-card-label">Provas</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-card-icon purple">
+                                        <i class="fas fa-clone"></i>
+                                    </div>
+                                    <div class="stat-card-content">
+                                        <div class="stat-card-value" id="stat-flashcards-count">0</div>
+                                        <div class="stat-card-label">Flashcards</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-history"></i> Histórico de Sincronização</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="sync-history" class="sync-history-list">
+                                <p class="empty-state">Nenhuma sincronização realizada ainda.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-trash"></i> Limpeza de Dados</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Remova todos os dados locais e volte à configuração inicial. Esta ação não pode ser desfeita.</p>
+                            <button class="btn btn-danger" onclick="DataApp.clearAllData()">
+                                <i class="fas fa-trash"></i> Limpar Todos os Dados
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- RECURSOS -->
-            <section id="features" class="features-container">
-                <div class="section-title">
-                    <h2>Recursos Disponíveis</h2>
-                    <p>Tudo o que você precisa para garantir sua vaga</p>
+            <!-- SETTINGS PAGE -->
+            <section id="page-settings" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Configurações</h1>
+                    <p class="page-subtitle">Personalize sua experiência</p>
                 </div>
 
-                <!-- Grupo 1 -->
-                <div class="category-block">
-                    <div class="category-header">
-                        <div class="category-icon"><i class="fas fa-compass"></i></div>
-                        <h3>Navegação Principal</h3>
+                <div class="settings-sections">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-palette"></i> Aparência</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Modo Escuro</span>
+                                    <span class="setting-desc">Reduz o cansaço visual em ambientes escuros</span>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="setting-darkmode" onchange="SettingsApp.toggleDarkMode(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Tamanho da Fonte</span>
+                                    <span class="setting-desc">Ajusta o tamanho do texto</span>
+                                </div>
+                                <select id="setting-fontsize" onchange="SettingsApp.setFontSize(this.value)">
+                                    <option value="small">Pequeno</option>
+                                    <option value="medium" selected>Médio</option>
+                                    <option value="large">Grande</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="features-grid">
-                        <div class="feature-card glass-effect">
-                            <div class="card-header"><i class="fas fa-chart-line"></i><h4>Dashboard</h4></div>
-                            <p>Visão geral com estatísticas, atalhos rápidos e resumo de progresso.</p>
-                        </div>
-                        <div class="feature-card glass-effect">
-                            <div class="card-header"><i class="fas fa-database"></i><h4>Banco de Questões</h4></div>
-                            <p>Acesso a questões de provas anteriores filtradas por banca, ano e especialidade.</p>
-                        </div>
-                        <div class="feature-card glass-effect">
-                            <div class="card-header"><i class="fas fa-briefcase"></i><h4>Concursos</h4></div>
-                            <p>Lista de editais abertos e datas de provas para concursos de enfermagem.</p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Grupo 2 -->
-                <div class="category-block">
-                    <div class="category-header">
-                        <div class="category-icon"><i class="fas fa-brain"></i></div>
-                        <h3>Ferramentas de Estudo</h3>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bell"></i> Notificações</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Lembrete de Estudos</span>
+                                    <span class="setting-desc">Receba notificações para estudar</span>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="setting-reminder" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Horário do Lembrete</span>
+                                </div>
+                                <input type="time" id="setting-reminder-time" value="08:00">
+                            </div>
+                        </div>
                     </div>
-                    <div class="features-grid">
-                        <div class="feature-card glass-effect">
-                            <div class="card-header"><i class="fas fa-clock"></i><h4>Pomodoro</h4></div>
-                            <p>Timer integrado para técnica de estudo: 25min foco + 5min pausa.</p>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-database"></i> Dados</h3>
                         </div>
-                        <div class="feature-card glass-effect">
-                            <div class="card-header"><i class="fas fa-layer-group"></i><h4>Flashcards</h4></div>
-                            <p>Sistema de repetição espaçada para memorização de termos técnicos.</p>
-                        </div>
-                        <div class="feature-card glass-effect">
-                            <div class="card-header"><i class="fas fa-project-diagram"></i><h4>Mapas Mentais</h4></div>
-                            <p>Resumos visuais de SUS, Ética, Farmacologia e outros temas complexos.</p>
+                        <div class="card-body">
+                            <button class="btn btn-secondary" onclick="SettingsApp.exportData()">
+                                <i class="fas fa-download"></i> Exportar Dados
+                            </button>
+                            <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">
+                                <i class="fas fa-upload"></i> Importar Dados
+                            </button>
+                            <input type="file" id="import-file" style="display: none;" accept=".json" onchange="SettingsApp.importData(this)">
+                            <button class="btn btn-danger" onclick="SettingsApp.clearData()">
+                                <i class="fas fa-trash"></i> Limpar Tudo
+                            </button>
                         </div>
                     </div>
                 </div>
             </section>
-        </main>
-    </div>
 
-    <footer id="footer-v2-container" role="contentinfo"></footer>
+            <!-- ADMIN PAGE -->
+            <section id="page-admin" class="page-section" style="display: none;">
+                <div class="page-header-simple">
+                    <h1 class="page-title">Administração</h1>
+                    <p class="page-subtitle">Gerencie o conteúdo da plataforma</p>
+                </div>
 
-    <!-- SCRIPTS GERAIS + CARREGADOR DE MÓDULOS -->
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="AdminApp.switchTab('questions')">Questões</button>
+                    <button class="tab-btn" onclick="AdminApp.switchTab('contests')">Concursos</button>
+                    <button class="tab-btn" onclick="AdminApp.switchTab('mindmaps')">Mapas</button>
+                    <button class="tab-btn" onclick="AdminApp.switchTab('users')">Usuários</button>
+                    <button class="tab-btn" onclick="AdminApp.switchTab('stats')">Estatísticas</button>
+                </div>
+
+                <div id="admin-questions" class="admin-content">
+                    <div class="admin-toolbar">
+                        <button class="btn btn-primary" onclick="AdminApp.addQuestion()">
+                            <i class="fas fa-plus"></i> Nova Questão
+                        </button>
+                        <button class="btn btn-secondary" onclick="AdminApp.importQuestions()">
+                            <i class="fas fa-file-import"></i> Importar JSON
+                        </button>
+                    </div>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Enunciado</th>
+                                    <th>Área</th>
+                                    <th>Banca</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-questions-body">
+                                <!-- Questões serão carregadas aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin-contests" class="admin-content" style="display: none;">
+                    <!-- Gerenciamento de concursos -->
+                </div>
+
+                <div id="admin-mindmaps" class="admin-content" style="display: none;">
+                    <!-- Gerenciamento de mapas mentais -->
+                </div>
+
+                <div id="admin-users" class="admin-content" style="display: none;">
+                    <!-- Gerenciamento de usuários -->
+                </div>
+
+                <div id="admin-stats" class="admin-content" style="display: none;">
+                    <!-- Estatísticas globais -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+    <footer class="main-footer" id="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-brand-section">
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                <rect width="40" height="40" rx="10" fill="#1A3E74"/>
+                                <path d="M20 10C15.6 10 12 13.6 12 18C12 20.9 13.2 22.9 15 25V30H25V25C26.8 22.9 28 20.9 28 18C28 13.6 24.4 10 20 10Z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="footer-brand-text">
+                            <h3>Enfermagem Concurseira</h3>
+                            <p>Sua plataforma de estudos para concursos de enfermagem</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-title">Navegação</h4>
+                    <ul class="footer-links">
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#questions">Banco de Questões</a></li>
+                        <li><a href="#contests">Concursos</a></li>
+                        <li><a href="#library">Biblioteca</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-title">Recursos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#quizzes">Simulados</a></li>
+                        <li><a href="#performance">Desempenho</a></li>
+                        <li><a href="#pomodoro">Anti-Stress</a></li>
+                        <li><a href="#settings">Configurações</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © <span id="current-year">2025</span> Enfermagem Concurseira. Todos os direitos reservados.
+                </p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================
+         MODAL & TOAST CONTAINERS
+         ======================================== -->
+    <div id="modal-container"></div>
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ========================================
+         EXTERNAL LIBRARIES
+         ======================================== -->
+    <script src="https://unpkg.com/dexie@3.2.4/dist/dexie.min.js"></script>
+
+    <!-- ========================================
+         CORE SCRIPTS
+         ======================================== -->
+    <script src="assets/js/event-bus.js"></script>
+    <script src="assets/js/header.js"></script>
+    <script src="assets/js/accessibility.js"></script>
+
+    <!-- ========================================
+         SERVICES
+         ======================================== -->
+    <script src="assets/app/services/db.js"></script>
+    <script src="assets/app/services/auth.js"></script>
+    <script src="assets/app/utils/helpers.js"></script>
+
+    <!-- ========================================
+         COMPONENTS
+         ======================================== -->
+    <script src="assets/app/components/Modal.js"></script>
+    <script src="assets/app/components/Toast.js"></script>
+    <script src="assets/app/services/content-sync.js"></script>
+    <script src="assets/app/components/DataApp.js"></script>
+
+    <!-- ========================================
+         APPLICATION - MAIN
+         ======================================== -->
+    <script src="assets/app/app.js"></script>
+
     <script>
-        (function() {
-            'use strict';
-
-            const BASE_URL = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/";
-
-            window.EventBus = window.EventBus || {
-                events: {}, fired: {},
-                on(e, cb) { 
-                    const event = e.toLowerCase();
-                    if(!this.events[event]) this.events[event] = [];
-                    this.events[event].push(cb);
-                    if(this.fired[event]) cb(this.fired[event]);
-                },
-                emit(e, data) {
-                    const event = e.toLowerCase();
-                    this.fired[event] = data || true;
-                    if(this.events[event]) this.events[event].forEach(cb => cb(data));
-                }
-            };
-
-            const CONFIG = {
-                components: [
-                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
-                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
-                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
-                ],
-                scripts: [
-                    'assets/js/event-bus-v4.js',
-                    'assets/js/accessibility-rules.js',
-                    'assets/js/libras-integration.js',
-                    'https://vlibras.gov.br/app/vlibras-plugin.js',
-                    'assets/js/accessibility-v4.js',
-                    'assets/js/header-v4.js',
-                    'assets/js/footer-v4.js'
-                ]
-            };
-
-            async function loadComponent(id, path) {
-                try {
-                    const url = path.startsWith('http') ? path : BASE_URL + path;
-                    const response = await fetch(url + '?t=' + Date.now());
-                    if (!response.ok) throw new Error(response.status);
-                    const html = await response.text();
-                    const container = document.getElementById(id);
-                    if (container) {
-                        container.innerHTML = html;
-                        window.EventBus.emit(`module:${id}:ready`);
-                    }
-                    return true;
-                } catch (e) {
-                    console.error(`[App] Erro ao carregar ${id}:`, e.message);
-                    return false;
-                }
+        // Inicialização rápida do ComponentLoader
+        const ComponentLoader = {
+            init: function() {
+                console.log('ComponentLoader initialized');
             }
-
-            async function loadScript(src) {
-                return new Promise((resolve) => {
-                    const script = document.createElement('script');
-                    script.src = (src.startsWith('http') ? src : BASE_URL + src) + '?v=' + Date.now();
-                    script.async = false;
-                    script.onload = () => {
-                        if(src.includes('vlibras') && window.VLibras) {
-                            try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch(e){}
-                        }
-                        resolve(true);
-                    };
-                    script.onerror = () => resolve(false);
-                    document.body.appendChild(script);
-                });
-            }
-
-            async function startApp() {
-                await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
-                for (const s of CONFIG.scripts) await loadScript(s);
-
-                setTimeout(() => {
-                    if (typeof window.HeaderInit === 'function') window.HeaderInit();
-                    const loader = document.getElementById('loader-global');
-                    if (loader) {
-                        loader.style.opacity = '0';
-                        setTimeout(() => loader.style.display = 'none', 500);
-                    }
-                }, 800);
-
-                initThreeJSBackground();
-                initHeroSlider();
-            }
-
-            function initThreeJSBackground() {
-                const container = document.getElementById('canvas-container');
-                if(!container) return;
-
-                const scene = new THREE.Scene();
-                scene.fog = new THREE.FogExp2(0xffffff, 0.002);
-
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                camera.position.z = 50;
-
-                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(window.devicePixelRatio);
-                container.appendChild(renderer.domElement);
-
-                const geometry = new THREE.BufferGeometry();
-                const particlesCount = 350;
-                const posArray = new Float32Array(particlesCount * 3);
-                for(let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 150; 
-                geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-                const material = new THREE.PointsMaterial({ size: 0.7, color: 0x1e3a66, transparent: true, opacity: 0.8 });
-                const particlesMesh = new THREE.Points(geometry, material);
-                scene.add(particlesMesh);
-
-                const lineMaterial = new THREE.LineBasicMaterial({ color: 0x1e3a66, transparent: true, opacity: 0.15 });
-                const linesGeometry = new THREE.BufferGeometry();
-                const points = [];
-                for (let i = 0; i < 100; i++) {
-                    points.push(new THREE.Vector3((Math.random()-0.5)*100, (Math.random()-0.5)*100, (Math.random()-0.5)*50));
-                    points.push(new THREE.Vector3((Math.random()-0.5)*100, (Math.random()-0.5)*100, (Math.random()-0.5)*50));
-                }
-                linesGeometry.setFromPoints(points);
-                const linesMesh = new THREE.LineSegments(linesGeometry, lineMaterial);
-                scene.add(linesMesh);
-
-                let mouseX = 0; let mouseY = 0;
-                document.addEventListener('mousemove', (event) => { mouseX = event.clientX; mouseY = event.clientY; });
-
-                const animate = () => {
-                    requestAnimationFrame(animate);
-                    particlesMesh.rotation.y += 0.001;
-                    linesMesh.rotation.y += 0.0005;
-                    
-                    const targetX = (mouseX / window.innerWidth) * 2 - 1;
-                    const targetY = -(mouseY / window.innerHeight) * 2 + 1;
-                    particlesMesh.rotation.y += 0.05 * (targetX - particlesMesh.rotation.y) * 0.05;
-                    particlesMesh.rotation.x += 0.05 * (targetY - particlesMesh.rotation.x) * 0.05;
-
-                    renderer.render(scene, camera);
-                };
-                animate();
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            }
-
-            function initHeroSlider() {
-                let currentSlide = 0;
-                const slides = document.querySelectorAll('.slide');
-                const dots = document.querySelectorAll('.dot');
-                if(slides.length === 0) return;
-
-                const totalSlides = slides.length;
-                const slideInterval = 4000;
-
-                function showSlide(index) {
-                    slides.forEach(slide => slide.classList.remove('active'));
-                    dots.forEach(dot => dot.classList.remove('active'));
-                    currentSlide = (index + totalSlides) % totalSlides;
-                    slides[currentSlide].classList.add('active');
-                    dots[currentSlide].classList.add('active');
-                }
-
-                window.changeSlide = function(index) {
-                    showSlide(index);
-                    clearInterval(autoSlide);
-                    autoSlide = setInterval(nextSlide, slideInterval);
-                };
-
-                function nextSlide() { showSlide(currentSlide + 1); }
-                let autoSlide = setInterval(nextSlide, slideInterval);
-            }
-
-            if (document.readyState === 'complete') startApp();
-            else window.addEventListener('load', startApp);
-
-        })();
+        };
+        window.ComponentLoader = ComponentLoader;
+        ComponentLoader.init();
     </script>
 </body>
 </html>
