@@ -1,0 +1,35 @@
+{
+    "version": "1.0.0",
+    "last_updated": "2024-02-01T10:00:00Z",
+    "changelog": [
+        {
+            "version": "1.0.0",
+            "date": "2024-02-01T10:00:00Z",
+            "description": "Versão inicial do banco de dados",
+            "changes": [
+                "20 questões adicionadas",
+                "8 concursos públicos",
+                "8 quizzes e provas",
+                "5 decks de flashcards",
+                "10 recursos da biblioteca"
+            ]
+        }
+    ],
+    "statistics": {
+        "total_questions": 20,
+        "total_contests": 8,
+        "total_quizzes": 8,
+        "total_flashcards": 25,
+        "total_library_resources": 10
+    },
+    "categories": [
+        "Assistência de Enfermagem",
+        "Legislação",
+        "Farmacologia",
+        "Saúde Coletiva",
+        "Saúde Mental",
+        "Urgência e Emergência"
+    ],
+    "update_url": "https://github.com/seu-usuario/enfermagem-concurseira/releases",
+    "repository_url": "https://github.com/seu-usuario/enfermagem-concurseira"
+}
