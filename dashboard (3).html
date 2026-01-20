@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Simulados de Enfermagem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #1A3E74; --accent: #00bcd4; --success: #4caf50; --warning: #ff9800; --error: #f44336; --light: #f4f6f9; --dark: #1f2937; }
+        body { font-family: 'Inter', sans-serif; background: var(--light); }
+        main { min-height: calc(100vh - 200px); padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .page-header { margin-bottom: 40px; }
+        .page-header h1 { font-family: 'Nunito Sans', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .page-header p { font-size: 16px; color: #666; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .stat-card h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+        .stat-value { font-size: 32px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .stat-label { font-size: 12px; color: #999; }
+        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-top: 12px; }
+        .progress-fill { height: 100%; background: var(--primary); }
+        .activities-section { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .activities-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+        .activity-item { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid #e2e8f0; }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(26, 62, 116, 0.1); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+        .activity-content { flex-grow: 1; }
+        .activity-title { font-weight: 600; color: var(--dark); }
+        .activity-time { font-size: 12px; color: #999; }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link" style="position: absolute; top: -40px; left: 0; background: var(--primary); color: white; padding: 8px; z-index: 100000;">Pular para conteúdo principal</a>
+    <div id="accessibility-container"></div>
+    <header id="header-container"></header>
+    <main id="main">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-chart-line"></i> Dashboard</h1>
+                <p>Acompanhe seu progresso e desempenho</p>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3><i class="fas fa-book"></i> Quizzes Realizados</h3>
+                    <div class="stat-value" id="total-quizzes">0</div>
+                    <div class="stat-label">Últimos 30 dias</div>
+                </div>
+                <div class="stat-card">
+                    <h3><i class="fas fa-check-circle"></i> Taxa de Acerto</h3>
+                    <div class="stat-value" id="taxa-acerto">0%</div>
+                    <div class="progress-bar"><div class="progress-fill" id="progress-acerto" style="width: 0%"></div></div>
+                </div>
+                <div class="stat-card">
+                    <h3><i class="fas fa-clock"></i> Tempo de Estudo</h3>
+                    <div class="stat-value" id="tempo-estudo">0h</div>
+                    <div class="stat-label">Horas totais</div>
+                </div>
+                <div class="stat-card">
+                    <h3><i class="fas fa-fire"></i> Sequência</h3>
+                    <div class="stat-value" id="sequencia">0</div>
+                    <div class="stat-label">Dias consecutivos</div>
+                </div>
+            </div>
+
+            <!-- Atividades Recentes -->
+            <div class="activities-section">
+                <h2><i class="fas fa-history"></i> Atividades Recentes</h2>
+                <div id="activities-list">
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="fas fa-book"></i></div>
+                        <div class="activity-content">
+                            <div class="activity-title">Nenhuma atividade registrada</div>
+                            <div class="activity-time">Comece a estudar para ver seu progresso aqui</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer id="footer-container"></footer>
+
+    <script>
+        const Dashboard = {
+            init() {
+                this.carregarEstatisticas();
+                this.carregarComponentes();
+            },
+            carregarEstatisticas() {
+                try {
+                    const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                    
+                    // Total de quizzes
+                    document.getElementById('total-quizzes').textContent = historico.length;
+                    
+                    // Taxa de acerto
+                    if (historico.length > 0) {
+                        const mediaAcertos = Math.round(historico.reduce((sum, q) => sum + q.percentual, 0) / historico.length);
+                        document.getElementById('taxa-acerto').textContent = mediaAcertos + '%';
+                        document.getElementById('progress-acerto').style.width = mediaAcertos + '%';
+                    }
+                    
+                    // Tempo total
+                    const tempoTotal = historico.reduce((sum, q) => sum + (q.tempoTotal || 0), 0);
+                    const horas = Math.floor(tempoTotal / 3600);
+                    document.getElementById('tempo-estudo').textContent = horas + 'h';
+                    
+                    // Atividades recentes
+                    if (historico.length > 0) {
+                        const atividades = historico.slice(-5).reverse().map(q => `
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-check-circle"></i></div>
+                                <div class="activity-content">
+                                    <div class="activity-title">${q.tipo} - ${q.acertos}/${q.total} acertos</div>
+                                    <div class="activity-time">${new Date(q.dataFinal).toLocaleDateString('pt-BR')}</div>
+                                </div>
+                            </div>
+                        `).join('');
+                        document.getElementById('activities-list').innerHTML = atividades;
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar estatísticas:', error);
+                }
+            },
+            carregarComponentes() {
+                fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/header-v4.html').then(r => r.text()).then(h => document.getElementById('header-container').innerHTML = h).catch(e => console.error(e));
+                fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/footer-v4.html').then(r => r.text()).then(h => document.getElementById('footer-container').innerHTML = h).catch(e => console.error(e));
+                fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/accessibility-v4.html').then(r => r.text()).then(h => document.getElementById('accessibility-container').innerHTML = h).catch(e => console.error(e));
+            }
+        };
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => Dashboard.init()); } else { Dashboard.init(); }
+    </script>
+</body>
+</html>
