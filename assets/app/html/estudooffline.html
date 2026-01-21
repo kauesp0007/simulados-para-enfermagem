@@ -3,198 +3,1000 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Estudo Offline - Simulados de Enfermagem">
     <title>Estudo Offline | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS dos Componentes -->
+    <link rel="stylesheet" href="assets/components/css/header.css">
+    <link rel="stylesheet" href="assets/components/css/footer.css">
+    <link rel="stylesheet" href="assets/components/css/accessibility.css">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary: #1A3E74; --accent: #00bcd4; --success: #4caf50; --light: #f4f6f9; --dark: #1f2937; }
-        body { font-family: 'Inter', sans-serif; background: var(--light); }
-        main { min-height: calc(100vh - 200px); padding: 40px 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .page-header { text-align: center; margin-bottom: 40px; }
-        .page-header h1 { font-family: 'Nunito Sans', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-        .page-header p { font-size: 16px; color: #666; }
-        .status-bar { background: white; padding: 20px; border-radius: 12px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .status-item { text-align: center; }
-        .status-icon { font-size: 24px; margin-bottom: 8px; }
-        .status-label { font-size: 12px; color: #666; }
-        .status-value { font-size: 24px; font-weight: 700; color: var(--primary); }
-        .online-badge { background: var(--success); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
-        .content-section { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .content-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
-        .content-list { display: flex; flex-direction: column; gap: 12px; }
-        .content-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--light); border-radius: 8px; }
-        .content-item input { width: 20px; height: 20px; cursor: pointer; }
-        .content-item label { flex-grow: 1; cursor: pointer; font-size: 14px; }
-        .content-item .size { font-size: 12px; color: #999; }
-        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #0d2a52; }
-        .btn-secondary { background: #e2e8f0; color: var(--dark); }
-        .btn-secondary:hover { background: #cbd5e1; }
-        .actions { display: flex; gap: 12px; margin-top: 20px; }
-        .tips { background: #e3f2fd; border-left: 4px solid var(--primary); padding: 16px; border-radius: 8px; margin-top: 30px; }
-        .tips h3 { color: var(--primary); margin-bottom: 12px; font-size: 14px; }
-        .tips p { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 8px; }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .status-bar { flex-direction: column; gap: 20px; } }
+        /* ============================================
+           RESET E BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Skip Link para Acessibilidade */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200000;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loader-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        .loader-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loader-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loader-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Layout Principal */
+        .page-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Breadcrumb */
+        .nav-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .nav-breadcrumb span {
+            color: #666;
+        }
+
+        .nav-breadcrumb .current {
+            color: #666;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-header h1 i {
+            color: var(--primary);
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .status-bar:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(26, 62, 116, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .status-icon.storage { background: rgba(33, 150, 243, 0.1); color: #2196f3; }
+        .status-icon.topics { background: rgba(76, 175, 80, 0.1); color: #4caf50; }
+        .status-icon.questions { background: rgba(156, 39, 176, 0.1); color: #9c27b0; }
+        .status-icon.pending { background: rgba(255, 152, 0, 0.1); color: #ff9800; }
+
+        .status-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .status-value {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .online-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .online-badge i {
+            font-size: 10px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 32px 0 20px 0;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .content-section:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-section h2 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .content-section h2 i {
+            color: var(--accent);
+        }
+
+        .content-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--light);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: #e8f4f8;
+        }
+
+        .content-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .content-item label {
+            flex-grow: 1;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .content-item .size {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .content-item .download-icon {
+            color: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .content-item:hover .download-icon {
+            opacity: 1;
+        }
+
+        .content-item .remove-btn {
+            padding: 6px 12px;
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--error);
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .content-item .remove-btn:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        .content-item .check-icon {
+            color: var(--success);
+            font-size: 18px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #152c4f;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-danger {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        /* Tips Card */
+        .tips-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+            margin-top: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .tips-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .tips-card h3 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tips-card h3 i {
+            color: var(--warning);
+        }
+
+        .tips-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .tip-item i {
+            color: var(--success);
+            font-size: 16px;
+            margin-top: 2px;
+        }
+
+        .tip-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 24px 16px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .tips-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .status-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .status-bar,
+        body.dark-mode .content-section,
+        body.dark-mode .tips-card {
+            background: #2d3748;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-header h1,
+        body.dark-mode .content-section h2,
+        body.dark-mode .section-title,
+        body.dark-mode .tips-card h3 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-header p,
+        body.dark-mode .status-label,
+        body.dark-mode .content-item label,
+        body.dark-mode .content-item .size,
+        body.dark-mode .tip-item p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .content-item {
+            background: #1f2937;
+        }
+
+        body.dark-mode .content-item:hover {
+            background: #374151;
+        }
+
+        body.dark-mode .tip-item {
+            background: #1f2937;
+        }
+
+        body.dark-mode .content-section h2 {
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .status-icon {
+            background: rgba(0, 188, 212, 0.2);
+            color: var(--accent);
+        }
+
+        /* High Contrast Mode */
+        body[data-contrast="high"] .status-bar,
+        body[data-contrast="high"] .content-section,
+        body[data-contrast="high"] .tips-card {
+            border: 2px solid var(--primary);
+        }
+
+        body[data-contrast="high"] .content-item {
+            border: 1px solid #4b5563;
+        }
+
+        /* Reduzir Animações */
+        body.reduce-animations .status-bar,
+        body.reduce-animations .content-section,
+        body.reduce-animations .tips-card,
+        body.reduce-animations .btn,
+        body.reduce-animations .content-item {
+            transition: none;
+        }
+
+        body.reduce-animations .loader-dot {
+            animation: none;
+        }
+
+        body[data-reduce-motion="reduce"] .status-bar,
+        body[data-reduce-motion="reduce"] .content-section,
+        body[data-reduce-motion="reduce"] .btn {
+            transition: none;
+            animation: none;
+        }
     </style>
 </head>
 <body>
-    <div id="accessibility-container"></div>
-    <header id="header-container"></header>
-    <main id="main">
-        <div class="container">
-            <div class="page-header">
-                <h1><i class="fas fa-wifi"></i> Estudo Offline</h1>
-                <p>Baixe conteúdo para estudar sem internet</p>
-            </div>
-
-            <!-- Status -->
-            <div class="status-bar">
-                <div class="status-item">
-                    <div class="status-icon"><i class="fas fa-database"></i></div>
-                    <div class="status-label">Armazenado</div>
-                    <div class="status-value" id="storage-used">0 KB</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-icon"><i class="fas fa-book"></i></div>
-                    <div class="status-label">Tópicos Baixados</div>
-                    <div class="status-value" id="topics-count">0</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-icon"><i class="fas fa-question-circle"></i></div>
-                    <div class="status-label">Questões Offline</div>
-                    <div class="status-value" id="questions-count">0</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-icon"><i class="fas fa-sync"></i></div>
-                    <div class="status-label">Pendente Sync</div>
-                    <div class="status-value" id="pending-sync">0</div>
-                </div>
-            </div>
-
-            <!-- Conteúdo -->
-            <div class="content-grid">
-                <!-- Conteúdo Baixado -->
-                <div class="content-section">
-                    <h2><i class="fas fa-check-circle"></i> Conteúdo Baixado</h2>
-                    <div class="content-list" id="downloaded-list">
-                        <div style="text-align: center; padding: 40px; color: #999;">
-                            <i class="fas fa-inbox" style="font-size: 40px; margin-bottom: 16px; display: block;"></i>
-                            Nenhum conteúdo baixado
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Disponível para Download -->
-                <div class="content-section">
-                    <h2><i class="fas fa-download"></i> Disponível para Download</h2>
-                    <div class="content-list">
-                        <div class="content-item">
-                            <input type="checkbox" id="topic-1" value="anatomia">
-                            <label for="topic-1">Anatomia e Fisiologia</label>
-                            <span class="size">2.5 MB</span>
-                        </div>
-                        <div class="content-item">
-                            <input type="checkbox" id="topic-2" value="farmacologia">
-                            <label for="topic-2">Farmacologia</label>
-                            <span class="size">1.8 MB</span>
-                        </div>
-                        <div class="content-item">
-                            <input type="checkbox" id="topic-3" value="patologia">
-                            <label for="topic-3">Prevenção e Controle de Infecções</label>
-                            <span class="size">1.2 MB</span>
-                        </div>
-                        <div class="content-item">
-                            <input type="checkbox" id="topic-4" value="semiologia">
-                            <label for="topic-4">Semiologia e Semiometria</label>
-                            <span class="size">0.9 MB</span>
-                        </div>
-                        <div class="content-item">
-                            <input type="checkbox" id="topic-5" value="saude-publica">
-                            <label for="topic-5">Saúde Pública</label>
-                            <span class="size">1.5 MB</span>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-primary" onclick="EstudoOffline.baixarSelecionados()">
-                            <i class="fas fa-download"></i> Baixar Tópicos
-                        </button>
-                        <button class="btn btn-secondary" onclick="EstudoOffline.selecionarTodos()">
-                            <i class="fas fa-check"></i> Selecionar Tudo
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Dicas -->
-            <div class="tips">
-                <h3><i class="fas fa-lightbulb"></i> Dicas para Estudo Offline:</h3>
-                <p>✓ Baixe conteúdo quando estiver com conexão Wi-Fi para economizar dados</p>
-                <p>✓ Seu progresso será sincronizado automaticamente quando voltar online</p>
-                <p>✓ Mantenha o app atualizado para ter acesso aos conteúdos mais recentes</p>
-                <p>✓ Ideal para estudar no metrô, ônibus ou em qualquer lugar sem internet</p>
-            </div>
+    <!-- LOADER -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
         </div>
-    </main>
-    <footer id="footer-container"></footer>
+    </div>
 
+    <!-- SKIP LINK -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
+    <div id="accessibility-container"></div>
+    <div id="header-container"></div>
+
+    <!-- CONTEÚDO -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            <div class="container">
+                <!-- Navigation Breadcrumb -->
+                <nav class="nav-breadcrumb" aria-label="Navegação">
+                    <a href="index.html"><i class="fas fa-home"></i> Início</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <a href="dashboard (8)-corrigido.html">Dashboard</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <span class="current">Estudo Offline</span>
+                </nav>
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1><i class="fas fa-wifi"></i> Estudo Offline</h1>
+                    <p>Baixe conteúdo para estudar sem conexão com a internet</p>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="status-item">
+                        <div class="status-icon storage">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="status-label">Armazenamento Usado</div>
+                        <div class="status-value" id="storage-used">0 MB</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon topics">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="status-label">Tópicos Baixados</div>
+                        <div class="status-value" id="topics-count">0</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon questions">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="status-label">Questões Offline</div>
+                        <div class="status-value" id="questions-count">0</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon pending">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <div class="status-label">Pendente Sync</div>
+                        <div class="status-value" id="pending-sync">0</div>
+                    </div>
+                </div>
+
+                <!-- Status Online -->
+                <div style="margin-bottom: 24px;">
+                    <span class="online-badge">
+                        <i class="fas fa-circle"></i>
+                        Online
+                    </span>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <!-- Conteúdo Baixado -->
+                    <div class="content-section">
+                        <h2><i class="fas fa-check-circle"></i> Conteúdo Baixado</h2>
+                        <div class="content-list" id="downloaded-list">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>Nenhum conteúdo baixado ainda</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Disponível para Download -->
+                    <div class="content-section">
+                        <h2><i class="fas fa-download"></i> Disponível para Download</h2>
+                        <div class="content-list">
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-1" value="anatomia">
+                                <label for="topic-1">Anatomia e Fisiologia</label>
+                                <span class="size">2.5 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-2" value="farmacologia">
+                                <label for="topic-2">Farmacologia</label>
+                                <span class="size">1.8 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-3" value="patologia">
+                                <label for="topic-3">Prevenção e Controle de Infecções</label>
+                                <span class="size">1.2 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-4" value="semiologia">
+                                <label for="topic-4">Semiologia e Semiometria</label>
+                                <span class="size">0.9 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-5" value="saude-publica">
+                                <label for="topic-5">Saúde Pública</label>
+                                <span class="size">1.5 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-6" value="enfermagem-cirurgica">
+                                <label for="topic-6">Enfermagem Cirúrgica</label>
+                                <span class="size">2.1 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-7" value="enfermagem-obstetrica">
+                                <label for="topic-7">Enfermagem Obstétrica</label>
+                                <span class="size">1.9 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-8" value="enfermagem-pediatrica">
+                                <label for="topic-8">Enfermagem Pediátrica</label>
+                                <span class="size">1.7 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-primary" onclick="EstudoOffline.baixarSelecionados()">
+                                <i class="fas fa-download"></i>
+                                Baixar Selecionados
+                            </button>
+                            <button class="btn btn-secondary" onclick="EstudoOffline.selecionarTodos()">
+                                <i class="fas fa-check-square"></i>
+                                Selecionar Tudo
+                            </button>
+                            <button class="btn btn-secondary" onclick="EstudoOffline.desmarcarTodos()">
+                                <i class="fas fa-square"></i>
+                                Desmarcar Tudo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tips Card -->
+                <div class="tips-card">
+                    <h3><i class="fas fa-lightbulb"></i> Dicas para Estudo Offline</h3>
+                    <div class="tips-list">
+                        <div class="tip-item">
+                            <i class="fas fa-wifi"></i>
+                            <p>Baixe conteúdo quando estiver conectado ao Wi-Fi para economizar seus dados móveis</p>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-sync"></i>
+                            <p>Seu progresso será sincronizado automaticamente quando voltar a ter conexão</p>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-update"></i>
+                            <p>Mantenha o aplicativo atualizado para ter acesso aos conteúdos mais recentes</p>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-subway"></i>
+                            <p>Ideal para estudar no metrô, ônibus ou em qualquer lugar sem internet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- SCRIPTS DOS COMPONENTES -->
+    <script src="assets/components/js/accessibility-loader.js"></script>
+    <script src="assets/components/js/header-loader.js"></script>
+    <script src="assets/components/js/footer-loader.js"></script>
+    <script src="assets/components/js/component-loader.js"></script>
+
+    <!-- SCRIPTS DA PÁGINA -->
     <script>
-        const EstudoOffline = {
-            init() {
-                this.carregarComponentes();
-                this.atualizarEstatisticas();
-            },
-            baixarSelecionados() {
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-                if (checkboxes.length === 0) { alert('Selecione pelo menos um tópico'); return; }
-                
-                const topicos = Array.from(checkboxes).map(cb => cb.value);
-                const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
-                const novos = topicos.filter(t => !downloaded.includes(t));
-                
-                if (novos.length > 0) {
-                    localStorage.setItem('offline_downloaded', JSON.stringify([...downloaded, ...novos]));
+        (function() {
+            'use strict';
+
+            /**
+             * EstudoOffline - Gerencia o conteúdo offline
+             */
+            const EstudoOffline = {
+                topicNames: {
+                    'anatomia': 'Anatomia e Fisiologia',
+                    'farmacologia': 'Farmacologia',
+                    'patologia': 'Prevenção e Controle de Infecções',
+                    'semiologia': 'Semiologia e Semiometria',
+                    'saude-publica': 'Saúde Pública',
+                    'enfermagem-cirurgica': 'Enfermagem Cirúrgica',
+                    'enfermagem-obstetrica': 'Enfermagem Obstétrica',
+                    'enfermagem-pediatrica': 'Enfermagem Pediátrica'
+                },
+                topicSizes: {
+                    'anatomia': '2.5 MB',
+                    'farmacologia': '1.8 MB',
+                    'patologia': '1.2 MB',
+                    'semiologia': '0.9 MB',
+                    'saude-publica': '1.5 MB',
+                    'enfermagem-cirurgica': '2.1 MB',
+                    'enfermagem-obstetrica': '1.9 MB',
+                    'enfermagem-pediatrica': '1.7 MB'
+                },
+
+                init() {
+                    console.log('[EstudoOffline] Inicializando...');
+                    this.carregarEstatisticas();
+                    this.esconderLoader();
+                },
+
+                baixarSelecionados() {
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                    
+                    if (checkboxes.length === 0) {
+                        alert('Por favor, selecione pelo menos um tópico para baixar.');
+                        return;
+                    }
+                    
+                    const topicos = Array.from(checkboxes).map(cb => cb.value);
+                    const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
+                    const novos = topicos.filter(t => !downloaded.includes(t));
+                    
+                    if (novos.length > 0) {
+                        localStorage.setItem('offline_downloaded', JSON.stringify([...downloaded, ...novos]));
+                        
+                        // Uncheck all
+                        checkboxes.forEach(cb => cb.checked = false);
+                        
+                        this.carregarEstatisticas();
+                        
+                        // Show success message
+                        const downloadedCount = novos.length;
+                        alert(`${downloadedCount} tópico(s) baixado(s) com sucesso! Você já pode estudar offline.`);
+                    } else {
+                        alert('Os tópicos selecionados já foram baixados anteriormente.');
+                    }
+                },
+
+                selecionarTodos() {
+                    const checkboxes = document.querySelectorAll('.content-section:nth-child(2) input[type="checkbox"]');
+                    checkboxes.forEach(cb => cb.checked = true);
+                },
+
+                desmarcarTodos() {
+                    const checkboxes = document.querySelectorAll('.content-section:nth-child(2) input[type="checkbox"]');
                     checkboxes.forEach(cb => cb.checked = false);
-                    this.atualizarEstatisticas();
-                    alert('Tópicos baixados com sucesso!');
-                } else {
-                    alert('Esses tópicos já foram baixados');
+                },
+
+                remover(topico) {
+                    if (!confirm(`Tem certeza que deseja remover "${this.topicNames[topico] || topico}" do seu armazenamento offline?`)) {
+                        return;
+                    }
+                    
+                    const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
+                    const novos = downloaded.filter(t => t !== topico);
+                    localStorage.setItem('offline_downloaded', JSON.stringify(novos));
+                    this.carregarEstatisticas();
+                },
+
+                carregarEstatisticas() {
+                    const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
+                    const topicsCount = downloaded.length;
+                    const questionsCount = topicsCount * 50;
+                    const storageUsed = (topicsCount * 1.5).toFixed(1);
+                    
+                    // Update status bar
+                    document.getElementById('storage-used').textContent = storageUsed + ' MB';
+                    document.getElementById('topics-count').textContent = topicsCount;
+                    document.getElementById('questions-count').textContent = questionsCount;
+                    
+                    // Calculate pending sync (questions answered offline)
+                    const offlineAnswers = JSON.parse(localStorage.getItem('offline_answers') || '[]');
+                    document.getElementById('pending-sync').textContent = offlineAnswers.length;
+                    
+                    // Update downloaded list
+                    const downloadedList = document.getElementById('downloaded-list');
+                    
+                    if (downloaded.length === 0) {
+                        downloadedList.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>Nenhum conteúdo baixado ainda</p>
+                            </div>
+                        `;
+                    } else {
+                        downloadedList.innerHTML = downloaded.map(t => `
+                            <div class="content-item">
+                                <i class="fas fa-check-circle check-icon"></i>
+                                <label>${this.topicNames[t] || t}</label>
+                                <span class="size">${this.topicSizes[t] || '1.5 MB'}</span>
+                                <button class="remove-btn" onclick="EstudoOffline.remover('${t}')">
+                                    <i class="fas fa-trash"></i>
+                                    Remover
+                                </button>
+                            </div>
+                        `).join('');
+                    }
+                },
+
+                esconderLoader() {
+                    setTimeout(() => {
+                        const loader = document.getElementById('loader-global');
+                        if (loader) {
+                            loader.classList.add('hidden');
+                            setTimeout(() => loader.style.display = 'none', 500);
+                        }
+                    }, 800);
                 }
-            },
-            selecionarTodos() {
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                const todosSelecionados = Array.from(checkboxes).every(cb => cb.checked);
-                checkboxes.forEach(cb => cb.checked = !todosSelecionados);
-            },
-            atualizarEstatisticas() {
-                const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
-                document.getElementById('topics-count').textContent = downloaded.length;
-                document.getElementById('questions-count').textContent = downloaded.length * 50;
-                document.getElementById('storage-used').textContent = (downloaded.length * 1.5) + ' MB';
-                
-                const downloadedList = document.getElementById('downloaded-list');
-                if (downloaded.length === 0) {
-                    downloadedList.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;"><i class="fas fa-inbox" style="font-size: 40px; margin-bottom: 16px; display: block;"></i>Nenhum conteúdo baixado</div>';
-                } else {
-                    const topicNames = { anatomia: 'Anatomia e Fisiologia', farmacologia: 'Farmacologia', patologia: 'Prevenção e Controle de Infecções', semiologia: 'Semiologia e Semiometria', 'saude-publica': 'Saúde Pública' };
-                    downloadedList.innerHTML = downloaded.map(t => `<div class="content-item"><i class="fas fa-check-circle" style="color: var(--success);"></i><label>${topicNames[t] || t}</label><button class="btn btn-secondary" style="padding: 4px 12px; font-size: 12px;" onclick="EstudoOffline.remover('${t}')"><i class="fas fa-trash"></i></button></div>`).join('');
-                }
-            },
-            remover(topico) {
-                const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
-                const novos = downloaded.filter(t => t !== topico);
-                localStorage.setItem('offline_downloaded', JSON.stringify(novos));
-                this.atualizarEstatisticas();
-            },
-            carregarComponentes() {
-                fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/header-v4.html').then(r => r.text()).then(h => document.getElementById('header-container').innerHTML = h).catch(e => console.error(e));
-                fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/footer-v4.html').then(r => r.text()).then(h => document.getElementById('footer-container').innerHTML = h).catch(e => console.error(e));
+            };
+
+            // Expor para uso global
+            window.EstudoOffline = EstudoOffline;
+
+            // Inicializar quando o DOM estiver pronto
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => EstudoOffline.init());
+            } else {
+                EstudoOffline.init();
             }
-        };
-        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => EstudoOffline.init()); } else { EstudoOffline.init(); }
+        })();
     </script>
 </body>
 </html>
