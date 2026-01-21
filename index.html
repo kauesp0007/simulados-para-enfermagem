@@ -2,13 +2,436 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=assets/app/html/index.html">
-    <title>Simulados de Enfermagem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Simulados de Enfermagem">
+    <meta name="description" content="Sua carreira em Enfermagem começa aqui. Simulados, questões e ferramentas clínicas.">
+    
+    <title>Sua Carreira em Enfermagem | Plataforma Integrada</title>
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS Externos do Projeto Original -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* =========================================
+           ESTILOS LOCAIS DA LANDING PAGE
+           ========================================= */
+        :root {
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --bg-main-header: #ffffff;
+            --text-main: #1f2937;
+        }
+
+        /* Reset e Base */
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; color: var(--text-main); background-color: #f4f6f9; position: relative; }
+        h1, h2, h3 { font-family: 'Nunito Sans', sans-serif; }
+        
+        /* Acessibilidade - Skip Link */
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-primary); color: white; padding: 8px; z-index: 100000; transition: top 0.3s; }
+        .skip-link:focus { top: 0; }
+        
+        /* --- LOADER GLOBAL --- */
+        #loader-global { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200000; transition: opacity 0.5s ease; }
+        .loader-image { background-color: #ffffff; margin-bottom: 30px; max-width: 180px; height: auto; position: relative; z-index: 2; }
+        .loader-dots { display: flex; gap: 8px; align-items: center; justify-content: center; position: relative; z-index: 2; }
+        .loader-dot { width: 10px; height: 10px; background: #1A3E74; border-radius: 50%; opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+        
+        /* Animação SVG do Preloader */
+        .loader-svg-bg { position: absolute; top: -100px; left: 0; width: 100%; height: calc(100% + 200px); z-index: 1; pointer-events: none; }
+        .loader-svg-bg svg { width: 100%; height: 100%; opacity: 0.6; }
+        .svg-curve { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; will-change: stroke-dashoffset; }
+        .svg-curve-1 { stroke: #1A3E74; stroke-width: 2; animation: drawPath 3s ease-in-out forwards; }
+        .svg-curve-2 { stroke: #00bcd4; stroke-width: 2; animation: drawPath 3s ease-in-out 0.5s forwards, pulseGlow 4s ease-in-out 3s infinite; }
+        @keyframes drawPath { 0% { stroke-dashoffset: 1000; opacity: 0; } 10% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0.8; } }
+        @keyframes pulseGlow { 0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 2px rgba(0, 188, 212, 0.3)); } 50% { opacity: 0.9; filter: drop-shadow(0 0 8px rgba(0, 188, 212, 0.6)); } }
+
+        /* --- BACKGROUND CANVAS --- */
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #ffffff 0%, #f0f4f8 100%); }
+        
+        .page-wrapper { width: 100%; max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; position: relative; z-index: 1; }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        .hero-section { min-height: 85vh; display: flex; align-items: center; margin-bottom: 4rem; margin-top: 2rem; }
+        .hero-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 2rem; align-items: center; width: 100%; }
+        .hero-text { text-align: left; }
+        
+        h1 { font-size: 3.5rem; line-height: 1.1; color: #0f172a; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+        .highlight { color: var(--color-primary); display: block; }
+        @media (min-width: 768px) { .highlight { display: inline; } }
+        
+        p.subtitle { font-family: 'Inter', sans-serif; font-size: 1.15rem; color: #64748b; line-height: 1.6; margin-bottom: 2rem; max-width: 550px; font-weight: 400; }
+
+        /* Botão */
+        .button-group { display: flex; justify-content: flex-start; width: 100%; margin-bottom: 1.5rem; }
+        .btn { font-family: 'Inter', sans-serif; display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem; border-radius: 8px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; text-decoration: none; border: none; box-shadow: 0 4px 6px -1px rgba(30, 58, 102, 0.1); }
+        .btn-primary { background-color: var(--color-primary); color: #ffffff; }
+        .btn-primary:hover { background-color: #152c4f; transform: translateY(-4px); box-shadow: 0 10px 25px -3px rgba(30, 58, 102, 0.25); }
+        .btn svg { margin-right: 12px; width: 24px; height: 24px; }
+
+        /* Disclaimer Inline */
+        .hero-disclaimer-box {
+            background: rgba(255, 255, 255, 0.6);
+            border-left: 4px solid var(--color-primary);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            backdrop-filter: blur(5px);
+            max-width: 90%;
+            font-size: 0.8rem;
+            color: #475569;
+            line-height: 1.4;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .hero-disclaimer-box strong { color: var(--color-primary); display: block; margin-bottom: 4px; }
+        .warning-text { display: block; margin-top: 6px; color: #dc2626; font-weight: 600; font-size: 0.75rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 4px; }
+
+        /* Mega Frame Visual */
+        .mega-image-frame { position: relative; border: 2px solid var(--color-primary); border-radius: 0 30px 0 30px; box-shadow: 0 4px 12px rgba(26, 62, 116, 0.15), 0 2px 6px rgba(26, 62, 116, 0.1); background: var(--bg-main-header); transition: all 0.3s ease; width: 100%; max-width: 100%; margin: 0 auto; }
+        .mega-image-frame:hover { box-shadow: 0 8px 24px rgba(26, 62, 116, 0.2), 0 4px 8px rgba(26, 62, 116, 0.15); border-color: var(--color-accent); }
+        .mega-image-container { border-radius: 0 28px 0 28px; overflow: hidden; padding: 8px; background: var(--bg-main-header); }
+        .frame-image-container { width: 100%; height: auto; aspect-ratio: 16 / 10; position: relative; overflow: hidden; border-radius: 0 22px 0 22px; border: 1px solid rgba(26, 62, 116, 0.2); }
+        .frame-image-container img.slide { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: opacity 1s ease-in-out, transform 0.5s ease; position: absolute; top: 0; left: 0; opacity: 0; border-radius: 0 22px 0 22px; }
+        .frame-image-container img.slide.active { opacity: 1; z-index: 1; }
+        .mega-image-frame:hover .frame-image-container img.slide.active { transform: scale(1.04); }
+        
+        .slider-dots { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 2; background: rgba(255, 255, 255, 0.8); padding: 8px 12px; border-radius: 20px; backdrop-filter: blur(4px); }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: all 0.3s; }
+        .dot.active { background: var(--color-primary); transform: scale(1.2); }
+
+        /* Features Section */
+        .features-container { padding: 4rem 0; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.2rem; color: var(--color-primary); font-weight: 700; margin-bottom: 0.5rem; }
+        .section-title p { color: #64748b; }
+        .category-block { margin-bottom: 4rem; }
+        .category-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+        .category-header h3 { font-size: 1.5rem; color: #334155; margin: 0; }
+        .category-icon { background: #e0e7ff; color: var(--color-primary); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        
+        .glass-effect { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.8); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .feature-card { border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; height: 100%; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); background: #ffffff; border-color: var(--color-primary); }
+        .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+        .card-header i { color: var(--color-primary); font-size: 1.1rem; }
+        .card-header h4 { font-weight: 600; color: #1f2937; font-size: 1.1rem; margin: 0; }
+        .feature-card p { color: #64748b; font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-text { text-align: center; order: 1; }
+            .mega-image-frame { order: 2; width: 100%; }
+            .frame-image-container { height: auto; aspect-ratio: 16/10; }
+            .button-group { justify-content: center; }
+            .hero-disclaimer-box { margin: 0 auto; text-align: left; max-width: 100%; }
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .hero-section { min-height: auto; padding-top: 1rem; }
+        }
+    </style>
 </head>
-<body>
-    <p>Redirecionando para a página inicial...</p>
+<body class="light-mode">
+
+    <!-- LOADER GLOBAL -->
+    <div id="loader-global">
+        <div class="loader-svg-bg">
+            <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="none">
+                <path class="svg-curve svg-curve-1" d="M-100,250 C300,150 600,400 1500,300" fill="none" stroke="#1A3E74" stroke-width="2" />
+                <path class="svg-curve svg-curve-2" d="M-100,500 C400,400 800,650 1600,450" fill="none" stroke="#00bcd4" stroke-width="2" />
+            </svg>
+        </div>
+        <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/author-info.webp" alt="Simulados de Enfermagem" class="loader-image">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+        <p style="margin-top:25px; color:#1A3E74; font-weight:600; font-size:0.95rem; letter-spacing: 0.3px; position: relative; z-index: 2;">Carregando Plataforma...</p>
+    </div>
+
+    <!-- BACKGROUND CANVAS -->
+    <div id="canvas-container"></div>
+
+    <!-- SKIP LINK -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- PLACEHOLDERS MODULARES -->
+    <div id="nav-container"></div>
+    <div id="breadcrumb-container"></div>
+    <header id="header-v2-container" role="banner"></header>
+    
+    <aside id="accessibility-v2-container" role="complementary"></aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            
+            <!-- HERO SECTION -->
+            <section class="hero-section">
+                <div class="hero-grid">
+                    
+                    <!-- Coluna 1 -->
+                    <div class="hero-text">
+                        <h1>
+                            Profissional de enfermagem<br>
+                            sua Aprovação Começa<br>
+                            <span class="highlight">agora Mesmo</span>
+                        </h1>
+                        
+                        <p class="subtitle">
+                            Potencialize seus estudos com a plataforma definitiva para concursos. Sem burocracia, acesse simulados, calculadoras e conteúdos exclusivos com um clique.
+                        </p>
+
+                        <div class="button-group">
+                            <a href="assets\app\html\dashboard.html" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Acessar plataforma
+                            </a>
+                        </div>
+
+                        <!-- DISCLAIMER -->
+                        <div class="hero-disclaimer-box">
+                            <strong><i class="fas fa-shield-alt"></i> Política de Dados e Armazenamento:</strong>
+                            Ao acessar, você concorda com o uso de cookies e LocalStorage para salvar seu progresso.
+                            <span class="warning-text">
+                                <i class="fas fa-exclamation-triangle"></i> Aviso Importante: Limpar o cache ou alterar cookies resultará na perda dos dados salvos.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Coluna 2: Slider Visual -->
+                    <div class="mega-image-frame glowing-frame" id="heroSliderFrame">
+                        <div class="mega-image-container">
+                            <div class="frame-image-container">
+                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-welcome.webp" class="slide active" alt="Bem vindo">
+                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-nanda-tools.webp" class="slide" alt="Ferramentas Nanda">
+                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-simulator-tools.webp" class="slide" alt="Simuladores">
+                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-library-tools.webp" class="slide" alt="Biblioteca">
+                                <img src="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/images/hero-section/hero-section-notification-tools.webp" class="slide" alt="Notificações">
+                            </div>
+                        </div>
+                        <div class="slider-dots" id="sliderDots">
+                            <span class="dot active" onclick="changeSlide(0)"></span>
+                            <span class="dot" onclick="changeSlide(1)"></span>
+                            <span class="dot" onclick="changeSlide(2)"></span>
+                            <span class="dot" onclick="changeSlide(3)"></span>
+                            <span class="dot" onclick="changeSlide(4)"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- RECURSOS -->
+            <section id="features" class="features-container">
+                <div class="section-title">
+                    <h2>Recursos Disponíveis</h2>
+                    <p>Tudo o que você precisa para garantir sua vaga</p>
+                </div>
+
+                <!-- Grupo 1 -->
+                <div class="category-block">
+                    <div class="category-header">
+                        <div class="category-icon"><i class="fas fa-compass"></i></div>
+                        <h3>Navegação Principal</h3>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card glass-effect">
+                            <div class="card-header"><i class="fas fa-chart-line"></i><h4>Dashboard</h4></div>
+                            <p>Visão geral com estatísticas, atalhos rápidos e resumo de progresso.</p>
+                        </div>
+                        <div class="feature-card glass-effect">
+                            <div class="card-header"><i class="fas fa-briefcase"></i><h4>Concursos</h4></div>
+                            <p>Lista de editais abertos e datas de provas para concursos de enfermagem.</p>
+                        </div>
+                        <div class="feature-card glass-effect">
+                            <div class="card-header"><i class="fas fa-book"></i><h4>Biblioteca</h4></div>
+                            <p>Acesso a materiais de estudo, mapas mentais e recursos exclusivos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grupo 2 -->
+                <div class="category-block">
+                    <div class="category-header">
+                        <div class="category-icon"><i class="fas fa-brain"></i></div>
+                        <h3>Ferramentas de Estudo</h3>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card glass-effect">
+                            <div class="card-header"><i class="fas fa-clock"></i><h4>Simulados</h4></div>
+                            <p>6 tipos de simulados: Real, Personalizado, Provas Completas, Memória Rápida, Desafio Inverso e Quiz.</p>
+                        </div>
+                        <div class="feature-card glass-effect">
+                            <div class="card-header"><i class="fas fa-layer-group"></i><h4>Pomodoro</h4></div>
+                            <p>Timer integrado com 6 modos: Clássico, Estendido, Rápido, Meditação, Respiração e Pausa Ativa.</p>
+                        </div>
+                        <div class="feature-card glass-effect">
+                            <div class="card-header"><i class="fas fa-project-diagram"></i><h4>Desempenho</h4></div>
+                            <p>Análise completa com gráficos, estatísticas e evolução do seu aprendizado.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer id="footer-v2-container" role="contentinfo"></footer>
+
+    <!-- SCRIPTS GERAIS + CARREGADOR DE MÓDULOS -->
     <script>
-        window.location.href = 'assets/app/html/index.html';
+        (function() {
+            'use strict';
+
+            // --- 1. CONFIGURAÇÃO DE MÓDULOS EXTERNOS ---
+            const BASE_URL = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/";
+
+            // Configuração do EventBus
+            window.EventBus = window.EventBus || {
+                events: {}, fired: {},
+                on(e, cb) { 
+                    const event = e.toLowerCase();
+                    if(!this.events[event]) this.events[event] = [];
+                    this.events[event].push(cb);
+                    if(this.fired[event]) cb(this.fired[event]);
+                },
+                emit(e, data) {
+                    const event = e.toLowerCase();
+                    this.fired[event] = data || true;
+                    if(this.events[event]) this.events[event].forEach(cb => cb(data));
+                }
+            };
+
+            // Lista de Componentes e Scripts a carregar
+            const CONFIG = {
+                components: [
+                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
+                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
+                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
+                ],
+                scripts: [
+                    'assets/js/event-bus-v4.js',
+                    'assets/js/accessibility-rules.js',
+                    'https://vlibras.gov.br/app/vlibras-plugin.js',
+                    'assets/js/accessibility-v4.js',
+                    'assets/js/header-v4.js',
+                    'assets/js/footer-v4.js'
+                ]
+            };
+
+            // Função para carregar HTML dos componentes
+            async function loadComponent(id, path) {
+                try {
+                    const url = path.startsWith('http') ? path : BASE_URL + path;
+                    const response = await fetch(url + '?t=' + Date.now());
+                    if (!response.ok) throw new Error(response.status);
+                    const html = await response.text();
+                    const container = document.getElementById(id);
+                    if (container) {
+                        container.innerHTML = html;
+                        window.EventBus.emit(`module:${id}:ready`);
+                    }
+                    return true;
+                } catch (e) {
+                    console.error(`[App] Erro ao carregar ${id}:`, e.message);
+                    return false;
+                }
+            }
+
+            // Função para carregar Scripts JS
+            async function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src.startsWith('http') ? src : BASE_URL + src;
+                    script.onload = () => resolve(true);
+                    script.onerror = () => reject(new Error(`Erro ao carregar ${src}`));
+                    document.body.appendChild(script);
+                });
+            }
+
+            // Função principal de inicialização
+            async function initApp() {
+                try {
+                    // Carrega componentes
+                    await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
+                    
+                    // Carrega scripts
+                    for (const script of CONFIG.scripts) {
+                        try {
+                            await loadScript(script);
+                        } catch (e) {
+                            console.warn(`[App] Script opcional não carregado: ${script}`);
+                        }
+                    }
+
+                    // Oculta loader
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+
+                    console.log('[App] Plataforma carregada com sucesso!');
+                } catch (e) {
+                    console.error('[App] Erro na inicialização:', e);
+                }
+            }
+
+            // Slider de imagens
+            let currentSlide = 0;
+            window.changeSlide = function(index) {
+                const slides = document.querySelectorAll('.frame-image-container img.slide');
+                const dots = document.querySelectorAll('.slider-dots .dot');
+                
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            };
+
+            // Auto-rotate slides
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % 5;
+                window.changeSlide(currentSlide);
+            }, 5000);
+
+            // Inicializa quando o DOM está pronto
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
+            } else {
+                initApp();
+            }
+        })();
     </script>
+    <script src="navigation.js"></script>
 </body>
 </html>
