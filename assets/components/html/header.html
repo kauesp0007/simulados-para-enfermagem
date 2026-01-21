@@ -1,160 +1,455 @@
-<!-- Header Component - Simulados de Enfermagem -->
-<header class="main-header" role="banner">
-    <div class="header-top">
-        <div class="header-container">
-            <!-- Logo -->
-            <a href="../../assets/app/html/index.html" class="logo-link" aria-label="Simulados de Enfermagem - Página Inicial">
-                <img src="https://simulados-para-enfermagem.com.br/assets/components/images/logotipo-simulados-para-enfermagem.webp" 
-                     alt="Logo Simulados de Enfermagem" 
-                     class="logo-img"
-                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 60%22%3E%3Ctext x=%2210%22 y=%2240%22 font-size=%2224%22 fill=%22%231A3E74%22%3ESimulados%3C/text%3E%3C/svg%3E'">
-            </a>
+<!-- COMPONENTE CABEÇALHO - Versão Completa com Mega-Menus -->
+<!-- CSS externo é carregado pela página principal -->
 
-            <!-- Menu Toggle Mobile -->
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+<!-- FAIXA 1 - Top Bar com Controles de Acessibilidade -->
+<div class="top-bar" role="banner">
+    <div class="top-bar-container">
+        <!-- Ferramentas de Acessibilidade -->
+        <div class="top-bar-tools" role="toolbar" aria-label="Ferramentas de acessibilidade">
+            <!-- Aumentar Fonte -->
+            <button class="tool-btn" id="font-increase" aria-label="Aumentar tamanho da fonte" title="Aumentar fonte">
+                <i class="fas fa-search-plus"></i>
+                <span class="tool-text">A+</span>
             </button>
+            
+            <!-- Reduzir Fonte -->
+            <button class="tool-btn" id="font-decrease" aria-label="Reduzir tamanho da fonte" title="Reduzir fonte">
+                <i class="fas fa-search-minus"></i>
+                <span class="tool-text">A-</span>
+            </button>
+            
+            <!-- Toggle Tema Escuro/Claro -->
+            <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema" title="Tema escuro/claro" role="switch" aria-checked="false"></button>
+            
+            <!-- Skip Links -->
+            <div class="skip-links">
+                <a href="#main-header" class="skip-link">Pular ao cabeçalho</a>
+                <a href="#main-content" class="skip-link">Pular ao conteúdo</a>
+                <a href="#main-footer" class="skip-link">Pular ao rodapé</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <!-- Navigation -->
-            <nav class="main-nav" id="main-nav" role="navigation" aria-label="Menu principal">
-                <ul class="nav-menu">
-                    <!-- Dashboard -->
-                    <li class="nav-item">
-                        <a href="../../assets/app/html/dashboard.html" class="nav-link">
-                            <i class="fas fa-chart-line"></i>
-                            Dashboard
-                        </a>
-                    </li>
+<!-- FAIXA 2 - Header Principal com Mega-Menus -->
+<header class="main-header" id="main-header" role="banner">
+    <div class="header-container">
+        <!-- Logo -->
+        <a href="index.html" class="header-logo" aria-label="Ir para a página inicial">
+            <img src="https://simulados-para-enfermagem.com.br/assets/components/images/logotipo-simulados-para-enfermagem.webp" 
+                 alt="Simulados para Enfermagem" 
+                 class="logo-image">
+        </a>
 
-                    <!-- Simulados Dropdown -->
-                    <li class="nav-item has-submenu">
-                        <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-book"></i>
-                            Simulados
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="mega-menu">
-                            <div class="mega-menu-content">
-                                <!-- Coluna 1: Modos de Estudo -->
+        <!-- Menu Principal com Mega-Menus -->
+        <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+            <ul class="nav-list" role="menubar">
+                
+                <!-- Minha Área com Mega Menu -->
+                <li class="nav-item" role="none">
+                    <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-minha-area">
+                        Minha Área
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="mega-menu" role="menu" aria-label="Submenu Minha Área">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-grid">
+                                <!-- Coluna 1: Dashboard -->
                                 <div class="mega-menu-column">
-                                    <h3 class="mega-menu-title">
-                                        <i class="fas fa-graduation-cap"></i>
-                                        Modos de Estudo
-                                    </h3>
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                        Dashboard
+                                    </h4>
                                     <ul class="mega-menu-list">
-                                        <li><a href="../../assets/app/html/estudopersonalizado.html"><i class="fas fa-pencil-alt"></i> Estudo Personalizado</a></li>
-                                        <li><a href="../../assets/app/html/provascompletas.html"><i class="fas fa-file-alt"></i> Provas Completas</a></li>
-                                        <li><a href="../../assets/app/html/simuladoreal.html"><i class="fas fa-stopwatch"></i> Simulado Real</a></li>
-                                        <li><a href="../../assets/app/html/quiz.html"><i class="fas fa-question-circle"></i> Quiz Rápido</a></li>
+                                        <li><a href="dashboard.html"><i class="fas fa-chart-line"></i> Visão Geral</a></li>
+                                        <li><a href="estatisticas.html"><i class="fas fa-chart-bar"></i> Estatísticas</a></li>
+                                        <li><a href="progresso.html"><i class="fas fa-trending-up"></i> Meu Progresso</a></li>
                                     </ul>
                                 </div>
-
-                                <!-- Coluna 2: Desafios -->
-                                <div class="mega-menu-column">
-                                    <h3 class="mega-menu-title">
-                                        <i class="fas fa-gamepad"></i>
-                                        Desafios
-                                    </h3>
-                                    <ul class="mega-menu-list">
-                                        <li><a href="../../assets/app/html/memoriarapida.html"><i class="fas fa-brain"></i> Memória Rápida</a></li>
-                                        <li><a href="../../assets/app/html/desafioinverso.html"><i class="fas fa-exchange-alt"></i> Desafio Inverso</a></li>
-                                        <li><a href="../../assets/app/html/quizcuriosidade.html"><i class="fas fa-lightbulb"></i> Quiz Curiosidades</a></li>
-                                        <li><a href="../../assets/app/html/modoantiestresse.html"><i class="fas fa-spa"></i> Modo Anti-Stress</a></li>
-                                    </ul>
+                                
+                                <!-- Coluna 2: Minha Área do Usuário (4 itens) -->
+                                <div class="mega-menu-column" style="grid-column: span 2;">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-user"></i>
+                                        Minha Área
+                                    </h4>
+                                    <div class="user-area-grid">
+                                        <a href="https://simulados-para-enfermagem.com.br/assets/app/html/meu-desempenho.html" class="user-area-item">
+                                            <i class="fas fa-chart-pie"></i>
+                                            <span>Meu Desempenho</span>
+                                        </a>
+                                        <a href="https://simulados-para-enfermagem.com.br/assets/app/html/meusconcursos.html" class="user-area-item">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <span>Meus Concursos</span>
+                                        </a>
+                                        <a href="https://simulados-para-enfermagem.com.br/assets/app/html/minhasquestoes.html" class="user-area-item">
+                                            <i class="fas fa-question-circle"></i>
+                                            <span>Minhas Questões</span>
+                                        </a>
+                                        <a href="https://simulados-para-enfermagem.com.br/assets/app/html/settings.html" class="user-area-item">
+                                            <i class="fas fa-cog"></i>
+                                            <span>Preferências</span>
+                                        </a>
+                                    </div>
                                 </div>
-
-                                <!-- Coluna 3: Ferramentas -->
+                                
+                                <!-- Coluna 3: Destaque -->
                                 <div class="mega-menu-column">
-                                    <h3 class="mega-menu-title">
-                                        <i class="fas fa-tools"></i>
-                                        Ferramentas
-                                    </h3>
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-star"></i>
+                                        Destaques
+                                    </h4>
                                     <ul class="mega-menu-list">
-                                        <li><a href="../../assets/app/html/timerpomodoro.html"><i class="fas fa-hourglass-half"></i> Timer Pomodoro</a></li>
-                                        <li><a href="../../assets/app/html/estudooffline.html"><i class="fas fa-wifi-off"></i> Estudo Offline</a></li>
-                                        <li><a href="../../assets/app/html/minhasquestoes.html"><i class="fas fa-bookmark"></i> Minhas Questões</a></li>
-                                        <li><a href="../../assets/app/html/biblioteca.html"><i class="fas fa-library"></i> Biblioteca</a></li>
-                                    </ul>
-                                </div>
-
-                                <!-- Coluna 4: Concursos -->
-                                <div class="mega-menu-column">
-                                    <h3 class="mega-menu-title">
-                                        <i class="fas fa-briefcase"></i>
-                                        Concursos
-                                    </h3>
-                                    <ul class="mega-menu-list">
-                                        <li><a href="../../assets/app/html/meusconcursos.html"><i class="fas fa-star"></i> Meus Concursos</a></li>
-                                        <li><a href="../../assets/app/html/concursospublicos.html"><i class="fas fa-search"></i> Concursos Públicos</a></li>
-                                        <li><a href="../../assets/app/html/prova-template.html"><i class="fas fa-clipboard-list"></i> Provas</a></li>
+                                        <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
+                                        <li><a href="conquistas.html"><i class="fas fa-medal"></i> Conquistas</a></li>
+                                        <li><a href="certificados.html"><i class="fas fa-certificate"></i> Certificados</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                    </li>
-
-                    <!-- Progresso -->
-                    <li class="nav-item">
-                        <a href="../../assets/app/html/minhasquestoes.html" class="nav-link">
-                            <i class="fas fa-chart-pie"></i>
-                            Progresso
-                        </a>
-                    </li>
-
-                    <!-- Configurações -->
-                    <li class="nav-item">
-                        <a href="../../assets/app/html/settings.html" class="nav-link">
-                            <i class="fas fa-cog"></i>
-                            Configurações
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-            <!-- Header Actions -->
-            <div class="header-actions">
-                <!-- Notificações -->
-                <button class="action-btn notifications-btn" aria-label="Notificações" title="Notificações">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">3</span>
-                </button>
-
-                <!-- Tema Toggle -->
-                <button class="action-btn theme-toggle" id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
-                    <i class="fas fa-moon"></i>
-                </button>
-
-                <!-- Usuário Menu -->
-                <div class="user-menu">
-                    <button class="user-btn" id="user-menu-toggle" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user-circle"></i>
-                        <span class="user-name">Usuário</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="user-dropdown" id="user-dropdown">
-                        <a href="../../assets/app/html/settings.html" class="dropdown-item">
-                            <i class="fas fa-user"></i>
-                            Perfil
-                        </a>
-                        <a href="../../assets/app/html/settings.html" class="dropdown-item">
-                            <i class="fas fa-cog"></i>
-                            Configurações
-                        </a>
-                        <hr class="dropdown-divider">
-                        <button class="dropdown-item logout-btn">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Sair
-                        </button>
                     </div>
-                </div>
-            </div>
+                </li>
+                
+                <!-- Sobre Nós com Mega Menu -->
+                <li class="nav-item" role="none">
+                    <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-sobre">
+                        Sobre Nós
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="mega-menu" role="menu" aria-label="Submenu Sobre Nós">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-grid">
+                                <!-- Coluna 1: Quem Somos -->
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-users"></i>
+                                        Quem Somos
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="sobre-nos.html"><i class="fas fa-info-circle"></i> Nossa História</a></li>
+                                        <li><a href="missao.html"><i class="fas fa-bullseye"></i> Missão</a></li>
+                                        <li><a href="visao.html"><i class="fas fa-eye"></i> Visão</a></li>
+                                        <li><a href="valores.html"><i class="fas fa-heart"></i> Valores</a></li>
+                                        <li><a href="equipe.html"><i class="fas fa-user-tie"></i> Equipe</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Coluna 2: Informações -->
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-info-circle"></i>
+                                        Informações
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="sobre-projeto.html"><i class="fas fa-project-diagram"></i> Sobre o Projeto</a></li>
+                                        <li><a href="metodologia.html"><i class="fas fa-book"></i> Metodologia</a></li>
+                                        <li><a href="parceiros.html"><i class="fas fa-handshake"></i> Parceiros</a></li>
+                                        <li><a href="imprensa.html"><i class="fas fa-newspaper"></i> Imprensa</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Coluna 3: Legal -->
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-gavel"></i>
+                                        Legal
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="termos-uso.html"><i class="fas fa-file-contract"></i> Termos de Uso</a></li>
+                                        <li><a href="privacidade.html"><i class="fas fa-shield-alt"></i> Política de Privacidade</a></li>
+                                        <li><a href="cookies.html"><i class="fas fa-cookie-bite"></i> Política de Cookies</a></li>
+                                        <li><a href="licencas.html"><i class="fas fa-copyright"></i> Licenças</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Coluna 4: Contato -->
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-envelope"></i>
+                                        Contato
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="contato.html"><i class="fas fa-envelope"></i> Fale Conosco</a></li>
+                                        <li><a href="faq.html"><i class="fas fa-question"></i> Perguntas Frequentes</a></li>
+                                        <li><a href="suporte.html"><i class="fas fa-headset"></i> Suporte</a></li>
+                                        <li><a href="trabalhe-conosco.html"><i class="fas fa-briefcase"></i> Trabalhe Conosco</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- Simulados com Mega Menu -->
+                <li class="nav-item" role="none">
+                    <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-simulados">
+                        Simulados
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="mega-menu" role="menu" aria-label="Submenu Simulados">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-grid">
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-edit"></i>
+                                        Estudo Personalizado
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/estudopersonalizado.html"><i class="fas fa-sliders-h"></i> Criar Simulado</a></li>
+                                        <li><a href="por-assunto.html"><i class="fas fa-book"></i> Por Assunto</a></li>
+                                        <li><a href="por-banca.html"><i class="fas fa-gavel"></i> Por Banca</a></li>
+                                        <li><a href="por-tema.html"><i class="fas fa-tags"></i> Por Tema</a></li>
+                                        <li><a href="favoritos.html"><i class="fas fa-heart"></i> Meus Favoritos</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-list-alt"></i>
+                                        Provas Completas
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/provascompletas.html"><i class="fas fa-clipboard-list"></i> Todas as Provas</a></li>
+                                        <li><a href="provas-ano.html"><i class="fas fa-calendar"></i> Por Ano</a></li>
+                                        <li><a href="provas-estado.html"><i class="fas fa-map"></i> Por Estado</a></li>
+                                        <li><a href="provas-recentes.html"><i class="fas fa-clock"></i> Mais Recentes</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-stopwatch"></i>
+                                        Simulado Real
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/simuladoreal.html"><i class="fas fa-play"></i> Iniciar Simulado</a></li>
+                                        <li><a href="historico-simulados.html"><i class="fas fa-history"></i> Histórico</a></li>
+                                        <li><a href="gabaritos.html"><i class="fas fa-check-circle"></i> Gabaritos</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-bolt"></i>
+                                        Rápidos
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="quiz-rapido.html"><i class="fas fa-bolt"></i> Quiz Rápido</a></li>
+                                        <li><a href="desafio-diario.html"><i class="fas fa-calendar-check"></i> Desafio Diário</a></li>
+                                        <li><a href="revisão.html"><i class="fas fa-redo"></i> Revisão</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- Concursos Públicos -->
+                <li class="nav-item" role="none">
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/concursospublicos.html" class="nav-link" role="menuitem">
+                        Concursos Públicos
+                    </a>
+                </li>
+                
+                <!-- Recursos com Mega Menu -->
+                <li class="nav-item" role="none">
+                    <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-recursos">
+                        Recursos
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="mega-menu" role="menu" aria-label="Submenu Recursos">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-grid">
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-book-open"></i>
+                                        Biblioteca
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/biblioteca.html"><i class="fas fa-book"></i> Todos os Recursos</a></li>
+                                        <li><a href="mapas-mentais.html"><i class="fas fa-project-diagram"></i> Mapas Mentais</a></li>
+                                        <li><a href="resumos.html"><i class="fas fa-file-alt"></i> Resumos</a></li>
+                                        <li><a href="apostilas.html"><i class="fas fa-file-pdf"></i> Apostilas</a></li>
+                                        <li><a href="videos.html"><i class="fas fa-video"></i> Vídeos</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-brain"></i>
+                                        Memorização
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/memoriarapida.html"><i class="fas fa-bolt"></i> Memória Rápida</a></li>
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/desafioinverso.html"><i class="fas fa-random"></i> Desafio Inverso</a></li>
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/quizcuriosidade.html"><i class="fas fa-question-circle"></i> Quiz Curiosidade</a></li>
+                                        <li><a href="flashcards.html"><i class="fas fa-layer-group"></i> Flashcards</a></li>
+                                        <li><a href="mnemonicos.html"><i class="fas fa-lightbulb"></i> Mnemônicos</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-clock"></i>
+                                        Ferramentas
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/timerpomodoro.html"><i class="fas fa-hourglass-start"></i> Timer Pomodoro</a></li>
+                                        <li><a href="cronometro.html"><i class="fas fa-stopwatch"></i> Cronômetro</a></li>
+                                        <li><a href="planejador.html"><i class="fas fa-calendar-alt"></i> Planejador</a></li>
+                                        <li><a href="meta-diaria.html"><i class="fas fa-bullseye"></i> Meta Diária</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title">
+                                        <i class="fas fa-spa"></i>
+                                        Bem-Estar
+                                    </h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/modoantiestresse.html"><i class="fas fa-heart"></i> Modo Anti-Estresse</a></li>
+                                        <li><a href="meditacao.html"><i class="fas fa-spa"></i> Meditação</a></li>
+                                        <li><a href="respiracao.html"><i class="fas fa-lungs"></i> Respiração</a></li>
+                                        <li><a href="https://simulados-para-enfermagem.com.br/assets/app/html/estudooffline.html"><i class="fas fa-download"></i> Estudo Offline</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- Contato -->
+                <li class="nav-item" role="none">
+                    <a href="contato.html" class="nav-link" role="menuitem">
+                        Contato
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Busca -->
+        <div class="search-box" role="search">
+            <i class="fas fa-search"></i>
+            <input type="search" placeholder="Buscar..." aria-label="Buscar no site">
+            <button type="submit" aria-label="Pesquisar">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- Ações do Header -->
+        <div class="header-actions">
+            <a href="https://simulados-para-enfermagem.com.br/assets/app/html/admin-panel.html" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Entrar</span>
+            </a>
+            
+            <!-- Botão Menu Mobile -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu mobile" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </div>
-
-    <!-- Breadcrumb -->
-    <div class="header-breadcrumb" id="breadcrumb-container" role="navigation" aria-label="Breadcrumb">
-        <!-- Preenchido dinamicamente por JavaScript -->
-    </div>
 </header>
+
+<!-- Mobile Drawer -->
+<div class="mobile-drawer-overlay" id="mobile-overlay"></div>
+<aside class="mobile-drawer" id="mobile-drawer" aria-label="Menu mobile">
+    <div class="mobile-drawer-header">
+        <img src="https://simulados-para-enfermagem.com.br/assets/components/images/logotipo-simulados-para-enfermagem.webp" alt="Logo">
+        <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Fechar menu">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <nav class="mobile-nav">
+        <ul class="mobile-nav-list">
+            <!-- Minha Área -->
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" data-submenu="submenu-minha-area">
+                    <span><i class="fas fa-user"></i> Minha Área</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="mobile-submenu" id="submenu-minha-area">
+                    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/meu-desempenho.html"><i class="fas fa-chart-pie"></i> Meu Desempenho</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/meusconcursos.html"><i class="fas fa-graduation-cap"></i> Meus Concursos</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/minhasquestoes.html"><i class="fas fa-question-circle"></i> Minhas Questões</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/settings.html"><i class="fas fa-cog"></i> Preferências</a>
+                </div>
+            </li>
+            
+            <!-- Sobre Nós -->
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" data-submenu="submenu-sobre">
+                    <span><i class="fas fa-users"></i> Sobre Nós</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="mobile-submenu" id="submenu-sobre">
+                    <a href="sobre-nos.html"><i class="fas fa-info-circle"></i> Nossa História</a>
+                    <a href="missao.html"><i class="fas fa-bullseye"></i> Missão</a>
+                    <a href="visao.html"><i class="fas fa-eye"></i> Visão</a>
+                    <a href="valores.html"><i class="fas fa-heart"></i> Valores</a>
+                    <a href="equipe.html"><i class="fas fa-user-tie"></i> Equipe</a>
+                    <a href="termos-uso.html"><i class="fas fa-file-contract"></i> Termos de Uso</a>
+                    <a href="privacidade.html"><i class="fas fa-shield-alt"></i> Privacidade</a>
+                    <a href="contato.html"><i class="fas fa-envelope"></i> Fale Conosco</a>
+                </div>
+            </li>
+            
+            <!-- Simulados -->
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" data-submenu="submenu-simulados">
+                    <span><i class="fas fa-edit"></i> Simulados</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="mobile-submenu" id="submenu-simulados">
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/estudopersonalizado.html"><i class="fas fa-sliders-h"></i> Estudo Personalizado</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/provascompletas.html"><i class="fas fa-list-alt"></i> Provas Completas</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/simuladoreal.html"><i class="fas fa-stopwatch"></i> Simulado Real</a>
+                    <a href="quiz-rapido.html"><i class="fas fa-bolt"></i> Quiz Rápido</a>
+                </div>
+            </li>
+            
+            <!-- Concursos -->
+            <li class="mobile-nav-item">
+                <a href="https://simulados-para-enfermagem.com.br/assets/app/html/concursospublicos.html" class="mobile-nav-link">
+                    <span><i class="fas fa-briefcase"></i> Concursos Públicos</span>
+                </a>
+            </li>
+            
+            <!-- Recursos -->
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" data-submenu="submenu-recursos">
+                    <span><i class="fas fa-book"></i> Recursos</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="mobile-submenu" id="submenu-recursos">
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/biblioteca.html"><i class="fas fa-book-open"></i> Biblioteca</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/memoriarapida.html"><i class="fas fa-bolt"></i> Memória Rápida</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/desafioinverso.html"><i class="fas fa-random"></i> Desafio Inverso</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/quizcuriosidade.html"><i class="fas fa-question-circle"></i> Quiz Curiosidade</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/timerpomodoro.html"><i class="fas fa-clock"></i> Timer Pomodoro</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/modoantiestresse.html"><i class="fas fa-spa"></i> Modo Anti-Estresse</a>
+                    <a href="https://simulados-para-enfermagem.com.br/assets/app/html/estudooffline.html"><i class="fas fa-download"></i> Estudo Offline</a>
+                </div>
+            </li>
+            
+            <!-- Contato -->
+            <li class="mobile-nav-item">
+                <a href="contato.html" class="mobile-nav-link">
+                    <span><i class="fas fa-envelope"></i> Contato</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="mobile-drawer-footer">
+        <a href="https://simulados-para-enfermagem.com.br/assets/app/html/admin-panel.html" class="login-btn" style="width: 100%; justify-content: center;">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Entrar ou Criar Conta</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Scripts do Header -->
+<!-- JavaScript externo é carregado pela página principal -->
