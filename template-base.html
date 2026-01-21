@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="robots" content="index, follow">
+    
+    <title>Simulados de Enfermagem | Página</title>
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS Externos do Projeto Original -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+
+    <style>
+        :root {
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --bg-main: #f4f6f9;
+            --text-main: #1f2937;
+            --text-secondary: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-main); 
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Nunito Sans', sans-serif; }
+
+        /* Skip Link */
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-primary); color: white; padding: 8px; z-index: 100000; transition: top 0.3s; }
+        .skip-link:focus { top: 0; }
+
+        /* Loader */
+        #loader-global { 
+            position: fixed; 
+            inset: 0; 
+            background: #ffffff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 200000; 
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+        #loader-global.hidden { opacity: 0; pointer-events: none; }
+        
+        .loader-dots { display: flex; gap: 8px; }
+        .loader-dot { width: 10px; height: 10px; background: var(--color-primary); border-radius: 50%; opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+
+        /* Page Wrapper */
+        .page-wrapper { 
+            width: 100%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 2rem 1.5rem; 
+            position: relative; 
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+        }
+
+        /* Main Content */
+        main { width: 100%; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .page-wrapper { padding: 1rem; }
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+    <!-- LOADER GLOBAL -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- SKIP LINK -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- PLACEHOLDERS MODULARES -->
+    <header id="header-v2-container" role="banner"></header>
+    
+    <aside id="accessibility-v2-container" role="complementary"></aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            <!-- Conteúdo específico da página vai aqui -->
+        </main>
+    </div>
+
+    <footer id="footer-v2-container" role="contentinfo"></footer>
+
+    <!-- SCRIPTS GERAIS + CARREGADOR DE MÓDULOS -->
+    <script>
+        (function() {
+            'use strict';
+
+            const BASE_URL = "https://auditeduca.github.io/Calculadoras-de-Enfermagem/";
+
+            // EventBus
+            window.EventBus = window.EventBus || {
+                events: {}, fired: {},
+                on(e, cb) { 
+                    const event = e.toLowerCase();
+                    if(!this.events[event]) this.events[event] = [];
+                    this.events[event].push(cb);
+                    if(this.fired[event]) cb(this.fired[event]);
+                },
+                emit(e, data) {
+                    const event = e.toLowerCase();
+                    this.fired[event] = data || true;
+                    if(this.events[event]) this.events[event].forEach(cb => cb(data));
+                }
+            };
+
+            const CONFIG = {
+                components: [
+                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
+                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
+                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
+                ],
+                scripts: [
+                    'assets/js/event-bus-v4.js',
+                    'assets/js/accessibility-rules.js',
+                    'https://vlibras.gov.br/app/vlibras-plugin.js',
+                    'assets/js/accessibility-v4.js',
+                    'assets/js/header-v4.js',
+                    'assets/js/footer-v4.js'
+                ]
+            };
+
+            async function loadComponent(id, path) {
+                try {
+                    const url = path.startsWith('http') ? path : BASE_URL + path;
+                    const response = await fetch(url + '?t=' + Date.now());
+                    if (!response.ok) throw new Error(response.status);
+                    const html = await response.text();
+                    const container = document.getElementById(id);
+                    if (container) {
+                        container.innerHTML = html;
+                        window.EventBus.emit(`module:${id}:ready`);
+                    }
+                    return true;
+                } catch (e) {
+                    console.error(`[App] Erro ao carregar ${id}:`, e.message);
+                    return false;
+                }
+            }
+
+            async function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src.startsWith('http') ? src : BASE_URL + src;
+                    script.onload = () => resolve(true);
+                    script.onerror = () => reject(new Error(`Erro ao carregar ${src}`));
+                    document.body.appendChild(script);
+                });
+            }
+
+            async function initApp() {
+                try {
+                    await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
+                    
+                    for (const script of CONFIG.scripts) {
+                        try {
+                            await loadScript(script);
+                        } catch (e) {
+                            console.warn(`[App] Script opcional não carregado: ${script}`);
+                        }
+                    }
+
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+
+                    console.log('[App] Página carregada com sucesso!');
+                } catch (e) {
+                    console.error('[App] Erro na inicialização:', e);
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
+            } else {
+                initApp();
+            }
+        })();
+    </script>
+</body>
+</html>

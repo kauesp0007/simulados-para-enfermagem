@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | Simulados de Enfermagem</title>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --color-success: #4caf50;
+            --color-warning: #ff9800;
+            --color-error: #f44336;
+            --color-info: #2196f3;
+            --bg-main: #f4f6f9;
+            --text-main: #1f2937;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #2d5a9a 100%);
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .login-box p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(26, 62, 116, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #0f2847;
+        }
+
+        .login-error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Admin Panel */
+        .admin-container {
+            display: none;
+            min-height: 100vh;
+            background-color: var(--bg-main);
+        }
+
+        .admin-header {
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-header h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .admin-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .logout-btn {
+            padding: 10px 16px;
+            background: var(--color-error);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 16px 0;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-btn .badge {
+            display: inline-block;
+            background: var(--color-error);
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+            font-weight: 700;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--color-info);
+        }
+
+        .stat-card h3 {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .stat-card .number {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-card p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .stat-card.success { border-left-color: var(--color-success); }
+        .stat-card.warning { border-left-color: var(--color-warning); }
+        .stat-card.error { border-left-color: var(--color-error); }
+        .stat-card.accent { border-left-color: var(--color-accent); }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-main);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f2847;
+        }
+
+        .btn-success {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #388e3c;
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* List */
+        .items-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .list-item {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item-info {
+            flex: 1;
+        }
+
+        .list-item-title {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .list-item-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .list-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-btn.edit {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+
+        .action-btn.edit:hover {
+            background: #2196f3;
+            color: white;
+        }
+
+        .action-btn.delete {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+
+        .action-btn.delete:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .tabs-container {
+                padding: 0 10px;
+                gap: 10px;
+            }
+
+            .tab-btn {
+                font-size: 12px;
+                padding: 12px 0;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .list-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .list-item-actions {
+                width: 100%;
+                margin-top: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link" style="position: absolute; top: -40px; left: 0; background: var(--color-primary); color: white; padding: 8px; z-index: 100000; transition: top 0.3s;">Pular para conteúdo principal</a>
+    
+    <!-- Accessibility Container -->
+    <div id="accessibility-container"></div>
+
+    <!-- Header Container -->
+    <header id="header-container"></header>
+
+    <!-- Login Page -->
+    <div class="login-container" id="login-page">
+        <div class="login-box">
+            <h1>Painel Administrativo</h1>
+            <p>Gerenciamento de Simulados de Enfermagem</p>
+            
+            <div class="login-error" id="login-error"></div>
+            
+            <form onsubmit="AdminAuth.login(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="admin@simulados.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+            </form>
+            
+            <p style="margin-top: 20px; font-size: 12px; text-align: center; color: var(--text-secondary);">
+                <strong>Demo:</strong> admin@simulados.com / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-container" id="admin-panel">
+        <!-- Header -->
+        <div class="admin-header">
+            <div>
+                <h1>Painel Administrativo</h1>
+                <p>Gerencie questões, provas, concursos e conteúdo do banco de dados</p>
+            </div>
+            <button class="logout-btn" onclick="AdminAuth.logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="AdminPanel.switchTab('estatisticas')">
+                <i class="fas fa-chart-bar"></i> Estatísticas
+            </button>
+            <button class="tab-btn" onclick="AdminPanel.switchTab('usuarios')">
+                <i class="fas fa-users"></i> Usuários
+            </button>
+            <button class="tab-btn" onclick="AdminPanel.switchTab('provas')">
+                <i class="fas fa-file-alt"></i> Provas
+            </button>
+            <button class="tab-btn" onclick="AdminPanel.switchTab('questoes')">
+                <i class="fas fa-question-circle"></i> Questões
+                <span class="badge" id="questoes-badge" style="display: none;">0</span>
+            </button>
+            <button class="tab-btn" onclick="AdminPanel.switchTab('concursos')">
+                <i class="fas fa-briefcase"></i> Concursos
+            </button>
+        </div>
+
+        <!-- Tab: Estatísticas -->
+        <div class="tab-content active" id="tab-estatisticas">
+            <div class="cards-grid">
+                <div class="stat-card">
+                    <h3>Total de Usuários</h3>
+                    <div class="number" id="stat-usuarios">0</div>
+                    <p>Usuários cadastrados</p>
+                </div>
+                <div class="stat-card success">
+                    <h3>Questões Completadas</h3>
+                    <div class="number" id="stat-questoes">0</div>
+                    <p>Questões no banco</p>
+                </div>
+                <div class="stat-card warning">
+                    <h3>Pendências</h3>
+                    <div class="number" id="stat-pendencias">0</div>
+                    <p>Questões aguardando aprovação</p>
+                </div>
+                <div class="stat-card accent">
+                    <h3>Concursos Públicos</h3>
+                    <div class="number" id="stat-concursos">0</div>
+                    <p>Concursos cadastrados</p>
+                </div>
+                <div class="stat-card error">
+                    <h3>Provas Cadastradas</h3>
+                    <div class="number" id="stat-provas">0</div>
+                    <p>Provas no banco</p>
+                </div>
+            </div>
+
+            <!-- Enviar Notificação Geral -->
+            <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <h2 style="font-family: 'Nunito Sans', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 16px;">
+                    <i class="fas fa-bell"></i> Enviar Notificação Geral
+                </h2>
+                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">
+                    Envie uma notificação para todos os usuários da plataforma
+                </p>
+
+                <form onsubmit="AdminPanel.enviarNotificacao(event)">
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Título *</label>
+                            <input type="text" id="notif-titulo" placeholder="Título da notificação" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Mensagem *</label>
+                            <textarea id="notif-mensagem" placeholder="Conteúdo da notificação" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tipo *</label>
+                            <select id="notif-tipo" required>
+                                <option value="">Selecione um tipo</option>
+                                <option value="informacao">Informação</option>
+                                <option value="atualizacao">Atualização</option>
+                                <option value="lembrete">Lembrete</option>
+                                <option value="conquista">Conquista</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-paper-plane"></i> Enviar para Todos
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tab: Usuários -->
+        <div class="tab-content" id="tab-usuarios">
+            <h2 style="font-family: 'Nunito Sans', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px;">
+                <i class="fas fa-users"></i> Gerenciamento de Usuários
+            </h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                Visualize e gerencie usuários cadastrados na plataforma
+            </p>
+            <div class="items-list" id="usuarios-list">
+                <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                    <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                    <p>Nenhum usuário cadastrado ainda</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Provas -->
+        <div class="tab-content" id="tab-provas">
+            <h2 style="font-family: 'Nunito Sans', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px;">
+                <i class="fas fa-file-alt"></i> Gerenciamento de Provas
+            </h2>
+
+            <!-- Importação/Exportação -->
+            <div style="background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">
+                    <i class="fas fa-download"></i> Importação/Exportação de Provas
+                </h3>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="AdminPanel.downloadTemplate('prova')">
+                        <i class="fas fa-file-download"></i> Template
+                    </button>
+                    <button class="btn btn-secondary" onclick="AdminPanel.exportarProvas()">
+                        <i class="fas fa-file-export"></i> Exportar Provas
+                    </button>
+                    <button class="btn btn-primary" onclick="AdminPanel.openModal('nova-prova')">
+                        <i class="fas fa-plus"></i> Nova Prova
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label>Importar JSON</label>
+                    <textarea id="import-provas-json" placeholder='[{"titulo": "...", "instituicao": "...", ...}]' style="font-family: 'Courier New', monospace; font-size: 12px;"></textarea>
+                </div>
+
+                <button class="btn btn-success" onclick="AdminPanel.importarProvas()">
+                    <i class="fas fa-upload"></i> Importar Provas
+                </button>
+            </div>
+
+            <!-- Lista de Provas -->
+            <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Provas Cadastradas</h3>
+                <div class="items-list" id="provas-list">
+                    <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                        <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                        <p>Nenhuma prova cadastrada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Questões -->
+        <div class="tab-content" id="tab-questoes">
+            <h2 style="font-family: 'Nunito Sans', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px;">
+                <i class="fas fa-question-circle"></i> Gerenciamento de Questões
+            </h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                Revise e aprove questões criadas por usuários em "Minhas Questões"
+            </p>
+
+            <div style="margin-bottom: 20px; display: flex; gap: 12px;">
+                <button class="btn btn-secondary" onclick="AdminPanel.filtrarQuestoes('todas')">
+                    <i class="fas fa-list"></i> Todas
+                </button>
+                <button class="btn btn-secondary" onclick="AdminPanel.filtrarQuestoes('pendentes')">
+                    <i class="fas fa-hourglass-half"></i> Selecionador Pendências
+                </button>
+                <button class="btn btn-success" onclick="AdminPanel.aprovarSelecionadas()">
+                    <i class="fas fa-check-circle"></i> Aprovar Selecionadas
+                </button>
+            </div>
+
+            <div class="items-list" id="questoes-list">
+                <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                    <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                    <p>Nenhuma questão pendente</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Concursos -->
+        <div class="tab-content" id="tab-concursos">
+            <h2 style="font-family: 'Nunito Sans', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px;">
+                <i class="fas fa-briefcase"></i> Gerenciamento de Concursos
+            </h2>
+
+            <!-- Importação/Exportação -->
+            <div style="background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">
+                    <i class="fas fa-download"></i> Importação/Exportação de Concursos
+                </h3>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="AdminPanel.downloadTemplate('concurso')">
+                        <i class="fas fa-file-download"></i> Template
+                    </button>
+                    <button class="btn btn-secondary" onclick="AdminPanel.exportarConcursos()">
+                        <i class="fas fa-file-export"></i> Exportar Concursos
+                    </button>
+                    <button class="btn btn-primary" onclick="AdminPanel.openModal('novo-concurso')">
+                        <i class="fas fa-plus"></i> Novo Concurso
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label>Importar JSON</label>
+                    <textarea id="import-concursos-json" placeholder='[{"titulo": "...", "instituicao": "...", ...}]' style="font-family: 'Courier New', monospace; font-size: 12px;"></textarea>
+                </div>
+
+                <button class="btn btn-success" onclick="AdminPanel.importarConcursos()">
+                    <i class="fas fa-upload"></i> Importar Concursos
+                </button>
+            </div>
+
+            <!-- Lista de Concursos -->
+            <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Concursos Cadastrados</h3>
+                <div class="items-list" id="concursos-list">
+                    <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                        <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                        <p>Nenhum concurso cadastrado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Nova Prova -->
+    <div class="modal" id="modal-nova-prova">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nova Prova</h2>
+                <button class="modal-close" onclick="AdminPanel.closeModal('nova-prova')">×</button>
+            </div>
+
+            <form onsubmit="AdminPanel.salvarProva(event)">
+                <input type="hidden" id="prova-edit-id">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Título *</label>
+                        <input type="text" id="prova-titulo" placeholder="Título da prova" required>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea id="prova-descricao" placeholder="Descrição da prova"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tipo de Prova *</label>
+                        <select id="prova-tipo" required>
+                            <option value="">Selecione</option>
+                            <option value="completa">Prova Completa</option>
+                            <option value="rapida">Prova Rápida</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Concurso *</label>
+                        <select id="prova-concurso-tipo" required>
+                            <option value="">Selecione</option>
+                            <option value="geral">Geral</option>
+                            <option value="enfermeiro">Enfermeiro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Instituição *</label>
+                        <input type="text" id="prova-instituicao" placeholder="Ex: TJMS" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Banco Examinador *</label>
+                        <input type="text" id="prova-banco" placeholder="Ex: Banca Examinadora" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Estado *</label>
+                        <select id="prova-estado" required>
+                            <option value="">Selecione</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="BA">Bahia</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cidade *</label>
+                        <input type="text" id="prova-cidade" placeholder="Cidade" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ano *</label>
+                        <input type="number" id="prova-ano" placeholder="2025" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tempo Limite (minutos) *</label>
+                        <input type="number" id="prova-tempo" placeholder="60" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Estilo de Numeração *</label>
+                        <select id="prova-estilo" required>
+                            <option value="">Selecione</option>
+                            <option value="A">A, B, C, D</option>
+                            <option value="1">1, 2, 3, 4</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="AdminPanel.closeModal('nova-prova')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Criar Prova</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Novo Concurso -->
+    <div class="modal" id="modal-novo-concurso">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Novo Concurso</h2>
+                <button class="modal-close" onclick="AdminPanel.closeModal('novo-concurso')">×</button>
+            </div>
+
+            <form onsubmit="AdminPanel.salvarConcurso(event)">
+                <input type="hidden" id="concurso-edit-id">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Nome do Concurso *</label>
+                        <input type="text" id="concurso-titulo" placeholder="Nome do concurso" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Instituição *</label>
+                        <input type="text" id="concurso-instituicao" placeholder="Ex: Tribunal de Justiça" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Banco Examinador *</label>
+                        <input type="text" id="concurso-banco" placeholder="Ex: Banca Examinadora" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Estado *</label>
+                        <select id="concurso-estado" required>
+                            <option value="">Selecione</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="BA">Bahia</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cidade *</label>
+                        <input type="text" id="concurso-cidade" placeholder="Cidade" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tipo de Concurso *</label>
+                        <select id="concurso-tipo" required>
+                            <option value="">Selecione</option>
+                            <option value="Geral">Geral</option>
+                            <option value="Enfermeiro">Enfermeiro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Vagas *</label>
+                        <input type="number" id="concurso-vagas" placeholder="10" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Salário</label>
+                        <input type="text" id="concurso-salario" placeholder="R$ 0,00">
+                    </div>
+                    <div class="form-group">
+                        <label>Início Inscrições *</label>
+                        <input type="date" id="concurso-inicio" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Fim Inscrições *</label>
+                        <input type="date" id="concurso-fim" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Data de Prova *</label>
+                        <input type="date" id="concurso-prova" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select id="concurso-status" required>
+                            <option value="">Selecione</option>
+                            <option value="Aberto">Aberto</option>
+                            <option value="Fechado">Fechado</option>
+                            <option value="Resultado">Resultado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Site Oficial</label>
+                        <input type="url" id="concurso-site" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>URL do Edital</label>
+                        <input type="url" id="concurso-edital" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>URL Gabarito Preliminar</label>
+                        <input type="url" id="concurso-gabarito" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="AdminPanel.closeModal('novo-concurso')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Criar Concurso</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        'use strict';
+
+        // Autenticação
+        const AdminAuth = {
+            login(event) {
+                event.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                // Credenciais demo
+                if (email === 'admin@simulados.com' && password === 'admin123') {
+                    localStorage.setItem('admin_session', JSON.stringify({
+                        email,
+                        loginTime: new Date().toISOString()
+                    }));
+                    this.showPanel();
+                } else {
+                    document.getElementById('login-error').textContent = 'Email ou senha inválidos';
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            },
+
+            logout() {
+                localStorage.removeItem('admin_session');
+                location.reload();
+            },
+
+            isAuthenticated() {
+                return !!localStorage.getItem('admin_session');
+            },
+
+            showPanel() {
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                AdminPanel.init();
+            }
+        };
+
+        // Painel Admin
+        const AdminPanel = {
+            init() {
+                this.carregarDados();
+                this.atualizarEstatisticas();
+                this.renderizarListas();
+            },
+
+            carregarDados() {
+                // Dados são carregados do localStorage
+                console.log('[AdminPanel] Dados carregados');
+            },
+
+            atualizarEstatisticas() {
+                const usuarios = JSON.parse(localStorage.getItem('admin_usuarios')) || [];
+                const questoes = JSON.parse(localStorage.getItem('admin_questoes')) || [];
+                const pendentes = JSON.parse(localStorage.getItem('user_questoes_pendentes')) || [];
+                const concursos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
+                const provas = JSON.parse(localStorage.getItem('admin_provas')) || [];
+
+                document.getElementById('stat-usuarios').textContent = usuarios.length;
+                document.getElementById('stat-questoes').textContent = questoes.length;
+                document.getElementById('stat-pendencias').textContent = pendentes.length;
+                document.getElementById('stat-concursos').textContent = concursos.length;
+                document.getElementById('stat-provas').textContent = provas.length;
+
+                // Atualizar badge
+                if (pendentes.length > 0) {
+                    document.getElementById('questoes-badge').textContent = pendentes.length;
+                    document.getElementById('questoes-badge').style.display = 'inline-block';
+                }
+            },
+
+            renderizarListas() {
+                // Renderizar provas
+                const provas = JSON.parse(localStorage.getItem('admin_provas')) || [];
+                const provasList = document.getElementById('provas-list');
+                if (provas.length === 0) {
+                    provasList.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);"><i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i><p>Nenhuma prova cadastrada</p></div>';
+                } else {
+                    provasList.innerHTML = provas.map(prova => `
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <div class="list-item-title">${prova.titulo}</div>
+                                <div class="list-item-meta">${prova.instituicao} • ${prova.ano} • ${prova.questoes?.length || 0} questões</div>
+                            </div>
+                            <div class="list-item-actions">
+                                <button class="action-btn edit" onclick="AdminPanel.editarProva('${prova.id}')">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="action-btn delete" onclick="AdminPanel.deletarProva('${prova.id}')">
+                                    <i class="fas fa-trash"></i> Deletar
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // Renderizar concursos
+                const concursos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
+                const concursosList = document.getElementById('concursos-list');
+                if (concursos.length === 0) {
+                    concursosList.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);"><i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i><p>Nenhum concurso cadastrado</p></div>';
+                } else {
+                    concursosList.innerHTML = concursos.map(concurso => `
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <div class="list-item-title">${concurso.titulo}</div>
+                                <div class="list-item-meta">${concurso.instituicao} • ${concurso.estado} • ${concurso.vagas} vagas</div>
+                            </div>
+                            <div class="list-item-actions">
+                                <button class="action-btn edit" onclick="AdminPanel.editarConcurso('${concurso.id}')">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="action-btn delete" onclick="AdminPanel.deletarConcurso('${concurso.id}')">
+                                    <i class="fas fa-trash"></i> Deletar
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // Renderizar questões pendentes
+                const pendentes = JSON.parse(localStorage.getItem('user_questoes_pendentes')) || [];
+                const questoesList = document.getElementById('questoes-list');
+                if (pendentes.length === 0) {
+                    questoesList.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);"><i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i><p>Nenhuma questão pendente</p></div>';
+                } else {
+                    questoesList.innerHTML = pendentes.map((questao, idx) => `
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <div class="list-item-title">
+                                    <input type="checkbox" value="${questao.id}" style="margin-right: 8px;">
+                                    ${questao.enunciado}
+                                </div>
+                                <div class="list-item-meta">Criada por: ${questao.criadoPor} • Pendente</div>
+                            </div>
+                            <div class="list-item-actions">
+                                <button class="action-btn delete" onclick="AdminPanel.rejeitarQuestao('${questao.id}')">
+                                    <i class="fas fa-times"></i> Rejeitar
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            },
+
+            switchTab(tabName) {
+                // Ocultar todas as abas
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+                // Mostrar aba selecionada
+                document.getElementById(`tab-${tabName}`).classList.add('active');
+                event.target.classList.add('active');
+            },
+
+            openModal(modalName) {
+                document.getElementById(`modal-${modalName}`).classList.add('active');
+            },
+
+            closeModal(modalName) {
+                document.getElementById(`modal-${modalName}`).classList.remove('active');
+                if (modalName === 'nova-prova') {
+                    this.resetarFormularioProva();
+                } else if (modalName === 'novo-concurso') {
+                    this.resetarFormularioConcurso();
+                }
+            },
+
+            resetarFormularioProva() {
+                document.getElementById('prova-edit-id').value = '';
+                document.querySelector('#modal-nova-prova .modal-header h2').textContent = 'Nova Prova';
+                document.querySelector('#modal-nova-prova form').reset();
+            },
+
+            resetarFormularioConcurso() {
+                document.getElementById('concurso-edit-id').value = '';
+                document.querySelector('#modal-novo-concurso .modal-header h2').textContent = 'Novo Concurso';
+                document.querySelector('#modal-novo-concurso form').reset();
+            }
+
+            enviarNotificacao(event) {
+                event.preventDefault();
+                const titulo = document.getElementById('notif-titulo').value;
+                const mensagem = document.getElementById('notif-mensagem').value;
+                const tipo = document.getElementById('notif-tipo').value;
+
+                const notificacao = {
+                    id: Date.now().toString(),
+                    titulo,
+                    mensagem,
+                    tipo,
+                    data: new Date().toISOString()
+                };
+
+                const notificacoes = JSON.parse(localStorage.getItem('admin_notificacoes')) || [];
+                notificacoes.push(notificacao);
+                localStorage.setItem('admin_notificacoes', JSON.stringify(notificacoes));
+
+                alert('Notificação enviada para todos os usuários!');
+                event.target.reset();
+            },
+
+            salvarProva(event) {
+                event.preventDefault();
+                const prova = {
+                    id: Date.now().toString(),
+                    titulo: document.getElementById('prova-titulo').value,
+                    descricao: document.getElementById('prova-descricao').value,
+                    tipo: document.getElementById('prova-tipo').value,
+                    concursoTipo: document.getElementById('prova-concurso-tipo').value,
+                    instituicao: document.getElementById('prova-instituicao').value,
+                    banco: document.getElementById('prova-banco').value,
+                    estado: document.getElementById('prova-estado').value,
+                    cidade: document.getElementById('prova-cidade').value,
+                    ano: parseInt(document.getElementById('prova-ano').value),
+                    tempo: parseInt(document.getElementById('prova-tempo').value),
+                    estilo: document.getElementById('prova-estilo').value,
+                    questoes: [],
+                    dataCriacao: new Date().toISOString()
+                };
+
+                const provas = JSON.parse(localStorage.getItem('admin_provas')) || [];
+                provas.push(prova);
+                localStorage.setItem('admin_provas', JSON.stringify(provas));
+
+                alert('Prova criada com sucesso!');
+                this.closeModal('nova-prova');
+                this.atualizarEstatisticas();
+                this.renderizarListas();
+            },
+
+            salvarConcurso(event) {
+                event.preventDefault();
+                const concurso = {
+                    id: Date.now().toString(),
+                    titulo: document.getElementById('concurso-titulo').value,
+                    instituicao: document.getElementById('concurso-instituicao').value,
+                    banco: document.getElementById('concurso-banco').value,
+                    estado: document.getElementById('concurso-estado').value,
+                    cidade: document.getElementById('concurso-cidade').value,
+                    tipo: document.getElementById('concurso-tipo').value,
+                    vagas: parseInt(document.getElementById('concurso-vagas').value),
+                    salario: document.getElementById('concurso-salario').value,
+                    dataInicio: document.getElementById('concurso-inicio').value,
+                    dataFim: document.getElementById('concurso-fim').value,
+                    dataProva: document.getElementById('concurso-prova').value,
+                    status: document.getElementById('concurso-status').value,
+                    site: document.getElementById('concurso-site').value,
+                    edital: document.getElementById('concurso-edital').value,
+                    gabarito: document.getElementById('concurso-gabarito').value,
+                    dataCriacao: new Date().toISOString()
+                };
+
+                const concursos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
+                concursos.push(concurso);
+                localStorage.setItem('admin_concursos', JSON.stringify(concursos));
+
+                alert('Concurso criado com sucesso!');
+                this.closeModal('novo-concurso');
+                this.atualizarEstatisticas();
+                this.renderizarListas();
+            },
+
+            deletarProva(provaId) {
+                if (confirm('Tem certeza que deseja deletar esta prova?')) {
+                    const provas = JSON.parse(localStorage.getItem('admin_provas')) || [];
+                    const novasProvas = provas.filter(p => p.id !== provaId);
+                    localStorage.setItem('admin_provas', JSON.stringify(novasProvas));
+                    this.atualizarEstatisticas();
+                    this.renderizarListas();
+                }
+            },
+
+            deletarConcurso(concursoId) {
+                if (confirm('Tem certeza que deseja deletar este concurso?')) {
+                    const concursos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
+                    const novosConcursos = concursos.filter(c => c.id !== concursoId);
+                    localStorage.setItem('admin_concursos', JSON.stringify(novosConcursos));
+                    this.atualizarEstatisticas();
+                    this.renderizarListas();
+                }
+            },
+
+            rejeitarQuestao(questaoId) {
+                if (confirm('Tem certeza que deseja rejeitar esta questão?')) {
+                    const pendentes = JSON.parse(localStorage.getItem('user_questoes_pendentes')) || [];
+                    const novasPendentes = pendentes.filter(q => q.id !== questaoId);
+                    localStorage.setItem('user_questoes_pendentes', JSON.stringify(novasPendentes));
+                    this.atualizarEstatisticas();
+                    this.renderizarListas();
+                }
+            },
+
+            aprovarSelecionadas() {
+                const checkboxes = document.querySelectorAll('#questoes-list input[type="checkbox"]:checked');
+                if (checkboxes.length === 0) {
+                    alert('Selecione pelo menos uma questão');
+                    return;
+                }
+
+                const pendentes = JSON.parse(localStorage.getItem('user_questoes_pendentes')) || [];
+                const questoes = JSON.parse(localStorage.getItem('admin_questoes')) || [];
+
+                checkboxes.forEach(checkbox => {
+                    const questaoId = checkbox.value;
+                    const questao = pendentes.find(q => q.id === questaoId);
+                    if (questao) {
+                        questoes.push(questao);
+                    }
+                });
+
+                const novasPendentes = pendentes.filter(q => !Array.from(checkboxes).some(cb => cb.value === q.id));
+                localStorage.setItem('admin_questoes', JSON.stringify(questoes));
+                localStorage.setItem('user_questoes_pendentes', JSON.stringify(novasPendentes));
+
+                alert('Questões aprovadas com sucesso!');
+                this.atualizarEstatisticas();
+                this.renderizarListas();
+            },
+
+            importarProvas() {
+                const json = document.getElementById('import-provas-json').value;
+                try {
+                    const novasProvas = JSON.parse(json);
+                    const provas = JSON.parse(localStorage.getItem('admin_provas')) || [];
+                    provas.push(...novasProvas);
+                    localStorage.setItem('admin_provas', JSON.stringify(provas));
+                    alert('Provas importadas com sucesso!');
+                    document.getElementById('import-provas-json').value = '';
+                    this.atualizarEstatisticas();
+                    this.renderizarListas();
+                } catch (e) {
+                    alert('JSON inválido: ' + e.message);
+                }
+            },
+
+            importarConcursos() {
+                const json = document.getElementById('import-concursos-json').value;
+                try {
+                    const novosConcursos = JSON.parse(json);
+                    const concursos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
+                    concursos.push(...novosConcursos);
+                    localStorage.setItem('admin_concursos', JSON.stringify(concursos));
+                    alert('Concursos importados com sucesso!');
+                    document.getElementById('import-concursos-json').value = '';
+                    this.atualizarEstatisticas();
+                    this.renderizarListas();
+                } catch (e) {
+                    alert('JSON inválido: ' + e.message);
+                }
+            },
+
+            exportarProvas() {
+                const provas = JSON.parse(localStorage.getItem('admin_provas')) || [];
+                const json = JSON.stringify(provas, null, 2);
+                this.downloadJSON(json, 'provas.json');
+            },
+
+            exportarConcursos() {
+                const concursos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
+                const json = JSON.stringify(concursos, null, 2);
+                this.downloadJSON(json, 'concursos.json');
+            },
+
+            downloadJSON(json, filename) {
+                const blob = new Blob([json], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            },
+
+            downloadTemplate(tipo) {
+                const templates = {
+                    prova: [
+                        {
+                            titulo: "ENFERMEIRO EM CUIDADOS INTENSIVOS",
+                            descricao: "Prova de ensino superior em enfermagem",
+                            tipo: "completa",
+                            instituicao: "TJMS",
+                            estado: "MS",
+                            cidade: "Campo Grande",
+                            ano: 2025,
+                            tempoLimite: 180,
+                            estilo: "A"
+                        }
+                    ],
+                    concurso: [
+                        {
+                            titulo: "XI CONCURSO PÚBLICO PARA PROVIMENTO DE CARGOS",
+                            instituicao: "Tribunal de Justiça",
+                            estado: "MS",
+                            cidade: "Campo Grande",
+                            vagas: 15,
+                            dataInicio: "2025-02-01",
+                            dataFim: "2025-02-28",
+                            dataProva: "2025-03-15",
+                            status: "Aberto"
+                        }
+                    ]
+                };
+
+                const json = JSON.stringify(templates[tipo], null, 2);
+                this.downloadJSON(json, `template-${tipo}.json`);
+            },
+
+            filtrarQuestoes(filtro) {
+                console.log(`Filtrando questões por: ${filtro}`);
+            },
+
+            editarProva(provaId) {
+                const provas = JSON.parse(localStorage.getItem('admin_provas')) || [];
+                const prova = provas.find(p => p.id === provaId);
+                if (prova) {
+                    document.getElementById('prova-titulo').value = prova.titulo;
+                    document.getElementById('prova-descricao').value = prova.descricao || '';
+                    document.getElementById('prova-tipo').value = prova.tipo;
+                    document.getElementById('prova-concurso-tipo').value = prova.concursoTipo;
+                    document.getElementById('prova-instituicao').value = prova.instituicao;
+                    document.getElementById('prova-banco').value = prova.banco;
+                    document.getElementById('prova-estado').value = prova.estado;
+                    document.getElementById('prova-cidade').value = prova.cidade;
+                    document.getElementById('prova-ano').value = prova.ano;
+                    document.getElementById('prova-tempo').value = prova.tempo;
+                    document.getElementById('prova-estilo').value = prova.estilo;
+                    
+                    // Armazenar ID para edição
+                    document.getElementById('prova-edit-id').value = provaId;
+                    document.querySelector('#modal-nova-prova .modal-header h2').textContent = 'Editar Prova';
+                    this.openModal('nova-prova');
+                }
+            },
+
+            editarConcurso(concursoId) {
+                const concursos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
+                const concurso = concursos.find(c => c.id === concursoId);
+                if (concurso) {
+                    document.getElementById('concurso-titulo').value = concurso.titulo;
+                    document.getElementById('concurso-instituicao').value = concurso.instituicao;
+                    document.getElementById('concurso-banco').value = concurso.banco;
+                    document.getElementById('concurso-estado').value = concurso.estado;
+                    document.getElementById('concurso-cidade').value = concurso.cidade;
+                    document.getElementById('concurso-tipo').value = concurso.tipo;
+                    document.getElementById('concurso-vagas').value = concurso.vagas;
+                    document.getElementById('concurso-salario').value = concurso.salario || '';
+                    document.getElementById('concurso-inicio').value = concurso.dataInicio;
+                    document.getElementById('concurso-fim').value = concurso.dataFim;
+                    document.getElementById('concurso-prova').value = concurso.dataProva;
+                    document.getElementById('concurso-status').value = concurso.status;
+                    document.getElementById('concurso-site').value = concurso.site || '';
+                    document.getElementById('concurso-edital').value = concurso.edital || '';
+                    document.getElementById('concurso-gabarito').value = concurso.gabarito || '';
+                    
+                    // Armazenar ID para edição
+                    document.getElementById('concurso-edit-id').value = concursoId;
+                    document.querySelector('#modal-novo-concurso .modal-header h2').textContent = 'Editar Concurso';
+                    this.openModal('novo-concurso');
+                }
+            }
+        };
+
+        // Inicializar
+        window.addEventListener('load', () => {
+            if (AdminAuth.isAuthenticated()) {
+                AdminAuth.showPanel();
+            }
+        });
+    </script>
+
+    <!-- Footer Container -->
+    <footer id="footer-container"></footer>
+
+    <script>
+        // Carregar componentes modulares
+        async function carregarComponentes() {
+            try {
+                const headerResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/header-v4.html');
+                const headerHTML = await headerResponse.text();
+                document.getElementById('header-container').innerHTML = headerHTML;
+
+                const footerResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/footer-v4.html');
+                const footerHTML = await footerResponse.text();
+                document.getElementById('footer-container').innerHTML = footerHTML;
+
+                const accessibilityResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/accessibility-v4.html');
+                const accessibilityHTML = await accessibilityResponse.text();
+                document.getElementById('accessibility-container').innerHTML = accessibilityHTML;
+
+                if (window.loadAccessibilityScripts) {
+                    window.loadAccessibilityScripts();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar componentes:', error);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', carregarComponentes);
+        } else {
+            carregarComponentes();
+        }
+    </script>
+</body>
+</html>
