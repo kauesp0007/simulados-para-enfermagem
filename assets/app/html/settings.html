@@ -3,25 +3,1230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personalize sua experiência">
-    <link rel="icon" type="image/webp" href="../../assets/app/images/favicon.webp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Configurações - Personalize sua experiência nos Simulados de Enfermagem">
     <title>Configurações | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="../../assets/app/css/global.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+
+    <style>
+        /* ============================================
+           SETTINGS SPECIFIC STYLES
+           ============================================ */
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200000;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loader-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+        }
+
+        .settings-container {
+            max-width: 800px;
+        }
+
+        .page-header {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            color: var(--primary);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title h1 i {
+            color: var(--primary);
+        }
+
+        .page-title p {
+            font-size: 16px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .breadcrumb i {
+            font-size: 10px;
+            color: #999;
+        }
+
+        .settings-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%);
+            border-radius: 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .section-title p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .row-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .row-description {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #e2e8f0;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .form-select {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--dark);
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            min-width: 160px;
+        }
+
+        .form-select:hover {
+            border-color: var(--primary);
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e0f2fe;
+            border-radius: 8px;
+            color: var(--primary);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .info-content h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .info-content p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .progress-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .progress-value {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #152c4f;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--dark);
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-error {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-error:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 24px 16px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .back-btn {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .settings-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .form-select {
+                width: 100%;
+            }
+        }
+
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .settings-section,
+        body.dark-mode .back-btn,
+        body.dark-mode .btn-secondary {
+            background: #2d3748;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .row-label,
+        body.dark-mode .section-title h2,
+        body.dark-mode .page-title h1 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .row-description,
+        body.dark-mode .section-title p,
+        body.dark-mode .page-title p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .settings-row {
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .section-header {
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .form-select {
+            background: #374151;
+            border-color: #4b5563;
+            color: #f0f4f8;
+        }
+
+        body.reduce-animations .toggle-slider,
+        body.reduce-animations .btn,
+        body.reduce-animations .back-btn {
+            transition: none;
+        }
+
+        body.reduce-animations .loader-dot {
+            animation: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Loader Global -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
     <div id="header-container"></div>
-    <div id="nav-container"></div>
-    <div id="breadcrumb-container"></div>
-    
-    <main id="main-content">
-        <h1>Configurações</h1>
-        <p>Personalize sua experiência</p>
-    </main>
-    
+
+    <!-- Conteúdo Principal -->
+    <div class="page-wrapper settings-container">
+        <main id="main-content">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Navegação">
+                <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="dashboard.html">Dashboard</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Configurações</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <button class="back-btn" onclick="window.location.href='dashboard.html'" title="Voltar ao início">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="page-title">
+                    <h1><i class="fas fa-cog"></i> Configurações</h1>
+                    <p>Personalize sua experiência nos Simulados de Enfermagem</p>
+                </div>
+            </div>
+
+            <!-- Seção: Aparência -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="section-title">
+                        <h2>Aparência</h2>
+                        <p>Personalize como o aplicativo é exibido</p>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Modo Escuro</div>
+                        <div class="row-description">Ative para usar o tema escuro</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-dark-mode">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Tamanho da Fonte</div>
+                        <div class="row-description">Ajuste o tamanho do texto</div>
+                    </div>
+                    <select class="form-select" id="font-size">
+                        <option value="small">Pequeno</option>
+                        <option value="medium" selected>Médio</option>
+                        <option value="large">Grande</option>
+                    </select>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Idioma</div>
+                        <div class="row-description">Selecione o idioma do aplicativo</div>
+                    </div>
+                    <select class="form-select" id="language">
+                        <option value="pt" selected>Português (Brasil)</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Seção: Áudio -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--accent) 0%, #0097a7 100%);">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <div class="section-title">
+                        <h2>Áudio</h2>
+                        <p>Configurações de som e voz</p>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Voz Automática</div>
+                        <div class="row-description">Leitura automática das questões</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-auto-voice" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Efeitos Sonoros</div>
+                        <div class="row-description">Sons de feedback nas respostas</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-sound-effects" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Velocidade da Voz</div>
+                        <div class="row-description">Velocidade da síntese de voz</div>
+                    </div>
+                    <select class="form-select" id="voice-speed">
+                        <option value="0.7">Lento (0.7x)</option>
+                        <option value="0.85" selected>Normal (0.85x)</option>
+                        <option value="1">Rápido (1.0x)</option>
+                        <option value="1.15">Muito Rápido (1.15x)</option>
+                    </select>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Volume</div>
+                        <div class="row-description">Volume da síntese de voz</div>
+                    </div>
+                    <select class="form-select" id="voice-volume">
+                        <option value="0.5">50%</option>
+                        <option value="0.75" selected>75%</option>
+                        <option value="1">100%</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Seção: Notificações -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--warning) 0%, #f57c00 100%);">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="section-title">
+                        <h2>Notificações</h2>
+                        <p>Gerencie alertas e lembretes</p>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Notificações de Questões</div>
+                        <div class="row-description">Receba lembretes para praticar</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-notifications" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Horário de Prática</div>
+                        <div class="row-description">Defina um horário para estudar</div>
+                    </div>
+                    <select class="form-select" id="practice-time">
+                        <option value="morning">Manhã (08:00)</option>
+                        <option value="afternoon">Tarde (14:00)</option>
+                        <option value="evening" selected>Noite (19:00)</option>
+                        <option value="none">Desativado</option>
+                    </select>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Resumo Semanal</div>
+                        <div class="row-description">Receba seu progresso por email</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-weekly-summary">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Seção: Privacidade -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--success) 0%, #388e3c 100%);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="section-title">
+                        <h2>Privacidade</h2>
+                        <p>Controle seus dados e privacidade</p>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Salvar Progresso</div>
+                        <div class="row-description">Salvar automaticamente suas respostas</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-save-progress" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Modo Anônimo</div>
+                        <div class="row-description">Seu nome não será exibido em rankings</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-anonymous">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <button class="btn btn-error" onclick="SettingsManager.clearData()">
+                        <i class="fas fa-trash"></i> Limpar Dados
+                    </button>
+                </div>
+            </div>
+
+            <!-- Seção: Preferências de Estudo -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%);">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="section-title">
+                        <h2>Preferências de Estudo</h2>
+                        <p>Configure como você estuda</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Personalize seu estudo</h4>
+                        <p>Essas configurações afetam como as questões são apresentadas e como você interage com o conteúdo.</p>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Mostrar Explicações</div>
+                        <div class="row-description">Exibir explicação após cada resposta</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-explanations" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Barra de Progresso</div>
+                        <div class="row-description">Mostrar progresso durante o quiz</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-progress-bar" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Questões por Quiz</div>
+                        <div class="row-description">Número de questões em cada sessão</div>
+                    </div>
+                    <select class="form-select" id="questions-per-quiz">
+                        <option value="5">5 questões</option>
+                        <option value="10" selected>10 questões</option>
+                        <option value="15">15 questões</option>
+                        <option value="20">20 questões</option>
+                        <option value="30">30 questões</option>
+                    </select>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Ordenação das Questões</div>
+                        <div class="row-description">Como as questões são ordenadas</div>
+                    </div>
+                    <select class="form-select" id="question-order">
+                        <option value="random" selected>Aleatório</option>
+                        <option value="sequential">Sequencial</option>
+                        <option value="difficulty">Por dificuldade</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Seção: Armazenamento -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--accent) 0%, #0097a7 100%);">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="section-title">
+                        <h2>Armazenamento</h2>
+                        <p>Gerencie seus dados armazenados</p>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Espaço Utilizado</span>
+                        <span class="progress-value" id="storage-used">2.4 MB</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" id="storage-bar" style="width: 24%;"></div>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <div class="row-label">Cache de Questões</div>
+                        <div class="row-description">Questões salvas localmente: 15</div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="SettingsManager.clearCache()">
+                        <i class="fas fa-trash"></i> Limpar
+                    </button>
+                </div>
+
+                <div class="settings-row">
+                    <button class="btn btn-secondary" onclick="SettingsManager.exportData()">
+                        <i class="fas fa-download"></i> Exportar Dados
+                    </button>
+                </div>
+
+                <div class="settings-row">
+                    <button class="btn btn-secondary" onclick="SettingsManager.importData()">
+                        <i class="fas fa-upload"></i> Importar Dados
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botões de Ação -->
+            <div class="settings-section">
+                <div style="display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="SettingsManager.resetDefaults()">
+                        <i class="fas fa-undo"></i> Restaurar Padrões
+                    </button>
+                    <button class="btn btn-primary" onclick="SettingsManager.saveSettings()">
+                        <i class="fas fa-save"></i> Salvar Configurações
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
     <div id="footer-container"></div>
+
+    <!-- SCRIPT DO COMPONENT LOADER -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ========================================
+            // CONFIGURAÇÃO DE CAMINHOS
+            // ========================================
+            const Config = {
+                htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+                components: [
+                    { id: 'accessibility-container', file: 'accessibility.html', name: 'Painel de Acessibilidade' },
+                    { id: 'header-container', file: 'header.html', name: 'Cabeçalho' },
+                    { id: 'footer-container', file: 'footer.html', name: 'Rodapé' }
+                ]
+            };
+
+            // ========================================
+            // CARREGADOR DE COMPONENTES
+            // ========================================
+            const ComponentLoader = {
+                async loadComponent(comp) {
+                    const container = document.getElementById(comp.id);
+                    
+                    if (!container) {
+                        console.error('[ERRO] Container não encontrado: #' + comp.id);
+                        return false;
+                    }
+
+                    const fullPath = Config.htmlPath + comp.file;
+                    console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
+
+                    try {
+                        const response = await fetch(fullPath);
+                        
+                        if (!response.ok) {
+                            throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                        }
+
+                        const html = await response.text();
+                        
+                        if (!html || html.trim() === '') {
+                            throw new Error('Arquivo vazio');
+                        }
+
+                        container.innerHTML = html;
+                        console.log('[SUCESSO] ' + comp.name + ' carregado');
+                        return true;
+
+                    } catch (error) {
+                        console.error('[ERRO] ' + comp.name + ':', error.message);
+                        return false;
+                    }
+                },
+
+                async init() {
+                    console.log('========================================');
+                    console.log('CARREGANDO COMPONENTES');
+                    console.log('========================================');
+                    
+                    for (const comp of Config.components) {
+                        await this.loadComponent(comp);
+                    }
+
+                    console.log('========================================');
+                    console.log('[OK] Componentes carregados!');
+                    console.log('========================================');
+                }
+            };
+
+            // ========================================
+            // SETTINGS MANAGER
+            // ========================================
+            const SettingsManager = {
+                settings: {},
+
+                init() {
+                    console.log('[SettingsManager] Inicializando...');
+                    this.loadSettings();
+                    this.setupEventListeners();
+                    this.hideLoader();
+                },
+
+                hideLoader() {
+                    setTimeout(() => {
+                        const loader = document.getElementById('loader-global');
+                        if (loader) {
+                            loader.classList.add('hidden');
+                            setTimeout(() => loader.style.display = 'none', 500);
+                        }
+                    }, 500);
+                },
+
+                loadSettings() {
+                    const savedSettings = localStorage.getItem('app_settings');
+                    if (savedSettings) {
+                        this.settings = JSON.parse(savedSettings);
+                    } else {
+                        this.settings = {
+                            darkMode: false,
+                            fontSize: 'medium',
+                            language: 'pt',
+                            autoVoice: true,
+                            soundEffects: true,
+                            voiceSpeed: '0.85',
+                            voiceVolume: '0.75',
+                            notifications: true,
+                            practiceTime: 'evening',
+                            weeklySummary: false,
+                            saveProgress: true,
+                            anonymous: false,
+                            showExplanations: true,
+                            showProgressBar: true,
+                            questionsPerQuiz: '10',
+                            questionOrder: 'random'
+                        };
+                    }
+                    
+                    this.applySettings();
+                },
+
+                applySettings() {
+                    document.getElementById('toggle-dark-mode').checked = this.settings.darkMode;
+                    document.getElementById('font-size').value = this.settings.fontSize;
+                    document.getElementById('language').value = this.settings.language;
+                    document.getElementById('toggle-auto-voice').checked = this.settings.autoVoice;
+                    document.getElementById('toggle-sound-effects').checked = this.settings.soundEffects;
+                    document.getElementById('voice-speed').value = this.settings.voiceSpeed;
+                    document.getElementById('voice-volume').value = this.settings.voiceVolume;
+                    document.getElementById('toggle-notifications').checked = this.settings.notifications;
+                    document.getElementById('practice-time').value = this.settings.practiceTime;
+                    document.getElementById('toggle-weekly-summary').checked = this.settings.weeklySummary;
+                    document.getElementById('toggle-save-progress').checked = this.settings.saveProgress;
+                    document.getElementById('toggle-anonymous').checked = this.settings.anonymous;
+                    document.getElementById('toggle-explanations').checked = this.settings.showExplanations;
+                    document.getElementById('toggle-progress-bar').checked = this.settings.showProgressBar;
+                    document.getElementById('questions-per-quiz').value = this.settings.questionsPerQuiz;
+                    document.getElementById('question-order').value = this.settings.questionOrder;
+                },
+
+                setupEventListeners() {
+                    document.getElementById('toggle-dark-mode').addEventListener('change', (e) => {
+                        this.settings.darkMode = e.target.checked;
+                        this.applyTheme();
+                    });
+
+                    document.getElementById('toggle-auto-voice').addEventListener('change', (e) => {
+                        this.settings.autoVoice = e.target.checked;
+                    });
+
+                    document.getElementById('toggle-sound-effects').addEventListener('change', (e) => {
+                        this.settings.soundEffects = e.target.checked;
+                    });
+
+                    document.getElementById('toggle-notifications').addEventListener('change', (e) => {
+                        this.settings.notifications = e.target.checked;
+                    });
+
+                    document.getElementById('toggle-weekly-summary').addEventListener('change', (e) => {
+                        this.settings.weeklySummary = e.target.checked;
+                    });
+
+                    document.getElementById('toggle-save-progress').addEventListener('change', (e) => {
+                        this.settings.saveProgress = e.target.checked;
+                    });
+
+                    document.getElementById('toggle-anonymous').addEventListener('change', (e) => {
+                        this.settings.anonymous = e.target.checked;
+                    });
+
+                    document.getElementById('toggle-explanations').addEventListener('change', (e) => {
+                        this.settings.showExplanations = e.target.checked;
+                    });
+
+                    document.getElementById('toggle-progress-bar').addEventListener('change', (e) => {
+                        this.settings.showProgressBar = e.target.checked;
+                    });
+
+                    document.getElementById('font-size').addEventListener('change', (e) => {
+                        this.settings.fontSize = e.target.value;
+                        this.applyFontSize();
+                    });
+
+                    document.getElementById('language').addEventListener('change', (e) => {
+                        this.settings.language = e.target.value;
+                    });
+
+                    document.getElementById('voice-speed').addEventListener('change', (e) => {
+                        this.settings.voiceSpeed = e.target.value;
+                    });
+
+                    document.getElementById('voice-volume').addEventListener('change', (e) => {
+                        this.settings.voiceVolume = e.target.value;
+                    });
+
+                    document.getElementById('practice-time').addEventListener('change', (e) => {
+                        this.settings.practiceTime = e.target.value;
+                    });
+
+                    document.getElementById('questions-per-quiz').addEventListener('change', (e) => {
+                        this.settings.questionsPerQuiz = e.target.value;
+                    });
+
+                    document.getElementById('question-order').addEventListener('change', (e) => {
+                        this.settings.questionOrder = e.target.value;
+                    });
+                },
+
+                applyTheme() {
+                    if (this.settings.darkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                },
+
+                applyFontSize() {
+                    const sizes = { small: '87.5%', medium: '100%', large: '112.5%' };
+                    document.documentElement.style.fontSize = sizes[this.settings.fontSize];
+                },
+
+                saveSettings() {
+                    localStorage.setItem('app_settings', JSON.stringify(this.settings));
+                    console.log('[SettingsManager] Configurações salvas');
+                    alert('Configurações salvas com sucesso!');
+                },
+
+                resetDefaults() {
+                    if (confirm('Tem certeza que deseja restaurar as configurações padrão?')) {
+                        localStorage.removeItem('app_settings');
+                        this.settings = {};
+                        this.loadSettings();
+                        alert('Configurações restauradas com sucesso!');
+                    }
+                },
+
+                clearData() {
+                    if (confirm('Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.')) {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        alert('Todos os dados foram removidos.');
+                        window.location.reload();
+                    }
+                },
+
+                clearCache() {
+                    if (confirm('Tem certeza que deseja limpar o cache de questões?')) {
+                        const keysToRemove = [];
+                        for (let i = 0; i < localStorage.length; i++) {
+                            const key = localStorage.key(i);
+                            if (key && (key.includes('question') || key.includes('quiz'))) {
+                                keysToRemove.push(key);
+                            }
+                        }
+                        keysToRemove.forEach(key => localStorage.removeItem(key));
+                        alert('Cache limpo com sucesso!');
+                    }
+                },
+
+                exportData() {
+                    const data = { settings: this.settings, exportDate: new Date().toISOString() };
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'acoes.json';
+                    a.click();
+                    URL.revokesimulados-configurObjectURL(url);
+                },
+
+                importData() {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '.json';
+                    input.onchange = (e) => {
+                        const file = e.target.files[0];
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            try {
+                                const data = JSON.parse(event.target.result);
+                                if (data.settings) {
+                                    this.settings = data.settings;
+                                    localStorage.setItem('app_settings', JSON.stringify(this.settings));
+                                    this.applySettings();
+                                    alert('Configurações importadas com sucesso!');
+                                }
+                            } catch (error) {
+                                alert('Erro ao importar arquivo. Verifique o formato.');
+                            }
+                        };
+                        reader.readAsText(file);
+                    };
+                    input.click();
+                }
+            };
+
+            // ========================================
+            // INICIALIZAÇÃO
+            // ========================================
+            function init() {
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', function() {
+                        ComponentLoader.init().then(function() {
+                            SettingsManager.init();
+                        });
+                    });
+                } else {
+                    ComponentLoader.init().then(function() {
+                        SettingsManager.init();
+                    });
+                }
+            }
+
+            init();
+
+        })();
+    </script>
     
-    <script src="../../assets/components/js/navigation.js"></script>
-    <script src="../../assets/app/js/component-loader.js"></script>
+    <!-- JavaScript dos Componentes -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
+    
+    <!-- Scripts Locais -->
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/icons.js"></script>
 </body>
 </html>
