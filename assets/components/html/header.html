@@ -1,9 +1,160 @@
-<!-- Header Component -->
-<header class="main-header">
-    <div class="header-container">
-        <a href="../../assets/app/html/index.html" class="logo">
-            <img src="../../assets/app/images/logo.webp" alt="Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22%3ELogo%3C/text%3E%3C/svg%3E'">
-        </a>
-        <div class="header-title">Simulados de Enfermagem</div>
+<!-- Header Component - Simulados de Enfermagem -->
+<header class="main-header" role="banner">
+    <div class="header-top">
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="../../assets/app/html/index.html" class="logo-link" aria-label="Simulados de Enfermagem - Página Inicial">
+                <img src="https://simulados-para-enfermagem.com.br/assets/components/images/logotipo-simulados-para-enfermagem.webp" 
+                     alt="Logo Simulados de Enfermagem" 
+                     class="logo-img"
+                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 60%22%3E%3Ctext x=%2210%22 y=%2240%22 font-size=%2224%22 fill=%22%231A3E74%22%3ESimulados%3C/text%3E%3C/svg%3E'">
+            </a>
+
+            <!-- Menu Toggle Mobile -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Navigation -->
+            <nav class="main-nav" id="main-nav" role="navigation" aria-label="Menu principal">
+                <ul class="nav-menu">
+                    <!-- Dashboard -->
+                    <li class="nav-item">
+                        <a href="../../assets/app/html/dashboard.html" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <!-- Simulados Dropdown -->
+                    <li class="nav-item has-submenu">
+                        <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-book"></i>
+                            Simulados
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="mega-menu">
+                            <div class="mega-menu-content">
+                                <!-- Coluna 1: Modos de Estudo -->
+                                <div class="mega-menu-column">
+                                    <h3 class="mega-menu-title">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        Modos de Estudo
+                                    </h3>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="../../assets/app/html/estudopersonalizado.html"><i class="fas fa-pencil-alt"></i> Estudo Personalizado</a></li>
+                                        <li><a href="../../assets/app/html/provascompletas.html"><i class="fas fa-file-alt"></i> Provas Completas</a></li>
+                                        <li><a href="../../assets/app/html/simuladoreal.html"><i class="fas fa-stopwatch"></i> Simulado Real</a></li>
+                                        <li><a href="../../assets/app/html/quiz.html"><i class="fas fa-question-circle"></i> Quiz Rápido</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Coluna 2: Desafios -->
+                                <div class="mega-menu-column">
+                                    <h3 class="mega-menu-title">
+                                        <i class="fas fa-gamepad"></i>
+                                        Desafios
+                                    </h3>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="../../assets/app/html/memoriarapida.html"><i class="fas fa-brain"></i> Memória Rápida</a></li>
+                                        <li><a href="../../assets/app/html/desafioinverso.html"><i class="fas fa-exchange-alt"></i> Desafio Inverso</a></li>
+                                        <li><a href="../../assets/app/html/quizcuriosidade.html"><i class="fas fa-lightbulb"></i> Quiz Curiosidades</a></li>
+                                        <li><a href="../../assets/app/html/modoantiestresse.html"><i class="fas fa-spa"></i> Modo Anti-Stress</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Coluna 3: Ferramentas -->
+                                <div class="mega-menu-column">
+                                    <h3 class="mega-menu-title">
+                                        <i class="fas fa-tools"></i>
+                                        Ferramentas
+                                    </h3>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="../../assets/app/html/timerpomodoro.html"><i class="fas fa-hourglass-half"></i> Timer Pomodoro</a></li>
+                                        <li><a href="../../assets/app/html/estudooffline.html"><i class="fas fa-wifi-off"></i> Estudo Offline</a></li>
+                                        <li><a href="../../assets/app/html/minhasquestoes.html"><i class="fas fa-bookmark"></i> Minhas Questões</a></li>
+                                        <li><a href="../../assets/app/html/biblioteca.html"><i class="fas fa-library"></i> Biblioteca</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Coluna 4: Concursos -->
+                                <div class="mega-menu-column">
+                                    <h3 class="mega-menu-title">
+                                        <i class="fas fa-briefcase"></i>
+                                        Concursos
+                                    </h3>
+                                    <ul class="mega-menu-list">
+                                        <li><a href="../../assets/app/html/meusconcursos.html"><i class="fas fa-star"></i> Meus Concursos</a></li>
+                                        <li><a href="../../assets/app/html/concursospublicos.html"><i class="fas fa-search"></i> Concursos Públicos</a></li>
+                                        <li><a href="../../assets/app/html/prova-template.html"><i class="fas fa-clipboard-list"></i> Provas</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Progresso -->
+                    <li class="nav-item">
+                        <a href="../../assets/app/html/minhasquestoes.html" class="nav-link">
+                            <i class="fas fa-chart-pie"></i>
+                            Progresso
+                        </a>
+                    </li>
+
+                    <!-- Configurações -->
+                    <li class="nav-item">
+                        <a href="../../assets/app/html/settings.html" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            Configurações
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <!-- Notificações -->
+                <button class="action-btn notifications-btn" aria-label="Notificações" title="Notificações">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+
+                <!-- Tema Toggle -->
+                <button class="action-btn theme-toggle" id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <!-- Usuário Menu -->
+                <div class="user-menu">
+                    <button class="user-btn" id="user-menu-toggle" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="user-name">Usuário</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="user-dropdown">
+                        <a href="../../assets/app/html/settings.html" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            Perfil
+                        </a>
+                        <a href="../../assets/app/html/settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            Configurações
+                        </a>
+                        <hr class="dropdown-divider">
+                        <button class="dropdown-item logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sair
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="header-breadcrumb" id="breadcrumb-container" role="navigation" aria-label="Breadcrumb">
+        <!-- Preenchido dinamicamente por JavaScript -->
     </div>
 </header>
