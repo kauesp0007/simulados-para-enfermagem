@@ -3,25 +3,976 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Oportunidades de emprego">
-    <link rel="icon" type="image/webp" href="../../assets/app/images/favicon.webp">
     <title>Concursos Públicos | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="../../assets/app/css/global.css">
+    
+    <!-- CSS do Site Externo -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --color-success: #4caf50;
+            --color-warning: #ff9800;
+            --color-error: #f44336;
+            --color-info: #2196f3;
+            --bg-main: #f4f6f9;
+            --text-main: #1f2937;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--color-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 200px);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Map Section */
+        .map-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-section h2 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .map-section p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #e8f4f8 0%, #f0f9fb 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--color-accent);
+            opacity: 0.3;
+        }
+
+        .map-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        .legend-color.norte { background: #4caf50; }
+        .legend-color.nordeste { background: #ffc107; }
+        .legend-color.centro-oeste { background: #ff9800; }
+        .legend-color.sudeste { background: #e91e63; }
+        .legend-color.sul { background: #2196f3; }
+        .legend-color.selecionado { background: #9c27b0; }
+
+        /* Statistics Section */
+        .stats-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.blue {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+
+        .stat-icon.green {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+
+        .stat-icon.purple {
+            background: rgba(156, 39, 176, 0.1);
+            color: #9c27b0;
+        }
+
+        .stat-content h3 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .stat-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Search and Filters */
+        .search-filters {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .filter-btn {
+            padding: 10px 16px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Concursos List */
+        .concursos-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .concurso-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--color-info);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .concurso-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .concurso-header {
+            margin-bottom: 12px;
+        }
+
+        .concurso-title {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .concurso-instituicao {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .concurso-info {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .concurso-info i {
+            color: var(--color-accent);
+            width: 16px;
+        }
+
+        .concurso-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .concurso-vagas {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .concurso-vagas strong {
+            color: var(--color-success);
+            font-weight: 600;
+        }
+
+        .concurso-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .concurso-status.aberto {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+
+        .concurso-status.fechado {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+
+        .concurso-status.resultado {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+
+        .concurso-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .action-btn.add {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .action-btn.add:hover {
+            background: #4caf50;
+            color: white;
+        }
+
+        .action-btn.remove {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .action-btn.remove:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        .action-btn.link {
+            background: rgba(0, 188, 212, 0.1);
+            color: #00bcd4;
+            border: 1px solid rgba(0, 188, 212, 0.3);
+        }
+
+        .action-btn.link:hover {
+            background: #00bcd4;
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-section {
+                flex-direction: row;
+            }
+
+            .stat-card {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 20px 15px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .search-filters {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .concursos-list {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-section {
+                flex-direction: column;
+            }
+
+            .stat-card {
+                flex: 1;
+            }
+        }
+    </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link" style="position: absolute; top: -40px; left: 0; background: var(--color-primary); color: white; padding: 8px; z-index: 100000; transition: top 0.3s;">Pular para conteúdo principal</a>
+    
+    <!-- Loader Global -->
+    <div id="loader-global">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Accessibility Container -->
     <div id="accessibility-container"></div>
-    <div id="header-container"></div>
+
+    <!-- Header Container -->
+    <header id="header-container"></header>
+
+    <!-- Navigation Container -->
     <div id="nav-container"></div>
     <div id="breadcrumb-container"></div>
-    
+
+    <!-- Main Content -->
     <main id="main-content">
-        <h1>Concursos Públicos</h1>
-        <p>Oportunidades de emprego</p>
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Concursos Públicos</h1>
+                <p>Explore concursos abertos em todo o Brasil</p>
+            </div>
+
+            <!-- Main Grid: Map + Statistics -->
+            <div class="main-grid">
+                <!-- Map Section -->
+                <div class="map-section">
+                    <h2>Mapa do Brasil</h2>
+                    <p>Clique em um estado para filtrar os concursos</p>
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map-location-dot"></i>
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color norte"></div>
+                            <span>Norte</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color nordeste"></div>
+                            <span>Nordeste</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color centro-oeste"></div>
+                            <span>Centro-Oeste</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color sudeste"></div>
+                            <span>Sudeste</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color sul"></div>
+                            <span>Sul</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                <div class="stats-section">
+                    <!-- Total Concursos -->
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="stat-total">0</h3>
+                            <p>Concursos Totais</p>
+                        </div>
+                    </div>
+
+                    <!-- Inscrições Abertas -->
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-map-pin"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="stat-abertos">0</h3>
+                            <p>Inscrições Abertas</p>
+                        </div>
+                    </div>
+
+                    <!-- Concursos Nacionais -->
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="stat-nacionais">0</h3>
+                            <p>Concursos Nacionais</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="search-filters">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Buscar por nome, instituição, cidade..."
+                        onkeyup="ConcursosManager.buscar()"
+                    >
+                </div>
+                <button class="filter-btn" onclick="ConcursosManager.toggleFiltros()">
+                    <i class="fas fa-sliders-h"></i>
+                    Filtros
+                </button>
+            </div>
+
+            <!-- Concursos List -->
+            <div class="concursos-list" id="concursos-container">
+                <!-- Cards serão inseridos aqui pelo JavaScript -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <i class="fas fa-inbox"></i>
+                <h3>Nenhum concurso encontrado</h3>
+                <p>Tente ajustar seus filtros ou busca</p>
+            </div>
+        </div>
     </main>
-    
-    <div id="footer-container"></div>
-    
-    <script src="../../assets/components/js/navigation.js"></script>
-    <script src="../../assets/app/js/component-loader.js"></script>
+
+    <!-- Footer Container -->
+    <footer id="footer-container"></footer>
+
+    <!-- EventBus Script -->
+    <script>
+        (function() {
+            'use strict';
+
+            // EventBus simples
+            window.EventBus = {
+                events: {},
+                on(event, callback) {
+                    if (!this.events[event]) this.events[event] = [];
+                    this.events[event].push(callback);
+                },
+                emit(event, data) {
+                    if (this.events[event]) {
+                        this.events[event].forEach(callback => callback(data));
+                    }
+                }
+            };
+
+            // Base URL
+            const BASE_URL = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
+
+            // Configuração de componentes
+            const CONFIG = {
+                components: [
+                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
+                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
+                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
+                ],
+                scripts: [
+                    'assets/js/event-bus-v4.js',
+                    'assets/js/accessibility-rules.js',
+                    'https://vlibras.gov.br/app/vlibras-plugin.js',
+                    'assets/js/accessibility-v4.js',
+                    'assets/js/header-v4.js',
+                    'assets/js/footer-v4.js'
+                ]
+            };
+
+            // Carregar componentes
+            async function loadComponent(id, path) {
+                try {
+                    const url = path.startsWith('http') ? path : BASE_URL + path;
+                    const response = await fetch(url + '?t=' + Date.now());
+                    if (!response.ok) throw new Error(response.status);
+                    const html = await response.text();
+                    const container = document.getElementById(id);
+                    if (container) {
+                        container.innerHTML = html;
+                        window.EventBus.emit(`module:${id}:ready`);
+                    }
+                    return true;
+                } catch (e) {
+                    console.error(`[App] Erro ao carregar ${id}:`, e.message);
+                    return false;
+                }
+            }
+
+            // Carregar scripts
+            async function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src.startsWith('http') ? src : BASE_URL + src;
+                    script.onload = () => resolve(true);
+                    script.onerror = () => reject(new Error(`Erro ao carregar ${src}`));
+                    document.body.appendChild(script);
+                });
+            }
+
+            // Inicializar app
+            async function initApp() {
+                try {
+                    await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
+                    
+                    for (const script of CONFIG.scripts) {
+                        try {
+                            await loadScript(script);
+                        } catch (e) {
+                            console.warn(`[App] Script opcional não carregado: ${script}`);
+                        }
+                    }
+
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+
+                    // Inicializar gerenciador de concursos
+                    ConcursosManager.init();
+
+                    console.log('[App] Concursos Públicos carregado com sucesso!');
+                } catch (e) {
+                    console.error('[App] Erro na inicialização:', e);
+                }
+            }
+
+            // Carregar componentes modulares
+            async function carregarComponentes() {
+                try {
+                    const headerResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/header-v4.html');
+                    const headerHTML = await headerResponse.text();
+                    document.getElementById('header-container').innerHTML = headerHTML;
+
+                    const footerResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/footer-v4.html');
+                    const footerHTML = await footerResponse.text();
+                    document.getElementById('footer-container').innerHTML = footerHTML;
+
+                    const accessibilityResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/accessibility-v4.html');
+                    const accessibilityHTML = await accessibilityResponse.text();
+                    document.getElementById('accessibility-container').innerHTML = accessibilityHTML;
+
+                    if (window.loadAccessibilityScripts) {
+                        window.loadAccessibilityScripts();
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar componentes:', error);
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    carregarComponentes();
+                    initApp();
+                });
+            } else {
+                carregarComponentes();
+                initApp();
+            }
+        })();
+    </script>
+
+    <!-- Concursos Manager Script -->
+    <script>
+        (function() {
+            'use strict';
+
+            const ConcursosManager = {
+                concursos: [],
+                concursosFiltrados: [],
+                usuarioConcursos: [],
+                filtroEstado: null,
+                filtroStatus: null,
+
+                init() {
+                    console.log('[ConcursosManager] Inicializando...');
+                    this.carregarConcursos();
+                    this.carregarConcursosUsuario();
+                    this.renderizar();
+                    this.atualizarEstatisticas();
+                },
+
+                carregarConcursos() {
+                    try {
+                        const dados = localStorage.getItem('admin_concursos');
+                        this.concursos = dados ? JSON.parse(dados) : [];
+                        this.concursosFiltrados = [...this.concursos];
+                        console.log(`[ConcursosManager] ${this.concursos.length} concursos carregados`);
+                    } catch (error) {
+                        console.error('[ConcursosManager] Erro ao carregar concursos:', error);
+                        this.concursos = [];
+                    }
+                },
+
+                carregarConcursosUsuario() {
+                    try {
+                        const dados = localStorage.getItem('user_meus_concursos');
+                        this.usuarioConcursos = dados ? JSON.parse(dados) : [];
+                    } catch (error) {
+                        console.error('[ConcursosManager] Erro ao carregar concursos do usuário:', error);
+                        this.usuarioConcursos = [];
+                    }
+                },
+
+                salvarConcursosUsuario() {
+                    localStorage.setItem('user_meus_concursos', JSON.stringify(this.usuarioConcursos));
+                },
+
+                buscar() {
+                    const termo = document.getElementById('search-input').value.toLowerCase();
+                    
+                    this.concursosFiltrados = this.concursos.filter(concurso => {
+                        const matchBusca = !termo || 
+                            concurso.titulo.toLowerCase().includes(termo) ||
+                            concurso.instituicao.toLowerCase().includes(termo) ||
+                            concurso.cidade.toLowerCase().includes(termo);
+                        
+                        const matchEstado = !this.filtroEstado || concurso.estado === this.filtroEstado;
+                        const matchStatus = !this.filtroStatus || concurso.status === this.filtroStatus;
+                        
+                        return matchBusca && matchEstado && matchStatus;
+                    });
+
+                    this.renderizar();
+                },
+
+                toggleFiltros() {
+                    console.log('[ConcursosManager] Abrir painel de filtros');
+                    // Implementar painel de filtros modal
+                },
+
+                adicionarConcurso(concursoId) {
+                    const concurso = this.concursos.find(c => c.id === concursoId);
+                    if (concurso && !this.usuarioConcursos.find(c => c.id === concursoId)) {
+                        this.usuarioConcursos.push({
+                            ...concurso,
+                            adicionadoEm: new Date().toISOString()
+                        });
+                        this.salvarConcursosUsuario();
+                        this.renderizar();
+                        this.atualizarEstatisticas();
+                        console.log(`[ConcursosManager] Concurso ${concursoId} adicionado`);
+                    }
+                },
+
+                removerConcurso(concursoId) {
+                    this.usuarioConcursos = this.usuarioConcursos.filter(c => c.id !== concursoId);
+                    this.salvarConcursosUsuario();
+                    this.renderizar();
+                    console.log(`[ConcursosManager] Concurso ${concursoId} removido`);
+                },
+
+                estaAdicionado(concursoId) {
+                    return this.usuarioConcursos.some(c => c.id === concursoId);
+                },
+
+                atualizarEstatisticas() {
+                    const abertos = this.concursos.filter(c => c.status === 'aberto').length;
+                    const nacionais = this.concursos.filter(c => c.nacional === true).length;
+
+                    document.getElementById('stat-total').textContent = this.concursos.length;
+                    document.getElementById('stat-abertos').textContent = abertos;
+                    document.getElementById('stat-nacionais').textContent = nacionais;
+                },
+
+                renderizar() {
+                    const container = document.getElementById('concursos-container');
+                    const emptyState = document.getElementById('empty-state');
+
+                    if (this.concursosFiltrados.length === 0) {
+                        container.innerHTML = '';
+                        emptyState.style.display = 'block';
+                        return;
+                    }
+
+                    emptyState.style.display = 'none';
+                    container.innerHTML = this.concursosFiltrados.map(concurso => {
+                        const adicionado = this.estaAdicionado(concurso.id);
+                        return `
+                            <div class="concurso-card">
+                                <div class="concurso-header">
+                                    <div class="concurso-title">${concurso.titulo}</div>
+                                    <div class="concurso-instituicao">${concurso.instituicao}</div>
+                                </div>
+
+                                <div class="concurso-info">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>${concurso.cidade}, ${concurso.estado}</span>
+                                </div>
+
+                                <div class="concurso-info">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Inscrições até ${this.formatarData(concurso.dataFim)}</span>
+                                </div>
+
+                                <div class="concurso-meta">
+                                    <div class="concurso-vagas">
+                                        <strong>${concurso.vagas}</strong> vagas
+                                    </div>
+                                    <div class="concurso-status ${concurso.status}">
+                                        ${this.formatarStatus(concurso.status)}
+                                    </div>
+                                </div>
+
+                                <div class="concurso-actions">
+                                    ${adicionado ? `
+                                        <button class="action-btn remove" onclick="ConcursosManager.removerConcurso('${concurso.id}')">
+                                            <i class="fas fa-trash"></i>
+                                            Remover
+                                        </button>
+                                    ` : `
+                                        <button class="action-btn add" onclick="ConcursosManager.adicionarConcurso('${concurso.id}')">
+                                            <i class="fas fa-check"></i>
+                                            Adicionar
+                                        </button>
+                                    `}
+                                    ${concurso.link ? `
+                                        <a href="${concurso.link}" target="_blank" class="action-btn link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            Link
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                },
+
+                formatarData(data) {
+                    if (!data) return 'Data não informada';
+                    const d = new Date(data);
+                    return d.toLocaleDateString('pt-BR');
+                },
+
+                formatarStatus(status) {
+                    const statusMap = {
+                        'aberto': 'Aberto',
+                        'fechado': 'Fechado',
+                        'resultado': 'Resultado'
+                    };
+                    return statusMap[status] || status;
+                }
+            };
+
+            window.ConcursosManager = ConcursosManager;
+        })();
+    </script>
+    <script src="navigation.js"></script>
 </body>
 </html>
