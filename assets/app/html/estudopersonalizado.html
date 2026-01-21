@@ -3,25 +3,671 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Crie seu próprio quiz">
-    <link rel="icon" type="image/webp" href="../../assets/app/images/favicon.webp">
     <title>Estudo Personalizado | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="../../assets/app/css/global.css">
+    
+    <!-- CSS do Site Externo -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --color-success: #4caf50;
+            --color-warning: #ff9800;
+            --color-error: #f44336;
+            --color-info: #2196f3;
+            --bg-main: #f4f6f9;
+            --text-main: #1f2937;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--color-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 200px);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Header da Página */
+        .page-header {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--color-primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(26, 62, 116, 0.1);
+        }
+
+        .page-title {
+            flex: 1;
+        }
+
+        .page-title h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Card Principal */
+        .quiz-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .quiz-card h2 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .quiz-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .form-group p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-left: 0;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--color-success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(22px);
+        }
+
+        /* Select Dropdown */
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            background-color: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group select:hover {
+            border-color: var(--color-accent);
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+        }
+
+        /* Button */
+        .btn-primary {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--color-success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary i {
+            font-size: 18px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            main {
+                padding: 20px 15px;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            .quiz-card {
+                padding: 20px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="accessibility-container"></div>
-    <div id="header-container"></div>
+    <!-- Loader Global -->
+    <div id="loader-global">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Accessibility Container -->
+    <div id="accessibility-v2-container"></div>
+
+    <!-- Header Container -->
+    <div id="header-v2-container"></div>
+
+    <!-- Navigation Container -->
     <div id="nav-container"></div>
     <div id="breadcrumb-container"></div>
-    
-    <main id="main-content">
-        <h1>Estudo Personalizado</h1>
-        <p>Crie seu próprio quiz</p>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <button class="back-btn" onclick="window.history.back()" title="Voltar">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="page-title">
+                    <h1>Estudo Personalizado</h1>
+                    <p>Configure seu quiz do jeito que preferir</p>
+                </div>
+            </div>
+
+            <!-- Quiz Configuration Card -->
+            <div class="quiz-card">
+                <h2>Configurações do Quiz</h2>
+                <p>Escolha o tópico e o número de questões para criar seu quiz personalizado</p>
+
+                <!-- Toggle: Usar minhas questões -->
+                <div class="form-group">
+                    <label>
+                        <span>Usar minhas questões</span>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="useMyQuestions">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </label>
+                    <p>Use questões de seu banco pessoal</p>
+                </div>
+
+                <!-- Topic Selection -->
+                <div class="form-group">
+                    <label for="topicSelect">Tópico</label>
+                    <select id="topicSelect">
+                        <option value="">Todos os Tópicos</option>
+                        <option value="anatomia">Anatomia e Fisiologia</option>
+                        <option value="farmacologia">Farmacologia</option>
+                        <option value="patologia">Patologia</option>
+                        <option value="microbiologia">Microbiologia</option>
+                        <option value="bioquimica">Bioquímica</option>
+                        <option value="imunologia">Imunologia</option>
+                        <option value="saude-publica">Saúde Pública</option>
+                        <option value="enfermagem-basica">Enfermagem Básica</option>
+                        <option value="enfermagem-medica">Enfermagem Médica</option>
+                        <option value="enfermagem-cirurgica">Enfermagem Cirúrgica</option>
+                    </select>
+                </div>
+
+                <!-- Number of Questions -->
+                <div class="form-group">
+                    <label for="questionsSelect">Número de Questões</label>
+                    <select id="questionsSelect">
+                        <option value="10">10 questões</option>
+                        <option value="5">5 questões</option>
+                        <option value="15">15 questões</option>
+                        <option value="20">20 questões</option>
+                        <option value="30">30 questões</option>
+                        <option value="40">40 questões</option>
+                        <option value="50">50 questões</option>
+                    </select>
+                </div>
+
+                <!-- Start Button -->
+                <button class="btn-primary" id="startQuizBtn">
+                    <i class="fas fa-play"></i>
+                    Iniciar Estudo Focado
+                </button>
+            </div>
+        </div>
     </main>
-    
-    <div id="footer-container"></div>
-    
-    <script src="../../assets/components/js/navigation.js"></script>
-    <script src="../../assets/app/js/component-loader.js"></script>
+
+    <!-- Footer Container -->
+    <div id="footer-v2-container"></div>
+
+    <!-- EventBus Script -->
+    <script>
+        (function() {
+            'use strict';
+
+            // EventBus simples
+            window.EventBus = {
+                events: {},
+                on(event, callback) {
+                    if (!this.events[event]) this.events[event] = [];
+                    this.events[event].push(callback);
+                },
+                emit(event, data) {
+                    if (this.events[event]) {
+                        this.events[event].forEach(callback => callback(data));
+                    }
+                }
+            };
+
+            // Base URL
+            const BASE_URL = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
+
+            // Configuração de componentes
+            const CONFIG = {
+                components: [
+                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
+                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
+                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
+                ],
+                scripts: [
+                    'assets/js/event-bus-v4.js',
+                    'assets/js/accessibility-rules.js',
+                    'https://vlibras.gov.br/app/vlibras-plugin.js',
+                    'assets/js/accessibility-v4.js',
+                    'assets/js/header-v4.js',
+                    'assets/js/footer-v4.js'
+                ]
+            };
+
+            // Carregar componentes
+            async function loadComponent(id, path) {
+                try {
+                    const url = path.startsWith('http') ? path : BASE_URL + path;
+                    const response = await fetch(url + '?t=' + Date.now());
+                    if (!response.ok) throw new Error(response.status);
+                    const html = await response.text();
+                    const container = document.getElementById(id);
+                    if (container) {
+                        container.innerHTML = html;
+                        window.EventBus.emit(`module:${id}:ready`);
+                    }
+                    return true;
+                } catch (e) {
+                    console.error(`[App] Erro ao carregar ${id}:`, e.message);
+                    return false;
+                }
+            }
+
+            // Carregar scripts
+            async function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src.startsWith('http') ? src : BASE_URL + src;
+                    script.onload = () => resolve(true);
+                    script.onerror = () => reject(new Error(`Erro ao carregar ${src}`));
+                    document.body.appendChild(script);
+                });
+            }
+
+            // Inicializar app
+            async function initApp() {
+                try {
+                    await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
+                    
+                    for (const script of CONFIG.scripts) {
+                        try {
+                            await loadScript(script);
+                        } catch (e) {
+                            console.warn(`[App] Script opcional não carregado: ${script}`);
+                        }
+                    }
+
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+
+                    console.log('[App] Estudo Personalizado carregado com sucesso!');
+                } catch (e) {
+                    console.error('[App] Erro na inicialização:', e);
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
+            } else {
+                initApp();
+            }
+        })();
+    </script>
+
+    <!-- Estudo Personalizado Script -->
+    <script>
+        (function() {
+            'use strict';
+
+            const EstudoPersonalizadoManager = {
+                config: {
+                    useMyQuestions: false,
+                    topic: '',
+                    numberOfQuestions: 10
+                },
+
+                init() {
+                    console.log('[EstudoPersonalizado] Inicializando...');
+                    this.setupEventListeners();
+                    this.loadTopicsFromAdmin();
+                },
+
+                setupEventListeners() {
+                    // Toggle: Usar minhas questões
+                    const toggleBtn = document.getElementById('useMyQuestions');
+                    if (toggleBtn) {
+                        toggleBtn.addEventListener('change', (e) => {
+                            this.config.useMyQuestions = e.target.checked;
+                            this.updateTopicOptions();
+                            console.log('[EstudoPersonalizado] Usar minhas questões:', this.config.useMyQuestions);
+                        });
+                    }
+
+                    // Select: Tópico
+                    const topicSelect = document.getElementById('topicSelect');
+                    if (topicSelect) {
+                        topicSelect.addEventListener('change', (e) => {
+                            this.config.topic = e.target.value;
+                            console.log('[EstudoPersonalizado] Tópico selecionado:', this.config.topic);
+                        });
+                    }
+
+                    // Select: Número de questões
+                    const questionsSelect = document.getElementById('questionsSelect');
+                    if (questionsSelect) {
+                        questionsSelect.addEventListener('change', (e) => {
+                            this.config.numberOfQuestions = parseInt(e.target.value);
+                            console.log('[EstudoPersonalizado] Questões selecionadas:', this.config.numberOfQuestions);
+                        });
+                    }
+
+                    // Botão: Iniciar Estudo
+                    const startBtn = document.getElementById('startQuizBtn');
+                    if (startBtn) {
+                        startBtn.addEventListener('click', () => this.startQuiz());
+                    }
+                },
+
+                updateTopicOptions() {
+                    const topicSelect = document.getElementById('topicSelect');
+                    if (!topicSelect) return;
+
+                    if (this.config.useMyQuestions) {
+                        // Carregar tópicos de minhas questões
+                        topicSelect.innerHTML = '<option value="">Todas as minhas questões</option>';
+                        const myTopics = JSON.parse(localStorage.getItem('my_topics')) || [];
+                        myTopics.forEach(topic => {
+                            const option = document.createElement('option');
+                            option.value = topic.id;
+                            option.textContent = topic.name;
+                            topicSelect.appendChild(option);
+                        });
+                    } else {
+                        // Tópicos padrão do admin
+                        topicSelect.innerHTML = `
+                            <option value="">Todos os Tópicos</option>
+                            <option value="anatomia">Anatomia e Fisiologia</option>
+                            <option value="farmacologia">Farmacologia</option>
+                            <option value="patologia">Patologia</option>
+                            <option value="microbiologia">Microbiologia</option>
+                            <option value="bioquimica">Bioquímica</option>
+                            <option value="imunologia">Imunologia</option>
+                            <option value="saude-publica">Saúde Pública</option>
+                            <option value="enfermagem-basica">Enfermagem Básica</option>
+                            <option value="enfermagem-medica">Enfermagem Médica</option>
+                            <option value="enfermagem-cirurgica">Enfermagem Cirúrgica</option>
+                        `;
+                    }
+                },
+
+                loadTopicsFromAdmin() {
+                    try {
+                        const topics = JSON.parse(localStorage.getItem('admin_topics')) || [];
+                        console.log('[EstudoPersonalizado] Tópicos carregados do admin:', topics);
+                    } catch (error) {
+                        console.error('[EstudoPersonalizado] Erro ao carregar tópicos:', error);
+                    }
+                },
+
+                startQuiz() {
+                    try {
+                        // Validar configurações
+                        if (!this.config.numberOfQuestions) {
+                            alert('Por favor, selecione o número de questões');
+                            return;
+                        }
+
+                        // Buscar questões
+                        const questions = this.fetchQuestions();
+                        
+                        if (questions.length === 0) {
+                            alert('Nenhuma questão encontrada com os critérios selecionados');
+                            return;
+                        }
+
+                        // Salvar configuração e questões no localStorage
+                        localStorage.setItem('current_quiz', JSON.stringify({
+                            type: 'personalized',
+                            useMyQuestions: this.config.useMyQuestions,
+                            topic: this.config.topic,
+                            numberOfQuestions: this.config.numberOfQuestions,
+                            questions: questions,
+                            startTime: new Date().toISOString()
+                        }));
+
+                        console.log('[EstudoPersonalizado] Quiz iniciado com', questions.length, 'questões');
+                        
+                        // Redirecionar para página de quiz
+                        window.location.href = 'quiz.html';
+                    } catch (error) {
+                        console.error('[EstudoPersonalizado] Erro ao iniciar quiz:', error);
+                        alert('Erro ao iniciar o quiz. Tente novamente.');
+                    }
+                },
+
+                fetchQuestions() {
+                    try {
+                        let allQuestions = [];
+
+                        if (this.config.useMyQuestions) {
+                            // Buscar questões do usuário
+                            allQuestions = JSON.parse(localStorage.getItem('my_questions')) || [];
+                        } else {
+                            // Buscar questões do banco de dados (admin)
+                            allQuestions = JSON.parse(localStorage.getItem('admin_questions')) || [];
+                        }
+
+                        // Filtrar por tópico se selecionado
+                        if (this.config.topic) {
+                            allQuestions = allQuestions.filter(q => q.topic === this.config.topic);
+                        }
+
+                        // Embaralhar e limitar ao número de questões
+                        allQuestions = this.shuffleArray(allQuestions);
+                        return allQuestions.slice(0, this.config.numberOfQuestions);
+                    } catch (error) {
+                        console.error('[EstudoPersonalizado] Erro ao buscar questões:', error);
+                        return [];
+                    }
+                },
+
+                shuffleArray(array) {
+                    const shuffled = [...array];
+                    for (let i = shuffled.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                    }
+                    return shuffled;
+                }
+            };
+
+            // Inicializar quando o DOM estiver pronto
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    EstudoPersonalizadoManager.init();
+                });
+            } else {
+                EstudoPersonalizadoManager.init();
+            }
+
+            window.EstudoPersonalizadoManager = EstudoPersonalizadoManager;
+        })();
+    </script>
+    <script src="navigation.js"></script>
 </body>
 </html>
