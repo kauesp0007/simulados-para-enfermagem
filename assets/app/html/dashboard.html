@@ -3,25 +3,569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Seu progresso e estatísticas">
-    <link rel="icon" type="image/webp" href="../../assets/app/images/favicon.webp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Dashboard de progresso e desempenho - Simulados de Enfermagem">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    
     <title>Dashboard | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="../../assets/app/css/global.css">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+
+    <style>
+        :root {
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --bg-main: #f4f6f9;
+            --text-main: #1f2937;
+            --text-secondary: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-main); 
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Nunito Sans', sans-serif; }
+
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-primary); color: white; padding: 8px; z-index: 100000; transition: top 0.3s; }
+        .skip-link:focus { top: 0; }
+
+        #loader-global { 
+            position: fixed; 
+            inset: 0; 
+            background: #ffffff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 200000; 
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+        #loader-global.hidden { opacity: 0; pointer-events: none; }
+        
+        .loader-dots { display: flex; gap: 8px; }
+        .loader-dot { width: 10px; height: 10px; background: var(--color-primary); border-radius: 50%; opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+
+        .page-wrapper { 
+            width: 100%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 2rem 1.5rem; 
+            position: relative; 
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+        }
+
+        /* Dashboard Styles */
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-label i {
+            color: var(--color-primary);
+            font-size: 1.1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            font-size: 1.3rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--color-accent);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background: #152c4f;
+            transform: translateY(-2px);
+        }
+
+        /* Meta Diária e Notificações */
+        .meta-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #FF9800;
+        }
+
+        .meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .meta-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .meta-percentage {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .meta-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Notificação Card */
+        .notification-card {
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #FF9800;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .notification-icon {
+            font-size: 2rem;
+            color: #FF9800;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-main {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #E65100;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .btn-secondary:hover {
+            background: #F57C00;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .notification-card {
+                flex-direction: column;
+            }
+            .page-wrapper { padding: 1rem; }
+            .dashboard-header h1 { font-size: 1.8rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<body>
+<body class="light-mode">
+
+    <!-- LOADER -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- SKIP LINK -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
     <div id="header-container"></div>
     <div id="nav-container"></div>
     <div id="breadcrumb-container"></div>
-    
-    <main id="main-content">
-        <h1>Dashboard</h1>
-        <p>Seu progresso e estatísticas</p>
-    </main>
-    
+
+    <!-- CONTEÚDO -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            
+            <!-- Header -->
+            <div class="dashboard-header">
+                <h1>👋 Bem-vindo de volta!</h1>
+                <p>Aqui está seu progresso de hoje</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-check-circle"></i> Questões Respondidas</div>
+                    <div class="stat-value" id="total-questions">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-bullseye"></i> Taxa de Acerto</div>
+                    <div class="stat-value" id="accuracy-rate">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-fire"></i> Dias Seguidos</div>
+                    <div class="stat-value" id="consecutive-days">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-star"></i> XP Total</div>
+                    <div class="stat-value" id="total-xp">0</div>
+                </div>
+            </div>
+
+            <!-- Meta Diária -->
+            <div class="meta-section">
+                <div class="meta-header">
+                    <span class="meta-label">Meta Diária</span>
+                    <span class="meta-percentage" id="daily-percentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="daily-progress" style="width: 0%"></div>
+                </div>
+                <p class="meta-description" id="daily-description">0 de 10 questões hoje</p>
+            </div>
+
+            <!-- Notificação de Próxima Prova -->
+            <div class="notification-card">
+                <div class="notification-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Próxima Prova</div>
+                    <div class="notification-main" id="next-exam">Faltam dias!</div>
+                    <div class="notification-subtitle">Inscreva-se agora e comece a estudar para esta oportunidade</div>
+                    <button class="btn-secondary" onclick="window.location.href='concursospublicos.html'">Ver Detalhes</button>
+                </div>
+            </div>
+
+            <!-- Modos de Estudo -->
+            <h2 class="section-title"><i class="fas fa-book"></i> Modos de Estudo</h2>
+            <div class="cards-grid">
+                <div class="feature-card">
+                    <h3>📝 Estudo Personalizado</h3>
+                    <p>Monte seu quiz com seus tópicos e número de questões preferidos.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/estudopersonalizado.html'">Começar</button>
+                </div>
+                <div class="feature-card">
+                    <h3>📋 Provas Completas</h3>
+                    <p>Resolva provas de concursos anteriores na íntegra por banca e cargo.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/provascompletas.html'">Começar</button>
+                </div>
+                <div class="feature-card">
+                    <h3>⏱️ Simulado Real</h3>
+                    <p>Teste seus conhecimentos em um ambiente de prova real com cronômetro.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/simuladoreal.html'">Começar</button>
+                </div>
+            </div>
+
+            <!-- Desafios e Recursos -->
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Desafios e Recursos</h2>
+            <div class="cards-grid">
+                <div class="feature-card">
+                    <h3>⚡ Memória Rápida</h3>
+                    <p>Responda o máximo de questões em 15 minutos! Teste sua velocidade.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/memoriarapida.html'">Desafiar</button>
+                </div>
+                <div class="feature-card">
+                    <h3>🔄 Desafio Inverso</h3>
+                    <p>Adivinhe a pergunta pela resposta. Desafie seu conhecimento!</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/desafioinverso.html'">Desafiar</button>
+                </div>
+                <div class="feature-card">
+                    <h3>💡 Quiz de Curiosidades</h3>
+                    <p>Aprenda fatos novos e divertidos sobre enfermagem.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/quizcuriosidade.html'">Desafiar</button>
+                </div>
+                <div class="feature-card">
+                    <h3>📚 Biblioteca</h3>
+                    <p>Acesse mapas mentais e recursos de estudo exclusivos.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/biblioteca.html'">Explorar</button>
+                </div>
+                <div class="feature-card">
+                    <h3>🧘 Modo Anti-Stress</h3>
+                    <p>Reduza a ansiedade com exercícios de meditação e respiração.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/modoantiestresse.html'">Relaxar</button>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Acompanhe seu Progresso</h3>
+                    <p>Veja suas estatísticas, gráficos e evolução do aprendizado.</p>
+                    <button class="btn" onclick="window.location.href='assets/app/html/minhasquestoes.html'">Ver Análise</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
     <div id="footer-container"></div>
-    
-    <script src="../../assets/components/js/navigation.js"></script>
-    <script src="../../assets/app/js/component-loader.js"></script>
+
+    <!-- SCRIPTS -->
+    <script src="navigation.js"></script>
+    <script src="assets/app/js/component-loader.js"></script>
+
+    <script>
+        (function() {
+            'use strict';
+
+            /**
+             * Dashboard Manager - Gerencia dados e estatísticas
+             */
+            const DashboardManager = {
+                init() {
+                    this.loadStats();
+                    this.loadDailyGoal();
+                    this.hideLoaderWhenReady();
+                },
+
+                loadStats() {
+                    try {
+                        const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                        
+                        // Total de questões
+                        document.getElementById('total-questions').textContent = historico.length;
+                        
+                        // Taxa de acerto
+                        if (historico.length > 0) {
+                            const mediaAcertos = Math.round(
+                                historico.reduce((sum, q) => sum + (q.percentual || 0), 0) / historico.length
+                            );
+                            document.getElementById('accuracy-rate').textContent = mediaAcertos + '%';
+                        }
+                        
+                        // Dias consecutivos
+                        const consecutiveDays = this.calculateConsecutiveDays(historico);
+                        document.getElementById('consecutive-days').textContent = consecutiveDays;
+                        
+                        // XP Total
+                        const totalXP = historico.reduce((sum, q) => sum + (q.xp || 0), 0);
+                        document.getElementById('total-xp').textContent = totalXP.toLocaleString('pt-BR');
+                    } catch (error) {
+                        console.error('Erro ao carregar estatísticas:', error);
+                    }
+                },
+
+                loadDailyGoal() {
+                    try {
+                        const today = new Date().toDateString();
+                        const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                        const todayQuestions = historico.filter(q => new Date(q.dataFinal).toDateString() === today).length;
+                        const dailyGoal = 10;
+                        const percentage = Math.round((todayQuestions / dailyGoal) * 100);
+
+                        document.getElementById('daily-percentage').textContent = percentage + '%';
+                        document.getElementById('daily-progress').style.width = percentage + '%';
+                        document.getElementById('daily-description').textContent = `${todayQuestions} de ${dailyGoal} questões hoje`;
+                    } catch (error) {
+                        console.error('Erro ao carregar meta diária:', error);
+                    }
+                },
+
+                calculateConsecutiveDays(historico) {
+                    if (historico.length === 0) return 0;
+
+                    const hoje = new Date().toDateString();
+                    let dias = 0;
+                    let dataAtual = new Date();
+
+                    for (let i = 0; i < 365; i++) {
+                        const dataStr = dataAtual.toDateString();
+                        const temAtividadeNoDia = historico.some(q => 
+                            new Date(q.dataFinal).toDateString() === dataStr
+                        );
+
+                        if (temAtividadeNoDia) {
+                            dias++;
+                        } else if (dataStr !== hoje) {
+                            break;
+                        }
+
+                        dataAtual.setDate(dataAtual.getDate() - 1);
+                    }
+
+                    return dias;
+                },
+
+                hideLoaderWhenReady() {
+                    // Aguardar componentes carregarem
+                    setTimeout(() => {
+                        const loader = document.getElementById('loader-global');
+                        if (loader) {
+                            loader.classList.add('hidden');
+                            setTimeout(() => loader.style.display = 'none', 500);
+                        }
+                    }, 500);
+                }
+            };
+
+            // Inicializar quando o DOM estiver pronto
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => DashboardManager.init());
+            } else {
+                DashboardManager.init();
+            }
+        })();
+    </script>
 </body>
 </html>
