@@ -3,73 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Concursos | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Crie e gerencie suas próprias questões de estudo em Enfermagem">
+    
+    <title>Minhas Questões | Simulados de Enfermagem</title>
 
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS Externos do Projeto Original -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+
+    <style>
         :root {
-            --primary: #1A3E74;
-            --secondary: #00A86B;
-            --danger: #E63946;
-            --warning: #F77F00;
-            --info: #0096C7;
-            --light: #F8F9FA;
-            --dark: #212529;
-            --border: #E0E0E0;
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-info: #3b82f6;
+            --bg-light: #f9fafb;
+            --text-main: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-main);
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%);
+        h1, h2, h3 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-primary);
             color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
         }
 
-        header nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
+        .skip-link:focus {
+            top: 0;
+        }
+
+        main {
+            min-height: calc(100vh - 200px);
+            padding: 2rem 1.5rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        header a {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-        }
-
-        header a:hover {
-            opacity: 0.9;
-        }
-
-        /* Main */
-        main {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        .header-section {
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -78,445 +80,386 @@
             gap: 1rem;
         }
 
-        .header-section h1 {
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
             font-size: 2rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: var(--color-primary);
         }
 
-        .header-section p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        select {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            background: white;
-            cursor: pointer;
+        .page-subtitle {
+            color: var(--text-secondary);
+            margin: 0.5rem 0 0 0;
             font-size: 0.95rem;
         }
 
         .btn {
-            padding: 0.6rem 1.2rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-decoration: none;
+            border: none;
+            gap: 0.5rem;
         }
 
         .btn-primary {
-            background: var(--info);
+            background-color: var(--color-accent);
             color: white;
         }
 
         .btn-primary:hover {
-            background: #0077a8;
+            background-color: #00a8bd;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,150,199,0.3);
+            box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
         }
 
         .btn-secondary {
-            background: var(--secondary);
+            background-color: var(--text-secondary);
             color: white;
         }
 
         .btn-secondary:hover {
-            background: #008c5a;
+            background-color: #4b5563;
         }
 
         .btn-danger {
-            background: var(--danger);
+            background-color: var(--color-danger);
             color: white;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.9rem;
         }
 
         .btn-danger:hover {
-            background: #d62828;
+            background-color: #dc2626;
         }
 
-        .btn-edit {
-            background: var(--info);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        .btn-edit:hover {
-            background: #0077a8;
-        }
-
-        /* Cards Grid */
-        .cards-grid {
+        /* ===== ESTATÍSTICAS ===== */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .card {
+        .stat-card {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            transform: translateY(-4px);
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%);
-            color: white;
+            border-radius: 12px;
             padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--color-primary);
         }
 
-        .card-title {
-            flex: 1;
-            font-size: 1.1rem;
-            font-weight: 600;
-            line-height: 1.4;
-            max-height: 2.8em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .card-code {
-            background: rgba(255,255,255,0.2);
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            white-space: nowrap;
-            margin-left: 1rem;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .card-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .badge-success {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .badge-warning {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .badge-danger {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .badge-info {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-
-        .time-remaining {
-            background: var(--danger);
-            color: white;
-            padding: 0.8rem 1rem;
-            border-radius: 4px;
-            text-align: center;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .time-remaining.urgent {
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .card-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
+        .stat-label {
+            color: var(--text-secondary);
             font-size: 0.9rem;
-        }
-
-        .card-info-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #666;
-        }
-
-        .card-info-item i {
-            color: var(--primary);
-            width: 20px;
-        }
-
-        .progress-section {
-            margin-bottom: 1rem;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: #666;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary) 0%, #00c896 100%);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .card-footer {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-details {
-            flex: 1;
-            background: var(--info);
-            color: white;
-            padding: 0.6rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            text-align: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-details:hover {
-            background: #0077a8;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: #ccc;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h2 {
-            color: var(--primary);
             margin-bottom: 0.5rem;
         }
 
-        .empty-state p {
-            color: #666;
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* ===== QUESTÕES ===== */
+        .questoes-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--color-primary);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
             margin-bottom: 1.5rem;
         }
 
-        /* Modal */
+        .questoes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .questao-item {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .questao-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--color-accent);
+        }
+
+        .questao-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .questao-pergunta {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            word-break: break-word;
+        }
+
+        .questao-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .questao-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .tag-urgencia {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--color-danger);
+        }
+
+        .tag-pendente {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--color-warning);
+        }
+
+        .tag-habitual {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--color-info);
+        }
+
+        .tag-publica {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--color-success);
+        }
+
+        .questao-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .action-btn-view {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--color-info);
+        }
+
+        .action-btn-view:hover {
+            background-color: var(--color-info);
+            color: white;
+        }
+
+        .action-btn-edit {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--color-warning);
+        }
+
+        .action-btn-edit:hover {
+            background-color: var(--color-warning);
+            color: white;
+        }
+
+        .action-btn-delete {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--color-danger);
+        }
+
+        .action-btn-delete:hover {
+            background-color: var(--color-danger);
+            color: white;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 1000;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
         }
 
         .modal.active {
             display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
-            background: white;
-            border-radius: 8px;
-            max-width: 800px;
-            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-header {
-            background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%);
-            color: white;
-            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .modal-header h2 {
-            font-size: 1.5rem;
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin: 0;
         }
 
         .modal-close {
             background: none;
             border: none;
-            color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s;
         }
 
         .modal-close:hover {
-            opacity: 0.8;
+            color: var(--text-main);
         }
 
-        /* Tabs */
-        .tabs {
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
             display: flex;
-            border-bottom: 2px solid var(--border);
-            background: #f5f5f5;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
         }
 
-        .tab-btn {
-            flex: 1;
-            padding: 1rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            color: #666;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        .tab-btn:hover {
-            background: #f0f0f0;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 2rem;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Form */
+        /* ===== FORM ===== */
         .form-group {
             margin-bottom: 1.5rem;
         }
 
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--text-main);
         }
 
-        label .required {
-            color: var(--danger);
+        .form-group label .required {
+            color: var(--color-danger);
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="date"],
-        input[type="time"],
-        input[type="number"],
-        input[type="url"],
-        select,
-        textarea {
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-family: inherit;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
         }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 62, 116, 0.1);
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
         }
 
-        textarea {
+        .form-group textarea {
             resize: vertical;
             min-height: 100px;
         }
@@ -527,836 +470,562 @@
             gap: 1rem;
         }
 
-        .form-row.full {
-            grid-template-columns: 1fr;
+        .form-row-full {
+            grid-column: 1 / -1;
         }
 
-        /* Materials */
-        .materials-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .material-tag {
-            background: var(--info);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+        .form-checkbox {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            margin-top: 1rem;
         }
 
-        .material-tag button {
-            background: none;
-            border: none;
-            color: white;
+        .form-checkbox input {
+            width: auto;
             cursor: pointer;
-            font-size: 1rem;
-            padding: 0;
         }
 
-        .material-tag button:hover {
-            opacity: 0.8;
+        .form-checkbox label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
         }
 
-        .add-material {
+        .respostas-group {
             display: flex;
-            gap: 0.5rem;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
-        .add-material input {
+        .resposta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background-color: var(--bg-light);
+            border-radius: 6px;
+        }
+
+        .resposta-item input[type="radio"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .resposta-item input[type="text"] {
             flex: 1;
+            margin: 0;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
         }
 
-        .add-material button {
-            background: var(--secondary);
+        .add-tag-btn {
+            background-color: var(--color-accent);
             color: white;
             border: none;
-            padding: 0.8rem 1.2rem;
-            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s;
         }
 
-        .add-material button:hover {
-            background: #008c5a;
+        .add-tag-btn:hover {
+            background-color: #00a8bd;
         }
 
-        /* Phases */
-        .phase-item {
-            background: #f5f5f5;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--info);
-        }
-
-        .phase-item h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .phase-item p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .add-phase-btn {
-            width: 100%;
-            padding: 1rem;
-            background: #f5f5f5;
-            border: 2px dashed var(--border);
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--primary);
-            transition: all 0.3s ease;
-        }
-
-        .add-phase-btn:hover {
-            background: #f0f0f0;
-            border-color: var(--primary);
-        }
-
-        /* Modal Actions */
-        .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-
-        .btn-cancel {
-            background: #e0e0e0;
-            color: var(--dark);
-        }
-
-        .btn-cancel:hover {
-            background: #d0d0d0;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        footer a {
-            color: #0096C7;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Accessibility */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--primary);
-            color: white;
-            padding: 8px;
-            text-decoration: none;
-            z-index: 100;
-        }
-
-        .skip-link:focus {
-            top: 0;
-        }
-
-        /* Responsive */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header-section {
+            .page-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            .controls {
-                width: 100%;
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .questao-item {
                 flex-direction: column;
+                align-items: flex-start;
             }
 
-            .filter-group {
+            .questao-actions {
                 width: 100%;
-            }
-
-            .filter-group select {
-                width: 100%;
+                justify-content: flex-start;
             }
 
             .form-row {
                 grid-template-columns: 1fr;
             }
 
-            .card-header {
-                flex-direction: column;
-            }
-
-            .card-code {
-                margin-left: 0;
-                margin-top: 0.5rem;
-            }
-
-            .tabs {
-                flex-wrap: wrap;
-            }
-
-            .tab-btn {
-                flex: 0 1 auto;
-                padding: 0.8rem;
-                font-size: 0.9rem;
-            }
-
-            header nav {
-                flex-direction: column;
-                gap: 1rem;
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
             }
         }
     </style>
-
-    <!-- CSS Externos do Projeto Original -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
 </head>
 <body>
-    <a href="#main" class="skip-link">Pular para conteúdo principal</a>
+    <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
 
-    <!-- Accessibility Container -->
-    <div id="accessibility-container"></div>
-
-    <!-- Header Container -->
+    <!-- Header (Modular) -->
     <header id="header-container"></header>
 
-    <!-- Legacy Header (Fallback) -->
-    <header style="display: none;">
-        <nav>
-            <a href="index.html"><i class="fas fa-home"></i> Início</a>
-            <a href="modo-anti-estresse.html"><i class="fas fa-spa"></i> Modo Calma</a>
-        </nav>
-    </header>
+    <!-- Painel de Acessibilidade (Modular) -->
+    <div id="accessibility-container"></div>
 
-    <!-- Main -->
-    <main id="main">
-        <div class="header-section">
+    <!-- Conteúdo Principal -->
+    <main id="main-content">
+        <div class="page-header">
             <div>
-                <h1><i class="fas fa-graduation-cap"></i> Meus Concursos</h1>
-                <p>Gerencie suas inscrições e acompanhe seu progresso</p>
+                <h1 class="page-title">
+                    <i class="fas fa-pencil-alt"></i> Minhas Questões
+                </h1>
+                <p class="page-subtitle">Crie e gerencie suas próprias questões de estudo</p>
             </div>
-            <div class="controls">
-                <div class="filter-group">
-                    <label for="filter-phase" style="margin: 0; color: var(--primary);">
-                        <i class="fas fa-filter"></i> Filtro
-                    </label>
-                    <select id="filter-phase">
-                        <option value="">Todas as Fases</option>
-                        <option value="inscricao">Inscrição</option>
-                        <option value="prova">Prova</option>
-                        <option value="resultado">Resultado</option>
-                    </select>
+            <button class="btn btn-primary" id="btn-new-questao">
+                <i class="fas fa-plus"></i> Nova Questão
+            </button>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total de Questões</div>
+                <div class="stat-number" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pendentes</div>
+                <div class="stat-number" id="stat-pendentes">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Aprovadas</div>
+                <div class="stat-number" id="stat-aprovadas">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Públicas</div>
+                <div class="stat-number" id="stat-publicas">0</div>
+            </div>
+        </div>
+
+        <!-- Suas Questões -->
+        <div class="questoes-section">
+            <h2 class="section-title">Suas Questões (<span id="questoes-count">0</span>)</h2>
+            <p class="section-subtitle">As questões aprovadas pelo administrador podem ser usadas no banco oficial</p>
+
+            <div id="questoes-container" class="questoes-list"></div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-inbox"></i>
                 </div>
-                <button class="btn btn-primary" id="btn-new-concurso">
-                    <i class="fas fa-plus"></i> Novo Concurso
+                <h3 class="empty-title">Você ainda não criou nenhuma questão</h3>
+                <p class="empty-text">Comece criando sua primeira questão para estudar</p>
+                <button class="btn btn-primary" id="btn-empty-new">
+                    <i class="fas fa-plus"></i> Criar Primeira Questão
                 </button>
             </div>
         </div>
-
-        <!-- Cards Container -->
-        <div id="cards-container" class="cards-grid"></div>
-
-        <!-- Empty State -->
-        <div id="empty-state" class="empty-state" style="display: none;">
-            <i class="fas fa-trophy" style="font-size: 5rem; color: #FFD700;"></i>
-            <h2>Nenhum concurso cadastrado</h2>
-            <p>Comece adicionando os concursos para os quais você está se preparando</p>
-            <button class="btn btn-primary" id="btn-empty-new" style="margin-top: 1.5rem;">
-                <i class="fas fa-plus"></i> Adicionar Primeiro Concurso
-            </button>
-        </div>
     </main>
 
-    <!-- Modal Novo/Editar Concurso -->
-    <div id="modal-concurso" class="modal">
+    <!-- Modal Nova/Editar Questão -->
+    <div id="modal-questao" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modal-title">Novo Concurso</h2>
+                <h2 class="modal-title" id="modal-title">Nova Questão</h2>
                 <button class="modal-close" id="modal-close">&times;</button>
             </div>
 
-            <!-- Tabs -->
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="basico">Básico</button>
-                <button class="tab-btn" data-tab="fases">Fases (<span id="fases-count">0</span>)</button>
-                <button class="tab-btn" data-tab="materiais">Materiais</button>
-                <button class="tab-btn" data-tab="adicional">Adicional</button>
-            </div>
-
-            <!-- Tab: Básico -->
-            <div class="tab-content active" id="tab-basico">
-                <form id="form-basico">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="concurso-nome">Nome do Concurso <span class="required">*</span></label>
-                            <input type="text" id="concurso-nome" placeholder="Ex: Concurso Prefeitura SP" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="concurso-instituicao">Instituição</label>
-                            <input type="text" id="concurso-instituicao" placeholder="Ex: Prefeitura de São Paulo">
-                        </div>
+            <div class="modal-body">
+                <form id="form-questao">
+                    <div class="form-group">
+                        <label for="questao-pergunta">
+                            Pergunta <span class="required">*</span>
+                        </label>
+                        <textarea id="questao-pergunta" placeholder="Digite sua pergunta aqui..." required></textarea>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="concurso-banca">Banca Examinadora</label>
-                            <input type="text" id="concurso-banca" placeholder="Ex: CEBRASPE, FCC">
-                        </div>
-                        <div class="form-group">
-                            <label for="concurso-site">Site do Concurso</label>
-                            <input type="url" id="concurso-site" placeholder="https://...">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="concurso-estado">Estado <span class="required">*</span></label>
-                            <select id="concurso-estado" required>
-                                <option value="">Selecionar estado</option>
-                                <option value="AC">Acre</option>
-                                <option value="AL">Alagoas</option>
-                                <option value="AP">Amapá</option>
-                                <option value="AM">Amazonas</option>
-                                <option value="BA">Bahia</option>
-                                <option value="CE">Ceará</option>
-                                <option value="DF">Distrito Federal</option>
-                                <option value="ES">Espírito Santo</option>
-                                <option value="GO">Goiás</option>
-                                <option value="MA">Maranhão</option>
-                                <option value="MT">Mato Grosso</option>
-                                <option value="MS">Mato Grosso do Sul</option>
-                                <option value="MG">Minas Gerais</option>
-                                <option value="PA">Pará</option>
-                                <option value="PB">Paraíba</option>
-                                <option value="PR">Paraná</option>
-                                <option value="PE">Pernambuco</option>
-                                <option value="PI">Piauí</option>
-                                <option value="RJ">Rio de Janeiro</option>
-                                <option value="RN">Rio Grande do Norte</option>
-                                <option value="RS">Rio Grande do Sul</option>
-                                <option value="RO">Rondônia</option>
-                                <option value="RR">Roraima</option>
-                                <option value="SC">Santa Catarina</option>
-                                <option value="SP">São Paulo</option>
-                                <option value="SE">Sergipe</option>
-                                <option value="TO">Tocantins</option>
+                            <label for="questao-topico">
+                                Tópico <span class="required">*</span>
+                            </label>
+                            <select id="questao-topico" required>
+                                <option value="">Selecionar tópico</option>
+                                <option value="Anatomia">Anatomia</option>
+                                <option value="Fisiologia">Fisiologia</option>
+                                <option value="Farmacologia">Farmacologia</option>
+                                <option value="Patologia">Patologia</option>
+                                <option value="Microbiologia">Microbiologia</option>
+                                <option value="Imunologia">Imunologia</option>
+                                <option value="Bioquímica">Bioquímica</option>
+                                <option value="Enfermagem Clínica">Enfermagem Clínica</option>
+                                <option value="Enfermagem Cirúrgica">Enfermagem Cirúrgica</option>
+                                <option value="Enfermagem Obstétrica">Enfermagem Obstétrica</option>
+                                <option value="Enfermagem Pediátrica">Enfermagem Pediátrica</option>
+                                <option value="Saúde Coletiva">Saúde Coletiva</option>
+                                <option value="Administração">Administração</option>
+                                <option value="Ética">Ética</option>
+                                <option value="Legislação">Legislação</option>
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="concurso-cidade">Cidade</label>
-                            <input type="text" id="concurso-cidade" placeholder="Ex: São Paulo">
+                            <label for="questao-dificuldade">
+                                Dificuldade <span class="required">*</span>
+                            </label>
+                            <select id="questao-dificuldade" required>
+                                <option value="">Selecionar dificuldade</option>
+                                <option value="Fácil">Fácil</option>
+                                <option value="Médio">Médio</option>
+                                <option value="Difícil">Difícil</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="concurso-data-prova">Data de Prova</label>
-                            <input type="date" id="concurso-data-prova">
-                        </div>
-                        <div class="form-group">
-                            <label for="concurso-horario">Horário de Entrada</label>
-                            <input type="time" id="concurso-horario">
+                    <div class="form-group">
+                        <label>Respostas <span class="required">*</span></label>
+                        <div class="respostas-group">
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="0" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 1" required>
+                            </div>
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="1" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 2" required>
+                            </div>
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="2" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 3" required>
+                            </div>
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="3" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 4" required>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="concurso-local">Local de Prova</label>
-                            <input type="text" id="concurso-local" placeholder="Ex: Av. Paulista, 1000">
-                        </div>
-                        <div class="form-group">
-                            <label for="concurso-preco">Preço Final de Entrada</label>
-                            <input type="text" id="concurso-preco" placeholder="Ex: R$ 100,00">
-                        </div>
+                    <div class="form-group">
+                        <label for="questao-explicacao">Explicação (opcional)</label>
+                        <textarea id="questao-explicacao" placeholder="Explique por que a resposta está correta..."></textarea>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="concurso-vagas">Número de Vagas</label>
-                            <input type="number" id="concurso-vagas" placeholder="Ex: 10">
+                    <div class="form-group">
+                        <label for="questao-tags">Tags (opcional)</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="questao-tags" placeholder="Ex: urgência, habitual">
+                            <button type="button" class="add-tag-btn" id="btn-add-tag">
+                                <i class="fas fa-plus"></i> Adicionar
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <label for="concurso-salario">Salário</label>
-                            <input type="text" id="concurso-salario" placeholder="Ex: R$ 5.000,00">
-                        </div>
+                        <div id="tags-list" style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;"></div>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="questao-publica">
+                        <label for="questao-publica">Tornar pública (outros usuários poderão ver)</label>
                     </div>
                 </form>
             </div>
 
-            <!-- Tab: Fases -->
-            <div class="tab-content" id="tab-fases">
-                <div id="fases-list"></div>
-                <button class="add-phase-btn" id="btn-add-phase">
-                    <i class="fas fa-plus"></i> Adicionar Nova Fase
-                </button>
-            </div>
-
-            <!-- Tab: Materiais -->
-            <div class="tab-content" id="tab-materiais">
-                <div class="form-group">
-                    <label>Materiais Sugeridos</label>
-                    <div class="materials-list" id="materiais-sugeridos">
-                        <button type="button" class="material-tag" data-material="BIO">BIO</button>
-                        <button type="button" class="material-tag" data-material="CPF">CPF</button>
-                        <button type="button" class="material-tag" data-material="Cartório de Imóveis">Cartório de Imóveis</button>
-                        <button type="button" class="material-tag" data-material="Cartório Protesto">Cartório Protesto</button>
-                        <button type="button" class="material-tag" data-material="Leis e Súmulas">Leis e Súmulas</button>
-                        <button type="button" class="material-tag" data-material="Calculadora">Calculadora</button>
-                        <button type="button" class="material-tag" data-material="Comparação de Resoluções">Comparação de Resoluções</button>
-                        <button type="button" class="material-tag" data-material="Garrafa de Água">Garrafa de Água</button>
-                        <button type="button" class="material-tag" data-material="Lanchete">Lanchete</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Adicionar Material Personalizado</label>
-                    <div class="add-material">
-                        <input type="text" id="material-input" placeholder="Ex: Certificado de Validação">
-                        <button type="button" class="btn btn-secondary" id="btn-add-material">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Materiais a Levar (<span id="materiais-count">0</span>)</label>
-                    <div id="materiais-selecionados" class="materials-list"></div>
-                </div>
-            </div>
-
-            <!-- Tab: Adicional -->
-            <div class="tab-content" id="tab-adicional">
-                <div class="form-group">
-                    <label for="concurso-observacoes">Observações</label>
-                    <textarea id="concurso-observacoes" placeholder="Anotações adicionais sobre o concurso..."></textarea>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
             <div class="modal-footer">
-                <button class="btn btn-cancel" id="btn-modal-cancel">Cancelar</button>
-                <button class="btn btn-primary" id="btn-modal-save">Criar</button>
+                <button class="btn btn-secondary" id="btn-modal-cancel">Cancelar</button>
+                <button class="btn btn-primary" id="btn-modal-save">Criar Questão</button>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Simulados de Enfermagem. Todos os direitos reservados.</p>
-        <p>
-            <a href="#">Privacidade</a> | 
-            <a href="#">Termos</a> | 
-            <a href="#">Contato</a>
-        </p>
-    </footer>
+    <!-- Footer (Modular) -->
+    <footer id="footer-container"></footer>
 
     <script>
-        // Data Management
-        const MeusConcursos = {
-            // Carregar concursos
+        // ===== DADOS EM LOCALSTORAGE =====
+        const MinhasQuestoes = {
             carregar() {
-                const meus = JSON.parse(localStorage.getItem('user_meus_concursos')) || [];
-                const publicos = JSON.parse(localStorage.getItem('admin_concursos')) || [];
-                return [...meus, ...publicos];
+                return JSON.parse(localStorage.getItem('user_questoes')) || [];
             },
 
-            // Salvar novo concurso
-            salvar(concurso) {
-                const meus = JSON.parse(localStorage.getItem('user_meus_concursos')) || [];
-                concurso.id = Date.now();
-                concurso.tipo = 'manual';
-                concurso.progresso = 0;
-                concurso.fases = concurso.fases || [];
-                concurso.materiais = concurso.materiais || [];
-                meus.push(concurso);
-                localStorage.setItem('user_meus_concursos', JSON.stringify(meus));
-                return concurso;
+            salvar(questao) {
+                const questoes = this.carregar();
+                questao.id = Date.now();
+                questao.dataCriacao = new Date().toISOString();
+                questao.status = questao.publica ? 'pendente' : 'privada';
+                
+                if (questao.publica) {
+                    const pendentes = JSON.parse(localStorage.getItem('user_questoes_pendentes')) || [];
+                    pendentes.push(questao);
+                    localStorage.setItem('user_questoes_pendentes', JSON.stringify(pendentes));
+                }
+
+                questoes.push(questao);
+                localStorage.setItem('user_questoes', JSON.stringify(questoes));
+                return questao;
             },
 
-            // Atualizar concurso
             atualizar(id, dados) {
-                const meus = JSON.parse(localStorage.getItem('user_meus_concursos')) || [];
-                const idx = meus.findIndex(c => c.id === id);
-                if (idx !== -1) {
-                    meus[idx] = { ...meus[idx], ...dados };
-                    localStorage.setItem('user_meus_concursos', JSON.stringify(meus));
+                const questoes = this.carregar();
+                const index = questoes.findIndex(q => q.id === id);
+                if (index !== -1) {
+                    questoes[index] = { ...questoes[index], ...dados };
+                    localStorage.setItem('user_questoes', JSON.stringify(questoes));
                 }
             },
 
-            // Deletar concurso
             deletar(id) {
-                const meus = JSON.parse(localStorage.getItem('user_meus_concursos')) || [];
-                const filtrado = meus.filter(c => c.id !== id);
-                localStorage.setItem('user_meus_concursos', JSON.stringify(filtrado));
+                let questoes = this.carregar();
+                questoes = questoes.filter(q => q.id !== id);
+                localStorage.setItem('user_questoes', JSON.stringify(questoes));
             },
 
-            // Obter um concurso
             obter(id) {
-                const todos = this.carregar();
-                return todos.find(c => c.id === id);
+                const questoes = this.carregar();
+                return questoes.find(q => q.id === id);
             }
         };
 
-        // UI Management
+        // ===== UI =====
         const UI = {
-            modal: document.getElementById('modal-concurso'),
-            container: document.getElementById('cards-container'),
+            modal: document.getElementById('modal-questao'),
+            container: document.getElementById('questoes-container'),
             emptyState: document.getElementById('empty-state'),
-            currentConcursoId: null,
-            materiaisSelecionados: [],
-            fases: [],
+            currentQuestaoId: null,
+            tags: [],
 
-            // Abrir modal
-            abrirModal(concursoId = null) {
-                this.currentConcursoId = concursoId;
-                this.materiaisSelecionados = [];
-                this.fases = [];
+            abrirModal(questaoId = null) {
+                this.currentQuestaoId = questaoId;
+                this.tags = [];
+                document.getElementById('tags-list').innerHTML = '';
 
-                if (concursoId) {
-                    const concurso = MeusConcursos.obter(concursoId);
-                    this.preencherFormulario(concurso);
-                    document.getElementById('modal-title').textContent = 'Editar Concurso';
+                if (questaoId) {
+                    const questao = MinhasQuestoes.obter(questaoId);
+                    this.preencherFormulario(questao);
+                    document.getElementById('modal-title').textContent = 'Editar Questão';
                     document.getElementById('btn-modal-save').textContent = 'Atualizar';
                 } else {
                     this.limparFormulario();
-                    document.getElementById('modal-title').textContent = 'Novo Concurso';
-                    document.getElementById('btn-modal-save').textContent = 'Criar';
+                    document.getElementById('modal-title').textContent = 'Nova Questão';
+                    document.getElementById('btn-modal-save').textContent = 'Criar Questão';
                 }
 
                 this.modal.classList.add('active');
             },
 
-            // Fechar modal
             fecharModal() {
                 this.modal.classList.remove('active');
                 this.limparFormulario();
+                this.currentQuestaoId = null;
             },
 
-            // Preencher formulário
-            preencherFormulario(concurso) {
-                document.getElementById('concurso-nome').value = concurso.nome || '';
-                document.getElementById('concurso-instituicao').value = concurso.instituicao || '';
-                document.getElementById('concurso-banca').value = concurso.banca || '';
-                document.getElementById('concurso-site').value = concurso.site || '';
-                document.getElementById('concurso-estado').value = concurso.estado || '';
-                document.getElementById('concurso-cidade').value = concurso.cidade || '';
-                document.getElementById('concurso-data-prova').value = concurso.dataProva || '';
-                document.getElementById('concurso-horario').value = concurso.horario || '';
-                document.getElementById('concurso-local').value = concurso.local || '';
-                document.getElementById('concurso-preco').value = concurso.preco || '';
-                document.getElementById('concurso-vagas').value = concurso.vagas || '';
-                document.getElementById('concurso-salario').value = concurso.salario || '';
-                document.getElementById('concurso-observacoes').value = concurso.observacoes || '';
+            preencherFormulario(questao) {
+                document.getElementById('questao-pergunta').value = questao.pergunta || '';
+                document.getElementById('questao-topico').value = questao.topico || '';
+                document.getElementById('questao-dificuldade').value = questao.dificuldade || '';
+                document.getElementById('questao-explicacao').value = questao.explicacao || '';
+                document.getElementById('questao-publica').checked = questao.publica || false;
 
-                this.fases = concurso.fases || [];
-                this.materiaisSelecionados = concurso.materiais || [];
-                this.atualizarMateriais();
-                this.atualizarFases();
+                const respostas = document.querySelectorAll('.resposta-input');
+                (questao.respostas || []).forEach((resp, idx) => {
+                    if (respostas[idx]) respostas[idx].value = resp;
+                });
+
+                const radioButtons = document.querySelectorAll('input[name="resposta-correta"]');
+                if (questao.respostaCorreta !== undefined) {
+                    radioButtons[questao.respostaCorreta].checked = true;
+                }
+
+                this.tags = questao.tags || [];
+                this.renderizarTags();
             },
 
-            // Limpar formulário
             limparFormulario() {
-                document.getElementById('form-basico').reset();
-                document.getElementById('concurso-observacoes').value = '';
-                this.materiaisSelecionados = [];
-                this.fases = [];
-                this.atualizarMateriais();
-                this.atualizarFases();
+                document.getElementById('form-questao').reset();
+                this.tags = [];
+                document.getElementById('tags-list').innerHTML = '';
             },
 
-            // Obter dados do formulário
             obterDados() {
+                const respostas = Array.from(document.querySelectorAll('.resposta-input')).map(input => input.value);
+                const respostaCorreta = parseInt(document.querySelector('input[name="resposta-correta"]:checked').value);
+
                 return {
-                    nome: document.getElementById('concurso-nome').value,
-                    instituicao: document.getElementById('concurso-instituicao').value,
-                    banca: document.getElementById('concurso-banca').value,
-                    site: document.getElementById('concurso-site').value,
-                    estado: document.getElementById('concurso-estado').value,
-                    cidade: document.getElementById('concurso-cidade').value,
-                    dataProva: document.getElementById('concurso-data-prova').value,
-                    horario: document.getElementById('concurso-horario').value,
-                    local: document.getElementById('concurso-local').value,
-                    preco: document.getElementById('concurso-preco').value,
-                    vagas: document.getElementById('concurso-vagas').value,
-                    salario: document.getElementById('concurso-salario').value,
-                    observacoes: document.getElementById('concurso-observacoes').value,
-                    materiais: this.materiaisSelecionados,
-                    fases: this.fases
+                    pergunta: document.getElementById('questao-pergunta').value,
+                    topico: document.getElementById('questao-topico').value,
+                    dificuldade: document.getElementById('questao-dificuldade').value,
+                    respostas: respostas,
+                    respostaCorreta: respostaCorreta,
+                    explicacao: document.getElementById('questao-explicacao').value,
+                    tags: this.tags,
+                    publica: document.getElementById('questao-publica').checked
                 };
             },
 
-            // Atualizar materiais
-            atualizarMateriais() {
-                const selecionados = document.getElementById('materiais-selecionados');
-                selecionados.innerHTML = '';
-                this.materiaisSelecionados.forEach(mat => {
-                    const tag = document.createElement('div');
-                    tag.className = 'material-tag';
-                    tag.innerHTML = `
-                        ${mat}
-                        <button type="button" onclick="UI.removerMaterial('${mat}')">×</button>
-                    `;
-                    selecionados.appendChild(tag);
-                });
-                document.getElementById('materiais-count').textContent = this.materiaisSelecionados.length;
-            },
-
-            // Remover material
-            removerMaterial(material) {
-                this.materiaisSelecionados = this.materiaisSelecionados.filter(m => m !== material);
-                this.atualizarMateriais();
-            },
-
-            // Adicionar material
-            adicionarMaterial(material) {
-                if (material && !this.materiaisSelecionados.includes(material)) {
-                    this.materiaisSelecionados.push(material);
-                    this.atualizarMateriais();
+            adicionarTag(tag) {
+                if (tag && !this.tags.includes(tag)) {
+                    this.tags.push(tag);
+                    this.renderizarTags();
+                    document.getElementById('questao-tags').value = '';
                 }
             },
 
-            // Atualizar fases
-            atualizarFases() {
-                const list = document.getElementById('fases-list');
-                list.innerHTML = '';
-                this.fases.forEach((fase, idx) => {
-                    const item = document.createElement('div');
-                    item.className = 'phase-item';
-                    item.innerHTML = `
-                        <h4>${fase.nome || 'Fase ' + (idx + 1)}</h4>
-                        <p><i class="fas fa-calendar"></i> ${fase.data || 'Data não definida'}</p>
-                        <p><i class="fas fa-map-marker-alt"></i> ${fase.local || 'Local não definido'}</p>
-                        <button type="button" class="btn btn-danger" onclick="UI.removerFase(${idx})" style="margin-top: 0.5rem;">
-                            <i class="fas fa-trash"></i> Remover
+            removerTag(tag) {
+                this.tags = this.tags.filter(t => t !== tag);
+                this.renderizarTags();
+            },
+
+            renderizarTags() {
+                const container = document.getElementById('tags-list');
+                container.innerHTML = this.tags.map(tag => `
+                    <div class="tag tag-habitual">
+                        ${tag}
+                        <button type="button" style="background: none; border: none; color: inherit; cursor: pointer; margin-left: 0.25rem;" onclick="UI.removerTag('${tag}')">
+                            &times;
                         </button>
-                    `;
-                    list.appendChild(item);
-                });
-                document.getElementById('fases-count').textContent = this.fases.length;
+                    </div>
+                `).join('');
             },
 
-            // Remover fase
-            removerFase(idx) {
-                this.fases.splice(idx, 1);
-                this.atualizarFases();
-            },
-
-            // Adicionar fase
-            adicionarFase() {
-                const nome = prompt('Nome da fase (ex: Inscrição, Prova, Resultado):');
-                if (!nome) return;
-                const data = prompt('Data (DD/MM/YYYY):');
-                const local = prompt('Local (opcional):');
-                this.fases.push({ nome, data, local });
-                this.atualizarFases();
-            },
-
-            // Renderizar cards
             renderizar() {
-                const concursos = MeusConcursos.carregar();
-                
-                if (concursos.length === 0) {
+                const questoes = MinhasQuestoes.carregar();
+                this.atualizarEstatisticas(questoes);
+
+                if (questoes.length === 0) {
                     this.container.style.display = 'none';
                     this.emptyState.style.display = 'block';
                     return;
                 }
 
-                this.container.style.display = 'grid';
+                this.container.style.display = 'flex';
                 this.emptyState.style.display = 'none';
                 this.container.innerHTML = '';
 
-                concursos.forEach(concurso => {
-                    const card = this.criarCard(concurso);
-                    this.container.appendChild(card);
+                questoes.forEach(questao => {
+                    const item = this.criarItemQuestao(questao);
+                    this.container.appendChild(item);
                 });
+
+                document.getElementById('questoes-count').textContent = questoes.length;
             },
 
-            // Criar card
-            criarCard(concurso) {
-                const card = document.createElement('div');
-                card.className = 'card';
+            criarItemQuestao(questao) {
+                const item = document.createElement('div');
+                item.className = 'questao-item';
 
-                const dataProva = new Date(concurso.dataProva);
-                const hoje = new Date();
-                const diasRestantes = Math.ceil((dataProva - hoje) / (1000 * 60 * 60 * 24));
-                const urgente = diasRestantes > 0 && diasRestantes <= 7;
+                const tagsHTML = (questao.tags || []).map(tag => 
+                    `<span class="tag tag-habitual">${tag}</span>`
+                ).join('');
 
-                const status = concurso.tipo === 'manual' ? 'Manual' : 'Público';
-                const statusBadge = concurso.tipo === 'manual' ? 'badge-info' : 'badge-success';
-
-                card.innerHTML = `
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">${concurso.nome}</div>
-                            <div class="card-actions">
-                                ${concurso.tipo === 'manual' ? `
-                                    <button class="btn btn-edit" onclick="UI.abrirModal(${concurso.id})">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </button>
-                                    <button class="btn btn-danger" onclick="MeusConcursos.deletar(${concurso.id}); UI.renderizar();">
-                                        <i class="fas fa-trash"></i> Deletar
-                                    </button>
-                                ` : ''}
-                            </div>
+                item.innerHTML = `
+                    <div class="questao-content">
+                        <div class="questao-pergunta">${questao.pergunta}</div>
+                        <div class="questao-meta">
+                            <span><i class="fas fa-bookmark"></i> ${questao.topico}</span>
+                            <span><i class="fas fa-signal"></i> ${questao.dificuldade}</span>
+                            <span><i class="fas fa-calendar"></i> ${new Date(questao.dataCriacao).toLocaleDateString('pt-BR')}</span>
                         </div>
-                        <div class="card-code">${concurso.codigo || '---'}</div>
+                        <div class="questao-tags">
+                            ${questao.publica ? '<span class="tag tag-publica">Pública</span>' : ''}
+                            ${questao.status === 'pendente' ? '<span class="tag tag-pendente">Pendente</span>' : ''}
+                            ${tagsHTML}
+                        </div>
                     </div>
-                    <div class="card-body">
-                        ${diasRestantes > 0 ? `
-                            <div class="time-remaining ${urgente ? 'urgent' : ''}">
-                                <i class="fas fa-clock"></i> ${diasRestantes} dia${diasRestantes !== 1 ? 's' : ''}
-                            </div>
-                        ` : ''}
-
-                        <div class="card-status">
-                            <span class="badge ${statusBadge}">${status}</span>
-                            <span class="badge badge-info">Prova realizada</span>
-                        </div>
-
-                        <div class="card-info">
-                            <div class="card-info-item">
-                                <i class="fas fa-calendar"></i>
-                                <span>${concurso.dataProva || 'Data não definida'}</span>
-                            </div>
-                            <div class="card-info-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${concurso.cidade || 'Cidade não definida'}, ${concurso.estado || '---'}</span>
-                            </div>
-                        </div>
-
-                        <div class="progress-section">
-                            <div class="progress-label">
-                                <span>Progresso de Estudos</span>
-                                <span>${concurso.progresso || 0}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${concurso.progresso || 0}%"></div>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <a href="detalhes-concurso.html?id=${concurso.id}" class="btn-details">
-                                <i class="fas fa-arrow-right"></i> Ver Detalhes Completos
-                            </a>
-                        </div>
+                    <div class="questao-actions">
+                        <button class="action-btn action-btn-view" title="Visualizar" onclick="UI.visualizarQuestao(${questao.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn action-btn-edit" title="Editar" onclick="UI.abrirModal(${questao.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn action-btn-delete" title="Deletar" onclick="UI.deletarQuestao(${questao.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 `;
 
-                return card;
+                return item;
+            },
+
+            atualizarEstatisticas(questoes) {
+                const total = questoes.length;
+                const pendentes = questoes.filter(q => q.status === 'pendente').length;
+                const aprovadas = questoes.filter(q => q.status === 'aprovada').length;
+                const publicas = questoes.filter(q => q.publica).length;
+
+                document.getElementById('stat-total').textContent = total;
+                document.getElementById('stat-pendentes').textContent = pendentes;
+                document.getElementById('stat-aprovadas').textContent = aprovadas;
+                document.getElementById('stat-publicas').textContent = publicas;
+            },
+
+            visualizarQuestao(id) {
+                const questao = MinhasQuestoes.obter(id);
+                if (questao) {
+                    alert(`Pergunta: ${questao.pergunta}\n\nRespostas:\n${questao.respostas.map((r, i) => `${i + 1}. ${r}`).join('\n')}\n\nResposta Correta: ${questao.respostas[questao.respostaCorreta]}`);
+                }
+            },
+
+            deletarQuestao(id) {
+                if (confirm('Tem certeza que deseja deletar esta questão?')) {
+                    MinhasQuestoes.deletar(id);
+                    this.renderizar();
+                }
             }
         };
 
-        // Event Listeners
-        document.getElementById('btn-new-concurso').addEventListener('click', () => UI.abrirModal());
+        // ===== EVENT LISTENERS =====
+        document.getElementById('btn-new-questao').addEventListener('click', () => UI.abrirModal());
         document.getElementById('btn-empty-new').addEventListener('click', () => UI.abrirModal());
         document.getElementById('modal-close').addEventListener('click', () => UI.fecharModal());
         document.getElementById('btn-modal-cancel').addEventListener('click', () => UI.fecharModal());
 
-        // Salvar concurso
         document.getElementById('btn-modal-save').addEventListener('click', () => {
-            const nome = document.getElementById('concurso-nome').value;
-            if (!nome) {
-                alert('Por favor, preencha o nome do concurso');
+            const pergunta = document.getElementById('questao-pergunta').value;
+            if (!pergunta) {
+                alert('Por favor, preencha a pergunta');
                 return;
             }
 
             const dados = UI.obterDados();
-            if (UI.currentConcursoId) {
-                MeusConcursos.atualizar(UI.currentConcursoId, dados);
+            if (UI.currentQuestaoId) {
+                MinhasQuestoes.atualizar(UI.currentQuestaoId, dados);
             } else {
-                MeusConcursos.salvar(dados);
+                MinhasQuestoes.salvar(dados);
             }
 
             UI.fecharModal();
             UI.renderizar();
         });
 
-        // Tabs
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabName = btn.dataset.tab;
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(`tab-${tabName}`).classList.add('active');
-            });
+        document.getElementById('btn-add-tag').addEventListener('click', (e) => {
+            e.preventDefault();
+            const tag = document.getElementById('questao-tags').value.trim();
+            UI.adicionarTag(tag);
         });
 
-        // Materiais
-        document.getElementById('btn-add-material').addEventListener('click', () => {
-            const input = document.getElementById('material-input');
-            UI.adicionarMaterial(input.value);
-            input.value = '';
-        });
-
-        document.getElementById('material-input').addEventListener('keypress', (e) => {
+        document.getElementById('questao-tags').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                const input = document.getElementById('material-input');
-                UI.adicionarMaterial(input.value);
-                input.value = '';
+                e.preventDefault();
+                const tag = document.getElementById('questao-tags').value.trim();
+                UI.adicionarTag(tag);
             }
         });
 
-        // Materiais sugeridos
-        document.querySelectorAll('#materiais-sugeridos .material-tag').forEach(tag => {
-            tag.addEventListener('click', (e) => {
-                e.preventDefault();
-                const material = tag.dataset.material;
-                UI.adicionarMaterial(material);
-            });
-        });
-
-        // Fases
-        document.getElementById('btn-add-phase').addEventListener('click', () => {
-            UI.adicionarFase();
-        });
-
-        // Filtro
-        document.getElementById('filter-phase').addEventListener('change', (e) => {
-            // TODO: Implementar filtro
-            UI.renderizar();
-        });
-
-        // Modal close on background click
-        document.getElementById('modal-concurso').addEventListener('click', (e) => {
+        document.getElementById('modal-questao').addEventListener('click', (e) => {
             if (e.target === UI.modal) {
                 UI.fecharModal();
             }
         });
 
-        // Inicializar
+        // ===== INICIALIZAR =====
         UI.renderizar();
-    </script>
 
-    <!-- Footer Container -->
-    <footer id="footer-container"></footer>
-
-    <script>
-        // Carregar componentes modulares
+        // ===== CARREGAR HEADER, FOOTER E ACESSIBILIDADE =====
         async function carregarComponentes() {
             try {
                 const headerResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/header-v4.html');
@@ -1379,11 +1048,7 @@
             }
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', carregarComponentes);
-        } else {
-            carregarComponentes();
-        }
+        carregarComponentes();
     </script>
 </body>
 </html>
