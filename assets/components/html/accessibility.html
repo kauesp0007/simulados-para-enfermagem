@@ -1,87 +1,56 @@
-<!-- Accessibility Panel - Simulados de Enfermagem -->
-<div class="accessibility-panel" id="accessibility-panel" role="region" aria-label="Painel de Acessibilidade">
-    <!-- Toggle Button -->
-    <button class="accessibility-toggle" id="accessibility-toggle" aria-label="Abrir painel de acessibilidade" aria-expanded="false" aria-controls="accessibility-controls">
-        <i class="fas fa-universal-access"></i>
-    </button>
+<!-- COMPONENTE ACESSIBILIDADE - Versão Simplificada -->
+<!-- Scripts são carregados externamente pelo accessibility-loader.js -->
 
-    <!-- Controls Panel -->
-    <div class="accessibility-controls" id="accessibility-controls" hidden>
+<!-- Painel de Acessibilidade -->
+<div class="accessibility-panel" id="accessibility-panel">
+    <button class="accessibility-toggle" id="accessibility-toggle" aria-label="Opções de acessibilidade">
+        <i class="fas fa-universal-access"></i>
+        <span>Acessibilidade</span>
+    </button>
+    
+    <div class="accessibility-menu" id="accessibility-menu">
         <div class="accessibility-header">
-            <h2>Acessibilidade</h2>
-            <button class="close-btn" id="accessibility-close" aria-label="Fechar painel">
+            <h3><i class="fas fa-universal-access"></i> Acessibilidade</h3>
+            <button class="accessibility-close" id="accessibility-close" aria-label="Fechar">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-
+        
         <div class="accessibility-content">
-            <!-- Font Size Control -->
-            <div class="control-group">
-                <label for="font-size">Tamanho da Fonte</label>
-                <div class="control-buttons">
-                    <button class="control-btn" id="font-decrease" aria-label="Diminuir tamanho da fonte" title="Diminuir">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <span class="control-value" id="font-value">100%</span>
-                    <button class="control-btn" id="font-increase" aria-label="Aumentar tamanho da fonte" title="Aumentar">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
+            <div class="accessibility-section">
+                <h4 class="accessibility-section-title">Visual</h4>
+                <button class="accessibility-btn" id="btn-dark-mode">
+                    <i class="fas fa-moon"></i> Modo Escuro
+                </button>
+                <button class="accessibility-btn" id="btn-light-mode">
+                    <i class="fas fa-sun"></i> Modo Claro
+                </button>
+                <button class="accessibility-btn" id="btn-high-contrast">
+                    <i class="fas fa-adjust"></i> Alto Contraste
+                </button>
             </div>
-
-            <!-- Contrast Control -->
-            <div class="control-group">
-                <label>Contraste</label>
-                <div class="control-toggle">
-                    <button class="toggle-btn" id="contrast-toggle" aria-label="Alternar contraste alto" aria-pressed="false">
-                        <span class="toggle-label">Normal</span>
-                        <span class="toggle-switch"></span>
-                        <span class="toggle-label">Alto</span>
-                    </button>
-                </div>
+            
+            <div class="accessibility-section">
+                <h4 class="accessibility-section-title">Texto</h4>
+                <button class="accessibility-btn" id="btn-large-text">
+                    <i class="fas fa-font"></i> Aumentar Fonte
+                </button>
             </div>
-
-            <!-- Dark Mode Control -->
-            <div class="control-group">
-                <label>Modo Escuro</label>
-                <div class="control-toggle">
-                    <button class="toggle-btn" id="dark-mode-toggle" aria-label="Alternar modo escuro" aria-pressed="false">
-                        <span class="toggle-label">Claro</span>
-                        <span class="toggle-switch"></span>
-                        <span class="toggle-label">Escuro</span>
-                    </button>
-                </div>
+            
+            <div class="accessibility-section">
+                <h4 class="accessibility-section-title">Movimento</h4>
+                <button class="accessibility-btn" id="btn-reduce-motion">
+                    <i class="fas fa-stop-circle"></i> Reduzir Animações
+                </button>
             </div>
-
-            <!-- Screen Reader Control -->
-            <div class="control-group">
-                <label>Leitor de Tela</label>
-                <div class="control-toggle">
-                    <button class="toggle-btn" id="screen-reader-toggle" aria-label="Alternar leitor de tela" aria-pressed="false">
-                        <span class="toggle-label">Desativado</span>
-                        <span class="toggle-switch"></span>
-                        <span class="toggle-label">Ativado</span>
-                    </button>
-                </div>
+            
+            <div class="accessibility-section">
+                <button class="accessibility-btn accessibility-reset" id="btn-reset-accessibility">
+                    <i class="fas fa-undo"></i> Restaurar Padrões
+                </button>
             </div>
-
-            <!-- Animation Reduction -->
-            <div class="control-group">
-                <label>Reduzir Animações</label>
-                <div class="control-toggle">
-                    <button class="toggle-btn" id="reduce-motion-toggle" aria-label="Reduzir animações" aria-pressed="false">
-                        <span class="toggle-label">Normal</span>
-                        <span class="toggle-switch"></span>
-                        <span class="toggle-label">Reduzido</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Reset Button -->
-            <button class="reset-btn" id="accessibility-reset" aria-label="Restaurar configurações padrão">
-                <i class="fas fa-redo"></i>
-                Restaurar Padrão
-            </button>
         </div>
     </div>
 </div>
+
+<!-- O script de inicialização é carregado externamente via accessibility-loader.js -->
