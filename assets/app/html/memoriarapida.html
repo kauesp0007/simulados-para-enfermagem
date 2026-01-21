@@ -3,217 +3,1090 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Memória Rápida - Teste sua velocidade respondendo questões em 15 minutos">
     <title>Memória Rápida | Simulados de Enfermagem</title>
-    
-    <!-- CSS do Site Externo -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary: #1A3E74; --accent: #00bcd4; --success: #4caf50; --warning: #ff9800; --error: #f44336; --light: #f4f6f9; --dark: #1f2937; }
-        body { font-family: 'Inter', sans-serif; background: var(--light); }
-        main { min-height: calc(100vh - 200px); padding: 40px 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .page-header { margin-bottom: 40px; }
-        .page-header h1 { font-family: 'Nunito Sans', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-        .page-header p { font-size: 16px; color: #666; }
-        
-        .memory-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin-bottom: 40px; }
-        .memory-card { aspect-ratio: 1; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease; font-weight: 700; font-size: 32px; }
-        .memory-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
-        .memory-card.flipped { background: var(--primary); color: white; }
-        
-        .controls { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
-        .btn { padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #152c4f; }
-        .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
-        .btn-secondary:hover { background: var(--light); }
-        
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .stat-label { font-size: 14px; color: #666; margin-bottom: 8px; }
-        .stat-value { font-size: 28px; font-weight: 700; color: var(--primary); }
-        
-        @media (max-width: 768px) { .memory-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); } }
-    </style>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS dos Componentes -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
 </head>
 <body>
-    <a href="#main" class="skip-link" style="position: absolute; top: -40px; left: 0; background: var(--primary); color: white; padding: 8px; z-index: 100000;">Pular para conteúdo principal</a>
+    <!-- COMPONENTES MODULARIZADOS -->
     <div id="accessibility-container"></div>
-    <header id="header-container"></header>
-    <div id="nav-container"></div>
-    <div id="breadcrumb-container"></div>
-    
-    <main id="main">
-        <div class="container">
-            <div class="page-header">
-                <h1><i class="fas fa-bolt"></i> Memória Rápida</h1>
-                <p>Teste sua memória com quizzes rápidos e desafiadores</p>
-            </div>
+    <div id="header-container"></div>
 
-            <!-- Estatísticas -->
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label"><i class="fas fa-play"></i> Jogos Realizados</div>
-                    <div class="stat-value" id="games-played">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label"><i class="fas fa-trophy"></i> Melhor Sequência</div>
-                    <div class="stat-value" id="best-streak">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label"><i class="fas fa-percent"></i> Taxa de Acerto</div>
-                    <div class="stat-value" id="accuracy">0%</div>
-                </div>
-            </div>
-
-            <!-- Controles -->
-            <div class="controls">
-                <button class="btn btn-primary" onclick="MemoriaRapida.iniciarJogo()">
-                    <i class="fas fa-play"></i> Iniciar Novo Jogo
-                </button>
-                <button class="btn btn-secondary" onclick="MemoriaRapida.resetar()">
-                    <i class="fas fa-redo"></i> Resetar
-                </button>
-                <select id="difficulty" class="btn btn-secondary" style="padding: 10px 16px;">
-                    <option value="facil">Fácil (4 pares)</option>
-                    <option value="medio" selected>Médio (8 pares)</option>
-                    <option value="dificil">Difícil (12 pares)</option>
-                </select>
-            </div>
-
-            <!-- Grid de Memória -->
-            <div class="memory-grid" id="memory-grid"></div>
-
-            <!-- Resultado -->
-            <div id="result-message" style="display: none; background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                <h2 id="result-title" style="font-size: 28px; margin-bottom: 16px;"></h2>
-                <p id="result-text" style="font-size: 16px; color: #666; margin-bottom: 20px;"></p>
-                <button class="btn btn-primary" onclick="MemoriaRapida.iniciarJogo()">
-                    <i class="fas fa-play"></i> Jogar Novamente
-                </button>
-            </div>
+    <!-- Loader Global -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
         </div>
-    </main>
-    
-    <footer id="footer-container"></footer>
+    </div>
 
-    <script src="navigation.js"></script>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- Conteúdo Principal -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Navegação">
+                <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="dashboard.html">Dashboard</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Memória Rápida</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <button class="back-btn" onclick="window.location.href='dashboard.html'" title="Voltar ao início">
+                    <i class="fas fa-home"></i>
+                </button>
+                <div class="page-title">
+                    <h1><i class="fas fa-bolt"></i> Memória Rápida</h1>
+                    <p>Teste sua velocidade respondendo o máximo de questões em 15 minutos</p>
+                </div>
+            </div>
+
+            <!-- Configuração -->
+            <div id="config-area">
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fas fa-play"></i> Jogos Realizados</div>
+                        <div class="stat-value" id="games-played">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fas fa-trophy"></i> Melhor Pontuação</div>
+                        <div class="stat-value success" id="best-score">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fas fa-percent"></i> Melhor Taxa</div>
+                        <div class="stat-value warning" id="best-accuracy">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fas fa-fire"></i> Melhor Sequência</div>
+                        <div class="stat-value" id="best-streak">0</div>
+                    </div>
+                </div>
+
+                <!-- Config Card -->
+                <div class="quiz-card">
+                    <h2><i class="fas fa-cog"></i> Configuração do Quiz</h2>
+                    <p>Escolha o tópico e inicie o desafio de velocidade</p>
+
+                    <!-- Topic Selection -->
+                    <div class="form-group">
+                        <label for="topicSelect">
+                            <i class="fas fa-book"></i>
+                            <span>Tópico</span>
+                        </label>
+                        <select id="topicSelect">
+                            <option value="">Todos os Tópicos</option>
+                            <option value="anatomia">Anatomia e Fisiologia</option>
+                            <option value="farmacologia">Farmacologia</option>
+                            <option value="patologia">Patologia</option>
+                            <option value="microbiologia">Microbiologia</option>
+                            <option value="bioquimica">Bioquímica</option>
+                            <option value="imunologia">Imunologia</option>
+                            <option value="saude-publica">Saúde Pública</option>
+                            <option value="enfermagem-basica">Enfermagem Básica</option>
+                            <option value="enfermagem-medica">Enfermagem Médica</option>
+                            <option value="enfermagem-cirurgica">Enfermagem Cirúrgica</option>
+                        </select>
+                    </div>
+
+                    <!-- Start Button -->
+                    <button class="btn-primary" id="startQuizBtn">
+                        <i class="fas fa-play"></i>
+                        Iniciar Memória Rápida
+                    </button>
+                </div>
+            </div>
+
+            <!-- Área do Quiz -->
+            <div id="quiz-area">
+                <!-- Quiz Header -->
+                <div class="quiz-card quiz-header">
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-info">
+                            <span id="question-counter">Questão 1</span>
+                            <span id="score-display">Acertos: 0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="timer-display" id="timer-display">
+                        <i class="fas fa-stopwatch"></i>
+                        <span id="timer">15:00</span>
+                    </div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="question-card">
+                    <div class="question-number" id="question-number">Questão 1</div>
+                    <div class="question-text" id="question-text">Carregando questão...</div>
+                    
+                    <div class="question-actions">
+                        <button class="action-btn" id="btn-read-question" onclick="QuizManager.readCurrentQuestion()">
+                            <i class="fas fa-volume-up"></i> Ler Questão
+                        </button>
+                        <button class="action-btn" id="btn-read-alternatives" onclick="QuizManager.readAlternatives()">
+                            <i class="fas fa-headphones"></i> Ler Alternativas
+                        </button>
+                        <button class="action-btn" id="btn-stop-reading" onclick="QuizManager.stopReading()" style="display: none;">
+                            <i class="fas fa-stop"></i> Parar Leitura
+                        </button>
+                    </div>
+
+                    <div class="options-list" id="options-list">
+                        <!-- Options will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="quiz-navigation">
+                    <button class="nav-btn next" id="btn-next" onclick="QuizManager.nextQuestion()">
+                        Próxima <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Área de Resultados -->
+            <div id="results-area">
+                <div class="results-card">
+                    <div class="results-icon" id="results-icon">⚡</div>
+                    <h2 class="results-title" id="results-title">Desafio Completo!</h2>
+                    <p class="results-subtitle" id="results-subtitle">Você respondeu o máximo que pôde!</p>
+
+                    <div class="results-stats">
+                        <div class="result-stat">
+                            <div class="stat-label">Questões Respondidas</div>
+                            <div class="stat-value" id="result-answered">0</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="stat-label">Acertos</div>
+                            <div class="stat-value success" id="result-correct">0</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="stat-label">Erros</div>
+                            <div class="stat-value error" id="result-wrong">0</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="stat-label">Taxa de Acerto</div>
+                            <div class="stat-value" id="result-percentage">0%</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="stat-label">Sequência</div>
+                            <div class="stat-value warning" id="result-streak">0</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="stat-label">XP Obtido</div>
+                            <div class="stat-value" id="result-xp">0</div>
+                        </div>
+                    </div>
+
+                    <div class="results-actions">
+                        <button class="btn-primary" onclick="QuizManager.printResults()">
+                            <i class="fas fa-print"></i> Imprimir Resultados
+                        </button>
+                        <button class="btn-primary btn-success" onclick="QuizManager.newQuiz()">
+                            <i class="fas fa-plus"></i> Novo Desafio
+                        </button>
+                        <button class="btn-primary btn-secondary" onclick="QuizManager.restartQuiz()">
+                            <i class="fas fa-redo"></i> Repetir Este
+                        </button>
+                        <button class="btn-primary btn-secondary" onclick="QuizManager.goHome()">
+                            <i class="fas fa-home"></i> Voltar ao Início
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- COMPONENTES MODULARIZADOS -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript dos Componentes -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/component-loader.js"></script>
+
+    <!-- Script Principal da Memória Rápida -->
     <script>
-        const MemoriaRapida = {
-            cards: [],
-            flipped: [],
-            matched: 0,
-            moves: 0,
-            startTime: null,
-            gameActive: false,
+        /**
+         * SoundManager - Gerencia os efeitos sonoros do quiz
+         */
+        const SoundManager = {
+            volume: 0.5,
+            audioContext: null,
 
-            iniciarJogo() {
-                const difficulty = document.getElementById('difficulty').value;
-                const pairCounts = { facil: 4, medio: 8, dificil: 12 };
-                const pairs = pairCounts[difficulty];
-                
-                this.cards = [];
-                for (let i = 1; i <= pairs; i++) {
-                    this.cards.push(i, i);
+            init() {
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.audioContext = new AudioContext();
+                    console.log('[SoundManager] Inicializado');
+                } catch (e) {
+                    console.log('[SoundManager] Áudio não suportado');
                 }
-                this.cards.sort(() => Math.random() - 0.5);
-                
-                this.flipped = [];
-                this.matched = 0;
-                this.moves = 0;
-                this.startTime = Date.now();
-                this.gameActive = true;
-                
-                document.getElementById('result-message').style.display = 'none';
-                this.renderCards();
             },
 
-            renderCards() {
-                const grid = document.getElementById('memory-grid');
-                grid.innerHTML = '';
-                
-                this.cards.forEach((card, index) => {
-                    const cardEl = document.createElement('div');
-                    cardEl.className = 'memory-card';
-                    cardEl.textContent = this.flipped.includes(index) || this.isMatched(index) ? card : '?';
-                    cardEl.onclick = () => this.flipCard(index);
-                    grid.appendChild(cardEl);
+            playTone(frequency, type, duration, volume = 0.5) {
+                if (!this.audioContext) return;
+
+                try {
+                    const osc = this.audioContext.createOscillator();
+                    const gain = this.audioContext.createGain();
+
+                    osc.type = type;
+                    osc.frequency.value = frequency;
+
+                    gain.gain.setValueAtTime(volume * this.volume, this.audioContext.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+
+                    osc.connect(gain);
+                    gain.connect(this.audioContext.destination);
+
+                    osc.start(this.audioContext.currentTime);
+                    osc.stop(this.audioContext.currentTime + duration);
+                } catch (e) {
+                    console.log('[Sound] Erro ao reproduzir som');
+                }
+            },
+
+            playCorrect() {
+                this.playTone(800, 'sine', 0.15);
+                setTimeout(() => this.playTone(1000, 'sine', 0.15), 150);
+                setTimeout(() => this.playTone(1200, 'sine', 0.2), 300);
+            },
+
+            playWrong() {
+                this.playTone(300, 'sawtooth', 0.4);
+                setTimeout(() => this.playTone(250, 'sawtooth', 0.3), 200);
+            },
+
+            playComplete() {
+                const notes = [523, 659, 784, 1047];
+                notes.forEach((freq, i) => {
+                    setTimeout(() => this.playTone(freq, 'sine', 0.3), i * 150);
                 });
             },
 
-            flipCard(index) {
-                if (!this.gameActive || this.flipped.includes(index) || this.isMatched(index)) return;
-                
-                this.flipped.push(index);
-                this.renderCards();
-                
-                if (this.flipped.length === 2) {
-                    this.moves++;
-                    const [first, second] = this.flipped;
-                    
-                    if (this.cards[first] === this.cards[second]) {
-                        this.matched += 2;
-                        this.flipped = [];
-                        
-                        if (this.matched === this.cards.length) {
-                            this.finalizarJogo();
-                        } else {
-                            this.renderCards();
-                        }
-                    } else {
-                        setTimeout(() => {
-                            this.flipped = [];
-                            this.renderCards();
-                        }, 1000);
-                    }
-                }
+            playStart() {
+                this.playTone(440, 'sine', 0.2);
+                setTimeout(() => this.playTone(554, 'sine', 0.2), 150);
+                setTimeout(() => this.playTone(659, 'sine', 0.3), 300);
             },
 
-            isMatched(index) {
-                return this.matched > 0 && this.cards.slice(0, this.matched).includes(this.cards[index]);
+            playTick() {
+                this.playTone(800, 'square', 0.05);
             },
 
-            finalizarJogo() {
-                this.gameActive = false;
-                const time = Math.round((Date.now() - this.startTime) / 1000);
-                
-                document.getElementById('games-played').textContent = 
-                    (parseInt(localStorage.getItem('memoria_jogos') || '0') + 1);
-                localStorage.setItem('memoria_jogos', document.getElementById('games-played').textContent);
-                
-                document.getElementById('result-message').style.display = 'block';
-                document.getElementById('result-title').textContent = '🎉 Parabéns!';
-                document.getElementById('result-text').textContent = 
-                    `Você completou em ${this.moves} movimentos e ${time} segundos!`;
-            },
-
-            resetar() {
-                this.cards = [];
-                this.flipped = [];
-                this.matched = 0;
-                this.moves = 0;
-                document.getElementById('memory-grid').innerHTML = '';
-                document.getElementById('result-message').style.display = 'none';
+            setVolume(vol) {
+                this.volume = Math.max(0, Math.min(1, vol));
             }
         };
 
+        /**
+         * QuestionReader - Lê questões em voz alta
+         */
+        const QuestionReader = {
+            synth: null,
+            utterance: null,
+            isReading: false,
+
+            init() {
+                if ('speechSynthesis' in window) {
+                    this.synth = window.speechSynthesis;
+                    this.loadVoices();
+                    if (this.synth.onvoiceschanged !== undefined) {
+                        this.synth.onvoiceschanged = () => this.loadVoices();
+                    }
+                    console.log('[QuestionReader] Inicializado');
+                }
+            },
+
+            loadVoices() {
+                const voices = this.synth ? this.synth.getVoices() : [];
+                console.log('[QuestionReader] Vozes disponíveis:', voices.length);
+            },
+
+            getPortugueseVoice() {
+                if (!this.synth) return null;
+                const voices = this.synth.getVoices();
+                const ptBR = voices.find(v => v.lang.includes('pt-BR') || v.lang.includes('pt_BR'));
+                if (ptBR) return ptBR;
+                return voices.find(v => v.lang.includes('pt'));
+            },
+
+            read(text, rate = 0.9, pitch = 1) {
+                if (!this.synth) {
+                    console.log('[QuestionReader] Síntese de voz não suportada');
+                    return;
+                }
+
+                this.stop();
+
+                this.utterance = new SpeechSynthesisUtterance(text);
+                this.utterance.lang = 'pt-BR';
+                this.utterance.rate = rate;
+                this.utterance.pitch = pitch;
+
+                const voice = this.getPortugueseVoice();
+                if (voice) {
+                    this.utterance.voice = voice;
+                }
+
+                this.utterance.onstart = () => {
+                    this.isReading = true;
+                    document.getElementById('btn-stop-reading').style.display = 'flex';
+                    console.log('[QuestionReader] Iniciou leitura');
+                };
+
+                this.utterance.onend = () => {
+                    this.isReading = false;
+                    document.getElementById('btn-stop-reading').style.display = 'none';
+                    console.log('[QuestionReader] Finalizou leitura');
+                };
+
+                this.utterance.onerror = (e) => {
+                    this.isReading = false;
+                    document.getElementById('btn-stop-reading').style.display = 'none';
+                    console.log('[QuestionReader] Erro:', e);
+                };
+
+                this.synth.speak(this.utterance);
+            },
+
+            readQuestionWithOptions(question, options) {
+                let text = `Questão: ${question}. `;
+                options.forEach((opt, i) => {
+                    const letter = String.fromCharCode(65 + i);
+                    text += `Alternativa ${letter}: ${opt}. `;
+                });
+                this.read(text, 0.9, 1);
+            },
+
+            stop() {
+                if (this.synth && this.synth.speaking) {
+                    this.synth.cancel();
+                }
+                this.isReading = false;
+                document.getElementById('btn-stop-reading').style.display = 'none';
+            }
+        };
+
+        /**
+         * QuizTimer - Gerencia o temporizador do simulado
+         */
+        const QuizTimer = {
+            interval: null,
+            remainingSeconds: 0,
+            totalSeconds: 0,
+            onTick: null,
+            onComplete: null,
+
+            init(durationMinutes, onTick, onComplete) {
+                this.totalSeconds = durationMinutes * 60;
+                this.remainingSeconds = this.totalSeconds;
+                this.onTick = onTick;
+                this.onComplete = onComplete;
+
+                this.updateDisplay();
+                console.log('[Timer] Inicializado:', durationMinutes, 'minutos');
+            },
+
+            start() {
+                if (this.interval) clearInterval(this.interval);
+
+                this.interval = setInterval(() => {
+                    this.remainingSeconds--;
+
+                    if (this.onTick) {
+                        this.onTick(this.remainingSeconds, this.totalSeconds);
+                    }
+
+                    if (this.remainingSeconds <= 10 && this.remainingSeconds > 0) {
+                        SoundManager.playTick();
+                    }
+
+                    if (this.remainingSeconds <= 0) {
+                        this.stop();
+                        if (this.onComplete) {
+                            this.onComplete();
+                        }
+                    }
+                }, 1000);
+
+                console.log('[Timer] Started');
+            },
+
+            stop() {
+                if (this.interval) {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                }
+            },
+
+            getFormattedTime() {
+                const minutes = Math.floor(this.remainingSeconds / 60);
+                const seconds = this.remainingSeconds % 60;
+                return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            },
+
+            updateDisplay() {
+                const display = document.getElementById('timer');
+                const container = document.getElementById('timer-display');
+                if (display) {
+                    display.textContent = this.getFormattedTime();
+                }
+                if (container) {
+                    container.classList.remove('warning', 'danger');
+                    if (this.remainingSeconds <= 10) {
+                        container.classList.add('danger');
+                    } else if (this.remainingSeconds <= 30) {
+                        container.classList.add('warning');
+                    }
+                }
+            }
+        };
+
+        /**
+         * ResultsPrinter - Imprime os resultados do quiz
+         */
+        const ResultsPrinter = {
+            print(results) {
+                const printWindow = window.open('', '_blank');
+
+                const html = `
+                    <!DOCTYPE html>
+                    <html lang="pt-BR">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Resultados - Memória Rápida - ${new Date().toLocaleDateString('pt-BR')}</title>
+                        <style>
+                            * { margin: 0; padding: 0; box-sizing: border-box; }
+                            body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }
+                            h1 { color: #1A3E74; margin-bottom: 8px; border-bottom: 3px solid #1A3E74; padding-bottom: 10px; }
+                            .header-info { margin-bottom: 20px; }
+                            .header-info p { color: #666; margin: 4px 0; }
+                            .summary { 
+                                background: #f4f6f9; 
+                                padding: 20px; 
+                                border-radius: 8px; 
+                                margin-bottom: 30px;
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                                gap: 16px;
+                            }
+                            .stat { text-align: center; padding: 10px; }
+                            .stat strong { display: block; font-size: 24px; color: #1A3E74; }
+                            .stat span { font-size: 12px; color: #666; text-transform: uppercase; }
+                            .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #999; }
+                            @media print { body { padding: 20px; } }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Memória Rápida - Resultados</h1>
+                        <div class="header-info">
+                            <p><strong>Data:</strong> ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}</p>
+                            <p><strong>Tópico:</strong> ${results.topic || 'Todos os Tópicos'}</p>
+                        </div>
+                        
+                        <div class="summary">
+                            <div class="stat"><strong>${results.answered}</strong><span>Respondidas</span></div>
+                            <div class="stat"><strong>${results.correct}</strong><span>Acertos</span></div>
+                            <div class="stat"><strong>${results.wrong}</strong><span>Erros</span></div>
+                            <div class="stat"><strong>${results.percentage}%</strong><span>Acerto</span></div>
+                            <div class="stat"><strong>${results.streak}</strong><span>Sequência</span></div>
+                            <div class="stat"><strong>${results.xp}</strong><span>XP</span></div>
+                        </div>
+                        
+                        <div class="footer">
+                            <p>Gerado por Simulados de Enfermagem - https://simulados-para-enfermagem.com.br</p>
+                        </div>
+                        
+                        <script>window.onload = () => window.print();<\/script>
+                    </body>
+                    </html>
+                `;
+
+                printWindow.document.write(html);
+                printWindow.document.close();
+            }
+        };
+
+        /**
+         * QuestionBank - Banco de dados de questões
+         */
+        const QuestionBank = {
+            questions: [
+                {
+                    id: 1,
+                    topic: "anatomia",
+                    question: "Qual é o principal osso do antebraço que se articula com o úmero no cotovelo?",
+                    options: ["Ulna", "Rádio", "Úmero", "Clavícula", "Escápula"],
+                    correctIndex: 0
+                },
+                {
+                    id: 2,
+                    topic: "anatomia",
+                    question: "Quantos pares de cordas vocais possuem as pregas vocais verdadeiras?",
+                    options: ["1 par", "2 pares", "3 pares", "4 pares", "5 pares"],
+                    correctIndex: 0
+                },
+                {
+                    id: 3,
+                    topic: "farmacologia",
+                    question: "Qual classe de medicamentos é comumente utilizada para tratar hipertensão arterial e atua como inibidor da enzima conversora de angiotensina (ECA)?",
+                    options: ["Betabloqueadores", "Diuréticos", "Inibidores da ECA", "Bloqueadores de canais de cálcio", "Vasodilatadores diretos"],
+                    correctIndex: 2
+                },
+                {
+                    id: 4,
+                    topic: "farmacologia",
+                    question: "A digoxina é um medicamento frequentemente utilizado em qual condição cardíaca?",
+                    options: ["Hipertensão arterial", "Insuficiência cardíaca", "Trombose venosa", "Arritmia atrial", "Angina pectoris"],
+                    correctIndex: 1
+                },
+                {
+                    id: 5,
+                    topic: "patologia",
+                    question: "O que é aterosclerose?",
+                    options: ["Inflamação dos vasos linfáticos", "Depósito de placas de gordura nas artérias", "Degeneração das células musculares cardíacas", "Obstrução das veias por coágulos", "Dilatação anormal das artérias"],
+                    correctIndex: 1
+                },
+                {
+                    id: 6,
+                    topic: "patologia",
+                    question: "Qual é a principal característica patológica do diabetes mellitus tipo 1?",
+                    options: ["Resistência à insulina", "Deficiência na produção de insulina", "Produção excessiva de glucagon", "Disfunção das células alfa", "Alterações no receptor de insulina"],
+                    correctIndex: 1
+                },
+                {
+                    id: 7,
+                    topic: "microbiologia",
+                    question: "Qual microorganismo é o agente causador da tuberculose?",
+                    options: ["Mycobacterium tuberculosis", "Streptococcus pneumoniae", "Haemophilus influenzae", "Neisseria meningitidis", "Clostridium tetani"],
+                    correctIndex: 0
+                },
+                {
+                    id: 8,
+                    topic: "microbiologia",
+                    question: "Os vírus são considerados organismos acelulares porque:",
+                    options: ["Possuem apenas DNA", "Possuem apenas RNA", "Não possuem estrutura celular completa", "São muito pequenos", "Não se reproduzem"],
+                    correctIndex: 2
+                },
+                {
+                    id: 9,
+                    topic: "saude-publica",
+                    question: "O que significa o conceito de 'Vigilância em Saúde'?",
+                    options: ["Monitoramento contínuo de doenças e seus determinantes", "Controle de vetores em áreas rurais", "Fiscalização de estabelecimentos de saúde", "Inspeção de alimentos em restaurantes", "Educação em saúde nas escolas"],
+                    correctIndex: 0
+                },
+                {
+                    id: 10,
+                    topic: "saude-publica",
+                    question: "Qual é o indicador utilizado para medir a proporção de nascidos vivos com baixo peso?",
+                    options: ["Taxa de mortalidade materna", "Taxa de natalidade", "Peso ao nascer inferior a 2.500g", "Número de consultas pré-natal", "Idade gestacional ao parto"],
+                    correctIndex: 2
+                },
+                {
+                    id: 11,
+                    topic: "enfermagem-basica",
+                    question: "Qual é a finalidade da técnica de higiene oral em pacientes acamados?",
+                    options: ["Apenas estética", "Prevenir infecções bucais e sistêmicas", "Substituir a escovação convencional", "Reduzir a sede", "Estimular o apetite"],
+                    correctIndex: 1
+                },
+                {
+                    id: 12,
+                    topic: "enfermagem-basica",
+                    question: "Ao realizar a mensuração da temperatura axilar, qual é o tempo mínimo recomendado?",
+                    options: ["2 minutos", "5 minutos", "10 minutos", "15 minutos", "1 minuto"],
+                    correctIndex: 1
+                },
+                {
+                    id: 13,
+                    topic: "enfermagem-medica",
+                    question: "Qual é a classificação da insuficiência cardíaca baseada na New York Heart Association (NYHA) que apresenta sintomas em repouso?",
+                    options: ["Classe I", "Classe II", "Classe III", "Classe IV", "Classe V"],
+                    correctIndex: 3
+                },
+                {
+                    id: 14,
+                    topic: "enfermagem-medica",
+                    question: "A pneumonia comunitária é mais frequentemente causada por qual agente etiológico?",
+                    options: ["Klebsiella pneumoniae", "Pseudomonas aeruginosa", "Streptococcus pneumoniae", "Staphylococcus aureus", "Legionella pneumophila"],
+                    correctIndex: 2
+                },
+                {
+                    id: 15,
+                    topic: "enfermagem-cirurgica",
+                    question: "Qual é o objetivo principal da avaliação pré-operatória?",
+                    options: ["Determinar o tipo de anestesia", "Identificar riscos e preparar o paciente", "Agendar a data da cirurgia", "Calcular os custos da cirurgia", "Selecionar o cirurgião"],
+                    correctIndex: 1
+                },
+                {
+                    id: 16,
+                    topic: "enfermagem-cirurgica",
+                    question: "O que é deiscência cirúrgica?",
+                    options: ["Infecção no local da incisão", "Abertura espontânea dos pontos da ferida operatória", "Acúmulo de líquido no local da cirurgia", "Sangramento excessivo pós-operatório", "Formação de queloide"],
+                    correctIndex: 1
+                },
+                {
+                    id: 17,
+                    topic: "bioquimica",
+                    question: "Qual é a principal fonte de energia para as células musculares durante exercícios intensos de curta duração?",
+                    options: ["Ácidos graxos", "Glicose", "ATP muscular e creatina fosfato", "Aminoácidos", "Cetonas"],
+                    correctIndex: 2
+                },
+                {
+                    id: 18,
+                    topic: "bioquimica",
+                    question: "A hemoglobina é uma proteína responsável pelo transporte de qual gás no sangue?",
+                    options: ["Dióxido de carbono", "Nitrogênio", "Oxigênio", "Monóxido de carbono", "Oxido nitroso"],
+                    correctIndex: 2
+                },
+                {
+                    id: 19,
+                    topic: "imunologia",
+                    question: "Qual células são responsáveis pela resposta imunitária mediada por anticorpos?",
+                    options: ["Linfócitos T", "Linfócitos B", "Neutrófilos", "Macrófagos", "Eosinófilos"],
+                    correctIndex: 1
+                },
+                {
+                    id: 20,
+                    topic: "imunologia",
+                    question: "O que são anticorpos (imunoglobulinas)?",
+                    options: ["Células de defesa", "Proteínas produzidas pelo sistema imune", "Lipídios de membrana", "Carboidratos estruturais", "Ácidos nucleicos"],
+                    correctIndex: 1
+                }
+            ],
+
+            getAll() {
+                return this.questions;
+            },
+
+            getByTopic(topic) {
+                if (!topic) return this.questions;
+                return this.questions.filter(q => q.topic === topic);
+            },
+
+            shuffle(array) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            },
+
+            getRandom(count, topic = '') {
+                let questions = this.getByTopic(topic);
+                questions = this.shuffle(questions);
+                return questions;
+            }
+        };
+
+        /**
+         * QuizManager - Gerencia todo o fluxo do quiz
+         */
+        const QuizManager = {
+            config: {
+                topic: '',
+                duration: 15 // minutos
+            },
+            questions: [],
+            currentIndex: 0,
+            answers: [],
+            startTime: null,
+            quizFinished: false,
+            currentStreak: 0,
+            bestStreak: 0,
+
+            init() {
+                this.loadStats();
+                this.setupEventListeners();
+                this.hideLoader();
+                console.log('[QuizManager] Inicializado');
+            },
+
+            setupEventListeners() {
+                const topicSelect = document.getElementById('topicSelect');
+                if (topicSelect) {
+                    topicSelect.addEventListener('change', (e) => {
+                        this.config.topic = e.target.value;
+                        console.log('[QuizManager] Tópico selecionado:', this.config.topic);
+                    });
+                }
+
+                const startBtn = document.getElementById('startQuizBtn');
+                if (startBtn) {
+                    startBtn.addEventListener('click', () => this.startQuiz());
+                }
+            },
+
+            loadStats() {
+                try {
+                    const stats = JSON.parse(localStorage.getItem('memoria_rapida_stats') || '{}');
+                    document.getElementById('games-played').textContent = stats.games || 0;
+                    document.getElementById('best-score').textContent = stats.bestScore || 0;
+                    document.getElementById('best-accuracy').textContent = (stats.bestAccuracy || 0) + '%';
+                    document.getElementById('best-streak').textContent = stats.bestStreak || 0;
+                    this.bestStreak = stats.bestStreak || 0;
+                } catch (error) {
+                    console.log('[QuizManager] Erro ao carregar estatísticas:', error);
+                }
+            },
+
+            saveStats(answered, correct, streak) {
+                try {
+                    const stats = JSON.parse(localStorage.getItem('memoria_rapida_stats') || '{}');
+                    stats.games = (stats.games || 0) + 1;
+                    stats.bestScore = Math.max(stats.bestScore || 0, answered);
+                    stats.bestAccuracy = Math.max(stats.bestAccuracy || 0, answered > 0 ? Math.round((correct / answered) * 100) : 0);
+                    stats.bestStreak = Math.max(stats.bestStreak || 0, streak);
+                    localStorage.setItem('memoria_rapida_stats', JSON.stringify(stats));
+                } catch (error) {
+                    console.log('[QuizManager] Erro ao salvar estatísticas:', error);
+                }
+            },
+
+            startQuiz() {
+                // Carregar questões
+                this.questions = QuestionBank.getRandom(999, this.config.topic);
+                
+                if (this.questions.length === 0) {
+                    alert('Nenhuma questão encontrada');
+                    return;
+                }
+
+                // Inicializar respostas
+                this.answers = [];
+                this.currentIndex = 0;
+                this.startTime = Date.now();
+                this.quizFinished = false;
+                this.currentStreak = 0;
+
+                // Mostrar área do quiz
+                document.getElementById('config-area').style.display = 'none';
+                document.getElementById('quiz-area').style.display = 'block';
+                document.getElementById('results-area').style.display = 'none';
+
+                // Inicializar timer (15 minutos fixos para Memória Rápida)
+                QuizTimer.init(15, (remaining, total) => {
+                    QuizTimer.updateDisplay();
+                }, () => {
+                    this.finishQuiz();
+                });
+                QuizTimer.start();
+
+                // Inicializar som
+                SoundManager.init();
+                SoundManager.playStart();
+
+                // Renderizar primeira questão
+                this.renderQuestion();
+            },
+
+            renderQuestion() {
+                // Verificar se há questões restantes
+                if (this.currentIndex >= this.questions.length) {
+                    this.finishQuiz();
+                    return;
+                }
+
+                const question = this.questions[this.currentIndex];
+
+                // Atualizar contador
+                document.getElementById('question-counter').textContent = 
+                    `Questão ${this.currentIndex + 1}`;
+                document.getElementById('question-number').textContent = 
+                    `Questão ${this.currentIndex + 1}`;
+                document.getElementById('score-display').textContent = 
+                    `Acertos: ${this.answers.filter(a => a && a.correct).length}`;
+
+                // Atualizar texto da questão
+                document.getElementById('question-text').textContent = question.question;
+
+                // Renderizar opções
+                const optionsList = document.getElementById('options-list');
+                optionsList.innerHTML = '';
+
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                question.options.forEach((option, index) => {
+                    const optionEl = document.createElement('div');
+                    optionEl.className = 'option-item';
+                    optionEl.onclick = () => this.selectOption(index);
+                    optionEl.innerHTML = `
+                        <span class="option-letter">${letters[index]}</span>
+                        <span class="option-text">${option}</span>
+                    `;
+                    optionsList.appendChild(optionEl);
+                });
+            },
+
+            selectOption(index) {
+                if (this.quizFinished) return;
+
+                const question = this.questions[this.currentIndex];
+                const isCorrect = index === question.correctIndex;
+
+                // Atualizar resposta
+                this.answers[this.currentIndex] = {
+                    questionId: question.id,
+                    selected: index,
+                    correct: isCorrect,
+                    question: question.question,
+                    options: question.options,
+                    correctIndex: question.correctIndex
+                };
+
+                // Atualizar streak
+                if (isCorrect) {
+                    this.currentStreak++;
+                } else {
+                    this.currentStreak = 0;
+                }
+
+                // Atualizar visual
+                const options = document.querySelectorAll('.option-item');
+                options.forEach((opt, i) => {
+                    opt.classList.remove('selected', 'correct', 'wrong');
+                    if (i === index) {
+                        opt.classList.add(isCorrect ? 'correct' : 'wrong');
+                    } else if (i === question.correctIndex) {
+                        opt.classList.add('correct');
+                    }
+                });
+
+                // Som de feedback
+                if (isCorrect) {
+                    SoundManager.playCorrect();
+                } else {
+                    SoundManager.playWrong();
+                }
+
+                // Atualizar score
+                document.getElementById('score-display').textContent = 
+                    `Acertos: ${this.answers.filter(a => a && a.correct).length}`;
+
+                // Avançar para próxima questão após breve delay
+                setTimeout(() => {
+                    this.currentIndex++;
+                    this.renderQuestion();
+                }, 500);
+            },
+
+            nextQuestion() {
+                this.currentIndex++;
+                this.renderQuestion();
+            },
+
+            finishQuiz() {
+                this.quizFinished = true;
+                QuizTimer.stop();
+                QuestionReader.stop();
+
+                const endTime = Date.now();
+                const correctCount = this.answers.filter(a => a && a.correct).length;
+                const answeredCount = this.answers.filter(a => a !== undefined).length;
+                const totalQuestions = this.questions.length;
+                const percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+                const xp = this.calculateXP(correctCount, percentage);
+
+                // Atualizar resultados
+                document.getElementById('result-answered').textContent = answeredCount;
+                document.getElementById('result-correct').textContent = correctCount;
+                document.getElementById('result-wrong').textContent = answeredCount - correctCount;
+                document.getElementById('result-percentage').textContent = `${percentage}%`;
+                document.getElementById('result-streak').textContent = this.currentStreak;
+                document.getElementById('result-xp').textContent = xp;
+
+                // Ícone e título
+                const icon = document.getElementById('results-icon');
+                const title = document.getElementById('results-title');
+                const subtitle = document.getElementById('results-subtitle');
+
+                if (percentage >= 80) {
+                    icon.textContent = '🏆';
+                    title.textContent = 'Excelente!';
+                    subtitle.textContent = 'Você demonstrou uma memória impressionante!';
+                } else if (percentage >= 60) {
+                    icon.textContent = '⚡';
+                    title.textContent = 'Muito Bom!';
+                    subtitle.textContent = 'Sua velocidade e precisão são ótimas!';
+                } else if (percentage >= 40) {
+                    icon.textContent = '📚';
+                    title.textContent = 'Bom Trabalho!';
+                    subtitle.textContent = 'Continue praticando para melhorar!';
+                } else {
+                    icon.textContent = '💪';
+                    title.textContent = 'Continue Praticando!';
+                    subtitle.textContent = 'A cada tentativa você melhora mais!';
+                }
+
+                // Som de completion
+                SoundManager.playComplete();
+
+                // Salvar estatísticas
+                this.saveStats(answeredCount, correctCount, this.currentStreak);
+
+                // Salvar no histórico
+                this.saveToHistory({
+                    dataFinal: new Date().toISOString(),
+                    percentual: percentage,
+                    xp: xp,
+                    acertos: correctCount,
+                    respondidas: answeredCount,
+                    streak: this.currentStreak,
+                    tipo: 'memoria-rapida',
+                    topico: this.config.topic || 'Todos'
+                });
+
+                // Mostrar área de resultados
+                document.getElementById('quiz-area').style.display = 'none';
+                document.getElementById('results-area').style.display = 'block';
+
+                console.log('[QuizManager] Quiz finalizado. Respondidas:', answeredCount, 'XP:', xp);
+            },
+
+            calculateXP(correct, percentage) {
+                // XP base: 20 por acerto
+                let xp = correct * 20;
+                
+                // Bônus por taxa de acerto
+                if (percentage >= 80) {
+                    xp *= 1.3;
+                } else if (percentage >= 60) {
+                    xp *= 1.1;
+                }
+
+                return Math.round(xp);
+            },
+
+            saveToHistory(result) {
+                try {
+                    const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                    historico.unshift(result);
+                    localStorage.setItem('user_historico_quizzes', JSON.stringify(historico.slice(0, 100)));
+                    console.log('[QuizManager] Resultado salvo no histórico');
+                } catch (error) {
+                    console.error('[QuizManager] Erro ao salvar histórico:', error);
+                }
+            },
+
+            readCurrentQuestion() {
+                const question = this.questions[this.currentIndex];
+                QuestionReader.readQuestionWithOptions(question.question, question.options);
+            },
+
+            readAlternatives() {
+                const question = this.questions[this.currentIndex];
+                let text = '';
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                question.options.forEach((opt, i) => {
+                    text += `Alternativa ${letters[i]}: ${opt}. `;
+                });
+                QuestionReader.read(text, 0.9, 1);
+            },
+
+            stopReading() {
+                QuestionReader.stop();
+            },
+
+            printResults() {
+                const correctCount = this.answers.filter(a => a && a.correct).length;
+                const answeredCount = this.answers.filter(a => a !== undefined).length;
+                const percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+                const xp = this.calculateXP(correctCount, percentage);
+
+                const results = {
+                    answered: answeredCount,
+                    correct: correctCount,
+                    wrong: answeredCount - correctCount,
+                    percentage: percentage,
+                    streak: this.currentStreak,
+                    xp: xp,
+                    topic: this.config.topic || 'Todos os Tópicos'
+                };
+
+                ResultsPrinter.print(results);
+            },
+
+            restartQuiz() {
+                // Repetir com as mesmas questões
+                this.currentIndex = 0;
+                this.answers = [];
+                this.startTime = Date.now();
+                this.quizFinished = false;
+                this.currentStreak = 0;
+
+                document.getElementById('results-area').style.display = 'none';
+                document.getElementById('quiz-area').style.display = 'block';
+
+                QuizTimer.init(15, (remaining, total) => {
+                    QuizTimer.updateDisplay();
+                }, () => {
+                    this.finishQuiz();
+                });
+                QuizTimer.start();
+
+                SoundManager.playStart();
+                this.renderQuestion();
+            },
+
+            newQuiz() {
+                // Novo quiz com novas questões
+                this.startQuiz();
+            },
+
+            goHome() {
+                window.location.href = 'dashboard.html';
+            },
+
+            hideLoader() {
+                setTimeout(() => {
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }
+                }, 500);
+            }
+        };
+
+        // Inicializar quando o DOM estiver pronto
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
-                if (Navigation.init) Navigation.init();
+                SoundManager.init();
+                QuestionReader.init();
+                QuizManager.init();
             });
         } else {
-            if (Navigation.init) Navigation.init();
+            SoundManager.init();
+            QuestionReader.init();
+            QuizManager.init();
         }
     </script>
 </body>
