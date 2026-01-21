@@ -1,296 +1,1072 @@
-/* Accessibility Panel Styles - Simulados de Enfermagem */
+/**
+ * Accessibility Dashboard CSS - Modular Component
+ * Recursos de Acessibilidade para Página Dashboard
+ * Versão: v4-dashboard
+ * 
+ * Inclui:
+ * - Skip Links (Pular para conteúdo)
+ * - Fokus Visible States
+ * - Screen Reader Only Content
+ * - High Contrast Mode
+ * - Reduced Motion Support
+ * - Font Size Adjustments
+ * - Accessibility Widgets
+ */
 
+/* ============================================
+   CSS CUSTOM PROPERTIES (VARIÁVEIS)
+   ============================================ */
 :root {
-    --primary: #1A3E74;
-    --accent: #00bcd4;
-    --light: #f4f6f9;
-    --dark: #1f2937;
-    --border: #e5e7eb;
+    /* Font Family */
+    --font-nunito: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Primary Colors */
+    --color-primary: #1A3E74;
+    --color-primary-hover: #0d2847;
+    --color-accent: #00bcd4;
+    --color-accent-glow: #00bcd4;
+    
+    /* Accessibility Colors */
+    --focus-ring-color: #00bcd4;
+    --focus-ring-width: 3px;
+    --focus-ring-offset: 2px;
+    
+    /* Text Colors */
+    --text-primary: #1A3E74;
+    --text-secondary: #4a5568;
+    --text-inverse: #ffffff;
+    
+    /* Background Colors */
+    --bg-main: #f4f6f9;
+    --bg-white: #ffffff;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    
+    /* Font Size Scale */
+    --font-size-scale: 1;
 }
 
-.accessibility-panel {
+/* ============================================
+   RESET DE BOX-SIZING
+   ============================================ */
+.accessibility-dashboard-component {
+    box-sizing: border-box;
+    font-family: var(--font-inter);
+}
+
+.accessibility-dashboard-component *,
+.accessibility-dashboard-component *::before,
+.accessibility-dashboard-component *::after {
+    box-sizing: inherit;
+}
+
+/* ============================================
+   SKIP LINKS - PULAR PARA CONTEÚDO
+   ============================================ */
+.skip-link-dashboard {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    padding: 16px 24px;
+    z-index: 99999;
+    transition: top 0.3s ease, transform 0.3s ease;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 0 0 12px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.skip-link-dashboard::before {
+    content: '\f060';
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+.skip-link-dashboard:hover {
+    background: var(--color-primary-hover);
+}
+
+.skip-link-dashboard:focus {
+    top: 0;
+    outline: none;
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Skip Link para Footer */
+.skip-link-footer {
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    padding: 16px 24px;
+    z-index: 99999;
+    transition: bottom 0.3s ease;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.skip-link-footer:focus {
+    bottom: 0;
+    outline: none;
+}
+
+/* ============================================
+   FOCUS VISIBLE STATES
+   ============================================ */
+.accessibility-dashboard-component *:focus {
+    outline: none;
+}
+
+.accessibility-dashboard-component *:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: 4px;
+}
+
+/* Focus para elementos específicos */
+.accessibility-dashboard-component a:focus-visible,
+.accessibility-dashboard-component button:focus-visible,
+.accessibility-dashboard-component input:focus-visible,
+.accessibility-dashboard-component select:focus-visible,
+.accessibility-dashboard-component textarea:focus-visible,
+.accessibility-dashboard-component [tabindex]:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: 6px;
+}
+
+/* Focus ring mais forte para áreas importantes */
+.accessibility-dashboard-component .btn:focus-visible,
+.accessibility-dashboard-component .nav-link-dashboard:focus-visible,
+.accessibility-dashboard-component .footer-links-list a:focus-visible {
+    outline-width: 4px;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 8px rgba(0, 188, 212, 0.2);
+}
+
+/* ============================================
+   SCREEN READER ONLY (SR-ONLY)
+   ============================================ */
+.sr-only-dashboard {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.sr-only-focusable-dashboard:focus,
+.sr-only-focusable-dashboard:active {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* ============================================
+   HIGH CONTRAST MODE
+   ============================================ */
+@media (prefers-contrast: high) {
+    .accessibility-dashboard-component {
+        --focus-ring-color: #ff0000;
+        --focus-ring-width: 4px;
+    }
+    
+    .accessibility-dashboard-component *:focus-visible {
+        outline-width: 4px;
+        outline-offset: 4px;
+    }
+    
+    .skip-link-dashboard,
+    .skip-link-footer {
+        background: #000000;
+        border: 3px solid #ffffff;
+    }
+    
+    .skip-link-dashboard:focus,
+    .skip-link-footer:focus {
+        background: #ffffff;
+        color: #000000;
+    }
+    
+    .accessibility-dashboard-component a {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+    }
+    
+    .accessibility-dashboard-component a:hover {
+        background: #000000;
+        color: #ffffff;
+    }
+    
+    .accessibility-dashboard-component button,
+    .accessibility-dashboard-component .btn {
+        border: 3px solid currentColor !important;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .accessibility-dashboard-component *,
+    .accessibility-dashboard-component *::before,
+    .accessibility-dashboard-component *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    /* Desabilitar scroll suave */
+    html {
+        scroll-behavior: auto !important;
+    }
+    
+    /* Desabilitar transições */
+    .accessibility-dashboard-component {
+        transition: none !important;
+    }
+    
+    .accessibility-dashboard-component * {
+        transition: none !important;
+    }
+}
+
+/* ============================================
+   FONT SIZE ADJUSTMENTS
+   ============================================ */
+.accessibility-dashboard-component[data-font-scale="0.8"] {
+    font-size: 80%;
+}
+
+.accessibility-dashboard-component[data-font-scale="1"] {
+    font-size: 100%;
+}
+
+.accessibility-dashboard-component[data-font-scale="1.2"] {
+    font-size: 120%;
+}
+
+.accessibility-dashboard-component[data-font-scale="1.4"] {
+    font-size: 140%;
+}
+
+.accessibility-dashboard-component[data-font-scale="1.6"] {
+    font-size: 160%;
+}
+
+.accessibility-dashboard-component[data-font-scale="2"] {
+    font-size: 200%;
+}
+
+/* Preservar UI em diferentes escalas */
+.accessibility-dashboard-component[data-font-scale] .header-logo-image,
+.accessibility-dashboard-component[data-font-scale] .footer-main-logo,
+.accessibility-dashboard-component[data-font-scale] .user-avatar,
+.accessibility-dashboard-component[data-font-scale] .back-to-top-dashboard {
+    font-size: 1rem;
+}
+
+/* ============================================
+   ACCESSIBILITY WIDGET - BARRAS LATERAIS
+   ============================================ */
+.accessibility-widget-dashboard {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 999;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    filter: drop-shadow(-2px 2px 6px rgba(0, 0, 0, 0.15));
 }
 
-.accessibility-toggle {
+.accessibility-widget-dashboard.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(20px, -50%);
+}
+
+/* Widget visível no modo leitura */
+body.reading-mode .accessibility-widget-dashboard.hidden,
+body.reading-mode .accessibility-widget-dashboard {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(0, -50%) !important;
+}
+
+.accessibility-widget-dashboard button {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    border: none;
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 12px rgba(26, 62, 116, 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.2s;
+    border-radius: 8px 0 0 8px;
 }
 
-.accessibility-toggle:hover {
-    background: #152c4f;
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(26, 62, 116, 0.4);
+.accessibility-widget-dashboard button:first-child {
+    border-radius: 8px 0 0 0;
 }
 
-.accessibility-toggle:active {
-    transform: scale(0.95);
+.accessibility-widget-dashboard button:last-child {
+    border-radius: 0 0 0 8px;
 }
 
-.accessibility-controls {
-    position: absolute;
-    bottom: 70px;
-    right: 0;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    width: 320px;
-    max-height: 600px;
-    overflow-y: auto;
-    z-index: 1000;
+.accessibility-widget-dashboard button:hover {
+    background: var(--color-primary-hover);
+    width: 58px;
 }
 
-.accessibility-controls:not([hidden]) {
-    display: block;
+.accessibility-widget-dashboard button:focus-visible {
+    outline: 3px solid var(--focus-ring-color);
+    outline-offset: -3px;
 }
 
-.accessibility-controls[hidden] {
-    display: none;
+.accessibility-widget-dashboard button i {
+    font-size: 1.2rem;
 }
 
-.accessibility-header {
+/* ============================================
+   ACCESSIBILITY PANEL - PAINEL FLUTUANTE
+   ============================================ */
+.accessibility-panel-dashboard {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 420px;
+    max-height: calc(100vh - 2rem);
+    background: var(--bg-white);
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 1001;
+    color: var(--text-primary);
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(26, 62, 116, 0.1);
+}
+
+.accessibility-panel-dashboard:not(.hidden) {
+    transform: translateX(0);
+}
+
+.accessibility-panel-header {
+    padding: 1rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--light);
-    border-radius: 12px 12px 0 0;
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    position: relative;
+    min-height: 60px;
 }
 
-.accessibility-header h2 {
+.accessibility-panel-header h2 {
     margin: 0;
     font-size: 1.1rem;
-    color: var(--primary);
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.close-btn {
-    background: none;
+.accessibility-panel-header h2 i {
+    font-size: 1.25rem;
+}
+
+.accessibility-panel-close {
+    background: rgba(255, 255, 255, 0.2);
     border: none;
+    color: var(--text-inverse);
     cursor: pointer;
-    font-size: 1.2rem;
-    color: var(--dark);
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
-
-.close-btn:hover {
-    background: white;
-    color: var(--primary);
-}
-
-.accessibility-content {
-    padding: 1.5rem;
-}
-
-.control-group {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-}
-
-.control-group:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-}
-
-.control-group label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--dark);
-    margin-bottom: 0.75rem;
-}
-
-.control-buttons {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.control-btn {
-    background: var(--light);
-    border: 1px solid var(--border);
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    color: var(--primary);
-    transition: all 0.3s ease;
-}
-
-.control-btn:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.control-value {
-    flex: 1;
-    text-align: center;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--dark);
-}
-
-.control-toggle {
-    display: flex;
-}
-
-.toggle-btn {
-    display: flex;
-    align-items: center;
-    background: var(--light);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    padding: 0;
-    width: 100%;
+    width: 40px;
     height: 40px;
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.toggle-btn:hover {
-    border-color: var(--primary);
-}
-
-.toggle-btn[aria-pressed="true"] {
-    background: var(--accent);
-    border-color: var(--accent);
-}
-
-.toggle-label {
-    flex: 1;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-align: center;
-    color: var(--dark);
-    transition: all 0.3s ease;
-}
-
-.toggle-btn[aria-pressed="true"] .toggle-label {
-    color: white;
-}
-
-.toggle-switch {
-    position: absolute;
-    left: 2px;
-    width: calc(50% - 4px);
-    height: calc(100% - 4px);
-    background: white;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    top: 2px;
-}
-
-.toggle-btn[aria-pressed="true"] .toggle-switch {
-    left: calc(50% + 2px);
-}
-
-.reset-btn {
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.75rem;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
+    transition: all 0.2s ease;
+    font-size: 1.1rem;
 }
 
-.reset-btn:hover {
-    background: #152c4f;
+.accessibility-panel-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.accessibility-panel-close:focus-visible {
+    outline: 3px solid var(--focus-ring-color);
+    outline-offset: 3px;
+}
+
+.accessibility-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem;
+    padding-bottom: 120px;
+}
+
+/* ============================================
+   ACCESSIBILITY CARDS - OPÇÕES
+   ============================================ */
+.accessibility-option-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.accessibility-option-card {
+    background: #f1f5f9;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 1rem;
+    height: 6.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    font-family: inherit;
+    text-align: left;
+    color: var(--text-primary);
+}
+
+.accessibility-option-card:hover {
+    transform: translateY(-2px);
+    background: #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.accessibility-option-card.active {
+    border-color: var(--color-primary);
+    background: #dbeafe;
+}
+
+.accessibility-option-card:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+.accessibility-option-card i {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+
+.accessibility-option-card.active i {
+    color: var(--color-primary);
+}
+
+.accessibility-option-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.accessibility-option-hint {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* ============================================
+   FONT SIZE CONTROLS
+   ============================================ */
+.font-size-controls-dashboard {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.font-size-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-right: auto;
+}
+
+.font-size-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    background-color: #ffffff;
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 700;
+    font-size: 0.875rem;
+    box-shadow: 0 2px 4px rgba(26, 62, 116, 0.15);
+}
+
+.font-size-btn:hover {
+    background-color: #ffffff;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(26, 62, 116, 0.25);
     transform: translateY(-2px);
 }
 
-.reset-btn i {
+.font-size-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(26, 62, 116, 0.15);
+}
+
+.font-size-btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+.font-size-btn.at-max {
+    background-color: rgba(26, 62, 116, 0.15);
+    border-color: var(--color-primary);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.font-size-btn.at-min {
+    background-color: rgba(26, 62, 116, 0.1);
+    border-color: rgba(26, 62, 116, 0.5);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.font-size-btn i {
+    font-size: 0.875rem;
+}
+
+/* ============================================
+   THEME TOGGLE
+   ============================================ */
+.theme-toggle-dashboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 20px;
+    background-color: #ffffff;
+    border: 2px solid var(--color-primary);
+    border-radius: 10px;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.theme-toggle-dashboard:hover {
+    background-color: #ffffff;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(26, 62, 116, 0.25);
+    transform: translateY(-2px);
+}
+
+.theme-toggle-dashboard:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+.theme-toggle-dashboard i {
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   ACCESSIBILITY TOOLTIP
+   ============================================ */
+.accessibility-tooltip {
+    position: fixed;
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    padding: 12px 16px;
+    border-radius: 8px;
     font-size: 1rem;
+    font-weight: 500;
+    max-width: 400px;
+    z-index: 9992;
+    pointer-events: none;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    line-height: 1.4;
 }
 
-/* Scrollbar Styling */
-.accessibility-controls::-webkit-scrollbar {
-    width: 6px;
+/* ============================================
+   READING AIDS - GUIDES & MASKS
+   ============================================ */
+.reading-guide-dashboard {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 9990;
+    pointer-events: none;
+    display: none;
+    box-shadow: 0 0 10px currentColor;
 }
 
-.accessibility-controls::-webkit-scrollbar-track {
-    background: var(--light);
+.reading-guide-dashboard.active {
+    display: block;
 }
 
-.accessibility-controls::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
+.reading-guide-dashboard.guide-blue {
+    background: #1e3a8a;
+    box-shadow: 0 0 15px rgba(30, 58, 138, 0.6);
 }
 
-.accessibility-controls::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
+.reading-guide-dashboard.guide-orange {
+    background: #ea580c;
+    box-shadow: 0 0 15px rgba(234, 88, 12, 0.6);
 }
 
-/* Mobile Responsive */
-@media (max-width: 480px) {
-    .accessibility-panel {
-        bottom: 1rem;
-        right: 1rem;
-    }
+.reading-guide-dashboard.guide-black {
+    background: #000000;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
 
-    .accessibility-toggle {
-        width: 48px;
-        height: 48px;
-        font-size: 1.2rem;
-    }
+.reading-mask-dashboard {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 9990;
+    pointer-events: none;
+    display: none;
+}
 
-    .accessibility-controls {
-        width: 280px;
-        max-height: 70vh;
-    }
+.reading-mask-dashboard.active {
+    display: block;
+}
 
-    .accessibility-header {
-        padding: 1rem;
-    }
+#reading-mask-top-dashboard {
+    top: 0;
+}
 
-    .accessibility-header h2 {
-        font-size: 1rem;
-    }
+#reading-mask-bottom-dashboard {
+    bottom: 0;
+}
 
-    .accessibility-content {
-        padding: 1rem;
-    }
+/* ============================================
+   ACCESSIBILITY FOOTER PANEL
+   ============================================ */
+.accessibility-footer-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: #f8fafc;
+    backdrop-filter: none;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.25rem;
+    border-radius: 0 0 1rem 1rem;
+    border-top: 1px solid rgba(26, 62, 116, 0.1);
+}
 
-    .control-group {
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
+.accessibility-footer-btn {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(26, 62, 116, 0.25);
+    transition: transform 0.1s, background 0.2s;
+}
+
+.accessibility-footer-btn:hover {
+    background: var(--color-primary-hover);
+    transform: scale(1.02);
+}
+
+.accessibility-footer-btn:active {
+    transform: scale(0.98);
+}
+
+.accessibility-footer-btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+/* ============================================
+   DYSLEXIA FRIENDLY MODE
+   ============================================ */
+.dyslexia-friendly-dashboard p,
+.dyslexia-friendly-dashboard li,
+.dyslexia-friendly-dashboard td,
+.dyslexia-friendly-dashboard dd,
+.dyslexia-friendly-dashboard dt,
+.dyslexia-friendly-dashboard blockquote,
+.dyslexia-friendly-dashboard label {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', 'Comic Sans', cursive !important;
+    letter-spacing: 0.05em;
+    word-spacing: 0.1em;
+    line-height: 1.8 !important;
+}
+
+.dyslexia-friendly-dashboard h1,
+.dyslexia-friendly-dashboard h2,
+.dyslexia-friendly-dashboard h3 {
+    font-family: var(--font-nunito), sans-serif;
+    font-weight: 700;
+}
+
+/* ============================================
+   LARGE CURSOR MODE
+   ============================================ */
+.large-cursor-medium-dashboard {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 24 24' fill='%231A3E74' stroke='white' stroke-width='1.5'%3E%3Cpath d='M4 4l7.07 17 2.51-7.39L21 11.07z'/%3E%3C/svg%3E") 4 4, pointer !important;
+}
+
+.large-cursor-large-dashboard {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='%231A3E74' stroke='white' stroke-width='1.5'%3E%3Cpath d='M4 4l7.07 17 2.51-7.39L21 11.07z'/%3E%3C/svg%3E") 6 6, pointer !important;
+}
+
+.large-cursor-xlarge-dashboard {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 24 24' fill='%231A3E74' stroke='white' stroke-width='1.5'%3E%3Cpath d='M4 4l7.07 17 2.51-7.39L21 11.07z'/%3E%3C/svg%3E") 8 8, pointer !important;
+}
+
+/* Preservar cursor em elementos de UI interativos */
+.accessibility-dashboard-component button,
+.accessibility-dashboard-component a,
+.accessibility-dashboard-component input,
+.accessibility-dashboard-component select,
+.accessibility-dashboard-component textarea,
+.accessibility-panel-dashboard,
+.accessibility-widget-dashboard {
+    cursor: auto !important;
+}
+
+/* ============================================
+   STOP ANIMATIONS MODE
+   ============================================ */
+.stop-animations-dashboard *,
+.stop-animations-dashboard *::before,
+.stop-animations-dashboard *::after {
+    animation-play-state: paused !important;
+    transition-play-state: paused !important;
+}
+
+/* Preservar animações de UI */
+.stop-animations-dashboard .accessibility-panel-dashboard,
+.stop-animations-dashboard .accessibility-panel-dashboard *,
+.stop-animations-dashboard .accessibility-widget-dashboard,
+.stop-animations-dashboard .accessibility-widget-dashboard * {
+    animation-play-state: running !important;
+    transition-play-state: running !important;
+}
+
+/* ============================================
+   HIGHLIGHT LINKS & HEADERS
+   ============================================ */
+.highlight-links-dashboard a {
+    background: linear-gradient(90deg, #fef08a, #fde047) !important;
+    color: #000 !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.highlight-headers-dashboard h1,
+.highlight-headers-dashboard h2,
+.highlight-headers-dashboard h3,
+.highlight-headers-dashboard h4,
+.highlight-headers-dashboard h5,
+.highlight-headers-dashboard h6 {
+    background: linear-gradient(90deg, #dbeafe, #bfdbfe) !important;
+    padding: 8px 12px !important;
+    border-left: 4px solid var(--color-primary) !important;
+    border-radius: 4px !important;
+    margin-left: -12px !important;
+}
+
+/* Preservar estilos de UI */
+.accessibility-dashboard-component .accessibility-panel-header h1,
+.accessibility-dashboard-component .accessibility-panel-header h2,
+.accessibility-dashboard-component .accessibility-widget-dashboard h1,
+.accessibility-dashboard-component .accessibility-widget-dashboard h2 {
+    background: none !important;
+    padding: 0 !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* ============================================
+   SATURATION & GRAYSCALE
+   ============================================ */
+.saturation-low-dashboard {
+    filter: saturate(0.5);
+}
+
+.saturation-high-dashboard {
+    filter: saturate(1.8);
+}
+
+.grayscale-dashboard {
+    filter: grayscale(100%);
+}
+
+.saturation-low-dashboard .accessibility-panel-dashboard,
+.saturation-low-dashboard .accessibility-widget-dashboard,
+.saturation-high-dashboard .accessibility-panel-dashboard,
+.saturation-high-dashboard .accessibility-widget-dashboard,
+.grayscale-dashboard .accessibility-panel-dashboard,
+.grayscale-dashboard .accessibility-widget-dashboard {
+    filter: none;
+}
+
+/* ============================================
+   INVERT COLORS
+   ============================================ */
+.invert-colors-dashboard {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Proteger elementos de UI */
+.invert-colors-dashboard .accessibility-panel-dashboard,
+.invert-colors-dashboard .accessibility-widget-dashboard {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* ============================================
+   HIDE IMAGES MODE
+   ============================================ */
+.hide-images-dashboard img:not(.accessibility-panel-logo):not([class*="icon"]):not([class*="fa-"]):not([src*=".svg"]):not([aria-hidden="true"]),
+.hide-images-dashboard picture img:not(.accessibility-panel-logo):not([class*="icon"]):not([class*="fa-"]):not([src*=".svg"]),
+.hide-images-dashboard [role="img"]:not(.accessibility-panel-logo):not([class*="icon"]):not([class*="fa-"]) {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Preservar imagens de UI */
+.accessibility-panel-dashboard img,
+.accessibility-panel-dashboard picture,
+.accessibility-panel-dashboard [role="img"],
+.accessibility-widget-dashboard img,
+.accessibility-widget-dashboard picture,
+.accessibility-widget-dashboard [role="img"] {
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+    .accessibility-panel-dashboard {
+        width: calc(100% - 2rem) !important;
+        right: 1rem !important;
+        max-height: calc(100vh - 2rem);
     }
+    
+    .accessibility-widget-dashboard {
+        display: none;
+    }
+    
+    .accessibility-option-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .font-size-controls-dashboard {
+        flex-wrap: wrap;
+    }
+    
+    .font-size-label {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* ============================================
+   PRINT ACCESSIBILITY
+   ============================================ */
+@media print {
+    .skip-link-dashboard,
+    .skip-link-footer,
+    .accessibility-widget-dashboard,
+    .accessibility-panel-dashboard {
+        display: none !important;
+    }
+    
+    .accessibility-dashboard-component {
+        font-size: 12pt !important;
+        line-height: 1.5 !important;
+    }
+    
+    .accessibility-dashboard-component a {
+        text-decoration: underline !important;
+    }
+    
+    .accessibility-dashboard-component a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}
+
+/* ============================================
+   KEYBOARD NAVIGATION INDICATORS
+   ============================================ */
+.keyboard-nav-active-dashboard :focus {
+    outline: 3px solid var(--focus-ring-color) !important;
+    outline-offset: 3px !important;
+}
+
+/* ============================================
+   ERROR & VALIDATION STATES
+   ============================================ */
+.accessibility-dashboard-component [aria-invalid="true"],
+.accessibility-dashboard-component .error-field {
+    border: 3px solid #dc2626 !important;
+    outline: none !important;
+}
+
+.accessibility-dashboard-component [aria-invalid="true"]:focus,
+.accessibility-dashboard-component .error-field:focus {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.2) !important;
+}
+
+.accessibility-dashboard-component .error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.accessibility-dashboard-component .error-message::before {
+    content: '\f071';
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+.accessibility-dashboard-component [aria-busy="true"] {
+    cursor: wait !important;
+}
+
+.accessibility-dashboard-component [aria-busy="true"]::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin-dashboard 0.8s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes spin-dashboard {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes spin-dashboard {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .accessibility-dashboard-component [aria-busy="true"]::after {
+        animation: none;
+        border-top-color: currentColor;
+        border-right-color: currentColor;
+    }
+}
+
+/* ============================================
+   TOOLTIP ACCESSIBILITY
+   ============================================ */
+.accessibility-dashboard-component [data-tooltip] {
+    position: relative;
+}
+
+.accessibility-dashboard-component [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+    margin-bottom: 8px;
+}
+
+.accessibility-dashboard-component [data-tooltip]:hover::after,
+.accessibility-dashboard-component [data-tooltip]:focus::after {
+    opacity: 1;
+    visibility: visible;
 }
