@@ -4,63 +4,393 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gerenciamento do sistema">
-    <link rel="icon" type="image/webp" href="../../assets/app/images/favicon.webp">
     <title>Painel Admin | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="../../assets/app/css/global.css">
-    <link rel="stylesheet" href="../../assets/components/css/header.css">
-    <link rel="stylesheet" href="../../assets/components/css/footer.css">
-    <link rel="stylesheet" href="../../assets/components/css/accessibility.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="../../assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="../../assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS dos Componentes -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+
+    <style>
+        /* ============================================
+           VARIÁVEIS CSS - ESTILO DASHBOARD(6)
+           ============================================ */
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+        }
+
+        /* ============================================
+           RESET E BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* ============================================
+           ACESSIBILIDADE - DASHBOARD(6)
+           ============================================ */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* ============================================
+           LAYOUT PRINCIPAL
+           ============================================ */
+        .page-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+            padding: 40px 20px;
+        }
+
+        /* ============================================
+           ADMIN CONTAINER
+           ============================================ */
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-container h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-container h1 i {
+            color: var(--primary);
+        }
+
+        .admin-container .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        /* ============================================
+           ADMIN GRID
+           ============================================ */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* ============================================
+           ADMIN CARD - BASEADO NO STAT-CARD DASHBOARD(6)
+           ============================================ */
+        .admin-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .admin-card h2 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-card p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .admin-card p strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ============================================
+           BOTÕES - ESTILO DASHBOARD(6)
+           ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #152c4f;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           RESPONSIVIDADE - DASHBOARD(6)
+           ============================================ */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 24px 16px;
+            }
+
+            .admin-container h1 {
+                font-size: 24px;
+            }
+
+            .admin-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .admin-card {
+                padding: 20px;
+            }
+
+            .admin-card h2 {
+                font-size: 18px;
+            }
+        }
+
+        /* ============================================
+           DARK MODE - BASEADO NA DASHBOARD(6)
+           ============================================ */
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .admin-card {
+            background: #2d3748;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .admin-container h1 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .admin-container .subtitle {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .admin-card h2 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .admin-card p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .admin-card p strong {
+            color: var(--accent);
+        }
+
+        /* ============================================
+           REDUZIR ANIMAÇÕES - BASEADO NA DASHBOARD(6)
+           ============================================ */
+        body.reduce-animations .admin-card,
+        body.reduce-animations .btn {
+            transition: none;
+        }
+
+        /* ============================================
+           HIGH CONTRAST MODE
+           ============================================ */
+        body[data-contrast="high"] .admin-card {
+            border: 2px solid var(--primary);
+        }
+
+        body[data-contrast="high"] .btn-primary {
+            border: 2px solid white;
+        }
+    </style>
 </head>
 <body>
-    <!-- Componente de Acessibilidade -->
+    <!-- Skip Link para Acessibilidade -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
-    
-    <!-- Componente de Cabeçalho -->
     <div id="header-container"></div>
-    
-    <!-- Conteúdo Principal -->
-    <main id="main-content">
-        
-        <div class="admin-container">
-            <h1>Painel Administrativo</h1>
-            <p class="subtitle">Gerenciamento centralizado do sistema</p>
-            
-            <div class="admin-grid">
-                <section class="admin-card">
-                    <h2>Usuários</h2>
-                    <p>Total de usuários: <strong>1,234</strong></p>
-                    <a href="#" class="btn btn-primary">Gerenciar Usuários</a>
-                </section>
-                
-                <section class="admin-card">
-                    <h2>Questões</h2>
-                    <p>Total de questões: <strong>5,678</strong></p>
-                    <a href="#" class="btn btn-primary">Gerenciar Questões</a>
-                </section>
-                
-                <section class="admin-card">
-                    <h2>Concursos</h2>
-                    <p>Total de concursos: <strong>89</strong></p>
-                    <a href="#" class="btn btn-primary">Gerenciar Concursos</a>
-                </section>
-                
-                <section class="admin-card">
-                    <h2>Relatórios</h2>
-                    <p>Gerar relatórios do sistema</p>
-                    <a href="#" class="btn btn-primary">Ver Relatórios</a>
-                </section>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            <div class="admin-container">
+                <h1><i class="fas fa-cogs"></i> Painel Administrativo</h1>
+                <p class="subtitle">Gerenciamento centralizado do sistema</p>
+
+                <div class="admin-grid">
+                    <section class="admin-card">
+                        <h2><i class="fas fa-users"></i> Usuários</h2>
+                        <p>Total de usuários: <strong>1,234</strong></p>
+                        <p>Gerencie contas, permissões e atividades dos usuários.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-cog"></i> Gerenciar Usuários</a>
+                    </section>
+
+                    <section class="admin-card">
+                        <h2><i class="fas fa-question-circle"></i> Questões</h2>
+                        <p>Total de questões: <strong>5,678</strong></p>
+                        <p>Adicione, edite ou remova questões do banco de dados.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-cog"></i> Gerenciar Questões</a>
+                    </section>
+
+                    <section class="admin-card">
+                        <h2><i class="fas fa-graduation-cap"></i> Concursos</h2>
+                        <p>Total de concursos: <strong>89</strong></p>
+                        <p>Configure editais, bancas e datas de provas.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-cog"></i> Gerenciar Concursos</a>
+                    </section>
+
+                    <section class="admin-card">
+                        <h2><i class="fas fa-chart-bar"></i> Relatórios</h2>
+                        <p>Gerar relatórios do sistema</p>
+                        <p>Acompanhe métricas, desempenho e estatísticas gerais.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-chart-line"></i> Ver Relatórios</a>
+                    </section>
+
+                    <section class="admin-card">
+                        <h2><i class="fas fa-tags"></i> Categorias</h2>
+                        <p>Total de categorias: <strong>45</strong></p>
+                        <p>Organize questões por assuntos e especialidades.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-cog"></i> Gerenciar Categorias</a>
+                    </section>
+
+                    <section class="admin-card">
+                        <h2><i class="fas fa-bell"></i> Notificações</h2>
+                        <p>Mensagens pendentes: <strong>12</strong></p>
+                        <p>Envio de comunicados e alertas para usuários.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Gerenciar Notificações</a>
+                    </section>
+
+                    <section class="admin-card">
+                        <h2><i class="fas fa-shield-alt"></i> Segurança</h2>
+                        <p>Último backup: <strong>2 dias atrás</strong></p>
+                        <p>Configurações de segurança e backup do sistema.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-lock"></i> Configurações</a>
+                    </section>
+
+                    <section class="admin-card">
+                        <h2><i class="fas fa-history"></i> Logs</h2>
+                        <p>Registros de atividade: <strong>15,432</strong></p>
+                        <p>Histórico de ações e acessos no sistema.</p>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-search"></i> Visualizar Logs</a>
+                    </section>
+                </div>
             </div>
-        </div>
-        
-    </main>
-    
-    <!-- Componente de Rodapé -->
+        </main>
+    </div>
+
+    <!-- FOOTER -->
     <div id="footer-container"></div>
-    
-    <!-- Scripts de Componentes -->
-    <script src="../../assets/components/js/header-loader.js"></script>
-    <script src="../../assets/components/js/footer-loader.js"></script>
-    <script src="../../assets/components/js/accessibility-loader.js"></script>
-    <script src="../../assets/components/js/component-loader.js"></script>
+
+    <!-- SCRIPTS DOS COMPONENTES -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/component-loader.js"></script>
 </body>
 </html>
