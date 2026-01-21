@@ -3,25 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Exercícios de relaxamento">
-    <link rel="icon" type="image/webp" href="../../assets/app/images/favicon.webp">
-    <title>Modo Anti-Stress | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="../../assets/app/css/global.css">
+    <title>Modo Anti-Estresse | Simulados de Enfermagem</title>
+    
+    <!-- CSS do Site Externo -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #1A3E74; --accent: #00bcd4; --success: #4caf50; --warning: #ff9800; --error: #f44336; --light: #f4f6f9; --dark: #1f2937; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        main { min-height: calc(100vh - 200px); padding: 40px 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .page-header { margin-bottom: 40px; text-align: center; color: white; }
+        .page-header h1 { font-family: 'Nunito Sans', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .page-header p { font-size: 16px; opacity: 0.9; }
+        
+        .breathing-container { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); margin-bottom: 30px; text-align: center; }
+        .breathing-circle { width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; animation: breathe 8s infinite; }
+        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        .breathing-text { font-size: 18px; font-weight: 600; color: white; }
+        
+        .instructions { background: rgba(255,255,255,0.1); border: 2px solid white; border-radius: 12px; padding: 20px; color: white; margin-bottom: 30px; }
+        .instructions h3 { margin-bottom: 12px; }
+        .instructions p { font-size: 14px; line-height: 1.6; }
+        
+        .controls { display: flex; gap: 12px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+        .btn { padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
+        .btn-primary { background: white; color: #667eea; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: white; border: 2px solid white; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.3); }
+        
+        .messages { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .message-item { padding: 12px; background: #f0f7ff; border-left: 4px solid #667eea; border-radius: 4px; margin-bottom: 12px; }
+        .message-item:last-child { margin-bottom: 0; }
+        
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .stat-card { background: rgba(255,255,255,0.1); border: 2px solid white; color: white; padding: 20px; border-radius: 12px; text-align: center; }
+        .stat-label { font-size: 14px; opacity: 0.9; margin-bottom: 8px; }
+        .stat-value { font-size: 28px; font-weight: 700; }
+        
+        @media (max-width: 768px) { .breathing-circle { width: 150px; height: 150px; } }
+    </style>
 </head>
 <body>
+    <a href="#main" class="skip-link" style="position: absolute; top: -40px; left: 0; background: var(--primary); color: white; padding: 8px; z-index: 100000;">Pular para conteúdo principal</a>
     <div id="accessibility-container"></div>
-    <div id="header-container"></div>
+    <header id="header-container"></header>
     <div id="nav-container"></div>
     <div id="breadcrumb-container"></div>
     
-    <main id="main-content">
-        <h1>Modo Anti-Stress</h1>
-        <p>Exercícios de relaxamento</p>
+    <main id="main">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-spa"></i> Modo Anti-Estresse</h1>
+                <p>Respire, relaxe e recupere sua energia</p>
+            </div>
+
+            <!-- Instruções -->
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> Como Usar</h3>
+                <p>Siga o círculo com seus olhos e respire junto. Inspire durante a expansão, segure por alguns segundos e expire durante a contração. Esta técnica de respiração profunda ajuda a reduzir o estresse e a ansiedade.</p>
+            </div>
+
+            <!-- Círculo de Respiração -->
+            <div class="breathing-container">
+                <div class="breathing-circle">
+                    <div class="breathing-text" id="breathing-text">Inspire</div>
+                </div>
+                <div style="font-size: 16px; color: #666; margin-bottom: 20px;">
+                    <strong id="cycle-count">Ciclo 1 de 5</strong>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="controls">
+                <button class="btn btn-primary" onclick="ModoAntiEstresse.iniciar()">
+                    <i class="fas fa-play"></i> Iniciar
+                </button>
+                <button class="btn btn-primary" onclick="ModoAntiEstresse.pausar()">
+                    <i class="fas fa-pause"></i> Pausar
+                </button>
+                <button class="btn btn-secondary" onclick="ModoAntiEstresse.resetar()">
+                    <i class="fas fa-redo"></i> Resetar
+                </button>
+                <select id="duration" class="btn btn-secondary" style="padding: 10px 16px;">
+                    <option value="3">3 ciclos</option>
+                    <option value="5" selected>5 ciclos</option>
+                    <option value="10">10 ciclos</option>
+                </select>
+            </div>
+
+            <!-- Mensagens Motivacionais -->
+            <div class="messages">
+                <h3 style="color: #667eea; margin-bottom: 16px;"><i class="fas fa-heart"></i> Mensagens de Motivação</h3>
+                <div id="messages-list">
+                    <div class="message-item">✨ Você é capaz de superar qualquer desafio</div>
+                    <div class="message-item">🌟 Cada respiração é um novo começo</div>
+                    <div class="message-item">💪 Seu bem-estar é importante</div>
+                    <div class="message-item">🎯 Você está no caminho certo</div>
+                    <div class="message-item">🌈 Calma e foco trazem sucesso</div>
+                </div>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-spa"></i> Sessões Completadas</div>
+                    <div class="stat-value" id="sessions-completed">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-clock"></i> Tempo Total</div>
+                    <div class="stat-value" id="total-time">0m</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fas fa-calendar"></i> Dias Consecutivos</div>
+                    <div class="stat-value" id="consecutive-days">0</div>
+                </div>
+            </div>
+        </div>
     </main>
     
-    <div id="footer-container"></div>
-    
-    <script src="../../assets/components/js/navigation.js"></script>
-    <script src="../../assets/app/js/component-loader.js"></script>
+    <footer id="footer-container"></footer>
+
+    <script src="navigation.js"></script>
+    <script>
+        const ModoAntiEstresse = {
+            isRunning: false,
+            currentCycle: 0,
+            totalCycles: 5,
+            phase: 'inspire', // inspire, segure, expire
+            phaseTime: 0,
+            phaseDuration: 4000, // 4 segundos por fase
+            interval: null,
+            totalTime: 0,
+
+            iniciar() {
+                if (this.isRunning) return;
+                
+                this.totalCycles = parseInt(document.getElementById('duration').value);
+                this.isRunning = true;
+                this.currentCycle = 1;
+                this.phase = 'inspire';
+                this.phaseTime = 0;
+                
+                this.interval = setInterval(() => this.atualizar(), 100);
+            },
+
+            pausar() {
+                this.isRunning = false;
+                clearInterval(this.interval);
+            },
+
+            atualizar() {
+                if (!this.isRunning) return;
+                
+                this.phaseTime += 100;
+                this.totalTime += 100;
+                
+                const progress = (this.phaseTime / this.phaseDuration) * 100;
+                
+                if (this.phase === 'inspire') {
+                    document.getElementById('breathing-text').textContent = 'Inspire';
+                    if (this.phaseTime >= this.phaseDuration) {
+                        this.phase = 'segure';
+                        this.phaseTime = 0;
+                    }
+                } else if (this.phase === 'segure') {
+                    document.getElementById('breathing-text').textContent = 'Segure';
+                    if (this.phaseTime >= this.phaseDuration) {
+                        this.phase = 'expire';
+                        this.phaseTime = 0;
+                    }
+                } else if (this.phase === 'expire') {
+                    document.getElementById('breathing-text').textContent = 'Expire';
+                    if (this.phaseTime >= this.phaseDuration) {
+                        this.currentCycle++;
+                        if (this.currentCycle > this.totalCycles) {
+                            this.finalizarSessao();
+                        } else {
+                            this.phase = 'inspire';
+                            this.phaseTime = 0;
+                        }
+                    }
+                }
+                
+                document.getElementById('cycle-count').textContent = 
+                    `Ciclo ${this.currentCycle} de ${this.totalCycles}`;
+            },
+
+            finalizarSessao() {
+                this.isRunning = false;
+                clearInterval(this.interval);
+                
+                const sessoes = parseInt(localStorage.getItem('antiestresse_sessoes') || '0') + 1;
+                localStorage.setItem('antiestresse_sessoes', sessoes);
+                document.getElementById('sessions-completed').textContent = sessoes;
+                
+                const minutos = Math.round(this.totalTime / 60000);
+                document.getElementById('total-time').textContent = minutos + 'm';
+                
+                alert('🎉 Parabéns! Você completou sua sessão de relaxamento!');
+                this.resetar();
+            },
+
+            resetar() {
+                this.isRunning = false;
+                clearInterval(this.interval);
+                this.currentCycle = 1;
+                this.phase = 'inspire';
+                this.phaseTime = 0;
+                this.totalTime = 0;
+                document.getElementById('breathing-text').textContent = 'Inspire';
+                document.getElementById('cycle-count').textContent = 'Ciclo 1 de ' + this.totalCycles;
+            }
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                if (Navigation.init) Navigation.init();
+                document.getElementById('sessions-completed').textContent = 
+                    localStorage.getItem('antiestresse_sessoes') || '0';
+            });
+        } else {
+            if (Navigation.init) Navigation.init();
+            document.getElementById('sessions-completed').textContent = 
+                localStorage.getItem('antiestresse_sessoes') || '0';
+        }
+    </script>
 </body>
 </html>
