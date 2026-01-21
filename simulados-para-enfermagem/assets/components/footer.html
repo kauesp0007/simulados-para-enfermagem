@@ -1,0 +1,182 @@
+<!--
+  Footer Component
+  Include this file before closing body tag
+  Dependencies: event-bus.js, footer.js, footer.css
+-->
+<footer class="main-footer" id="footer" role="contentinfo">
+  <div class="footer-content">
+    <!-- Main Footer Sections -->
+    <div class="footer-main">
+      <!-- Brand Section -->
+      <div class="footer-brand-section">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="10" fill="var(--color-primary)"/>
+              <path d="M20 10C15.6 10 12 13.6 12 18C12 20.9 13.2 22.9 15 25V30H25V25C26.8 22.9 28 20.9 28 18C28 13.6 24.4 10 20 10Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="footer-brand-text">
+            <h3>Enfermagem Concurseira</h3>
+            <p>Sua plataforma de estudos para concursos de enfermagem</p>
+          </div>
+        </div>
+        <p class="footer-tagline">
+          Comprometidos com sua preparação para concursos públicos na área de enfermagem.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-section">
+        <h4 class="footer-title">Navegação</h4>
+        <ul class="footer-links">
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#questions">Banco de Questões</a></li>
+          <li><a href="#contests">Concursos</a></li>
+          <li><a href="#library">Biblioteca</a></li>
+          <li><a href="#settings">Configurações</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="footer-section">
+        <h4 class="footer-title">Recursos</h4>
+        <ul class="footer-links">
+          <li><a href="#library?type=apostilas">Apostilas</a></li>
+          <li><a href="#library?type=resumos">Resumos</a></li>
+          <li><a href="#library?type=protocolos">Protocolos</a></li>
+          <li><a href="#library?type=nanda">NANDA</a></li>
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="footer-section">
+        <h4 class="footer-title">Suporte</h4>
+        <ul class="footer-links">
+          <li><a href="#faq">Perguntas Frequentes</a></li>
+          <li><a href="#contact">Contato</a></li>
+          <li><a href="#about">Sobre Nós</a></li>
+          <li><a href="#privacy">Política de Privacidade</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        © <span id="current-year">2024</span> Enfermagem Concurseira. Todos os direitos reservados.
+      </p>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook" class="social-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="social-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="18" cy="6" r="1"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="YouTube" class="social-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Banner -->
+  <div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-description">
+    <div class="cookie-banner-content">
+      <h3 id="cookie-title">Utilizamos cookies</h3>
+      <p id="cookie-description">
+        Utilizamos cookies para melhorar sua experiência em nosso site. 
+        Ao continuar navegando, você concorda com nossa política de privacidade.
+      </p>
+      <div class="cookie-banner-actions">
+        <button type="button" id="cookie-accept-all" class="btn btn-primary">
+          Aceitar Todos
+        </button>
+        <button type="button" id="cookie-settings" class="btn btn-outline">
+          Personalizar
+        </button>
+        <button type="button" id="cookie-reject" class="btn btn-ghost">
+          Recusar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Preferences Modal -->
+  <div id="cookie-overlay" class="cookie-overlay hidden"></div>
+  <div id="cookie-modal" class="cookie-modal hidden" role="dialog" aria-labelledby="cookie-modal-title">
+    <div class="cookie-modal-header">
+      <h3 id="cookie-modal-title">Preferências de Cookies</h3>
+      <button type="button" id="cookie-modal-close" class="cookie-modal-close" aria-label="Fechar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cookie-modal-body">
+      <!-- Necessary Cookies -->
+      <div class="cookie-category">
+        <div class="cookie-category-header">
+          <h4>Necessários</h4>
+          <span class="cookie-status">Sempre ativos</span>
+        </div>
+        <p>Essenciais para o funcionamento do site</p>
+        <label class="cookie-switch">
+          <input type="checkbox" checked disabled>
+          <span class="cookie-slider"></span>
+        </label>
+      </div>
+
+      <!-- Analytics Cookies -->
+      <div class="cookie-category">
+        <div class="cookie-category-header">
+          <h4>Analíticos</h4>
+          <label class="cookie-switch">
+            <input type="checkbox" id="cookie-analytics">
+            <span class="cookie-slider"></span>
+          </label>
+        </div>
+        <p>Nos ajudam a melhorar a experiência do usuário</p>
+      </div>
+
+      <!-- Marketing Cookies -->
+      <div class="cookie-category">
+        <div class="cookie-category-header">
+          <h4>Marketing</h4>
+          <label class="cookie-switch">
+            <input type="checkbox" id="cookie-marketing">
+            <span class="cookie-slider"></span>
+          </label>
+        </div>
+        <p>Personalização de anúncios e conteúdos</p>
+      </div>
+    </div>
+    <div class="cookie-modal-footer">
+      <button type="button" id="cookie-save-preferences" class="btn btn-primary">
+        Salvar Preferências
+      </button>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button type="button" id="backToTop" class="back-to-top hidden" aria-label="Voltar ao topo">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
+  <!-- Toast Notification -->
+  <div id="toast-notification" class="toast-notification hidden">
+    <span class="toast-message"></span>
+  </div>
+</footer>

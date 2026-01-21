@@ -1,0 +1,124 @@
+{
+    "resources": [
+        {
+            "id": "LIBR001",
+            "title": "Manual de Rotinas de Enfermagem em Adultos",
+            "category": "Protocolos",
+            "type": "PDF",
+            "description": "Manual completo com rotinas e procedimentos de enfermagem em clínica médica",
+            "author": "Associação Brasileira de Enfermagem",
+            "year": 2023,
+            "tags": ["Protocolos", "Clínica Médica", "Rotinas"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR002",
+            "title": "Código de Ética dos Profissionais de Enfermagem",
+            "category": "Legislação",
+            "type": "PDF",
+            "description": "Resolução COFEN 564/2017 - Texto atualizado com comentários",
+            "author": "COFEN",
+            "year": 2022,
+            "tags": ["Ética", "Legislação", "Cofen"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR003",
+            "title": "Guia de Bolso de Drugs - Edição 2024",
+            "category": "Farmacologia",
+            "type": "EBOOK",
+            "description": "Guia prático de medicamentos com dosages, vias e efeitos adversos",
+            "author": "Grupo Master",
+            "year": 2024,
+            "tags": ["Farmacologia", "Medicamentos", "Dosagem"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR004",
+            "title": "Anatomia Humana - Atlas Interativo",
+            "category": "Anatomia",
+            "type": "APLICATIVO",
+            "description": "Atlas anatômico completo com visualização 3D e informações detalhadas",
+            "author": "Visible Body",
+            "year": 2024,
+            "tags": ["Anatomia", "Atlas", "3D"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR005",
+            "title": "Fundamentos de Enfermagem - Brunnstrom",
+            "category": "Técnicas",
+            "type": "PDF",
+            "description": "Obra clássica com fundamentos e técnicas de enfermagem",
+            "author": "Sharon L. Brunnstrom",
+            "year": 2021,
+            "tags": ["Técnicas", "Fundamentos", "Clássico"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR006",
+            "title": "Protocolos de Higienização das Mãos - OMS",
+            "category": "Segurança",
+            "type": "PDF",
+            "description": "Diretrizes da OMS para higienização das mãos em serviços de saúde",
+            "author": "OMS",
+            "year": 2023,
+            "tags": ["Higienização", "Segurança do Paciente", "OMS"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR007",
+            "title": "Legislação do SUS - Cartilha Popular",
+            "category": "Legislação",
+            "type": "PDF",
+            "description": "Explicação acessível dos princípios e diretrizes do SUS",
+            "author": "Ministério da Saúde",
+            "year": 2023,
+            "tags": ["SUS", "Legislação", "Educação Popular"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR008",
+            "title": "Exame Físico Sistemático",
+            "category": "Semiologia",
+            "type": "VIDEO",
+            "description": "Série de vídeos demonstrando técnicas de exame físico sistemático",
+            "author": "Universidade de São Paulo",
+            "year": 2022,
+            "tags": ["Semiologia", "Exame Físico", "Vídeo"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR009",
+            "title": "Calculadora de Doses Pediátricas",
+            "category": "Ferramentas",
+            "type": "APLICATIVO",
+            "description": "Aplicativo para cálculo seguro de doses pediátricas",
+            "author": "SafeDose",
+            "year": 2024,
+            "tags": ["Pediatria", "Cálculo de Doses", "Segurança"],
+            "url": "#",
+            "created_by": "ADMIN"
+        },
+        {
+            "id": "LIBR010",
+            "title": "Doenças de Notificação Compulsória",
+            "category": "Saúde Pública",
+            "type": "PDF",
+            "description": "Lista completa das doenças de notificação compulsória e suas características",
+            "author": "Ministério da Saúde",
+            "year": 2023,
+            "tags": ["Notificação", "Doenças Transmissíveis", "Vigilância"],
+            "url": "#",
+            "created_by": "ADMIN"
+        }
+    ]
+}
