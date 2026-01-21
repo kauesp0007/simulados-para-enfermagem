@@ -3,50 +3,519 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Biblioteca de materiais de estudo - Simulados de Enfermagem">
     <title>Biblioteca | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS dos Componentes -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary: #1A3E74; --accent: #00bcd4; --success: #4caf50; --light: #f4f6f9; --dark: #1f2937; }
-        body { font-family: 'Inter', sans-serif; background: var(--light); }
-        main { min-height: calc(100vh - 200px); padding: 40px 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .page-header { text-align: center; margin-bottom: 40px; }
-        .page-header h1 { font-family: 'Nunito Sans', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-        .page-header p { font-size: 16px; color: #666; }
-        .search-bar { background: white; padding: 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .search-bar input { width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; }
-        .filters { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-        .filter-btn { padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; }
-        .filter-btn.active { background: var(--primary); color: white; }
-        .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .material-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease; }
-        .material-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .material-header { padding: 20px; background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%); color: white; }
-        .material-icon { font-size: 32px; margin-bottom: 12px; }
-        .material-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-        .material-category { font-size: 12px; opacity: 0.8; }
-        .material-body { padding: 16px; }
-        .material-desc { font-size: 13px; color: #666; margin-bottom: 12px; line-height: 1.5; }
-        .material-meta { display: flex; justify-content: space-between; font-size: 12px; color: #999; margin-bottom: 12px; }
-        .material-actions { display: flex; gap: 8px; }
-        .btn { padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: #e2e8f0; color: var(--dark); }
-        .btn-primary:hover { background: #0d2a52; }
-        .empty-state { text-align: center; padding: 60px 20px; }
-        .empty-state i { font-size: 60px; color: #ccc; margin-bottom: 20px; }
-        @media (max-width: 768px) { .materials-grid { grid-template-columns: 1fr; } .filters { flex-direction: column; } }
+        /* ============================================
+           VARIÁVEIS CSS - ESTILO DASHBOARD(8)
+           ============================================ */
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+        }
+
+        /* ============================================
+           RESET E BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* ============================================
+           ACESSIBILIDADE - DASHBOARD(8)
+           ============================================ */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* ============================================
+           LAYOUT PRINCIPAL - DASHBOARD(8)
+           ============================================ */
+        .page-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+            padding: 40px 20px;
+        }
+
+        /* ============================================
+           PAGE HEADER - DASHBOARD(8)
+           ============================================ */
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-header h1 i {
+            color: var(--primary);
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* ============================================
+           SEARCH BAR - ESTILO DASHBOARD(8)
+           ============================================ */
+        .search-bar {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 62, 116, 0.1);
+        }
+
+        .search-bar input::placeholder {
+            color: #999;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .filter-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .filter-btn.active:hover {
+            background: #152c4f;
+        }
+
+        /* ============================================
+           MATERIALS GRID
+           ============================================ */
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* ============================================
+           MATERIAL CARD - BASEADO NO FEATURE-CARD DASHBOARD(8)
+           ============================================ */
+        .material-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .material-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%);
+            color: white;
+        }
+
+        .material-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .material-title {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: white;
+        }
+
+        .material-category {
+            font-size: 13px;
+            opacity: 0.9;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .material-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .material-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .material-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .material-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .material-meta i {
+            color: var(--warning);
+        }
+
+        .material-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* ============================================
+           BOTÕES - ESTILO DASHBOARD(8)
+           ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #152c4f;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary.active {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-secondary.active:hover {
+            background: #d32f2f;
+        }
+
+        /* ============================================
+           EMPTY STATE - DASHBOARD(8)
+           ============================================ */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .empty-state p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* ============================================
+           RESPONSIVIDADE - DASHBOARD(8)
+           ============================================ */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 24px 16px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .materials-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .material-card {
+                padding: 0;
+            }
+
+            .search-bar {
+                padding: 20px;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                justify-content: center;
+            }
+
+            .material-header {
+                padding: 20px;
+            }
+
+            .material-body {
+                padding: 16px;
+            }
+
+            .material-title {
+                font-size: 16px;
+            }
+        }
+
+        /* ============================================
+           DARK MODE - DASHBOARD(8)
+           ============================================ */
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .search-bar {
+            background: #2d3748;
+        }
+
+        body.dark-mode .material-card {
+            background: #2d3748;
+        }
+
+        body.dark-mode .material-header {
+            background: linear-gradient(135deg, #2d3748 0%, #1f2937 100%);
+        }
+
+        body.dark-mode .material-title {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .material-category {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .material-desc {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .material-meta {
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .material-meta span {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .page-header h1 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-header p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .btn-secondary {
+            background: #4b5563;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background: #6b7280;
+        }
+
+        body.dark-mode .search-bar input {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .search-bar input::placeholder {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .filter-btn {
+            background: #4b5563;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .filter-btn:hover {
+            background: #6b7280;
+        }
+
+        /* ============================================
+           HIGH CONTRAST MODE
+           ============================================ */
+        body[data-contrast="high"] .material-card {
+            border: 2px solid var(--primary);
+        }
+
+        body[data-contrast="high"] .search-bar {
+            border: 2px solid var(--primary);
+        }
+
+        /* ============================================
+           REDUZIR ANIMAÇÕES - DASHBOARD(8)
+           ============================================ */
+        body.reduce-animations .material-card,
+        body.reduce-animations .btn,
+        body.reduce-animations .filter-btn {
+            transition: none;
+        }
+
+        body.reduce-animations .search-bar input:focus {
+            box-shadow: none;
+        }
+
+        body[data-reduce-motion="reduce"] .material-card,
+        body[data-reduce-motion="reduce"] .btn {
+            transition: none;
+            animation: none;
+        }
     </style>
 </head>
 <body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
-    <header id="header-container"></header>
-    <div id="nav-container"></div>
-    <div id="breadcrumb-container"></div>
+    <div id="header-container"></div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
     <main id="main">
-        <div class="container">
+        <div class="page-wrapper">
             <div class="page-header">
                 <h1><i class="fas fa-book-open"></i> Biblioteca</h1>
                 <p>Acervo completo de materiais de estudo para enfermagem</p>
@@ -54,13 +523,13 @@
 
             <!-- Busca e Filtros -->
             <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Buscar materiais..." onkeyup="Biblioteca.buscar()">
+                <input type="text" id="search-input" placeholder="Buscar materiais de estudo..." onkeyup="Biblioteca.buscar()">
                 <div class="filters">
-                    <button class="filter-btn active" onclick="Biblioteca.filtrar('todos')">Todos</button>
-                    <button class="filter-btn" onclick="Biblioteca.filtrar('livros')"><i class="fas fa-book"></i> Livros</button>
-                    <button class="filter-btn" onclick="Biblioteca.filtrar('videos')"><i class="fas fa-video"></i> Vídeos</button>
-                    <button class="filter-btn" onclick="Biblioteca.filtrar('artigos')"><i class="fas fa-newspaper"></i> Artigos</button>
-                    <button class="filter-btn" onclick="Biblioteca.filtrar('resumos')"><i class="fas fa-file-alt"></i> Resumos</button>
+                    <button class="filter-btn active" onclick="Biblioteca.filtrar('todos', this)"><i class="fas fa-layer-group"></i> Todos</button>
+                    <button class="filter-btn" onclick="Biblioteca.filtrar('livros', this)"><i class="fas fa-book"></i> Livros</button>
+                    <button class="filter-btn" onclick="Biblioteca.filtrar('videos', this)"><i class="fas fa-video"></i> Vídeos</button>
+                    <button class="filter-btn" onclick="Biblioteca.filtrar('artigos', this)"><i class="fas fa-newspaper"></i> Artigos</button>
+                    <button class="filter-btn" onclick="Biblioteca.filtrar('resumos', this)"><i class="fas fa-file-alt"></i> Resumos</button>
                 </div>
             </div>
 
@@ -69,38 +538,57 @@
                 <!-- Livros -->
                 <div class="material-card" data-category="livros">
                     <div class="material-header">
-                        <div class="material-icon"><i class="fas fa-book"></i></div>
+                        <div class="material-icon"><i class="fas fa-book-medical"></i></div>
                         <div class="material-title">Fundamentos de Enfermagem</div>
-                        <div class="material-category">Livro</div>
+                        <div class="material-category"><i class="fas fa-book"></i> Livro</div>
                     </div>
                     <div class="material-body">
-                        <div class="material-desc">Conceitos essenciais e práticas fundamentais da enfermagem moderna.</div>
+                        <div class="material-desc">Conceitos essenciais e práticas fundamentais da enfermagem moderna, incluindo cuidados básicos e procedimentos essenciais.</div>
                         <div class="material-meta">
                             <span><i class="fas fa-star"></i> 4.8/5</span>
                             <span><i class="fas fa-download"></i> 2.3K</span>
                         </div>
                         <div class="material-actions">
                             <button class="btn btn-primary" onclick="Biblioteca.abrir('livro1')"><i class="fas fa-eye"></i> Ver</button>
-                            <button class="btn btn-secondary" onclick="Biblioteca.favoritar('livro1')"><i class="fas fa-heart"></i></button>
+                            <button class="btn btn-secondary" id="fav-livro1" onclick="Biblioteca.favoritar('livro1', 'fav-livro1')"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="material-card" data-category="livros">
                     <div class="material-header">
-                        <div class="material-icon"><i class="fas fa-book"></i></div>
+                        <div class="material-icon"><i class="fas fa-pills"></i></div>
                         <div class="material-title">Farmacologia Clínica</div>
-                        <div class="material-category">Livro</div>
+                        <div class="material-category"><i class="fas fa-book"></i> Livro</div>
                     </div>
                     <div class="material-body">
-                        <div class="material-desc">Guia completo sobre medicamentos, interações e efeitos colaterais.</div>
+                        <div class="material-desc">Guia completo sobre medicamentos, interações medicamentosas, efeitos colaterais e administrações seguras.</div>
                         <div class="material-meta">
                             <span><i class="fas fa-star"></i> 4.6/5</span>
                             <span><i class="fas fa-download"></i> 1.8K</span>
                         </div>
                         <div class="material-actions">
                             <button class="btn btn-primary" onclick="Biblioteca.abrir('livro2')"><i class="fas fa-eye"></i> Ver</button>
-                            <button class="btn btn-secondary" onclick="Biblioteca.favoritar('livro2')"><i class="fas fa-heart"></i></button>
+                            <button class="btn btn-secondary" id="fav-livro2" onclick="Biblioteca.favoritar('livro2', 'fav-livro2')"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-card" data-category="livros">
+                    <div class="material-header">
+                        <div class="material-icon"><i class="fas fa-heartbeat"></i></div>
+                        <div class="material-title">Enfermagem Cardiológica</div>
+                        <div class="material-category"><i class="fas fa-book"></i> Livro</div>
+                    </div>
+                    <div class="material-body">
+                        <div class="material-desc">Abordagem completa dos cuidados cardíacos, ECG, arritmias e emergências cardiovasculares.</div>
+                        <div class="material-meta">
+                            <span><i class="fas fa-star"></i> 4.9/5</span>
+                            <span><i class="fas fa-download"></i> 1.5K</span>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn btn-primary" onclick="Biblioteca.abrir('livro3')"><i class="fas fa-eye"></i> Ver</button>
+                            <button class="btn btn-secondary" id="fav-livro3" onclick="Biblioteca.favoritar('livro3', 'fav-livro3')"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
@@ -108,19 +596,38 @@
                 <!-- Vídeos -->
                 <div class="material-card" data-category="videos">
                     <div class="material-header">
-                        <div class="material-icon"><i class="fas fa-video"></i></div>
+                        <div class="material-icon"><i class="fas fa-syringe"></i></div>
                         <div class="material-title">Técnicas de Punção</div>
-                        <div class="material-category">Vídeo</div>
+                        <div class="material-category"><i class="fas fa-video"></i> Vídeo</div>
                     </div>
                     <div class="material-body">
-                        <div class="material-desc">Tutorial passo a passo sobre técnicas de punção venosa e arterial.</div>
+                        <div class="material-desc">Tutorial passo a passo sobre técnicas de punção venosa e arterial, com demonstrações práticas.</div>
                         <div class="material-meta">
                             <span><i class="fas fa-star"></i> 4.9/5</span>
                             <span><i class="fas fa-download"></i> 5.2K</span>
                         </div>
                         <div class="material-actions">
                             <button class="btn btn-primary" onclick="Biblioteca.abrir('video1')"><i class="fas fa-play"></i> Assistir</button>
-                            <button class="btn btn-secondary" onclick="Biblioteca.favoritar('video1')"><i class="fas fa-heart"></i></button>
+                            <button class="btn btn-secondary" id="fav-video1" onclick="Biblioteca.favoritar('video1', 'fav-video1')"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-card" data-category="videos">
+                    <div class="material-header">
+                        <div class="material-icon"><i class="fas fa-user-nurse"></i></div>
+                        <div class="material-title">Procedimentos de Higiene</div>
+                        <div class="material-category"><i class="fas fa-video"></i> Vídeo</div>
+                    </div>
+                    <div class="material-body">
+                        <div class="material-desc">Demonstração completa dos procedimentos de higiene do paciente em ambiente hospitalar.</div>
+                        <div class="material-meta">
+                            <span><i class="fas fa-star"></i> 4.7/5</span>
+                            <span><i class="fas fa-download"></i> 3.8K</span>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn btn-primary" onclick="Biblioteca.abrir('video2')"><i class="fas fa-play"></i> Assistir</button>
+                            <button class="btn btn-secondary" id="fav-video2" onclick="Biblioteca.favoritar('video2', 'fav-video2')"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
@@ -128,19 +635,38 @@
                 <!-- Artigos -->
                 <div class="material-card" data-category="artigos">
                     <div class="material-header">
-                        <div class="material-icon"><i class="fas fa-newspaper"></i></div>
+                        <div class="material-icon"><i class="fas fa-virus"></i></div>
                         <div class="material-title">Protocolos de Infecção</div>
-                        <div class="material-category">Artigo</div>
+                        <div class="material-category"><i class="fas fa-newspaper"></i> Artigo</div>
                     </div>
                     <div class="material-body">
-                        <div class="material-desc">Artigo científico sobre prevenção e controle de infecções hospitalares.</div>
+                        <div class="material-desc">Artigo científico sobre prevenção e controle de infecções hospitalares e CCIH.</div>
                         <div class="material-meta">
                             <span><i class="fas fa-star"></i> 4.7/5</span>
                             <span><i class="fas fa-download"></i> 1.5K</span>
                         </div>
                         <div class="material-actions">
                             <button class="btn btn-primary" onclick="Biblioteca.abrir('artigo1')"><i class="fas fa-file-pdf"></i> PDF</button>
-                            <button class="btn btn-secondary" onclick="Biblioteca.favoritar('artigo1')"><i class="fas fa-heart"></i></button>
+                            <button class="btn btn-secondary" id="fav-artigo1" onclick="Biblioteca.favoritar('artigo1', 'fav-artigo1')"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-card" data-category="artigos">
+                    <div class="material-header">
+                        <div class="material-icon"><i class="fas fa-ambulance"></i></div>
+                        <div class="material-title">Emergências Pediátricas</div>
+                        <div class="material-category"><i class="fas fa-newspaper"></i> Artigo</div>
+                    </div>
+                    <div class="material-body">
+                        <div class="material-desc">Diretrizes e protocolos para atendimento de emergência em pacientes pediátricos.</div>
+                        <div class="material-meta">
+                            <span><i class="fas fa-star"></i> 4.8/5</span>
+                            <span><i class="fas fa-download"></i> 1.2K</span>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn btn-primary" onclick="Biblioteca.abrir('artigo2')"><i class="fas fa-file-pdf"></i> PDF</button>
+                            <button class="btn btn-secondary" id="fav-artigo2" onclick="Biblioteca.favoritar('artigo2', 'fav-artigo2')"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
@@ -148,54 +674,91 @@
                 <!-- Resumos -->
                 <div class="material-card" data-category="resumos">
                     <div class="material-header">
-                        <div class="material-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="material-icon"><i class="fas fa-child"></i></div>
                         <div class="material-title">Resumo: Anatomia</div>
-                        <div class="material-category">Resumo</div>
+                        <div class="material-category"><i class="fas fa-file-alt"></i> Resumo</div>
                     </div>
                     <div class="material-body">
-                        <div class="material-desc">Resumo conciso dos principais conceitos de anatomia humana.</div>
+                        <div class="material-desc">Resumo conciso dos principais conceitos de anatomia humana para estudos rápidos.</div>
                         <div class="material-meta">
                             <span><i class="fas fa-star"></i> 4.5/5</span>
                             <span><i class="fas fa-download"></i> 3.1K</span>
                         </div>
                         <div class="material-actions">
                             <button class="btn btn-primary" onclick="Biblioteca.abrir('resumo1')"><i class="fas fa-eye"></i> Ver</button>
-                            <button class="btn btn-secondary" onclick="Biblioteca.favoritar('resumo1')"><i class="fas fa-heart"></i></button>
+                            <button class="btn btn-secondary" id="fav-resumo1" onclick="Biblioteca.favoritar('resumo1', 'fav-resumo1')"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="material-card" data-category="resumos">
                     <div class="material-header">
-                        <div class="material-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="material-icon"><i class="fas fa-prescription-bottle"></i></div>
                         <div class="material-title">Resumo: Farmacologia</div>
-                        <div class="material-category">Resumo</div>
+                        <div class="material-category"><i class="fas fa-file-alt"></i> Resumo</div>
                     </div>
                     <div class="material-body">
-                        <div class="material-desc">Resumo das principais classes de medicamentos e suas ações.</div>
+                        <div class="material-desc">Resumo das principais classes de medicamentos, mecanismos de ação e efeitos.</div>
                         <div class="material-meta">
                             <span><i class="fas fa-star"></i> 4.6/5</span>
                             <span><i class="fas fa-download"></i> 2.8K</span>
                         </div>
                         <div class="material-actions">
                             <button class="btn btn-primary" onclick="Biblioteca.abrir('resumo2')"><i class="fas fa-eye"></i> Ver</button>
-                            <button class="btn btn-secondary" onclick="Biblioteca.favoritar('resumo2')"><i class="fas fa-heart"></i></button>
+                            <button class="btn btn-secondary" id="fav-resumo2" onclick="Biblioteca.favoritar('resumo2', 'fav-resumo2')"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-card" data-category="resumos">
+                    <div class="material-header">
+                        <div class="material-icon"><i class="fas fa-brain"></i></div>
+                        <div class="material-title">Resumo: Neurologia</div>
+                        <div class="material-category"><i class="fas fa-file-alt"></i> Resumo</div>
+                    </div>
+                    <div class="material-body">
+                        <div class="material-desc">Principais estruturas neurológicas, funções e avaliação neurológica básica.</div>
+                        <div class="material-meta">
+                            <span><i class="fas fa-star"></i> 4.7/5</span>
+                            <span><i class="fas fa-download"></i> 2.2K</span>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn btn-primary" onclick="Biblioteca.abrir('resumo3')"><i class="fas fa-eye"></i> Ver</button>
+                            <button class="btn btn-secondary" id="fav-resumo3" onclick="Biblioteca.favoritar('resumo3', 'fav-resumo3')"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <i class="fas fa-folder-open"></i>
+                <p>Nenhum material encontrado</p>
+                <p style="font-size: 14px; margin-top: 8px;">Tente ajustar sua busca ou filtros</p>
+            </div>
         </div>
     </main>
-    <footer id="footer-container"></footer>
 
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- SCRIPTS DOS COMPONENTES -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer-loader.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/component-loader.js"></script>
+
+    <!-- Script da Biblioteca -->
     <script>
         const Biblioteca = {
             filtroAtivo: 'todos',
-            init() { this.carregarComponentes(); },
-            filtrar(categoria) {
+            init() {
+                this.carregarFavoritos();
+            },
+            filtrar(categoria, btn) {
                 this.filtroAtivo = categoria;
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                event.target.classList.add('active');
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
                 this.aplicarFiltros();
             },
             buscar() {
@@ -204,6 +767,8 @@
             aplicarFiltros() {
                 const searchTerm = document.getElementById('search-input').value.toLowerCase();
                 const cards = document.querySelectorAll('.material-card');
+                let visibleCount = 0;
+
                 cards.forEach(card => {
                     const categoria = card.getAttribute('data-category');
                     const titulo = card.querySelector('.material-title').textContent.toLowerCase();
@@ -212,29 +777,64 @@
                     const passaFiltro = (this.filtroAtivo === 'todos' || categoria === this.filtroAtivo);
                     const passaBusca = titulo.includes(searchTerm) || desc.includes(searchTerm);
                     
-                    card.style.display = (passaFiltro && passaBusca) ? 'block' : 'none';
+                    if (passaFiltro && passaBusca) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
                 });
+
+                const emptyState = document.getElementById('empty-state');
+                if (visibleCount === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
             },
             abrir(id) {
                 alert('Abrindo material: ' + id);
             },
-            favoritar(id) {
+            favoritar(id, btnId) {
                 const favoritos = JSON.parse(localStorage.getItem('biblioteca_favoritos') || '[]');
+                const btn = document.getElementById(btnId);
+                const icon = btn.querySelector('i');
+                
                 if (favoritos.includes(id)) {
                     favoritos.splice(favoritos.indexOf(id), 1);
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    btn.classList.remove('active');
                 } else {
                     favoritos.push(id);
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    btn.classList.add('active');
                 }
+                
                 localStorage.setItem('biblioteca_favoritos', JSON.stringify(favoritos));
-                alert('Adicionado aos favoritos!');
             },
-            carregarComponentes() {
-                fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/header-v4.html').then(r => r.text()).then(h => document.getElementById('header-container').innerHTML = h).catch(e => console.error(e));
-                fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/footer-v4.html').then(r => r.text()).then(h => document.getElementById('footer-container').innerHTML = h).catch(e => console.error(e));
+            carregarFavoritos() {
+                const favoritos = JSON.parse(localStorage.getItem('biblioteca_favoritos') || '[]');
+                favoritos.forEach(id => {
+                    const btn = document.querySelector(`[id^="fav-${id}"]`);
+                    if (btn) {
+                        const icon = btn.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('far');
+                            icon.classList.add('fas');
+                        }
+                        btn.classList.add('active');
+                    }
+                });
             }
         };
-        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => Biblioteca.init()); } else { Biblioteca.init(); }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => Biblioteca.init());
+        } else {
+            Biblioteca.init();
+        }
     </script>
-    <script src="navigation.js"></script>
 </body>
 </html>
