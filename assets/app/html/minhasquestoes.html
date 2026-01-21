@@ -3,25 +3,1052 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Suas questões favoritas">
-    <link rel="icon" type="image/webp" href="../../assets/app/images/favicon.webp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Crie e gerencie suas próprias questões de estudo em Enfermagem">
+    
     <title>Minhas Questões | Simulados de Enfermagem</title>
-    <link rel="stylesheet" href="../../assets/app/css/global.css">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS Externos do Projeto Original -->
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
+
+    <style>
+        :root {
+            --color-primary: #1A3E74;
+            --color-accent: #00bcd4;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-info: #3b82f6;
+            --bg-light: #f9fafb;
+            --text-main: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-primary);
+            color: white;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        main {
+            min-height: calc(100vh - 200px);
+            padding: 2rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+            font-size: 2rem;
+            color: var(--color-primary);
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            margin: 0.5rem 0 0 0;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #00a8bd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--text-secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+
+        .btn-danger {
+            background-color: var(--color-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        /* ===== ESTATÍSTICAS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* ===== QUESTÕES ===== */
+        .questoes-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--color-primary);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .questoes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .questao-item {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .questao-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--color-accent);
+        }
+
+        .questao-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .questao-pergunta {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            word-break: break-word;
+        }
+
+        .questao-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .questao-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .tag-urgencia {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--color-danger);
+        }
+
+        .tag-pendente {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--color-warning);
+        }
+
+        .tag-habitual {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--color-info);
+        }
+
+        .tag-publica {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--color-success);
+        }
+
+        .questao-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .action-btn-view {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--color-info);
+        }
+
+        .action-btn-view:hover {
+            background-color: var(--color-info);
+            color: white;
+        }
+
+        .action-btn-edit {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--color-warning);
+        }
+
+        .action-btn-edit:hover {
+            background-color: var(--color-warning);
+            color: white;
+        }
+
+        .action-btn-delete {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--color-danger);
+        }
+
+        .action-btn-delete:hover {
+            background-color: var(--color-danger);
+            color: white;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-group label .required {
+            color: var(--color-danger);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-row-full {
+            grid-column: 1 / -1;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .form-checkbox input {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .form-checkbox label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .respostas-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .resposta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background-color: var(--bg-light);
+            border-radius: 6px;
+        }
+
+        .resposta-item input[type="radio"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .resposta-item input[type="text"] {
+            flex: 1;
+            margin: 0;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .add-tag-btn {
+            background-color: var(--color-accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .add-tag-btn:hover {
+            background-color: #00a8bd;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .questao-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .questao-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+            }
+        }
+    </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
+
+    <!-- Header (Modular) -->
+    <header id="header-container"></header>
+
+    <!-- Painel de Acessibilidade (Modular) -->
     <div id="accessibility-container"></div>
-    <div id="header-container"></div>
-    <div id="nav-container"></div>
-    <div id="breadcrumb-container"></div>
-    
+
+    <!-- Conteúdo Principal -->
     <main id="main-content">
-        <h1>Minhas Questões</h1>
-        <p>Suas questões favoritas</p>
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">
+                    <i class="fas fa-pencil-alt"></i> Minhas Questões
+                </h1>
+                <p class="page-subtitle">Crie e gerencie suas próprias questões de estudo</p>
+            </div>
+            <button class="btn btn-primary" id="btn-new-questao">
+                <i class="fas fa-plus"></i> Nova Questão
+            </button>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total de Questões</div>
+                <div class="stat-number" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pendentes</div>
+                <div class="stat-number" id="stat-pendentes">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Aprovadas</div>
+                <div class="stat-number" id="stat-aprovadas">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Públicas</div>
+                <div class="stat-number" id="stat-publicas">0</div>
+            </div>
+        </div>
+
+        <!-- Suas Questões -->
+        <div class="questoes-section">
+            <h2 class="section-title">Suas Questões (<span id="questoes-count">0</span>)</h2>
+            <p class="section-subtitle">As questões aprovadas pelo administrador podem ser usadas no banco oficial</p>
+
+            <div id="questoes-container" class="questoes-list"></div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-inbox"></i>
+                </div>
+                <h3 class="empty-title">Você ainda não criou nenhuma questão</h3>
+                <p class="empty-text">Comece criando sua primeira questão para estudar</p>
+                <button class="btn btn-primary" id="btn-empty-new">
+                    <i class="fas fa-plus"></i> Criar Primeira Questão
+                </button>
+            </div>
+        </div>
     </main>
-    
-    <div id="footer-container"></div>
-    
-    <script src="../../assets/components/js/navigation.js"></script>
-    <script src="../../assets/app/js/component-loader.js"></script>
+
+    <!-- Modal Nova/Editar Questão -->
+    <div id="modal-questao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Nova Questão</h2>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="form-questao">
+                    <div class="form-group">
+                        <label for="questao-pergunta">
+                            Pergunta <span class="required">*</span>
+                        </label>
+                        <textarea id="questao-pergunta" placeholder="Digite sua pergunta aqui..." required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="questao-topico">
+                                Tópico <span class="required">*</span>
+                            </label>
+                            <select id="questao-topico" required>
+                                <option value="">Selecionar tópico</option>
+                                <option value="Anatomia">Anatomia</option>
+                                <option value="Fisiologia">Fisiologia</option>
+                                <option value="Farmacologia">Farmacologia</option>
+                                <option value="Patologia">Patologia</option>
+                                <option value="Microbiologia">Microbiologia</option>
+                                <option value="Imunologia">Imunologia</option>
+                                <option value="Bioquímica">Bioquímica</option>
+                                <option value="Enfermagem Clínica">Enfermagem Clínica</option>
+                                <option value="Enfermagem Cirúrgica">Enfermagem Cirúrgica</option>
+                                <option value="Enfermagem Obstétrica">Enfermagem Obstétrica</option>
+                                <option value="Enfermagem Pediátrica">Enfermagem Pediátrica</option>
+                                <option value="Saúde Coletiva">Saúde Coletiva</option>
+                                <option value="Administração">Administração</option>
+                                <option value="Ética">Ética</option>
+                                <option value="Legislação">Legislação</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="questao-dificuldade">
+                                Dificuldade <span class="required">*</span>
+                            </label>
+                            <select id="questao-dificuldade" required>
+                                <option value="">Selecionar dificuldade</option>
+                                <option value="Fácil">Fácil</option>
+                                <option value="Médio">Médio</option>
+                                <option value="Difícil">Difícil</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Respostas <span class="required">*</span></label>
+                        <div class="respostas-group">
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="0" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 1" required>
+                            </div>
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="1" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 2" required>
+                            </div>
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="2" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 3" required>
+                            </div>
+                            <div class="resposta-item">
+                                <input type="radio" name="resposta-correta" value="3" required>
+                                <input type="text" class="resposta-input" placeholder="Resposta 4" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="questao-explicacao">Explicação (opcional)</label>
+                        <textarea id="questao-explicacao" placeholder="Explique por que a resposta está correta..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="questao-tags">Tags (opcional)</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="questao-tags" placeholder="Ex: urgência, habitual">
+                            <button type="button" class="add-tag-btn" id="btn-add-tag">
+                                <i class="fas fa-plus"></i> Adicionar
+                            </button>
+                        </div>
+                        <div id="tags-list" style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;"></div>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="questao-publica">
+                        <label for="questao-publica">Tornar pública (outros usuários poderão ver)</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btn-modal-cancel">Cancelar</button>
+                <button class="btn btn-primary" id="btn-modal-save">Criar Questão</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Modular) -->
+    <footer id="footer-container"></footer>
+
+    <script>
+        // ===== DADOS EM LOCALSTORAGE =====
+        const MinhasQuestoes = {
+            carregar() {
+                return JSON.parse(localStorage.getItem('user_questoes')) || [];
+            },
+
+            salvar(questao) {
+                const questoes = this.carregar();
+                questao.id = Date.now();
+                questao.dataCriacao = new Date().toISOString();
+                questao.status = questao.publica ? 'pendente' : 'privada';
+                
+                if (questao.publica) {
+                    const pendentes = JSON.parse(localStorage.getItem('user_questoes_pendentes')) || [];
+                    pendentes.push(questao);
+                    localStorage.setItem('user_questoes_pendentes', JSON.stringify(pendentes));
+                }
+
+                questoes.push(questao);
+                localStorage.setItem('user_questoes', JSON.stringify(questoes));
+                return questao;
+            },
+
+            atualizar(id, dados) {
+                const questoes = this.carregar();
+                const index = questoes.findIndex(q => q.id === id);
+                if (index !== -1) {
+                    questoes[index] = { ...questoes[index], ...dados };
+                    localStorage.setItem('user_questoes', JSON.stringify(questoes));
+                }
+            },
+
+            deletar(id) {
+                let questoes = this.carregar();
+                questoes = questoes.filter(q => q.id !== id);
+                localStorage.setItem('user_questoes', JSON.stringify(questoes));
+            },
+
+            obter(id) {
+                const questoes = this.carregar();
+                return questoes.find(q => q.id === id);
+            }
+        };
+
+        // ===== UI =====
+        const UI = {
+            modal: document.getElementById('modal-questao'),
+            container: document.getElementById('questoes-container'),
+            emptyState: document.getElementById('empty-state'),
+            currentQuestaoId: null,
+            tags: [],
+
+            abrirModal(questaoId = null) {
+                this.currentQuestaoId = questaoId;
+                this.tags = [];
+                document.getElementById('tags-list').innerHTML = '';
+
+                if (questaoId) {
+                    const questao = MinhasQuestoes.obter(questaoId);
+                    this.preencherFormulario(questao);
+                    document.getElementById('modal-title').textContent = 'Editar Questão';
+                    document.getElementById('btn-modal-save').textContent = 'Atualizar';
+                } else {
+                    this.limparFormulario();
+                    document.getElementById('modal-title').textContent = 'Nova Questão';
+                    document.getElementById('btn-modal-save').textContent = 'Criar Questão';
+                }
+
+                this.modal.classList.add('active');
+            },
+
+            fecharModal() {
+                this.modal.classList.remove('active');
+                this.limparFormulario();
+                this.currentQuestaoId = null;
+            },
+
+            preencherFormulario(questao) {
+                document.getElementById('questao-pergunta').value = questao.pergunta || '';
+                document.getElementById('questao-topico').value = questao.topico || '';
+                document.getElementById('questao-dificuldade').value = questao.dificuldade || '';
+                document.getElementById('questao-explicacao').value = questao.explicacao || '';
+                document.getElementById('questao-publica').checked = questao.publica || false;
+
+                const respostas = document.querySelectorAll('.resposta-input');
+                (questao.respostas || []).forEach((resp, idx) => {
+                    if (respostas[idx]) respostas[idx].value = resp;
+                });
+
+                const radioButtons = document.querySelectorAll('input[name="resposta-correta"]');
+                if (questao.respostaCorreta !== undefined) {
+                    radioButtons[questao.respostaCorreta].checked = true;
+                }
+
+                this.tags = questao.tags || [];
+                this.renderizarTags();
+            },
+
+            limparFormulario() {
+                document.getElementById('form-questao').reset();
+                this.tags = [];
+                document.getElementById('tags-list').innerHTML = '';
+            },
+
+            obterDados() {
+                const respostas = Array.from(document.querySelectorAll('.resposta-input')).map(input => input.value);
+                const respostaCorreta = parseInt(document.querySelector('input[name="resposta-correta"]:checked').value);
+
+                return {
+                    pergunta: document.getElementById('questao-pergunta').value,
+                    topico: document.getElementById('questao-topico').value,
+                    dificuldade: document.getElementById('questao-dificuldade').value,
+                    respostas: respostas,
+                    respostaCorreta: respostaCorreta,
+                    explicacao: document.getElementById('questao-explicacao').value,
+                    tags: this.tags,
+                    publica: document.getElementById('questao-publica').checked
+                };
+            },
+
+            adicionarTag(tag) {
+                if (tag && !this.tags.includes(tag)) {
+                    this.tags.push(tag);
+                    this.renderizarTags();
+                    document.getElementById('questao-tags').value = '';
+                }
+            },
+
+            removerTag(tag) {
+                this.tags = this.tags.filter(t => t !== tag);
+                this.renderizarTags();
+            },
+
+            renderizarTags() {
+                const container = document.getElementById('tags-list');
+                container.innerHTML = this.tags.map(tag => `
+                    <div class="tag tag-habitual">
+                        ${tag}
+                        <button type="button" style="background: none; border: none; color: inherit; cursor: pointer; margin-left: 0.25rem;" onclick="UI.removerTag('${tag}')">
+                            &times;
+                        </button>
+                    </div>
+                `).join('');
+            },
+
+            renderizar() {
+                const questoes = MinhasQuestoes.carregar();
+                this.atualizarEstatisticas(questoes);
+
+                if (questoes.length === 0) {
+                    this.container.style.display = 'none';
+                    this.emptyState.style.display = 'block';
+                    return;
+                }
+
+                this.container.style.display = 'flex';
+                this.emptyState.style.display = 'none';
+                this.container.innerHTML = '';
+
+                questoes.forEach(questao => {
+                    const item = this.criarItemQuestao(questao);
+                    this.container.appendChild(item);
+                });
+
+                document.getElementById('questoes-count').textContent = questoes.length;
+            },
+
+            criarItemQuestao(questao) {
+                const item = document.createElement('div');
+                item.className = 'questao-item';
+
+                const tagsHTML = (questao.tags || []).map(tag => 
+                    `<span class="tag tag-habitual">${tag}</span>`
+                ).join('');
+
+                item.innerHTML = `
+                    <div class="questao-content">
+                        <div class="questao-pergunta">${questao.pergunta}</div>
+                        <div class="questao-meta">
+                            <span><i class="fas fa-bookmark"></i> ${questao.topico}</span>
+                            <span><i class="fas fa-signal"></i> ${questao.dificuldade}</span>
+                            <span><i class="fas fa-calendar"></i> ${new Date(questao.dataCriacao).toLocaleDateString('pt-BR')}</span>
+                        </div>
+                        <div class="questao-tags">
+                            ${questao.publica ? '<span class="tag tag-publica">Pública</span>' : ''}
+                            ${questao.status === 'pendente' ? '<span class="tag tag-pendente">Pendente</span>' : ''}
+                            ${tagsHTML}
+                        </div>
+                    </div>
+                    <div class="questao-actions">
+                        <button class="action-btn action-btn-view" title="Visualizar" onclick="UI.visualizarQuestao(${questao.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn action-btn-edit" title="Editar" onclick="UI.abrirModal(${questao.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn action-btn-delete" title="Deletar" onclick="UI.deletarQuestao(${questao.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+
+                return item;
+            },
+
+            atualizarEstatisticas(questoes) {
+                const total = questoes.length;
+                const pendentes = questoes.filter(q => q.status === 'pendente').length;
+                const aprovadas = questoes.filter(q => q.status === 'aprovada').length;
+                const publicas = questoes.filter(q => q.publica).length;
+
+                document.getElementById('stat-total').textContent = total;
+                document.getElementById('stat-pendentes').textContent = pendentes;
+                document.getElementById('stat-aprovadas').textContent = aprovadas;
+                document.getElementById('stat-publicas').textContent = publicas;
+            },
+
+            visualizarQuestao(id) {
+                const questao = MinhasQuestoes.obter(id);
+                if (questao) {
+                    alert(`Pergunta: ${questao.pergunta}\n\nRespostas:\n${questao.respostas.map((r, i) => `${i + 1}. ${r}`).join('\n')}\n\nResposta Correta: ${questao.respostas[questao.respostaCorreta]}`);
+                }
+            },
+
+            deletarQuestao(id) {
+                if (confirm('Tem certeza que deseja deletar esta questão?')) {
+                    MinhasQuestoes.deletar(id);
+                    this.renderizar();
+                }
+            }
+        };
+
+        // ===== EVENT LISTENERS =====
+        document.getElementById('btn-new-questao').addEventListener('click', () => UI.abrirModal());
+        document.getElementById('btn-empty-new').addEventListener('click', () => UI.abrirModal());
+        document.getElementById('modal-close').addEventListener('click', () => UI.fecharModal());
+        document.getElementById('btn-modal-cancel').addEventListener('click', () => UI.fecharModal());
+
+        document.getElementById('btn-modal-save').addEventListener('click', () => {
+            const pergunta = document.getElementById('questao-pergunta').value;
+            if (!pergunta) {
+                alert('Por favor, preencha a pergunta');
+                return;
+            }
+
+            const dados = UI.obterDados();
+            if (UI.currentQuestaoId) {
+                MinhasQuestoes.atualizar(UI.currentQuestaoId, dados);
+            } else {
+                MinhasQuestoes.salvar(dados);
+            }
+
+            UI.fecharModal();
+            UI.renderizar();
+        });
+
+        document.getElementById('btn-add-tag').addEventListener('click', (e) => {
+            e.preventDefault();
+            const tag = document.getElementById('questao-tags').value.trim();
+            UI.adicionarTag(tag);
+        });
+
+        document.getElementById('questao-tags').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const tag = document.getElementById('questao-tags').value.trim();
+                UI.adicionarTag(tag);
+            }
+        });
+
+        document.getElementById('modal-questao').addEventListener('click', (e) => {
+            if (e.target === UI.modal) {
+                UI.fecharModal();
+            }
+        });
+
+        // ===== INICIALIZAR =====
+        UI.renderizar();
+
+        // ===== CARREGAR HEADER, FOOTER E ACESSIBILIDADE =====
+        async function carregarComponentes() {
+            try {
+                const headerResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/header-v4.html');
+                const headerHTML = await headerResponse.text();
+                document.getElementById('header-container').innerHTML = headerHTML;
+
+                const footerResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/footer-v4.html');
+                const footerHTML = await footerResponse.text();
+                document.getElementById('footer-container').innerHTML = footerHTML;
+
+                const accessibilityResponse = await fetch('https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/html/accessibility-v4.html');
+                const accessibilityHTML = await accessibilityResponse.text();
+                document.getElementById('accessibility-container').innerHTML = accessibilityHTML;
+
+                if (window.loadAccessibilityScripts) {
+                    window.loadAccessibilityScripts();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar componentes:', error);
+            }
+        }
+
+        carregarComponentes();
+    </script>
 </body>
 </html>
