@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://simulados-para-enfermagem.com.br/sitemap.xml
