@@ -3,60 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Provas Completas - Resolva provas de concursos anteriores na íntegra">
     <title>Provas Completas | Simulados de Enfermagem</title>
-    
-    <!-- CSS do Site Externo -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+
     <style>
+        /* ============================================
+           PROVAS COMPLETAS SPECIFIC STYLES
+           ============================================ */
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --color-primary: #1A3E74;
-            --color-accent: #00bcd4;
-            --color-success: #4caf50;
-            --color-warning: #ff9800;
-            --color-error: #f44336;
-            --color-info: #2196f3;
-            --bg-main: #f4f6f9;
-            --text-main: #1f2937;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
+        html {
+            font-size: 100%;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
+            background: var(--light);
+            color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
         }
 
         /* Loader Global */
         #loader-global {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            inset: 0;
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            z-index: 200000;
             transition: opacity 0.5s ease;
+            opacity: 1;
         }
 
         #loader-global.hidden {
@@ -64,51 +80,89 @@
             pointer-events: none;
         }
 
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--border-color);
-            border-top-color: var(--color-accent);
+        .loader-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loader-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
         }
 
-        /* Main Content */
-        main {
-            min-height: calc(100vh - 200px);
-            padding: 40px 20px;
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
         }
 
-        .container {
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .page-wrapper {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
         }
 
-        /* Header da Página */
         .page-header {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             display: flex;
-            align-items: center;
-            gap: 15px;
+            align-items: flex-start;
+            gap: 16px;
         }
 
         .back-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--color-primary);
+            background: white;
+            border: 1px solid #e2e8f0;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .back-btn:hover {
-            background: rgba(26, 62, 116, 0.1);
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .back-btn i {
+            font-size: 18px;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            color: white;
         }
 
         .page-title {
@@ -119,44 +173,83 @@
             font-family: 'Nunito Sans', sans-serif;
             font-size: 28px;
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 5px;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .page-title p {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: #666;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .breadcrumb i {
+            font-size: 10px;
+            color: #999;
         }
 
         /* Tabs */
         .tabs-container {
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--border-color);
-            overflow-x: auto;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             padding: 12px 20px;
-            background: none;
+            background: transparent;
+            color: #666;
             border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
             font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
+            font-weight: 500;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            white-space: nowrap;
         }
 
         .tab-btn:hover {
-            color: var(--color-primary);
+            background: var(--light);
+            color: var(--primary);
         }
 
         .tab-btn.active {
-            color: var(--color-primary);
-            border-bottom-color: var(--color-primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-btn i {
+            font-size: 14px;
         }
 
         /* Tab Content */
@@ -168,33 +261,33 @@
             display: block;
         }
 
-        /* Section Title */
         .section-title {
             font-family: 'Nunito Sans', sans-serif;
             font-size: 18px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 20px;
-            margin-top: 30px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
         }
 
-        .section-title:first-of-type {
-            margin-top: 0;
+        .section-title i {
+            color: var(--accent);
+            margin-right: 8px;
         }
 
         /* Provas Grid */
         .provas-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
-        /* Prova Card */
         .prova-card {
             background: white;
             border-radius: 12px;
-            padding: 20px;
+            padding: 24px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             display: flex;
@@ -202,81 +295,85 @@
         }
 
         .prova-card:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .prova-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
-            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .prova-title {
             font-family: 'Nunito Sans', sans-serif;
             font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
+            font-weight: 600;
+            color: var(--primary);
             flex: 1;
+            margin-right: 12px;
         }
 
         .prova-year {
-            background: var(--color-accent);
-            color: white;
+            background: var(--light);
+            color: var(--primary);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
-            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .prova-description {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
             line-height: 1.5;
+            margin-bottom: 16px;
+            flex: 1;
         }
 
         .prova-meta {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .prova-meta i {
-            color: var(--color-primary);
+            color: var(--accent);
         }
 
         .prova-info {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 15px;
-            font-size: 12px;
-            color: var(--text-secondary);
+            gap: 20px;
+            margin-bottom: 16px;
         }
 
         .prova-info-item {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 13px;
+            color: #666;
         }
 
         .prova-info-item strong {
-            color: var(--text-main);
+            color: var(--dark);
         }
 
         .prova-button {
-            margin-top: auto;
-            padding: 12px 16px;
-            background: var(--color-info);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 8px;
@@ -284,105 +381,164 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            transition: all 0.3s ease;
         }
 
         .prova-button:hover {
-            background: #1976d2;
+            background: #152c4f;
             transform: translateY(-2px);
         }
 
-        .prova-button:active {
-            transform: translateY(0);
+        .prova-button i {
+            font-size: 14px;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: var(--text-secondary);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .empty-state i {
             font-size: 48px;
-            color: var(--border-color);
-            margin-bottom: 20px;
+            color: #ccc;
+            margin-bottom: 16px;
         }
 
         .empty-state p {
             font-size: 16px;
-            margin-bottom: 10px;
+            color: #666;
         }
 
-        /* Responsivo */
         @media (max-width: 768px) {
-            main {
-                padding: 20px 15px;
-            }
-
-            .container {
-                max-width: 100%;
+            .page-wrapper {
+                padding: 24px 16px;
             }
 
             .page-title h1 {
                 font-size: 24px;
             }
 
-            .provas-grid {
-                grid-template-columns: 1fr;
-            }
-
             .tabs-container {
-                gap: 5px;
+                flex-direction: column;
             }
 
             .tab-btn {
-                padding: 10px 15px;
-                font-size: 13px;
+                width: 100%;
+                justify-content: center;
             }
+
+            .provas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .prova-card,
+        body.dark-mode .tabs-container,
+        body.dark-mode .empty-state {
+            background: #2d3748;
+        }
+
+        body.dark-mode .page-title h1 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-title p,
+        body.dark-mode .prova-description,
+        body.dark-mode .prova-meta,
+        body.dark-mode .prova-info-item {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .prova-title {
+            color: var(--accent);
+        }
+
+        body.dark-mode .prova-year {
+            background: #1f2937;
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .prova-meta {
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .tab-btn:not(.active) {
+            background: #1f2937;
+            color: #cbd5e1;
+        }
+
+        body.reduce-animations .prova-card,
+        body.reduce-animations .prova-button {
+            transition: none;
+        }
+
+        body.reduce-animations .loader-dot {
+            animation: none;
         }
     </style>
 </head>
 <body>
     <!-- Loader Global -->
     <div id="loader-global">
-        <div class="loader-spinner"></div>
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
     </div>
 
-    <!-- Accessibility Container -->
-    <div id="accessibility-v2-container"></div>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
-    <!-- Header Container -->
-    <div id="header-v2-container"></div>
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
+    <div id="accessibility-container"></div>
+    <div id="header-container"></div>
 
-    <!-- Navigation Container -->
-    <div id="nav-container"></div>
-    <div id="breadcrumb-container"></div>
+    <!-- Conteúdo Principal -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Navegação">
+                <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="dashboard.html">Dashboard</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Provas Completas</span>
+            </nav>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <button class="back-btn" onclick="window.history.back()" title="Voltar">
-                    <i class="fas fa-arrow-left"></i>
+                <button class="back-btn" onclick="window.location.href='dashboard.html'" title="Voltar ao início">
+                    <i class="fas fa-home"></i>
                 </button>
                 <div class="page-title">
-                    <h1>Provas Completas</h1>
+                    <h1><i class="fas fa-clipboard-list"></i> Provas Completas</h1>
                     <p>Resolva provas de concursos anteriores na íntegra</p>
                 </div>
             </div>
 
             <!-- Tabs -->
             <div class="tabs-container">
-                <button class="tab-btn active" data-tab="recentes">Recentes</button>
-                <button class="tab-btn" data-tab="anteriores">Anteriores</button>
-                <button class="tab-btn" data-tab="instituicao">Por Instituição</button>
-                <button class="tab-btn" data-tab="ano">Por Ano</button>
+                <button class="tab-btn active" data-tab="recentes">
+                    <i class="fas fa-clock"></i> Recentes
+                </button>
+                <button class="tab-btn" data-tab="anteriores">
+                    <i class="fas fa-history"></i> Anteriores
+                </button>
+                <button class="tab-btn" data-tab="instituicao">
+                    <i class="fas fa-building"></i> Por Instituição
+                </button>
+                <button class="tab-btn" data-tab="ano">
+                    <i class="fas fa-calendar-alt"></i> Por Ano
+                </button>
             </div>
 
             <!-- Tab: Recentes -->
@@ -395,7 +551,7 @@
 
             <!-- Tab: Anteriores -->
             <div class="tab-content" id="tab-anteriores">
-                <div class="section-title">Outros</div>
+                <div class="section-title">Outros Concursos</div>
                 <div class="provas-grid" id="provas-anteriores-grid">
                     <!-- Carregado dinamicamente -->
                 </div>
@@ -414,119 +570,85 @@
                     <!-- Carregado dinamicamente -->
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
-    <!-- Footer Container -->
-    <div id="footer-v2-container"></div>
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
 
-    <!-- EventBus Script -->
+    <!-- SCRIPT DO COMPONENT LOADER -->
     <script>
         (function() {
             'use strict';
 
-            // EventBus simples
-            window.EventBus = {
-                events: {},
-                on(event, callback) {
-                    if (!this.events[event]) this.events[event] = [];
-                    this.events[event].push(callback);
-                },
-                emit(event, data) {
-                    if (this.events[event]) {
-                        this.events[event].forEach(callback => callback(data));
-                    }
-                }
-            };
-
-            // Base URL
-            const BASE_URL = 'https://auditeduca.github.io/Calculadoras-de-Enfermagem/';
-
-            // Configuração de componentes
-            const CONFIG = {
+            // ========================================
+            // CONFIGURAÇÃO DE CAMINHOS
+            // ========================================
+            const Config = {
+                htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
                 components: [
-                    { id: 'accessibility-v2-container', path: 'assets/components/accessibility-v4.html' },
-                    { id: 'header-v2-container', path: 'assets/components/header-v4.html' },
-                    { id: 'footer-v2-container', path: 'assets/components/footer-v4.html' }
-                ],
-                scripts: [
-                    'assets/js/event-bus-v4.js',
-                    'assets/js/accessibility-rules.js',
-                    'https://vlibras.gov.br/app/vlibras-plugin.js',
-                    'assets/js/accessibility-v4.js',
-                    'assets/js/header-v4.js',
-                    'assets/js/footer-v4.js'
+                    { id: 'accessibility-container', file: 'accessibility.html', name: 'Painel de Acessibilidade' },
+                    { id: 'header-container', file: 'header.html', name: 'Cabeçalho' },
+                    { id: 'footer-container', file: 'footer.html', name: 'Rodapé' }
                 ]
             };
 
-            // Carregar componentes
-            async function loadComponent(id, path) {
-                try {
-                    const url = path.startsWith('http') ? path : BASE_URL + path;
-                    const response = await fetch(url + '?t=' + Date.now());
-                    if (!response.ok) throw new Error(response.status);
-                    const html = await response.text();
-                    const container = document.getElementById(id);
-                    if (container) {
-                        container.innerHTML = html;
-                        window.EventBus.emit(`module:${id}:ready`);
-                    }
-                    return true;
-                } catch (e) {
-                    console.error(`[App] Erro ao carregar ${id}:`, e.message);
-                    return false;
-                }
-            }
-
-            // Carregar scripts
-            async function loadScript(src) {
-                return new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    script.src = src.startsWith('http') ? src : BASE_URL + src;
-                    script.onload = () => resolve(true);
-                    script.onerror = () => reject(new Error(`Erro ao carregar ${src}`));
-                    document.body.appendChild(script);
-                });
-            }
-
-            // Inicializar app
-            async function initApp() {
-                try {
-                    await Promise.all(CONFIG.components.map(c => loadComponent(c.id, c.path)));
+            // ========================================
+            // CARREGADOR DE COMPONENTES
+            // ========================================
+            const ComponentLoader = {
+                async loadComponent(comp) {
+                    const container = document.getElementById(comp.id);
                     
-                    for (const script of CONFIG.scripts) {
-                        try {
-                            await loadScript(script);
-                        } catch (e) {
-                            console.warn(`[App] Script opcional não carregado: ${script}`);
+                    if (!container) {
+                        console.error('[ERRO] Container não encontrado: #' + comp.id);
+                        return false;
+                    }
+
+                    const fullPath = Config.htmlPath + comp.file;
+                    console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
+
+                    try {
+                        const response = await fetch(fullPath);
+                        
+                        if (!response.ok) {
+                            throw new Error('HTTP ' + response.status + ': ' + response.statusText);
                         }
+
+                        const html = await response.text();
+                        
+                        if (!html || html.trim() === '') {
+                            throw new Error('Arquivo vazio');
+                        }
+
+                        container.innerHTML = html;
+                        console.log('[SUCESSO] ' + comp.name + ' carregado');
+                        return true;
+
+                    } catch (error) {
+                        console.error('[ERRO] ' + comp.name + ':', error.message);
+                        return false;
+                    }
+                },
+
+                async init() {
+                    console.log('========================================');
+                    console.log('CARREGANDO COMPONENTES');
+                    console.log('========================================');
+                    
+                    for (const comp of Config.components) {
+                        await this.loadComponent(comp);
                     }
 
-                    const loader = document.getElementById('loader-global');
-                    if (loader) {
-                        loader.classList.add('hidden');
-                        setTimeout(() => loader.style.display = 'none', 500);
-                    }
-
-                    console.log('[App] Provas Completas carregado com sucesso!');
-                } catch (e) {
-                    console.error('[App] Erro na inicialização:', e);
+                    console.log('========================================');
+                    console.log('[OK] Componentes carregados!');
+                    console.log('========================================');
                 }
-            }
+            };
 
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initApp);
-            } else {
-                initApp();
-            }
-        })();
-    </script>
-
-    <!-- Provas Completas Script -->
-    <script>
-        (function() {
-            'use strict';
-
+            // ========================================
+            // PROVAS COMPLETAS MANAGER
+            // ========================================
             const ProvasCompletasManager = {
                 provas: [],
                 filtroAtivo: 'recentes',
@@ -536,13 +658,14 @@
                     this.setupEventListeners();
                     this.loadProvas();
                     this.renderProvas();
+                    this.hideLoader();
                 },
 
                 setupEventListeners() {
                     // Tabs
                     document.querySelectorAll('.tab-btn').forEach(btn => {
                         btn.addEventListener('click', (e) => {
-                            this.switchTab(e.target.dataset.tab);
+                            this.switchTab(e.target.closest('.tab-btn').dataset.tab);
                         });
                     });
                 },
@@ -601,6 +724,26 @@
                                     questoes: 30,
                                     tipo: 'Auxiliar',
                                     data: '2023-03-10'
+                                },
+                                {
+                                    id: 4,
+                                    titulo: 'ENFERMEIRO SAÚDE DA FAMÍLIA',
+                                    descricao: 'CONCURSO PARA ENFERMEIRO NA SAÚDE DA FAMÍLIA - MINISTÉRIO DA SAÚDE',
+                                    instituicao: 'MINISTÉRIO DA SAÚDE',
+                                    ano: 2023,
+                                    questoes: 60,
+                                    tipo: 'Enfermeiro',
+                                    data: '2023-08-05'
+                                },
+                                {
+                                    id: 5,
+                                    titulo: 'ENFERMEIRO DO TRABALHO',
+                                    descricao: 'PROVA PARA ENFERMEIRO ESPECIALISTA EM SAÚDE DO TRABALHO',
+                                    instituicao: 'PETROBRAS',
+                                    ano: 2020,
+                                    questoes: 45,
+                                    tipo: 'Enfermeiro',
+                                    data: '2020-11-15'
                                 }
                             ];
                         } else {
@@ -649,7 +792,7 @@
                     instituicoes.forEach(inst => {
                         const provasInst = this.provas.filter(p => p.instituicao === inst);
                         html += `
-                            <div class="section-title">${inst}</div>
+                            <div class="section-title"><i class="fas fa-building"></i> ${inst}</div>
                             <div class="provas-grid">
                                 ${provasInst.map(p => this.createProvaCard(p)).join('')}
                             </div>
@@ -667,7 +810,7 @@
                     anos.forEach(ano => {
                         const provasAno = this.provas.filter(p => p.ano === ano);
                         html += `
-                            <div class="section-title">Provas de ${ano}</div>
+                            <div class="section-title"><i class="fas fa-calendar-alt"></i> Provas de ${ano}</div>
                             <div class="provas-grid">
                                 ${provasAno.map(p => this.createProvaCard(p)).join('')}
                             </div>
@@ -691,11 +834,11 @@
                             </div>
                             <div class="prova-info">
                                 <div class="prova-info-item">
-                                    <i class="fas fa-question-circle" style="color: var(--color-info);"></i>
+                                    <i class="fas fa-question-circle" style="color: var(--accent);"></i>
                                     <span><strong>${prova.questoes}</strong> questões</span>
                                 </div>
                                 <div class="prova-info-item">
-                                    <i class="fas fa-user-md" style="color: var(--color-success);"></i>
+                                    <i class="fas fa-user-md" style="color: var(--success);"></i>
                                     <span>Tipo: <strong>${prova.tipo}</strong></span>
                                 </div>
                             </div>
@@ -726,45 +869,117 @@
 
                         // Buscar questões da prova
                         const todasQuestoes = JSON.parse(localStorage.getItem('admin_questoes')) || [];
-                        const questoesprova = todasQuestoes.filter(q => q.provaId === provaId);
+                        let questoesProva = todasQuestoes.filter(q => q.provaId === provaId);
 
-                        if (questoesprova.length === 0) {
+                        // Se não houver questões específicas da prova, usar questões de exemplo
+                        if (questoesProva.length === 0) {
+                            console.log('[ProvasCompletas] Usando banco de questões padrão');
+                            questoesProva = this.getDefaultQuestions();
+                        }
+
+                        if (questoesProva.length === 0) {
                             alert('Nenhuma questão encontrada para esta prova');
                             return;
                         }
+
+                        // Embaralhar questões
+                        questoesProva = this.shuffleArray(questoesProva);
 
                         // Salvar configuração no localStorage
                         localStorage.setItem('current_quiz', JSON.stringify({
                             type: 'prova_completa',
                             provaId: provaId,
                             provaTitulo: prova.titulo,
-                            questions: questoesprova,
+                            provaInstituicao: prova.instituicao,
+                            questions: questoesProva,
                             startTime: new Date().toISOString()
                         }));
 
-                        console.log('[ProvasCompletas] Prova iniciada:', prova.titulo);
+                        console.log('[ProvasCompletas] Prova iniciada:', prova.titulo, '- Questões:', questoesProva.length);
                         
                         // Redirecionar para página de quiz
-                        window.location.href = 'quiz.html';
+                        window.location.href = 'quiz-prova.html';
                     } catch (error) {
                         console.error('[ProvasCompletas] Erro ao iniciar prova:', error);
                         alert('Erro ao iniciar a prova. Tente novamente.');
                     }
+                },
+
+                getDefaultQuestions() {
+                    return [
+                        { id: 1, topic: "anatomia", question: "Qual é o principal osso do antebraço que se articula com o úmero no cotovelo?", options: ["Ulna", "Rádio", "Úmero", "Clavícula", "Escápula"], correctIndex: 0, provaId: 1 },
+                        { id: 2, topic: "anatomia", question: "Quantos pares de cordas vocais possuem as pregas vocais verdadeiras?", options: ["1 par", "2 pares", "3 pares", "4 pares", "5 pares"], correctIndex: 0, provaId: 1 },
+                        { id: 3, topic: "farmacologia", question: "Qual classe de medicamentos é comumente utilizada para tratar hipertensão arterial e atua como inibidor da enzima conversora de angiotensina (ECA)?", options: ["Betabloqueadores", "Diuréticos", "Inibidores da ECA", "Bloqueadores de canais de cálcio", "Vasodilatadores diretos"], correctIndex: 2, provaId: 1 },
+                        { id: 4, topic: "farmacologia", question: "A digoxina é um medicamento frequentemente utilizado em qual condição cardíaca?", options: ["Hipertensão arterial", "Insuficiência cardíaca", "Trombose venosa", "Arritmia atrial", "Angina pectoris"], correctIndex: 1, provaId: 1 },
+                        { id: 5, topic: "patologia", question: "O que é aterosclerose?", options: ["Inflamação dos vasos linfáticos", "Depósito de placas de gordura nas artérias", "Degeneração das células musculares cardíacas", "Obstrução das veias por coágulos", "Dilatação anormal das artérias"], correctIndex: 1, provaId: 1 },
+                        { id: 6, topic: "patologia", question: "Qual é a principal característica patológica do diabetes mellitus tipo 1?", options: ["Resistência à insulina", "Deficiência na produção de insulina", "Produção excessiva de glucagon", "Disfunção das células alfa", "Alterações no receptor de insulina"], correctIndex: 1, provaId: 1 },
+                        { id: 7, topic: "microbiologia", question: "Qual microorganismo é o agente causador da tuberculose?", options: ["Mycobacterium tuberculosis", "Streptococcus pneumoniae", "Haemophilus influenzae", "Neisseria meningitidis", "Clostridium tetani"], correctIndex: 0, provaId: 1 },
+                        { id: 8, topic: "microbiologia", question: "Os vírus são considerados organismos acelulares porque:", options: ["Possuem apenas DNA", "Possuem apenas RNA", "Não possuem estrutura celular completa", "São muito pequenos", "Não se reproduzem"], correctIndex: 2, provaId: 1 },
+                        { id: 9, topic: "saude-publica", question: "O que significa o conceito de 'Vigilância em Saúde'?", options: ["Monitoramento contínuo de doenças e seus determinantes", "Controle de vetores em áreas rurais", "Fiscalização de estabelecimentos de saúde", "Inspeção de alimentos em restaurantes", "Educação em saúde nas escolas"], correctIndex: 0, provaId: 1 },
+                        { id: 10, topic: "saude-publica", question: "Qual é o indicador utilizado para medir a proporção de nascidos vivos com baixo peso?", options: ["Taxa de mortalidade materna", "Taxa de natalidade", "Peso ao nascer inferior a 2.500g", "Número de consultas pré-natal", "Idade gestacional ao parto"], correctIndex: 2, provaId: 1 },
+                        { id: 11, topic: "enfermagem-basica", question: "Qual é a finalidade da técnica de higiene oral em pacientes acamados?", options: ["Apenas estética", "Prevenir infecções bucais e sistêmicas", "Substituir a escovação convencional", "Reduzir a sede", "Estimular o apetite"], correctIndex: 1, provaId: 2 },
+                        { id: 12, topic: "enfermagem-basica", question: "Ao realizar a mensuração da temperatura axilar, qual é o tempo mínimo recomendado?", options: ["2 minutos", "5 minutos", "10 minutos", "15 minutos", "1 minuto"], correctIndex: 1, provaId: 2 },
+                        { id: 13, topic: "enfermagem-medica", question: "Qual é a classificação da insuficiência cardíaca baseada na New York Heart Association (NYHA) que apresenta sintomas em repouso?", options: ["Classe I", "Classe II", "Classe III", "Classe IV", "Classe V"], correctIndex: 3, provaId: 2 },
+                        { id: 14, topic: "enfermagem-medica", question: "A pneumonia comunitária é mais frequentemente causada por qual agente etiológico?", options: ["Klebsiella pneumoniae", "Pseudomonas aeruginosa", "Streptococcus pneumoniae", "Staphylococcus aureus", "Legionella pneumophila"], correctIndex: 2, provaId: 2 },
+                        { id: 15, topic: "enfermagem-cirurgica", question: "Qual é o objetivo principal da avaliação pré-operatória?", options: ["Determinar o tipo de anestesia", "Identificar riscos e preparar o paciente", "Agendar a data da cirurgia", "Calcular os custos da cirurgia", "Selecionar o cirurgião"], correctIndex: 1, provaId: 2 },
+                        { id: 16, topic: "enfermagem-cirurgica", question: "O que é deiscência cirúrgica?", options: ["Infecção no local da incisão", "Abertura espontânea dos pontos da ferida operatória", "Acúmulo de líquido no local da cirurgia", "Sangramento excessivo pós-operatório", "Formação de queloide"], correctIndex: 1, provaId: 2 },
+                        { id: 17, topic: "bioquimica", question: "Qual é a principal fonte de energia para as células musculares durante exercícios intensos de curta duração?", options: ["Ácidos graxos", "Glicose", "ATP muscular e creatina fosfato", "Aminoácidos", "Cetonas"], correctIndex: 2, provaId: 3 },
+                        { id: 18, topic: "bioquimica", question: "A hemoglobina é uma proteína responsável pelo transporte de qual gás no sangue?", options: ["Dióxido de carbono", "Nitrogênio", "Oxigênio", "Monóxido de carbono", "Oxido nitroso"], correctIndex: 2, provaId: 3 },
+                        { id: 19, topic: "imunologia", question: "Qual células são responsáveis pela resposta imunitária mediada por anticorpos?", options: ["Linfócitos T", "Linfócitos B", "Neutrófilos", "Macrófagos", "Eosinófilos"], correctIndex: 1, provaId: 3 },
+                        { id: 20, topic: "imunologia", question: "O que são anticorpos (imunoglobulinas)?", options: ["Células de defesa", "Proteínas produzidas pelo sistema imune", "Lipídios de membrana", "Carboidratos estruturais", "Ácidos nucleicos"], correctIndex: 1, provaId: 3 }
+                    ];
+                },
+
+                shuffleArray(array) {
+                    const shuffled = [...array];
+                    for (let i = shuffled.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                    }
+                    return shuffled;
+                },
+
+                hideLoader() {
+                    setTimeout(() => {
+                        const loader = document.getElementById('loader-global');
+                        if (loader) {
+                            loader.classList.add('hidden');
+                            setTimeout(() => loader.style.display = 'none', 500);
+                        }
+                    }, 500);
                 }
             };
 
-            // Inicializar quando o DOM estiver pronto
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    ProvasCompletasManager.init();
-                });
-            } else {
-                ProvasCompletasManager.init();
+            // ========================================
+            // INICIALIZAÇÃO
+            // ========================================
+            function init() {
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', function() {
+                        ComponentLoader.init().then(function() {
+                            ProvasCompletasManager.init();
+                        });
+                    });
+                } else {
+                    ComponentLoader.init().then(function() {
+                        ProvasCompletasManager.init();
+                    });
+                }
             }
 
-            window.ProvasCompletasManager = ProvasCompletasManager;
+            init();
+
         })();
     </script>
-    <script src="navigation.js"></script>
+    
+    <!-- JavaScript dos Componentes -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
+    
+    <!-- Scripts Locais -->
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/icons.js"></script>
 </body>
 </html>
