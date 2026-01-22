@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#1A3E74">
-    <meta name="description" content="Modo Anti-Estresse - Leitura guiada com música ambiente para momentos de paz e concentração">
-    <title>Modo Anti-Estresse | Simulados de Enfermagem</title>
+    <meta name="description" content="Estudo Offline - Simulados de Enfermagem">
+    <title>Estudo Offline | Simulados de Enfermagem</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
@@ -22,14 +22,26 @@
 
     <!-- CSS dos Componentes Modularizados -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
-    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    
+    <!-- CSS do Cabeçalho -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
+    
+    <!-- CSS de Acessibilidade -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    
+    <!-- CSS do Rodapé -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
 
     <style>
         /* ============================================
-           ANTI-STRESS SPECIFIC STYLES
+           ESTUDO OFFLINE SPECIFIC STYLES
            ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary: #1A3E74;
             --accent: #00bcd4;
@@ -38,12 +50,6 @@
             --error: #f44336;
             --light: #f4f6f9;
             --dark: #1f2937;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
 
         html {
@@ -103,235 +109,292 @@
             40% { opacity: 1; transform: scale(1); }
         }
 
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--primary);
-            color: white;
-            padding: 8px;
-            z-index: 100000;
-            transition: top 0.3s;
-        }
-
-        .skip-link:focus {
-            top: 0;
-        }
-
+        /* Layout Principal */
         .page-wrapper {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
             position: relative;
             z-index: 1;
             min-height: calc(100vh - 300px);
+            padding: 40px 20px;
         }
 
-        .page-header {
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .back-btn {
-            background: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 8px;
-            cursor: pointer;
+        /* Navigation Breadcrumb */
+        .nav-breadcrumb {
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-breadcrumb a {
             color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease;
         }
 
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        .nav-breadcrumb a:hover {
+            color: var(--accent);
         }
 
-        .page-title h1 {
+        .nav-breadcrumb span {
+            color: #666;
+        }
+
+        .nav-breadcrumb .current {
+            color: #666;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-family: 'Nunito Sans', sans-serif;
             font-size: 32px;
             font-weight: 700;
+            margin-bottom: 8px;
             color: var(--dark);
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .page-title h1 i {
+        .page-header h1 i {
             color: var(--primary);
         }
 
-        .page-title p {
+        .page-header p {
             font-size: 16px;
             color: #666;
-            margin-top: 4px;
         }
 
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 24px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .breadcrumb a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--accent);
-        }
-
-        .breadcrumb i {
-            font-size: 10px;
-            color: #999;
-        }
-
-        .content-grid {
-            display: grid;
-            gap: 24px;
-        }
-
-        .quiz-card {
+        /* Status Bar */
+        .status-bar {
             background: white;
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 24px;
+            transition: all 0.3s ease;
         }
 
-        .quiz-card h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .status-bar:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
-        .quiz-card h2 i {
-            color: var(--primary);
+        .status-item {
+            text-align: center;
         }
 
-        .quiz-card > p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .voice-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background: #f0f9ff;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .voice-avatar {
+        .status-icon {
             width: 48px;
             height: 48px;
+            border-radius: 50%;
+            background: rgba(26, 62, 116, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
+            margin: 0 auto 12px;
             font-size: 20px;
-        }
-
-        .voice-name {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-
-        .voice-lang {
-            font-size: 13px;
-            color: #666;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-
-        .form-group label i {
             color: var(--primary);
         }
 
-        .form-textarea {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            resize: vertical;
-            min-height: 150px;
-            line-height: 1.6;
+        .status-icon.storage { background: rgba(33, 150, 243, 0.1); color: #2196f3; }
+        .status-icon.topics { background: rgba(76, 175, 80, 0.1); color: #4caf50; }
+        .status-icon.questions { background: rgba(156, 39, 176, 0.1); color: #9c27b0; }
+        .status-icon.pending { background: rgba(255, 152, 0, 0.1); color: #ff9800; }
+
+        .status-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
         }
 
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary);
+        .status-value {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
         }
 
-        .form-select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-            background: white;
-            cursor: pointer;
+        .online-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
         }
 
-        .form-select:focus {
-            outline: none;
-            border-color: var(--primary);
+        .online-badge i {
+            font-size: 10px;
         }
 
-        .controls-row {
+        /* Section Title */
+        .section-title {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 32px 0 20px 0;
+            color: var(--dark);
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            align-items: center;
+            gap: 8px;
         }
 
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .content-section:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-section h2 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .content-section h2 i {
+            color: var(--accent);
+        }
+
+        .content-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--light);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: #e8f4f8;
+        }
+
+        .content-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .content-item label {
+            flex-grow: 1;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .content-item .size {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .content-item .download-icon {
+            color: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .content-item:hover .download-icon {
+            opacity: 1;
+        }
+
+        .content-item .remove-btn {
+            padding: 6px 12px;
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--error);
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .content-item .remove-btn:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        .content-item .check-icon {
+            color: var(--success);
+            font-size: 18px;
+        }
+
+        /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 12px 24px;
             border-radius: 8px;
             border: none;
             font-weight: 600;
-            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
         }
 
         .btn-primary {
@@ -339,396 +402,266 @@
             color: white;
         }
 
-        .btn-primary:hover:not(:disabled) {
+        .btn-primary:hover {
             background: #152c4f;
-            transform: translateY(-2px);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
         }
 
         .btn-secondary {
             background: white;
-            color: var(--dark);
-            border: 2px solid #e2e8f0;
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
         .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-success {
-            background: var(--success);
+            background: var(--primary);
             color: white;
         }
 
-        .btn-success:hover {
-            background: #43a047;
-            transform: translateY(-2px);
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 16px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #ccc;
-        }
-
-        .status-dot.active {
-            background: var(--success);
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .progress-container {
-            margin-top: 16px;
-            display: none;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            text-align: right;
+        .btn-small {
+            padding: 8px 16px;
             font-size: 13px;
-            color: #666;
-            margin-top: 8px;
         }
 
-        .sound-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
+        .btn-danger {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(244, 67, 54, 0.3);
         }
 
-        .sound-btn {
+        .btn-danger:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        /* Actions */
+        .actions {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 20px 16px;
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            cursor: pointer;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        /* Tips Card */
+        .tips-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+            margin-top: 32px;
             transition: all 0.3s ease;
         }
 
-        .sound-btn:hover {
-            border-color: var(--primary);
-            background: #f0f9ff;
+        .tips-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
-        .sound-btn.active {
-            border-color: var(--primary);
-            background: #e0f2fe;
-        }
-
-        .sound-btn i {
-            font-size: 24px;
-            color: var(--primary);
-        }
-
-        .sound-label {
-            font-size: 13px;
-            color: var(--dark);
-            font-weight: 500;
-        }
-
-        .timer-display {
-            font-size: 48px;
+        .tips-card h3 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
             font-weight: 700;
             color: var(--primary);
-            font-family: 'Nunito Sans', sans-serif;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .breathing-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, #0d2a52 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            transition: transform 0.5s ease;
-        }
-
-        .breathing-circle.breathing {
-            animation: breathe 19s ease-in-out infinite;
-        }
-
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            22% { transform: scale(1.3); }
-            50% { transform: scale(1.3); }
-        }
-
-        .breathing-text {
-            color: white;
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .breathing-phases {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
-        .phase-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: #666;
-        }
-
-        .phase-item.active .phase-dot {
-            background: var(--success);
-        }
-
-        .phase-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ccc;
-        }
-
-        .btn-full {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .reading-content {
-            margin-top: 24px;
-            padding: 24px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .reading-content h2 {
-            font-size: 18px;
             margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .reading-text {
-            line-height: 1.8;
+        .tips-card h3 i {
+            color: var(--warning);
+        }
+
+        .tips-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .tip-item i {
+            color: var(--success);
             font-size: 16px;
+            margin-top: 2px;
         }
 
-        .highlight {
-            transition: background 0.3s ease;
+        .tip-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
         }
 
-        /* Reading Mode Overlay */
-        .reading-mode-overlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            z-index: 100000;
-            display: none;
-            flex-direction: column;
-        }
-
-        .reading-mode-overlay.active {
-            display: flex;
-        }
-
-        .reading-mode-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .reading-mode-title {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .reading-mode-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            overflow-y: auto;
-        }
-
-        .reading-mode-text {
-            max-width: 800px;
-            color: white;
-            font-size: 24px;
-            line-height: 2;
+        /* Empty State */
+        .empty-state {
             text-align: center;
+            padding: 48px 24px;
+            color: #999;
         }
 
-        .reading-mode-controls {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .empty-state i {
+            font-size: 48px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            display: block;
         }
 
-        .reading-mode-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .empty-state p {
+            font-size: 14px;
         }
 
-        .reading-mode-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .reading-mode-btn.playing {
-            background: var(--success);
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             .page-wrapper {
                 padding: 24px 16px;
             }
 
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .back-btn {
-                position: absolute;
-                top: 16px;
-                right: 16px;
-            }
-
-            .page-title h1 {
+            .page-header h1 {
                 font-size: 24px;
             }
 
-            .breathing-circle {
-                width: 150px;
-                height: 150px;
+            .content-grid {
+                grid-template-columns: 1fr;
             }
 
-            .breathing-text {
-                font-size: 16px;
+            .status-bar {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .breathing-phases {
+            .actions {
                 flex-direction: column;
-                align-items: center;
-                gap: 12px;
             }
 
-            .timer-display {
-                font-size: 36px;
+            .actions .btn {
+                width: 100%;
+                justify-content: center;
             }
 
-            .reading-mode-text {
-                font-size: 18px;
+            .tips-list {
+                grid-template-columns: 1fr;
             }
         }
 
+        @media (max-width: 480px) {
+            .status-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark Mode */
         body.dark-mode {
             background: #1f2937;
             color: #f0f4f8;
         }
 
-        body.dark-mode .quiz-card,
-        body.dark-mode .back-btn,
-        body.dark-mode .reading-content {
+        body.dark-mode .status-bar,
+        body.dark-mode .content-section,
+        body.dark-mode .tips-card {
             background: #2d3748;
             color: #f0f4f8;
         }
 
-        body.dark-mode .page-title h1,
-        body.dark-mode .voice-name,
-        body.dark-mode .quiz-card h2 {
+        body.dark-mode .page-header h1,
+        body.dark-mode .content-section h2,
+        body.dark-mode .section-title,
+        body.dark-mode .tips-card h3 {
             color: #f0f4f8;
         }
 
-        body.dark-mode .quiz-card > p,
-        body.dark-mode .page-title p {
+        body.dark-mode .page-header p,
+        body.dark-mode .status-label,
+        body.dark-mode .content-item label,
+        body.dark-mode .content-item .size,
+        body.dark-mode .tip-item p {
             color: #cbd5e1;
         }
 
-        body.dark-mode .form-textarea,
-        body.dark-mode .form-select {
+        body.dark-mode .content-item {
+            background: #1f2937;
+        }
+
+        body.dark-mode .content-item:hover {
             background: #374151;
+        }
+
+        body.dark-mode .tip-item {
+            background: #1f2937;
+        }
+
+        body.dark-mode .content-section h2 {
             border-color: #4b5563;
-            color: #f0f4f8;
         }
 
-        body.dark-mode .sound-btn {
-            background: #374151;
-            border-color: #4b5563;
+        body.dark-mode .status-icon {
+            background: rgba(0, 188, 212, 0.2);
+            color: var(--accent);
         }
 
-        body.dark-mode .sound-btn:hover,
-        body.dark-mode .sound-btn.active {
-            background: #4b5563;
-            border-color: var(--primary);
+        /* High Contrast Mode */
+        body[data-contrast="high"] .status-bar,
+        body[data-contrast="high"] .content-section,
+        body[data-contrast="high"] .tips-card {
+            border: 2px solid var(--primary);
         }
 
-        body.reduce-animations .breathing-circle,
+        body[data-contrast="high"] .content-item {
+            border: 1px solid #4b5563;
+        }
+
+        /* Reduzir Animações */
+        body.reduce-animations .status-bar,
+        body.reduce-animations .content-section,
+        body.reduce-animations .tips-card,
         body.reduce-animations .btn,
-        body.reduce-animations .back-btn {
+        body.reduce-animations .content-item {
             transition: none;
-            animation: none;
         }
 
         body.reduce-animations .loader-dot {
             animation: none;
         }
+
+        body[data-reduce-motion="reduce"] .status-bar,
+        body[data-reduce-motion="reduce"] .content-section,
+        body[data-reduce-motion="reduce"] .btn {
+            transition: none;
+            animation: none;
+        }
+
+        .component-error {
+            padding: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .component-error h4 {
+            color: #E65100;
+            margin: 0 0 10px 0;
+        }
+
+        .component-error p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .component-error code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
-    <!-- Loader Global -->
+    <!-- LOADER -->
     <div id="loader-global">
         <div class="loader-dots">
             <div class="loader-dot"></div>
@@ -737,892 +670,441 @@
         </div>
     </div>
 
-    <!-- Skip Link -->
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-
     <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
     <div id="header-container"></div>
 
-    <!-- Conteúdo Principal -->
+    <!-- CONTEÚDO -->
     <div class="page-wrapper">
         <main id="main-content">
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb" id="breadcrumb" aria-label="Navegação">
-                <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
-                <i class="fas fa-chevron-right"></i>
-                <a href="dashboard.html">Dashboard</a>
-                <i class="fas fa-chevron-right"></i>
-                <span>Anti-Estresse</span>
-            </nav>
+            <div class="container">
+                <!-- Navigation Breadcrumb -->
+                <nav class="nav-breadcrumb" aria-label="Navegação">
+                    <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <a href="dashboard.html">Dashboard</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <span class="current">Estudo Offline</span>
+                </nav>
 
-            <!-- Page Header -->
-            <div class="page-header">
-                <button class="back-btn" onclick="window.location.href='dashboard.html'" title="Voltar ao início">
-                    <i class="fas fa-home"></i>
-                </button>
-                <div class="page-title">
-                    <h1><i class="fas fa-spa"></i> Modo Anti-Estresse</h1>
-                    <p>Experimente nossa leitura guiada com música ambiente para momentos de paz e concentração</p>
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1><i class="fas fa-wifi"></i> Estudo Offline</h1>
+                    <p>Baixe conteúdo para estudar sem conexão com a internet</p>
                 </div>
-            </div>
 
-            <div class="content-grid">
-                <!-- Card de Leitura Guiada -->
-                <div class="quiz-card">
-                    <h2><i class="fas fa-volume-up"></i> Leitura Guiada Falada</h2>
-                    <p>Ouça o texto ser lido em voz alta com acompanhamento de música ambiente</p>
-
-                    <div class="voice-info" id="voiceInfo">
-                        <div class="voice-avatar">
-                            <i class="fas fa-microphone"></i>
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="status-item">
+                        <div class="status-icon storage">
+                            <i class="fas fa-database"></i>
                         </div>
-                        <div class="voice-details">
-                            <div class="voice-name" id="voiceName">Carregando vozes...</div>
-                            <div class="voice-lang" id="voiceLang">Aguarde</div>
+                        <div class="status-label">Armazenamento Usado</div>
+                        <div class="status-value" id="storage-used">0 MB</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon topics">
+                            <i class="fas fa-book"></i>
                         </div>
+                        <div class="status-label">Tópicos Baixados</div>
+                        <div class="status-value" id="topics-count">0</div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="readingText">
-                            <i class="fas fa-file-alt"></i>
-                            <span>Texto para Leitura</span>
-                        </label>
-                        <textarea class="form-textarea" id="readingText" placeholder="Digite ou cole o texto que deseja ouvir...">A paz interior começa no momento em que você decide não deixar que as circunstâncias externas controlem suas emoções. Quando você aprende a respirar profundamente e a encontrar equilíbrio, mesmo nos momentos mais desafiadores, descobre uma força que não sabia possuir.
-
-Cada respiração consciente é um passo em direção à tranquilidade. Quando a mente está barulhenta, volte sua atenção para o ar entrando e saindo dos pulmões. Este simples ato de presença pode transformar completamente sua perspectiva e trazer clareza aos pensamentos confusos.
-
-A jornada para o autocontrole não é sobre reprimir emoções, mas sim sobre entendê-las e integrá-las de forma harmoniosa. Quando você aceita suas emoções sem julgamento, cria espaço para o crescimento e a transformação pessoal.
-
-Lembre-se: você tem o poder de escolher sua reação diante de qualquer situação. Esta é a verdadeira essência da liberdade interior e da paz duradoura.</textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="speechRate">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <span>Velocidade da Voz</span>
-                        </label>
-                        <select class="form-select" id="speechRate">
-                            <option value="0.7">Lento (0.7x)</option>
-                            <option value="0.85" selected>Normal (0.85x)</option>
-                            <option value="1">Rápido (1.0x)</option>
-                            <option value="1.15">Muito Rápido (1.15x)</option>
-                        </select>
-                    </div>
-
-                    <div class="controls-row">
-                        <button class="btn btn-success" id="startReadingBtn" onclick="AntiEstresse.startGuidedSession()">
-                            <i class="fas fa-play"></i>
-                            Iniciar Leitura Guiada
-                        </button>
-                        <button class="btn btn-secondary" id="pauseReadingBtn" onclick="AntiEstresse.pauseReading()" disabled>
-                            <i class="fas fa-pause"></i>
-                            Pausar
-                        </button>
-                        <button class="btn btn-secondary" id="stopReadingBtn" onclick="AntiEstresse.stopReading()" disabled>
-                            <i class="fas fa-stop"></i>
-                            Parar
-                        </button>
-                    </div>
-
-                    <div class="status-indicator" id="readingStatus">
-                        <div class="status-dot" id="statusDot"></div>
-                        <span id="statusText">Pronto para começar</span>
-                    </div>
-
-                    <div class="progress-container" id="progressContainer">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill"></div>
+                    <div class="status-item">
+                        <div class="status-icon questions">
+                            <i class="fas fa-question-circle"></i>
                         </div>
-                        <div class="progress-text" id="progressText">0%</div>
+                        <div class="status-label">Questões Offline</div>
+                        <div class="status-value" id="questions-count">0</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon pending">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <div class="status-label">Pendente Sync</div>
+                        <div class="status-value" id="pending-sync">0</div>
                     </div>
                 </div>
 
-                <!-- Card de Música Ambiente -->
-                <div class="quiz-card">
-                    <h2><i class="fas fa-music"></i> Música Ambiente</h2>
-                    <p>Sons relaxantes para concentração e relaxamento</p>
+                <!-- Status Online -->
+                <div style="margin-bottom: 24px;">
+                    <span class="online-badge">
+                        <i class="fas fa-circle"></i>
+                        Online
+                    </span>
+                </div>
 
-                    <div class="sound-grid">
-                        <button class="sound-btn" onclick="MusicManager.toggleSound('rain')" id="rainBtn">
-                            <i class="fas fa-cloud-rain"></i>
-                            <span class="sound-label">Chuva</span>
-                        </button>
-                        <button class="sound-btn" onclick="MusicManager.toggleSound('forest')" id="forestBtn">
-                            <i class="fas fa-tree"></i>
-                            <span class="sound-label">Floresta</span>
-                        </button>
-                        <button class="sound-btn" onclick="MusicManager.toggleSound('waves')" id="wavesBtn">
-                            <i class="fas fa-water"></i>
-                            <span class="sound-label">Ondas</span>
-                        </button>
-                        <button class="sound-btn" onclick="MusicManager.toggleSound('white-noise')" id="whiteNoiseBtn">
-                            <i class="fas fa-wave-square"></i>
-                            <span class="sound-label">Ruído Branco</span>
-                        </button>
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <!-- Conteúdo Baixado -->
+                    <div class="content-section">
+                        <h2><i class="fas fa-check-circle"></i> Conteúdo Baixado</h2>
+                        <div class="content-list" id="downloaded-list">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>Nenhum conteúdo baixado ainda</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="controls-row">
-                        <button class="btn btn-secondary btn-full" onclick="MusicManager.stopAll()">
-                            <i class="fas fa-stop-circle"></i>
-                            Parar Todos os Sons
-                        </button>
-                    </div>
-
-                    <div class="status-indicator" id="musicStatus">
-                        <div class="status-dot" id="musicStatusDot"></div>
-                        <span id="musicStatusText">Silencioso</span>
+                    <!-- Disponível para Download -->
+                    <div class="content-section">
+                        <h2><i class="fas fa-download"></i> Disponível para Download</h2>
+                        <div class="content-list">
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-1" value="anatomia">
+                                <label for="topic-1">Anatomia e Fisiologia</label>
+                                <span class="size">2.5 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-2" value="farmacologia">
+                                <label for="topic-2">Farmacologia</label>
+                                <span class="size">1.8 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-3" value="patologia">
+                                <label for="topic-3">Prevenção e Controle de Infecções</label>
+                                <span class="size">1.2 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-4" value="semiologia">
+                                <label for="topic-4">Semiologia e Semiometria</label>
+                                <span class="size">0.9 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-5" value="saude-publica">
+                                <label for="topic-5">Saúde Pública</label>
+                                <span class="size">1.5 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-6" value="enfermagem-cirurgica">
+                                <label for="topic-6">Enfermagem Cirúrgica</label>
+                                <span class="size">2.1 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-7" value="enfermagem-obstetrica">
+                                <label for="topic-7">Enfermagem Obstétrica</label>
+                                <span class="size">1.9 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                            <div class="content-item">
+                                <input type="checkbox" id="topic-8" value="enfermagem-pediatrica">
+                                <label for="topic-8">Enfermagem Pediátrica</label>
+                                <span class="size">1.7 MB</span>
+                                <i class="fas fa-download download-icon"></i>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-primary" onclick="EstudoOffline.baixarSelecionados()">
+                                <i class="fas fa-download"></i>
+                                Baixar Selecionados
+                            </button>
+                            <button class="btn btn-secondary" onclick="EstudoOffline.selecionarTodos()">
+                                <i class="fas fa-check-square"></i>
+                                Selecionar Tudo
+                            </button>
+                            <button class="btn btn-secondary" onclick="EstudoOffline.desmarcarTodos()">
+                                <i class="fas fa-square"></i>
+                                Desmarcar Tudo
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card de Exercícios de Respiração -->
-                <div class="quiz-card">
-                    <h2><i class="fas fa-wind"></i> Exercícios de Respiração</h2>
-                    <p>Técnica 4-7-8 para relaxamento e controle da ansiedade</p>
-
-                    <div class="timer-display" id="timerDisplay">00:00</div>
-
-                    <div class="breathing-circle" id="breathingCircle">
-                        <span class="breathing-text" id="breathingText">Pronto</span>
-                    </div>
-
-                    <div class="breathing-phases">
-                        <div class="phase-item" id="phaseInhale">
-                            <div class="phase-dot"></div>
-                            <span>Inspirar (4s)</span>
+                <!-- Tips Card -->
+                <div class="tips-card">
+                    <h3><i class="fas fa-lightbulb"></i> Dicas para Estudo Offline</h3>
+                    <div class="tips-list">
+                        <div class="tip-item">
+                            <i class="fas fa-wifi"></i>
+                            <p>Baixe conteúdo quando estiver conectado ao Wi-Fi para economizar seus dados móveis</p>
                         </div>
-                        <div class="phase-item" id="phaseHold">
-                            <div class="phase-dot"></div>
-                            <span>Segurar (7s)</span>
+                        <div class="tip-item">
+                            <i class="fas fa-sync"></i>
+                            <p>Seu progresso será sincronizado automaticamente quando voltar a ter conexão</p>
                         </div>
-                        <div class="phase-item" id="phaseExhale">
-                            <div class="phase-dot"></div>
-                            <span>Expirar (8s)</span>
+                        <div class="tip-item">
+                            <i class="fas fa-update"></i>
+                            <p>Mantenha o aplicativo atualizado para ter acesso aos conteúdos mais recentes</p>
                         </div>
-                    </div>
-
-                    <div class="controls-row">
-                        <button class="btn btn-primary" id="breathingExerciseBtn" onclick="BreathingExercise.toggle()">
-                            <i class="fas fa-play"></i>
-                            Iniciar Exercício
-                        </button>
-                    </div>
-
-                    <div class="status-indicator" id="breathingStatus">
-                        <div class="status-dot" id="breathingStatusDot"></div>
-                        <span id="breathingStatusText">Parado</span>
+                        <div class="tip-item">
+                            <i class="fas fa-subway"></i>
+                            <p>Ideal para estudar no metrô, ônibus ou em qualquer lugar sem internet</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Área de Visualização da Leitura -->
-            <div class="reading-content" id="readingContent" style="display: none;">
-                <h2><i class="fas fa-book-open"></i> Texto para Leitura</h2>
-                <div class="reading-text" id="displayText"></div>
             </div>
         </main>
-    </div>
-
-    <!-- Modo Leitura Overlay -->
-    <div class="reading-mode-overlay" id="readingModeOverlay">
-        <div class="reading-mode-header">
-            <span class="reading-mode-title">Modo Leitura - Foco Total</span>
-            <button class="btn-secondary" onclick="ReadingMode.exit()" style="padding: 10px 20px; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-times"></i>
-                Sair do Modo Leitura
-            </button>
-        </div>
-        <div class="reading-mode-content">
-            <div class="reading-mode-text" id="fullscreenText"></div>
-        </div>
-        <div class="reading-mode-controls" id="readingControls">
-            <button class="reading-mode-btn" onclick="AntiEstresse.pauseReading()" id="overlayPauseBtn">
-                <i class="fas fa-pause"></i>
-            </button>
-            <button class="reading-mode-btn" onclick="AntiEstresse.stopReading()">
-                <i class="fas fa-stop"></i>
-            </button>
-            <button class="reading-mode-btn" onclick="ReadingMode.toggleControls()">
-                <i class="fas fa-cog"></i>
-            </button>
-        </div>
     </div>
 
     <!-- FOOTER -->
     <div id="footer-container"></div>
 
-    <!-- SCRIPT DO COMPONENT LOADER -->
+    <!-- JavaScript dos Componentes (carregados antes do script da página) -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
+
+    <!-- SCRIPT DO ESTUDO OFFLINE -->
     <script>
-        (function() {
-            'use strict';
+    (function() {
+        'use strict';
 
-            // ========================================
-            // CONFIGURAÇÃO DE CAMINHOS
-            // ========================================
-            const Config = {
-                htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
-                components: [
-                    { id: 'accessibility-container', file: 'accessibility.html', name: 'Painel de Acessibilidade' },
-                    { id: 'header-container', file: 'header.html', name: 'Cabeçalho' },
-                    { id: 'footer-container', file: 'footer.html', name: 'Rodapé' }
-                ]
-            };
-
-            // ========================================
-            // CARREGADOR DE COMPONENTES
-            // ========================================
-            const ComponentLoader = {
-                async loadComponent(comp) {
-                    const container = document.getElementById(comp.id);
-                    
-                    if (!container) {
-                        console.error('[ERRO] Container não encontrado: #' + comp.id);
-                        return false;
-                    }
-
-                    const fullPath = Config.htmlPath + comp.file;
-                    console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
-
-                    try {
-                        const response = await fetch(fullPath);
-                        
-                        if (!response.ok) {
-                            throw new Error('HTTP ' + response.status + ': ' + response.statusText);
-                        }
-
-                        const html = await response.text();
-                        
-                        if (!html || html.trim() === '') {
-                            throw new Error('Arquivo vazio');
-                        }
-
-                        container.innerHTML = html;
-                        console.log('[SUCESSO] ' + comp.name + ' carregado');
-                        return true;
-
-                    } catch (error) {
-                        console.error('[ERRO] ' + comp.name + ':', error.message);
-                        return false;
-                    }
+        // ========================================
+        // CONFIGURAÇÃO DE CAMINHOS
+        // ========================================
+        const Config = {
+            // URL base para os arquivos HTML dos componentes
+            htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+            
+            // Componentes a carregar
+            components: [
+                { 
+                    id: 'accessibility-container', 
+                    file: 'accessibility.html',
+                    name: 'Painel de Acessibilidade'
                 },
-
-                async init() {
-                    console.log('========================================');
-                    console.log('CARREGANDO COMPONENTES');
-                    console.log('========================================');
-                    
-                    for (const comp of Config.components) {
-                        await this.loadComponent(comp);
-                    }
-
-                    console.log('========================================');
-                    console.log('[OK] Componentes carregados!');
-                    console.log('========================================');
+                { 
+                    id: 'header-container', 
+                    file: 'header.html',
+                    name: 'Cabeçalho'
+                },
+                { 
+                    id: 'footer-container', 
+                    file: 'footer.html',
+                    name: 'Rodapé'
                 }
-            };
+            ]
+        };
 
-            // ========================================
-            // MUSIC MANAGER
-            // ========================================
-            const MusicManager = {
-                activeSounds: {},
-                audioContext: null,
-                masterGain: null,
-                isInitialized: false,
-
-                init() {
-                    if (this.isInitialized) return;
-                    try {
-                        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                        this.masterGain = this.audioContext.createGain();
-                        this.masterGain.gain.value = 0.5;
-                        this.masterGain.connect(this.audioContext.destination);
-                        this.isInitialized = true;
-                        console.log('[MusicManager] Inicializado');
-                    } catch (e) {
-                        console.error('[MusicManager] Áudio não suportado:', e);
-                    }
-                },
-
-                createNoiseBuffer() {
-                    if (!this.audioContext) return null;
-                    const bufferSize = this.audioContext.sampleRate * 2;
-                    const buffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
-                    const output = buffer.getChannelData(0);
-                    for (let i = 0; i < bufferSize; i++) {
-                        output[i] = Math.random() * 2 - 1;
-                    }
-                    return buffer;
-                },
-
-                toggleSound(soundType) {
-                    this.init();
-                    const btn = document.getElementById(soundType + 'Btn');
-                    const isActive = this.activeSounds[soundType];
-
-                    if (isActive) {
-                        this.stopSound(soundType);
-                        btn.classList.remove('active');
-                    } else {
-                        this.startSound(soundType);
-                        btn.classList.add('active');
-                    }
-                    this.updateStatus();
-                },
-
-                startSound(soundType) {
-                    if (!this.audioContext) return;
-                    if (this.audioContext.state === 'suspended') {
-                        this.audioContext.resume();
-                    }
-                    switch(soundType) {
-                        case 'rain': this.activeSounds.rain = this.createRainSound(); break;
-                        case 'forest': this.activeSounds.forest = this.createForestSound(); break;
-                        case 'waves': this.activeSounds.waves = this.createWavesSound(); break;
-                        case 'white-noise': this.activeSounds['white-noise'] = this.createWhiteNoise(); break;
-                    }
-                },
-
-                createRainSound() {
-                    if (!this.audioContext) return null;
-                    const bufferSize = this.audioContext.sampleRate * 2;
-                    const buffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
-                    const output = buffer.getChannelData(0);
-                    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        const white = Math.random() * 2 - 1;
-                        b0 = 0.99886 * b0 + white * 0.0555179;
-                        b1 = 0.99332 * b1 + white * 0.0750759;
-                        b2 = 0.96900 * b2 + white * 0.1538520;
-                        b3 = 0.86650 * b3 + white * 0.3104856;
-                        b4 = 0.55000 * b4 + white * 0.5329522;
-                        b5 = -0.7616 * b5 - white * 0.0168980;
-                        output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
-                        b6 = white * 0.115926;
-                    }
-                    const noise = this.audioContext.createBufferSource();
-                    noise.buffer = buffer;
-                    noise.loop = true;
-                    const filter = this.audioContext.createBiquadFilter();
-                    filter.type = 'lowpass';
-                    filter.frequency.value = 2000;
-                    const gain = this.audioContext.createGain();
-                    gain.gain.value = 0.15;
-                    const lfo = this.audioContext.createOscillator();
-                    const lfoGain = this.audioContext.createGain();
-                    lfo.frequency.value = 0.2;
-                    lfoGain.gain.value = 0.02;
-                    lfo.connect(lfoGain);
-                    lfoGain.connect(gain.gain);
-                    noise.connect(filter);
-                    filter.connect(gain);
-                    gain.connect(this.masterGain);
-                    noise.start();
-                    lfo.start();
-                    return { source: noise, lfo: lfo, gain: gain };
-                },
-
-                createForestSound() {
-                    if (!this.audioContext) return null;
-                    const sounds = [];
-                    const buffer = this.createNoiseBuffer();
-                    const windSource = this.audioContext.createBufferSource();
-                    windSource.buffer = buffer;
-                    windSource.loop = true;
-                    const windFilter = this.audioContext.createBiquadFilter();
-                    windFilter.type = 'bandpass';
-                    windFilter.frequency.value = 400;
-                    windFilter.Q.value = 0.5;
-                    const windGain = this.audioContext.createGain();
-                    windGain.gain.value = 0.05;
-                    const windLfo = this.audioContext.createOscillator();
-                    const windLfoGain = this.audioContext.createGain();
-                    windLfo.frequency.value = 0.1;
-                    windLfoGain.gain.value = 100;
-                    windLfo.connect(windLfoGain);
-                    windLfoGain.connect(windFilter.frequency);
-                    windSource.connect(windFilter);
-                    windFilter.connect(windGain);
-                    windGain.connect(this.masterGain);
-                    windSource.start();
-                    windLfo.start();
-                    sounds.push({ source: windSource, lfo: windLfo });
-                    return { sounds, stop: function() { sounds.forEach(function(s) { try { s.source.stop(); s.lfo.stop(); } catch(e) {} }); } };
-                },
-
-                createWavesSound() {
-                    if (!this.audioContext) return null;
-                    const buffer = this.createNoiseBuffer();
-                    const waveSource = this.audioContext.createBufferSource();
-                    waveSource.buffer = buffer;
-                    waveSource.loop = true;
-                    const lowpass = this.audioContext.createBiquadFilter();
-                    lowpass.type = 'lowpass';
-                    lowpass.frequency.value = 800;
-                    const waveGain = this.audioContext.createGain();
-                    waveGain.gain.value = 0.12;
-                    const lfo = this.audioContext.createOscillator();
-                    const lfoGain = this.audioContext.createGain();
-                    lfo.frequency.value = 0.1;
-                    lfoGain.gain.value = 300;
-                    lfo.connect(lfoGain);
-                    lfoGain.connect(lowpass.frequency);
-                    const volLfo = this.audioContext.createOscillator();
-                    const volLfoGain = this.audioContext.createGain();
-                    volLfo.frequency.value = 0.1;
-                    volLfoGain.gain.value = 0.08;
-                    volLfo.connect(volLfoGain);
-                    volLfoGain.connect(waveGain.gain);
-                    waveSource.connect(lowpass);
-                    lowpass.connect(waveGain);
-                    waveGain.connect(this.masterGain);
-                    waveSource.start();
-                    lfo.start();
-                    volLfo.start();
-                    return { source: waveSource, lfos: [lfo, volLfo], gain: waveGain };
-                },
-
-                createWhiteNoise() {
-                    if (!this.audioContext) return null;
-                    const buffer = this.createNoiseBuffer();
-                    const source = this.audioContext.createBufferSource();
-                    source.buffer = buffer;
-                    source.loop = true;
-                    const gain = this.audioContext.createGain();
-                    gain.gain.value = 0.03;
-                    const filter = this.audioContext.createBiquadFilter();
-                    filter.type = 'lowpass';
-                    filter.frequency.value = 8000;
-                    source.connect(filter);
-                    filter.connect(gain);
-                    gain.connect(this.masterGain);
-                    source.start();
-                    return { source: source, gain: gain };
-                },
-
-                stopSound(soundType) {
-                    if (this.activeSounds[soundType]) {
-                        const sound = this.activeSounds[soundType];
-                        if (sound.source) { try { sound.source.stop(); } catch(e) {} }
-                        if (sound.lfo) { try { sound.lfo.stop(); } catch(e) {} }
-                        if (sound.lfos) { sound.lfos.forEach(function(lfo) { try { lfo.stop(); } catch(e) {} }); }
-                        if (sound.stop) { sound.stop(); }
-                        if (sound.sounds) { sound.sounds.forEach(function(s) { try { s.source.stop(); s.lfo.stop(); } catch(e) {} }); }
-                        delete this.activeSounds[soundType];
-                    }
-                },
-
-                stopAll() {
-                    var self = this;
-                    Object.keys(this.activeSounds).forEach(function(soundType) {
-                        self.stopSound(soundType);
-                    });
-                    document.querySelectorAll('.sound-btn').forEach(function(btn) {
-                        btn.classList.remove('active');
-                    });
-                    this.updateStatus();
-                },
-
-                updateStatus() {
-                    var activeCount = Object.keys(this.activeSounds).length;
-                    var dot = document.getElementById('musicStatusDot');
-                    var text = document.getElementById('musicStatusText');
-                    if (activeCount > 0) {
-                        dot.className = 'status-dot active';
-                        text.textContent = activeCount + ' som(is) ativo(s)';
-                    } else {
-                        dot.className = 'status-dot';
-                        text.textContent = 'Silencioso';
-                    }
+        // ========================================
+        // CARREGADOR DE COMPONENTES
+        // ========================================
+        const ComponentLoader = {
+            async loadComponent(comp) {
+                const container = document.getElementById(comp.id);
+                
+                if (!container) {
+                    console.error('[ERRO] Container não encontrado: #' + comp.id);
+                    return false;
                 }
-            };
 
-            // ========================================
-            // ANTI-ESTRESS MANAGER
-            // ========================================
-            const AntiEstresse = {
-                isReading: false,
-                isPaused: false,
-                utterance: null,
-                voices: [],
-                currentWordIndex: 0,
-                words: [],
-                readingModeActive: false,
+                const fullPath = Config.htmlPath + comp.file;
+                console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
 
-                init() {
-                    if ('speechSynthesis' in window) {
-                        this.loadVoices();
-                        if (speechSynthesis.onvoiceschanged !== undefined) {
-                            speechSynthesis.onvoiceschanged = function() { self.loadVoices(); };
-                        }
-                        console.log('[AntiEstresse] Inicializado');
+                try {
+                    const response = await fetch(fullPath);
+                    
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status + ': ' + response.statusText);
                     }
-                },
 
-                loadVoices() {
+                    const html = await response.text();
+                    
+                    if (!html || html.trim() === '') {
+                        throw new Error('Arquivo vazio');
+                    }
+
+                    container.innerHTML = html;
+                    console.log('[SUCESSO] ' + comp.name + ' carregado');
+                    return true;
+
+                } catch (error) {
+                    console.error('[ERRO] ' + comp.name + ':', error.message);
+                    
+                    container.innerHTML = '<div class="component-error">' +
+                        '<h4>⚠️ Erro ao carregar: ' + comp.name + '</h4>' +
+                        '<p><strong>Arquivo:</strong> ' + comp.file + '</p>' +
+                        '<p><strong>Caminho:</strong> <code>' + fullPath + '</code></p>' +
+                        '<p><strong>Erro:</strong> ' + error.message + '</p>' +
+                        '<p style="font-size: 12px; color: #666; margin-top: 10px;">' +
+                        'Verifique se os arquivos estão na pasta correta.</p>' +
+                        '</div>';
+                    
+                    return false;
+                }
+            },
+
+            async init() {
+                console.log('========================================');
+                console.log('CARREGANDO COMPONENTES - ESTUDO OFFLINE');
+                console.log('========================================');
+                
+                let allLoaded = true;
+                
+                for (const comp of Config.components) {
+                    const success = await this.loadComponent(comp);
+                    if (!success) allLoaded = false;
+                }
+
+                console.log('========================================');
+                
+                if (allLoaded) {
+                    console.log('[OK] Todos os componentes carregados!');
+                } else {
+                    console.log('[AVISO] Alguns componentes não carregaram.');
+                }
+                console.log('========================================');
+
+                // Disparar evento de componentes carregados
+                document.dispatchEvent(new CustomEvent('headerComponentsLoaded', {
+                    bubbles: true,
+                    cancelable: true
+                }));
+
+                // Inicializar Estudo Offline
+                EstudoOffline.init();
+            }
+        };
+
+        /**
+         * EstudoOffline - Gerencia o conteúdo offline
+         */
+        const EstudoOffline = {
+            topicNames: {
+                'anatomia': 'Anatomia e Fisiologia',
+                'farmacologia': 'Farmacologia',
+                'patologia': 'Prevenção e Controle de Infecções',
+                'semiologia': 'Semiologia e Semiometria',
+                'saude-publica': 'Saúde Pública',
+                'enfermagem-cirurgica': 'Enfermagem Cirúrgica',
+                'enfermagem-obstetrica': 'Enfermagem Obstétrica',
+                'enfermagem-pediatrica': 'Enfermagem Pediátrica'
+            },
+            topicSizes: {
+                'anatomia': '2.5 MB',
+                'farmacologia': '1.8 MB',
+                'patologia': '1.2 MB',
+                'semiologia': '0.9 MB',
+                'saude-publica': '1.5 MB',
+                'enfermagem-cirurgica': '2.1 MB',
+                'enfermagem-obstetrica': '1.9 MB',
+                'enfermagem-pediatrica': '1.7 MB'
+            },
+
+            init: function() {
+                console.log('[EstudoOffline] Inicializando...');
+                this.carregarEstatisticas();
+                this.esconderLoader();
+            },
+
+            baixarSelecionados: function() {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                
+                if (checkboxes.length === 0) {
+                    alert('Por favor, selecione pelo menos um tópico para baixar.');
+                    return;
+                }
+                
+                const topicos = Array.from(checkboxes).map(function(cb) { return cb.value; });
+                const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
+                const novos = topicos.filter(function(t) { return downloaded.indexOf(t) === -1; });
+                
+                if (novos.length > 0) {
+                    localStorage.setItem('offline_downloaded', JSON.stringify(downloaded.concat(novos)));
+                    
+                    // Uncheck all
+                    checkboxes.forEach(function(cb) { cb.checked = false; });
+                    
+                    this.carregarEstatisticas();
+                    
+                    // Show success message
+                    const downloadedCount = novos.length;
+                    alert(downloadedCount + ' tópico(s) baixado(s) com sucesso! Você já pode estudar offline.');
+                } else {
+                    alert('Os tópicos selecionados já foram baixados anteriormente.');
+                }
+            },
+
+            selecionarTodos: function() {
+                const checkboxes = document.querySelectorAll('.content-section:nth-child(2) input[type="checkbox"]');
+                checkboxes.forEach(function(cb) { cb.checked = true; });
+            },
+
+            desmarcarTodos: function() {
+                const checkboxes = document.querySelectorAll('.content-section:nth-child(2) input[type="checkbox"]');
+                checkboxes.forEach(function(cb) { cb.checked = false; });
+            },
+
+            remover: function(topico) {
+                if (!confirm('Tem certeza que deseja remover "' + (this.topicNames[topico] || topico) + '" do seu armazenamento offline?')) {
+                    return;
+                }
+                
+                const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
+                const novos = downloaded.filter(function(t) { return t !== topico; });
+                localStorage.setItem('offline_downloaded', JSON.stringify(novos));
+                this.carregarEstatisticas();
+            },
+
+            carregarEstatisticas: function() {
+                const downloaded = JSON.parse(localStorage.getItem('offline_downloaded') || '[]');
+                const topicsCount = downloaded.length;
+                const questionsCount = topicsCount * 50;
+                const storageUsed = (topicsCount * 1.5).toFixed(1);
+                
+                // Update status bar
+                document.getElementById('storage-used').textContent = storageUsed + ' MB';
+                document.getElementById('topics-count').textContent = topicsCount;
+                document.getElementById('questions-count').textContent = questionsCount;
+                
+                // Calculate pending sync (questions answered offline)
+                const offlineAnswers = JSON.parse(localStorage.getItem('offline_answers') || '[]');
+                document.getElementById('pending-sync').textContent = offlineAnswers.length;
+                
+                // Update downloaded list
+                const downloadedList = document.getElementById('downloaded-list');
+                
+                if (downloaded.length === 0) {
+                    downloadedList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum conteúdo baixado ainda</p></div>';
+                } else {
                     var self = this;
-                    this.voices = speechSynthesis.getVoices();
-                    var portugueseVoices = this.voices.filter(function(v) { return v.lang.startsWith('pt'); });
-
-                    if (portugueseVoices.length > 0) {
-                        var preferred = portugueseVoices.find(function(v) {
-                            return v.name.toLowerCase().includes('marcela') ||
-                                   v.name.toLowerCase().includes('female') ||
-                                   v.name.toLowerCase().includes('woman');
-                        }) || portugueseVoices[0];
-
-                        document.getElementById('voiceName').textContent = preferred.name;
-                        document.getElementById('voiceLang').textContent = preferred.lang;
-                    } else {
-                        document.getElementById('voiceName').textContent = 'Voz Padrão';
-                        document.getElementById('voiceLang').textContent = this.voices[0] ? this.voices[0].lang : 'pt-BR';
-                    }
-                },
-
-                startGuidedSession() {
-                    var text = document.getElementById('readingText').value.trim();
-                    if (!text) {
-                        alert('Por favor, digite ou cole um texto para leitura.');
-                        return;
-                    }
-
-                    MusicManager.init();
-                    if (MusicManager.audioContext && MusicManager.audioContext.state === 'running') {
-                        if (MusicManager.masterGain) {
-                            MusicManager.masterGain.gain.setValueAtTime(0.3, MusicManager.audioContext.currentTime);
-                        }
-                    }
-
-                    this.isReading = true;
-                    this.isPaused = false;
-                    this.words = text.split(/\s+/);
-
-                    document.getElementById('startReadingBtn').disabled = true;
-                    document.getElementById('pauseReadingBtn').disabled = false;
-                    document.getElementById('stopReadingBtn').disabled = false;
-                    document.getElementById('progressContainer').style.display = 'block';
-                    document.getElementById('statusDot').className = 'status-dot active';
-                    document.getElementById('statusText').textContent = 'Lendo...';
-
-                    var self = this;
-                    document.getElementById('displayText').innerHTML = this.words.map(function(word, i) {
-                        return '<span id="word-' + i + '" class="highlight">' + word + '</span>';
-                    }).join(' ');
-                    document.getElementById('readingContent').style.display = 'block';
-
-                    document.getElementById('fullscreenText').innerHTML = text.split('\n').map(function(p) {
-                        return '<p>' + p + '</p>';
+                    downloadedList.innerHTML = downloaded.map(function(t) {
+                        return '<div class="content-item">' +
+                            '<i class="fas fa-check-circle check-icon"></i>' +
+                            '<label>' + (self.topicNames[t] || t) + '</label>' +
+                            '<span class="size">' + (self.topicSizes[t] || '1.5 MB') + '</span>' +
+                            '<button class="remove-btn" onclick="EstudoOffline.remover(\'' + t + '\')">' +
+                            '<i class="fas fa-trash"></i>Remover</button></div>';
                     }).join('');
-
-                    ReadingMode.enter();
-                    this.speakWord(0);
-                },
-
-                speakWord(index) {
-                    var self = this;
-                    if (!this.isReading || index >= this.words.length) {
-                        this.finishReading();
-                        return;
-                    }
-
-                    document.querySelectorAll('.reading-text .highlight').forEach(function(el) {
-                        el.style.background = 'transparent';
-                    });
-
-                    var currentWordEl = document.getElementById('word-' + index);
-                    if (currentWordEl) {
-                        currentWordEl.style.background = 'linear-gradient(180deg, transparent 60%, rgba(0, 188, 212, 0.3) 60%)';
-                        currentWordEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-
-                    var progress = ((index + 1) / this.words.length) * 100;
-                    document.getElementById('progressFill').style.width = progress + '%';
-                    document.getElementById('progressText').textContent = Math.round(progress) + '%';
-
-                    this.currentWordIndex = index;
-
-                    var text = this.words.slice(index).join(' ');
-                    var rate = parseFloat(document.getElementById('speechRate').value);
-
-                    this.utterance = new SpeechSynthesisUtterance(text);
-                    this.utterance.lang = 'pt-BR';
-                    this.utterance.rate = rate;
-                    this.utterance.pitch = 1;
-
-                    var portugueseVoice = this.voices.find(function(v) { return v.lang.startsWith('pt'); });
-                    if (portugueseVoice) {
-                        this.utterance.voice = portugueseVoice;
-                    }
-
-                    this.utterance.onend = function() {
-                        if (self.isReading && !self.isPaused) {
-                            var remainingText = self.words.slice(index).join(' ');
-                            if (remainingText.includes('.') || remainingText.includes('!') || remainingText.includes('?')) {
-                                setTimeout(function() { self.speakWord(index + 10); }, 300);
-                            } else {
-                                self.speakWord(index + 5);
-                            }
-                        }
-                    };
-
-                    this.utterance.onerror = function(e) {
-                        console.error('[AntiEstresse] Erro na síntese:', e);
-                        if (e.error !== 'interrupted') {
-                            self.speakWord(index + 5);
-                        }
-                    };
-
-                    speechSynthesis.speak(this.utterance);
-                },
-
-                pauseReading() {
-                    if (this.isReading) {
-                        if (this.isPaused) {
-                            speechSynthesis.resume();
-                            this.isPaused = false;
-                            document.getElementById('pauseReadingBtn').innerHTML = '<i class="fas fa-pause"></i> Pausar';
-                            document.getElementById('statusText').textContent = 'Lendo...';
-                            document.getElementById('overlayPauseBtn').classList.add('playing');
-                            if (MusicManager.masterGain) {
-                                MusicManager.masterGain.gain.setValueAtTime(0.3, MusicManager.audioContext.currentTime);
-                            }
-                        } else {
-                            speechSynthesis.pause();
-                            this.isPaused = true;
-                            document.getElementById('pauseReadingBtn').innerHTML = '<i class="fas fa-play"></i> Continuar';
-                            document.getElementById('statusText').textContent = 'Pausado';
-                            document.getElementById('overlayPauseBtn').classList.remove('playing');
-                            if (MusicManager.masterGain) {
-                                MusicManager.masterGain.gain.setValueAtTime(0.5, MusicManager.audioContext.currentTime);
-                            }
-                        }
-                    }
-                },
-
-                stopReading() {
-                    this.isReading = false;
-                    this.isPaused = false;
-                    speechSynthesis.cancel();
-
-                    if (MusicManager.masterGain) {
-                        MusicManager.masterGain.gain.setValueAtTime(0.5, MusicManager.audioContext.currentTime);
-                    }
-
-                    document.getElementById('startReadingBtn').disabled = false;
-                    document.getElementById('pauseReadingBtn').disabled = true;
-                    document.getElementById('stopReadingBtn').disabled = true;
-                    document.getElementById('pauseReadingBtn').innerHTML = '<i class="fas fa-pause"></i> Pausar';
-                    document.getElementById('statusDot').className = 'status-dot';
-                    document.getElementById('statusText').textContent = 'Pronto para começar';
-                    document.getElementById('overlayPauseBtn').classList.remove('playing');
-
-                    document.querySelectorAll('.reading-text .highlight').forEach(function(el) {
-                        el.style.background = 'transparent';
-                    });
-
-                    ReadingMode.exit();
-                },
-
-                finishReading() {
-                    this.isReading = false;
-                    document.getElementById('statusDot').className = 'status-dot';
-                    document.getElementById('statusText').textContent = 'Leitura concluída!';
-                    document.getElementById('startReadingBtn').disabled = false;
-                    document.getElementById('pauseReadingBtn').disabled = true;
-                    document.getElementById('stopReadingBtn').disabled = true;
-                    document.getElementById('overlayPauseBtn').classList.remove('playing');
-
-                    if (MusicManager.masterGain) {
-                        MusicManager.masterGain.gain.setValueAtTime(0.5, MusicManager.audioContext.currentTime);
-                    }
-
-                    setTimeout(function() {
-                        document.getElementById('statusText').textContent = 'Pronto para começar';
-                    }, 3000);
                 }
-            };
+            },
 
-            // ========================================
-            // READING MODE
-            // ========================================
-            const ReadingMode = {
-                isActive: false,
-                controlsTimeout: null,
-
-                enter() {
-                    this.isActive = true;
-                    document.getElementById('readingModeOverlay').classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    this.showControls();
-                },
-
-                exit() {
-                    this.isActive = false;
-                    document.getElementById('readingModeOverlay').classList.remove('active');
-                    document.body.style.overflow = '';
-                    if (this.controlsTimeout) {
-                        clearTimeout(this.controlsTimeout);
-                    }
-                },
-
-                toggleControls() {
-                    var controls = document.getElementById('readingControls');
-                    if (controls.classList.contains('visible')) {
-                        controls.classList.remove('visible');
-                    } else {
-                        this.showControls();
-                    }
-                },
-
-                showControls() {
-                    var controls = document.getElementById('readingControls');
-                    controls.classList.add('visible');
-                    if (this.controlsTimeout) {
-                        clearTimeout(this.controlsTimeout);
-                    }
-                    this.controlsTimeout = setTimeout(function() {
-                        if (!AntiEstresse.isPaused) {
-                            controls.classList.remove('visible');
-                        }
-                    }, 3000);
-                }
-            };
-
-            // ========================================
-            // BREATHING EXERCISE
-            // ========================================
-            const BreathingExercise = {
-                isActive: false,
-                interval: null,
-                startTime: null,
-                currentPhase: 0,
-                phaseStartTime: null,
-
-                toggle() {
-                    if (this.isActive) {
-                        this.stop();
-                    } else {
-                        this.start();
-                    }
-                },
-
-                start() {
-                    this.isActive = true;
-                    this.startTime = Date.now();
-                    this.currentPhase = 0;
-                    this.phaseStartTime = Date.now();
-
-                    document.getElementById('breathingCircle').classList.add('breathing');
-                    document.getElementById('breathingExerciseBtn').innerHTML = '<i class="fas fa-stop"></i> Parar Exercício';
-                    document.getElementById('breathingExerciseBtn').classList.remove('btn-primary');
-                    document.getElementById('breathingExerciseBtn').classList.add('btn-secondary');
-                    document.getElementById('breathingStatusDot').className = 'status-dot active';
-                    document.getElementById('breathingStatusText').textContent = 'Exercício ativo';
-
-                    this.runPhase();
-                },
-
-                runPhase() {
-                    var self = this;
-                    if (!this.isActive) return;
-
-                    var now = Date.now();
-                    var phaseElapsed = (now - this.phaseStartTime) / 1000;
-
-                    var phases = [
-                        { name: 'inhale', duration: 4, text: 'Inspire...', scale: 1.3 },
-                        { name: 'hold', duration: 7, text: 'Segure...', scale: 1.3 },
-                        { name: 'exhale', duration: 8, text: 'Expire...', scale: 1 }
-                    ];
-
-                    var currentPhaseData = phases[this.currentPhase];
-
-                    document.querySelectorAll('.phase-item').forEach(function(el, i) {
-                        el.classList.toggle('active', i === self.currentPhase);
-                    });
-
-                    if (phaseElapsed >= currentPhaseData.duration) {
-                        this.currentPhase = (this.currentPhase + 1) % phases.length;
-                        this.phaseStartTime = now;
-                        currentPhaseData = phases[this.currentPhase];
-                    }
-
-                    document.getElementById('breathingText').textContent = currentPhaseData.text;
-
-                    this.updateTimer();
-                    this.interval = requestAnimationFrame(function() { self.runPhase(); });
-                },
-
-                updateTimer() {
-                    var elapsed = Math.floor((Date.now() - this.startTime) / 1000);
-                    var minutes = Math.floor(elapsed / 60);
-                    var seconds = elapsed % 60;
-                    document.getElementById('timerDisplay').textContent =
-                        minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-                },
-
-                stop() {
-                    this.isActive = false;
-                    if (this.interval) {
-                        cancelAnimationFrame(this.interval);
-                    }
-
-                    document.getElementById('breathingCircle').classList.remove('breathing');
-                    document.getElementById('breathingText').textContent = 'Pronto';
-                    document.getElementById('breathingExerciseBtn').innerHTML = '<i class="fas fa-play"></i> Iniciar Exercício';
-                    document.getElementById('breathingExerciseBtn').classList.add('btn-primary');
-                    document.getElementById('breathingExerciseBtn').classList.remove('btn-secondary');
-                    document.getElementById('breathingStatusDot').className = 'status-dot';
-                    document.getElementById('breathingStatusText').textContent = 'Parado';
-                    document.querySelectorAll('.phase-item').forEach(function(el) { el.classList.remove('active'); });
-                }
-            };
-
-            // ========================================
-            // INICIALIZAÇÃO
-            // ========================================
-            function init() {
-                AntiEstresse.init();
-
-                var textValue = document.getElementById('readingText').value;
-                document.getElementById('displayText').innerHTML = textValue.split(/\s+/).map(function(word, i) {
-                    return '<span id="word-' + i + '" class="highlight">' + word + '</span>';
-                }).join(' ');
-
+            esconderLoader: function() {
                 setTimeout(function() {
                     var loader = document.getElementById('loader-global');
                     if (loader) {
                         loader.classList.add('hidden');
                         setTimeout(function() { loader.style.display = 'none'; }, 500);
                     }
-                }, 500);
-
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', function() {
-                        ComponentLoader.init().then(function() {
-                            AntiEstresse.init();
-                        });
-                    });
-                } else {
-                    ComponentLoader.init().then(function() {
-                        AntiEstresse.init();
-                    });
-                }
+                }, 800);
             }
+        };
 
-            init();
+        // Expor para uso global
+        window.EstudoOffline = EstudoOffline;
 
-        })();
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        function init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ComponentLoader.init();
+                });
+            } else {
+                ComponentLoader.init();
+            }
+        }
+
+        init();
+
+    })();
     </script>
-    
-    <!-- JavaScript dos Componentes -->
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
-    
-    <!-- Scripts Locais -->
-    <script src="js/utils.js"></script>
-    <script src="js/navigation.js"></script>
-    <script src="js/icons.js"></script>
 </body>
 </html>
