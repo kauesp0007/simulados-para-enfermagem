@@ -1,0 +1,736 @@
+<!-- ============================================
+     MODALS - ESTRUTURA MODULAR HTML
+     ============================================ -->
+
+<!-- MODAL: NOVA/EDITAR PROVA -->
+<div id="modal-prova" class="modal-overlay">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <div>
+                <h2><i class="fas fa-file-alt"></i> <span id="modal-prova-title">Nova Prova</span></h2>
+                <p class="modal-subtitle">Preencha as informações da prova</p>
+            </div>
+            <button class="modal-close" onclick="closeModal('prova')" aria-label="Fechar modal">&times;</button>
+        </div>
+
+        <div class="modal-tabs">
+            <button class="tab-btn active" onclick="switchTab('prova', 'basico')">
+                <i class="fas fa-info-circle"></i> Básico
+            </button>
+            <button class="tab-btn" onclick="switchTab('prova', 'arquivos')">
+                <i class="fas fa-file-pdf"></i> Arquivos
+            </button>
+            <button class="tab-btn" onclick="switchTab('prova', 'meta')">
+                <i class="fas fa-tags"></i> Metadados
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form id="form-prova">
+                <!-- ABA 1: BÁSICO -->
+                <div id="prova-basico" class="tab-content active">
+                    <div class="form-group">
+                        <label for="prova-titulo"><span class="required">*</span> Título</label>
+                        <input type="text" id="prova-titulo" name="titulo" placeholder="Ex: ENEM 2023" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-descricao">Descrição</label>
+                        <textarea id="prova-descricao" name="descricao" placeholder="Descrição da prova..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-tipo">Tipo de Prova</label>
+                        <select id="prova-tipo" name="tipo">
+                            <option value="">Selecione...</option>
+                            <option value="completa">Prova Completa</option>
+                            <option value="simulado">Simulado</option>
+                            <option value="questoes">Questões Avulsas</option>
+                            <option value="revisao">Revisão</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-banca">Banca Examinadora</label>
+                        <input type="text" id="prova-banca" name="banca" placeholder="Ex: CESPE, FCC, VUNESP">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-ano">Ano</label>
+                        <input type="number" id="prova-ano" name="ano" placeholder="2026" min="2000" max="2100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-tempo">Tempo Limite (minutos)</label>
+                        <input type="number" id="prova-tempo" name="tempo" placeholder="0" min="0" step="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-numeracao">Estilo de Numeração</label>
+                        <select id="prova-numeracao" name="numeracao">
+                            <option value="abc">A, B, C, D</option>
+                            <option value="abce">A, B, C, D, E</option>
+                            <option value="123">1, 2, 3, 4</option>
+                            <option value="1234">1, 2, 3, 4, 5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-thumbnail">URL da Thumbnail</label>
+                        <input type="url" id="prova-thumbnail" name="thumbnail" placeholder="https://...">
+                    </div>
+                </div>
+
+                <!-- ABA 2: ARQUIVOS -->
+                <div id="prova-arquivos" class="tab-content">
+                    <div class="form-group">
+                        <label for="prova-link-prova">Link da Prova</label>
+                        <input type="url" id="prova-link-prova" name="linkProva" placeholder="https://...">
+                        <small>PDF ou documento da prova completa</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-link-gabarito">Link do Gabarito</label>
+                        <input type="url" id="prova-link-gabarito" name="linkGabarito" placeholder="https://...">
+                        <small>Gabarito oficial ou comentado</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-link-resolucao">Link da Resolução</label>
+                        <input type="url" id="prova-link-resolucao" name="linkResolucao" placeholder="https://...">
+                        <small>Resolução comentada das questões</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-link-comentario">Link do Comentário</label>
+                        <input type="url" id="prova-link-comentario" name="linkComentario" placeholder="https://...">
+                        <small>Vídeo ou artigo com comentários</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-link-externo">Link Externo</label>
+                        <input type="url" id="prova-link-externo" name="linkExterno" placeholder="https://...">
+                        <small>Link para fonte ou referência externa</small>
+                    </div>
+                </div>
+
+                <!-- ABA 3: METADADOS -->
+                <div id="prova-meta" class="tab-content">
+                    <div class="form-group">
+                        <label for="prova-tags"><i class="fas fa-tags"></i> Tags</label>
+                        <input type="text" id="prova-tags" name="tags" placeholder="Ex: enfermagem, concurso, ENEM">
+                        <small>Separadas por vírgula</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-autor">Autor/Criador</label>
+                        <input type="text" id="prova-autor" name="autor" placeholder="Ex: João Silva">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-versao">Versão</label>
+                        <input type="text" id="prova-versao" name="versao" placeholder="1.0" value="1.0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-palavras">Palavras-chave</label>
+                        <input type="text" id="prova-palavras" name="palavrasChave" placeholder="Ex: semiologia, diagnóstico">
+                        <small>Separadas por vírgula</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-referencias">Referências Bibliográficas</label>
+                        <textarea id="prova-referencias" name="referencias" placeholder="Lista de referências..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-observacoes">Observações/Notas</label>
+                        <textarea id="prova-observacoes" name="observacoes" placeholder="Anotações adicionais..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prova-data-pub">Data de Publicação</label>
+                        <input type="date" id="prova-data-pub" name="dataPub">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('prova')">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+            <button class="btn btn-primary" onclick="salvarProva()">
+                <i class="fas fa-check"></i> Salvar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: NOVO/EDITAR CONCURSO -->
+<div id="modal-concurso" class="modal-overlay">
+    <div class="modal modal-xl">
+        <div class="modal-header">
+            <div>
+                <h2><i class="fas fa-building-columns"></i> <span id="modal-concurso-title">Novo Concurso</span></h2>
+                <p class="modal-subtitle">Preencha todas as informações do concurso</p>
+            </div>
+            <button class="modal-close" onclick="closeModal('concurso')" aria-label="Fechar modal">&times;</button>
+        </div>
+
+        <div class="modal-tabs">
+            <button class="tab-btn active" onclick="switchTab('concurso', 'basico')">
+                <i class="fas fa-info-circle"></i> Básico
+            </button>
+            <button class="tab-btn" onclick="switchTab('concurso', 'fases')">
+                <i class="fas fa-tasks"></i> Fases <span class="tab-badge" id="badge-fases">0</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('concurso', 'materiais')">
+                <i class="fas fa-briefcase"></i> Materiais
+            </button>
+            <button class="tab-btn" onclick="switchTab('concurso', 'arquivos')">
+                <i class="fas fa-file-pdf"></i> Arquivos
+            </button>
+            <button class="tab-btn" onclick="switchTab('concurso', 'meta')">
+                <i class="fas fa-tags"></i> Metadados
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form id="form-concurso">
+                <!-- ABA 1: BÁSICO -->
+                <div id="concurso-basico" class="tab-content active">
+                    <div class="form-group">
+                        <label for="concurso-nome"><span class="required">*</span> Nome do Concurso</label>
+                        <input type="text" id="concurso-nome" name="nome" placeholder="Ex: Concurso Prefeitura SP" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-instituicao"><span class="required">*</span> Instituição</label>
+                        <input type="text" id="concurso-instituicao" name="instituicao" placeholder="Ex: Prefeitura de São Paulo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-banca">Banca Examinadora</label>
+                        <input type="text" id="concurso-banca" name="banca" placeholder="Ex: CESPE, FCC, VUNESP">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-site">Site do Concurso</label>
+                        <input type="url" id="concurso-site" name="site" placeholder="https://...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-estado"><span class="required">*</span> Estado</label>
+                        <select id="concurso-estado" name="estado" required>
+                            <option value="">Selecione o estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-cidade">Cidade</label>
+                        <input type="text" id="concurso-cidade" name="cidade" placeholder="Ex: São Paulo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-data-prova"><span class="required">*</span> Data da Prova</label>
+                        <input type="date" id="concurso-data-prova" name="dataProva" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-horario">Horário de Entrada</label>
+                        <input type="time" id="concurso-horario" name="horario">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-local">Local da Prova</label>
+                        <input type="text" id="concurso-local" name="local" placeholder="Ex: Av. Paulista, 1000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-prazo">Prazo Final de Entrada</label>
+                        <input type="date" id="concurso-prazo" name="prazoEntrada">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-vagas">Número de Vagas</label>
+                        <input type="number" id="concurso-vagas" name="vagas" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-salario">Salário</label>
+                        <input type="text" id="concurso-salario" name="salario" placeholder="Ex: R$ 5.000,00">
+                    </div>
+                </div>
+
+                <!-- ABA 2: FASES -->
+                <div id="concurso-fases" class="tab-content">
+                    <div class="form-group">
+                        <label for="fase-tipo">Tipo de Fase</label>
+                        <select id="fase-tipo" name="faseTipo">
+                            <option value="inscricao">Inscrição</option>
+                            <option value="prova-escrita">Prova Escrita</option>
+                            <option value="prova-pratica">Prova Prática</option>
+                            <option value="entrevista">Entrevista</option>
+                            <option value="analise">Análise de Currículo</option>
+                            <option value="prova-oral">Prova Oral</option>
+                            <option value="resultado">Resultado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fase-nome">Nome Personalizado</label>
+                        <input type="text" id="fase-nome" name="faseNome" placeholder="Ex: Primeira Fase">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fase-data">Data</label>
+                        <input type="date" id="fase-data" name="faseData">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fase-local">Local</label>
+                        <input type="text" id="fase-local" name="faseLocal" placeholder="Ex: Av. Paulista, 1000">
+                    </div>
+
+                    <button type="button" class="btn btn-secondary" onclick="adicionarFase()">
+                        <i class="fas fa-plus"></i> Adicionar Fase
+                    </button>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label>Fases Cadastradas <span id="count-fases">(0)</span></label>
+                        <div id="lista-fases" class="items-list"></div>
+                    </div>
+                </div>
+
+                <!-- ABA 3: MATERIAIS -->
+                <div id="concurso-materiais" class="tab-content">
+                    <div class="form-group">
+                        <label>Materiais Sugeridos</label>
+                        <div class="materiais-sugeridos">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="rg">
+                                <span>RG</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="cpf">
+                                <span>CPF</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="cartao">
+                                <span>Cartão de Inscrição</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="caneta">
+                                <span>Caneta Preta/Azul</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="lapis">
+                                <span>Lápis e Borracha</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="calculadora">
+                                <span>Calculadora</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="comprovante">
+                                <span>Comprovante de Residência</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="agua">
+                                <span>Garrafa de Água</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="materiais" value="lanche">
+                                <span>Lanche</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="material-custom">Adicionar Material Personalizado</label>
+                        <div class="input-group">
+                            <input type="text" id="material-custom" placeholder="Ex: Certificado de vacinação">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="adicionarMaterial()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Materiais a Levar <span id="count-materiais">(0)</span></label>
+                        <div id="lista-materiais" class="items-list"></div>
+                    </div>
+                </div>
+
+                <!-- ABA 4: ARQUIVOS -->
+                <div id="concurso-arquivos" class="tab-content">
+                    <div class="form-group">
+                        <label for="concurso-link-edital">Link do Edital</label>
+                        <input type="url" id="concurso-link-edital" name="linkEdital" placeholder="https://...">
+                        <small>PDF do edital oficial</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-link-prova-ant">Link da Prova Anterior</label>
+                        <input type="url" id="concurso-link-prova-ant" name="linkProvaAnterior" placeholder="https://...">
+                        <small>Prova do concurso anterior</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-link-gabarito-ant">Link do Gabarito Anterior</label>
+                        <input type="url" id="concurso-link-gabarito-ant" name="linkGabaritoAnterior" placeholder="https://...">
+                        <small>Gabarito do concurso anterior</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-link-resultado">Link do Resultado</label>
+                        <input type="url" id="concurso-link-resultado" name="linkResultado" placeholder="https://...">
+                        <small>Resultado do concurso</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-link-externo">Link Externo</label>
+                        <input type="url" id="concurso-link-externo" name="linkExterno" placeholder="https://...">
+                        <small>Link para fonte ou referência externa</small>
+                    </div>
+                </div>
+
+                <!-- ABA 5: METADADOS -->
+                <div id="concurso-meta" class="tab-content">
+                    <div class="form-group">
+                        <label for="concurso-tags"><i class="fas fa-tags"></i> Tags</label>
+                        <input type="text" id="concurso-tags" name="tags" placeholder="Ex: enfermagem, concurso, saúde pública">
+                        <small>Separadas por vírgula</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-autor">Autor/Criador</label>
+                        <input type="text" id="concurso-autor" name="autor" placeholder="Ex: João Silva">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-versao">Versão</label>
+                        <input type="text" id="concurso-versao" name="versao" placeholder="1.0" value="1.0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-palavras">Palavras-chave</label>
+                        <input type="text" id="concurso-palavras" name="palavrasChave" placeholder="Ex: seleção, edital, resultado">
+                        <small>Separadas por vírgula</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-observacoes">Observações/Notas</label>
+                        <textarea id="concurso-observacoes" name="observacoes" placeholder="Anotações adicionais..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="concurso-data-pub">Data de Publicação</label>
+                        <input type="date" id="concurso-data-pub" name="dataPub">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('concurso')">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+            <button class="btn btn-primary" onclick="salvarConcurso()">
+                <i class="fas fa-check"></i> Salvar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: NOVO/EDITAR CONTEÚDO -->
+<div id="modal-conteudo" class="modal-overlay">
+    <div class="modal modal-xl">
+        <div class="modal-header">
+            <div>
+                <h2><i class="fas fa-book"></i> <span id="modal-conteudo-title">Novo Conteúdo</span></h2>
+                <p class="modal-subtitle">Crie conteúdo com múltiplos recursos</p>
+            </div>
+            <button class="modal-close" onclick="closeModal('conteudo')" aria-label="Fechar modal">&times;</button>
+        </div>
+
+        <div class="modal-tabs">
+            <button class="tab-btn active" onclick="switchTab('conteudo', 'basico')">
+                <i class="fas fa-info-circle"></i> Básico
+            </button>
+            <button class="tab-btn" onclick="switchTab('conteudo', 'recursos')">
+                <i class="fas fa-layer-group"></i> Recursos
+            </button>
+            <button class="tab-btn" onclick="switchTab('conteudo', 'arquivos')">
+                <i class="fas fa-file-pdf"></i> Arquivos
+            </button>
+            <button class="tab-btn" onclick="switchTab('conteudo', 'meta')">
+                <i class="fas fa-tags"></i> Metadados
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form id="form-conteudo">
+                <!-- ABA 1: BÁSICO -->
+                <div id="conteudo-basico" class="tab-content active">
+                    <div class="form-group">
+                        <label for="conteudo-titulo"><span class="required">*</span> Título</label>
+                        <input type="text" id="conteudo-titulo" name="titulo" placeholder="Ex: Semiologia em Enfermagem" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-descricao">Descrição</label>
+                        <textarea id="conteudo-descricao" name="descricao" placeholder="Descreva o conteúdo..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-tipo"><span class="required">*</span> Tipo de Conteúdo</label>
+                        <select id="conteudo-tipo" name="tipo" onchange="atualizarCamposDinamicos('conteudo')" required>
+                            <option value="">Selecione...</option>
+                            <option value="artigo">Artigo</option>
+                            <option value="video">Vídeo</option>
+                            <option value="audio">Áudio</option>
+                            <option value="imagem">Imagem</option>
+                            <option value="slide">Slide</option>
+                            <option value="flashcard">Flashcard</option>
+                            <option value="guia">Guia de Bolso</option>
+                            <option value="mapa">Mapa Mental</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-categoria">Categoria</label>
+                        <select id="conteudo-categoria" name="categoria">
+                            <option value="">Selecione...</option>
+                            <option value="saude">Saúde</option>
+                            <option value="farmacologia">Farmacologia</option>
+                            <option value="patologia">Patologia</option>
+                            <option value="procedimentos">Procedimentos</option>
+                            <option value="etica">Ética</option>
+                            <option value="comunicacao">Comunicação</option>
+                            <option value="lideranca">Liderança</option>
+                            <option value="gestao">Gestão</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-tempo">Tempo de Leitura (minutos)</label>
+                        <input type="number" id="conteudo-tempo" name="tempo" value="10" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-dificuldade">Nível de Dificuldade</label>
+                        <select id="conteudo-dificuldade" name="dificuldade">
+                            <option value="basico">Básico</option>
+                            <option value="intermediario" selected>Intermediário</option>
+                            <option value="avancado">Avançado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-status">Status</label>
+                        <select id="conteudo-status" name="status">
+                            <option value="rascunho" selected>Rascunho</option>
+                            <option value="publicado">Publicado</option>
+                            <option value="arquivado">Arquivado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-thumbnail">URL da Thumbnail</label>
+                        <input type="url" id="conteudo-thumbnail" name="thumbnail" placeholder="https://...">
+                    </div>
+
+                    <div id="conteudo-campos-dinamicos"></div>
+                </div>
+
+                <!-- ABA 2: RECURSOS -->
+                <div id="conteudo-recursos" class="tab-content">
+                    <div id="lista-recursos" class="items-list"></div>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="abrirModalRecurso()">
+                        <i class="fas fa-plus"></i> Adicionar Recurso
+                    </button>
+                </div>
+
+                <!-- ABA 3: ARQUIVOS -->
+                <div id="conteudo-arquivos" class="tab-content">
+                    <div class="form-group">
+                        <label for="conteudo-link-pdf">Link do PDF</label>
+                        <input type="url" id="conteudo-link-pdf" name="linkPdf" placeholder="https://...">
+                        <small>PDF do conteúdo completo</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-link-slides">Link dos Slides</label>
+                        <input type="url" id="conteudo-link-slides" name="linkSlides" placeholder="https://...">
+                        <small>Google Slides, Slideshare, etc.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-link-video">Link do Vídeo</label>
+                        <input type="url" id="conteudo-link-video" name="linkVideo" placeholder="https://...">
+                        <small>YouTube, Vimeo, etc.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-link-audio">Link do Áudio</label>
+                        <input type="url" id="conteudo-link-audio" name="linkAudio" placeholder="https://...">
+                        <small>MP3, WAV, OGG, etc.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-link-material">Link de Material Complementar</label>
+                        <input type="url" id="conteudo-link-material" name="linkMaterial" placeholder="https://...">
+                        <small>Exercícios, testes, etc.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-link-externo">Link Externo</label>
+                        <input type="url" id="conteudo-link-externo" name="linkExterno" placeholder="https://...">
+                        <small>Link para fonte ou referência externa</small>
+                    </div>
+                </div>
+
+                <!-- ABA 4: METADADOS -->
+                <div id="conteudo-meta" class="tab-content">
+                    <div class="form-group">
+                        <label for="conteudo-tags"><i class="fas fa-tags"></i> Tags</label>
+                        <input type="text" id="conteudo-tags" name="tags" placeholder="Ex: enfermagem, semiologia, diagnóstico">
+                        <small>Separadas por vírgula</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-autor">Autor/Criador</label>
+                        <input type="text" id="conteudo-autor" name="autor" placeholder="Ex: João Silva">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-versao">Versão</label>
+                        <input type="text" id="conteudo-versao" name="versao" placeholder="1.0" value="1.0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-palavras">Palavras-chave</label>
+                        <input type="text" id="conteudo-palavras" name="palavrasChave" placeholder="Ex: semiologia, diagnóstico, procedimento">
+                        <small>Separadas por vírgula</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-referencias">Referências Bibliográficas</label>
+                        <textarea id="conteudo-referencias" name="referencias" placeholder="Adicione referências..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-observacoes">Observações/Notas</label>
+                        <textarea id="conteudo-observacoes" name="observacoes" placeholder="Anotações adicionais..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-data-pub">Data de Publicação</label>
+                        <input type="date" id="conteudo-data-pub" name="dataPub">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conteudo-publico">Público-alvo</label>
+                        <input type="text" id="conteudo-publico" name="publico" placeholder="Ex: Enfermeiros, Estudantes">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('conteudo')">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+            <button class="btn btn-primary" onclick="salvarConteudo()">
+                <i class="fas fa-check"></i> Salvar Conteúdo
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: ADICIONAR RECURSO -->
+<div id="modal-recurso" class="modal-overlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-plus"></i> Adicionar Recurso</h2>
+            <button class="modal-close" onclick="closeModal('recurso')" aria-label="Fechar modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <form id="form-recurso">
+                <div class="form-group">
+                    <label for="recurso-tipo"><span class="required">*</span> Tipo de Recurso</label>
+                    <select id="recurso-tipo" name="tipo" required>
+                        <option value="">Selecione...</option>
+                        <option value="video">Vídeo</option>
+                        <option value="audio">Áudio</option>
+                        <option value="imagem">Imagem</option>
+                        <option value="slide">Slide</option>
+                        <option value="flashcard">Flashcard</option>
+                        <option value="pdf">PDF</option>
+                        <option value="documento">Documento</option>
+                        <option value="link">Link Externo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="recurso-titulo"><span class="required">*</span> Título</label>
+                    <input type="text" id="recurso-titulo" name="titulo" placeholder="Ex: Vídeo de Procedimento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="recurso-descricao">Descrição</label>
+                    <textarea id="recurso-descricao" name="descricao" placeholder="Descreva o recurso..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recurso-url"><span class="required">*</span> URL</label>
+                    <input type="url" id="recurso-url" name="url" placeholder="https://..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="recurso-duracao">Duração (minutos)</label>
+                    <input type="number" id="recurso-duracao" name="duracao" min="0" step="0.5">
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal('recurso')">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+            <button class="btn btn-primary" onclick="salvarRecurso()">
+                <i class="fas fa-check"></i> Adicionar
+            </button>
+        </div>
+    </div>
+</div>
