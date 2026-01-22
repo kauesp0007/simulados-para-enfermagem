@@ -20,17 +20,920 @@
     <!-- Ícones FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- CSS dos Componentes -->
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
+    
+    <!-- CSS do Cabeçalho -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
-    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+    
+    <!-- CSS de Acessibilidade -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    
+    <!-- CSS do Rodapé -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+
+    <style>
+        /* ============================================
+           MEMÓRIA RÁPIDA SPECIFIC STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+            --border: #e2e8f0;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200000;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loader-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Layout Principal */
+        .page-wrapper {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Breadcrumb */
+        .nav-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .nav-breadcrumb span {
+            color: #666;
+        }
+
+        .nav-breadcrumb .current {
+            color: #666;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 32px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid var(--border);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .back-btn i {
+            font-size: 18px;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            color: white;
+        }
+
+        .page-title {
+            flex: 1;
+        }
+
+        .page-title h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .page-title h1 i {
+            color: var(--accent);
+        }
+
+        .page-title p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Card Principal */
+        .quiz-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+        }
+
+        .quiz-card h2 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-card h2 i {
+            color: var(--accent);
+        }
+
+        .quiz-card p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .stat-label i {
+            color: var(--accent);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .stat-value.success {
+            color: var(--success);
+        }
+
+        .stat-value.warning {
+            color: var(--warning);
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .form-group label i {
+            color: var(--accent);
+            width: 20px;
+        }
+
+        .form-group p {
+            font-size: 12px;
+            color: #888;
+            margin-left: 0;
+            margin-bottom: 0;
+        }
+
+        /* Select Dropdown */
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--dark);
+            background-color: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group select:hover {
+            border-color: var(--accent);
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+        }
+
+        /* Button */
+        .btn-primary {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #152c4f;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary i {
+            font-size: 18px;
+        }
+
+        .btn-primary.btn-success {
+            background: var(--success);
+        }
+
+        .btn-primary.btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-primary.btn-secondary {
+            background: var(--accent);
+        }
+
+        .btn-primary.btn-secondary:hover {
+            background: #0097a7;
+        }
+
+        /* Quiz Area */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+        }
+
+        .quiz-progress-info {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .timer-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .timer-display i {
+            color: var(--accent);
+        }
+
+        .timer-display.warning {
+            color: var(--warning);
+        }
+
+        .timer-display.warning i {
+            color: var(--warning);
+        }
+
+        .timer-display.danger {
+            color: var(--error);
+            animation: pulse 1s infinite;
+        }
+
+        .timer-display.danger i {
+            color: var(--error);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Question Card */
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-number {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        /* Question Actions */
+        .question-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .action-btn i {
+            color: var(--primary);
+        }
+
+        .action-btn:hover i {
+            color: white;
+        }
+
+        /* Options List */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--light);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-item:hover {
+            border-color: var(--accent);
+            background: rgba(0, 188, 212, 0.05);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background: rgba(26, 62, 116, 0.05);
+        }
+
+        .option-item.correct {
+            border-color: var(--success);
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .option-item.wrong {
+            border-color: var(--error);
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Nunito Sans', sans-serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-item.correct .option-letter {
+            background: var(--success);
+            color: white;
+        }
+
+        .option-item.wrong .option-letter {
+            background: var(--error);
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 15px;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        /* Quiz Navigation */
+        .quiz-navigation {
+            margin-top: 24px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .nav-btn.next {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            background: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        /* Results Card */
+        .results-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .results-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .results-title {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .results-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .result-stat .stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .result-stat .stat-value {
+            font-size: 24px;
+        }
+
+        .results-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .results-actions .btn-primary {
+            margin-top: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 24px 16px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .quiz-card {
+                padding: 20px;
+            }
+
+            .page-header {
+                gap: 12px;
+            }
+
+            .back-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .back-btn {
+            background: #2d3748;
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .back-btn i {
+            color: var(--accent);
+        }
+
+        body.dark-mode .back-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        body.dark-mode .back-btn:hover i {
+            color: white;
+        }
+
+        body.dark-mode .page-title h1 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-title p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .quiz-card {
+            background: #2d3748;
+        }
+
+        body.dark-mode .quiz-card h2 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .quiz-card p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .stat-card {
+            background: #2d3748;
+        }
+
+        body.dark-mode .stat-label {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .form-group label {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .form-group p {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .form-group select {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .form-group select:focus {
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.2);
+        }
+
+        body.dark-mode .question-card {
+            background: #2d3748;
+        }
+
+        body.dark-mode .question-text {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .option-item {
+            background: #1f2937;
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .option-item:hover {
+            background: rgba(0, 188, 212, 0.1);
+        }
+
+        body.dark-mode .option-letter {
+            background: #374151;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .option-text {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .results-card {
+            background: #2d3748;
+        }
+
+        body.dark-mode .results-title {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .results-subtitle {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .result-stat {
+            background: #1f2937;
+        }
+
+        body.dark-mode .result-stat .stat-label {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .action-btn {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .action-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* High Contrast Mode */
+        body[data-contrast="high"] .quiz-card {
+            border: 2px solid var(--primary);
+        }
+
+        body[data-contrast="high"] .back-btn {
+            border-width: 2px;
+        }
+
+        body[data-contrast="high"] .stat-card {
+            border: 2px solid var(--primary);
+        }
+
+        body[data-contrast="high"] .question-card {
+            border: 2px solid var(--primary);
+        }
+
+        body[data-contrast="high"] .option-item {
+            border-width: 2px;
+        }
+
+        body[data-contrast="high"] .results-card {
+            border: 2px solid var(--primary);
+        }
+
+        /* Reduzir Animações */
+        body.reduce-animations .back-btn,
+        body.reduce-animations .btn-primary,
+        body.reduce-animations .option-item,
+        body.reduce-animations .action-btn {
+            transition: none;
+        }
+
+        body.reduce-animations .btn-primary:hover,
+        body.reduce-animations .option-item:hover,
+        body.reduce-animations .action-btn:hover {
+            transform: none;
+        }
+
+        body.reduce-animations .loader-dot {
+            animation: none;
+        }
+
+        body[data-reduce-motion="reduce"] .back-btn,
+        body[data-reduce-motion="reduce"] .btn-primary,
+        body[data-reduce-motion="reduce"] .option-item,
+        body[data-reduce-motion="reduce"] .action-btn {
+            transition: none;
+            animation: none;
+        }
+
+        body[data-reduce-motion="reduce"] .btn-primary:hover,
+        body[data-reduce-motion="reduce"] .option-item:hover,
+        body[data-reduce-motion="reduce"] .action-btn:hover {
+            transform: none;
+        }
+
+        body[data-reduce-motion="reduce"] .timer-display.danger {
+            animation: none;
+        }
+
+        .component-error {
+            padding: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .component-error h4 {
+            color: #E65100;
+            margin: 0 0 10px 0;
+        }
+
+        .component-error p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .component-error code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-    <!-- COMPONENTES MODULARIZADOS -->
-    <div id="accessibility-container"></div>
-    <div id="header-container"></div>
-
-    <!-- Loader Global -->
+    <!-- LOADER -->
     <div id="loader-global">
         <div class="loader-dots">
             <div class="loader-dot"></div>
@@ -39,201 +942,315 @@
         </div>
     </div>
 
-    <!-- Skip Link -->
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
+    <div id="accessibility-container"></div>
+    <div id="header-container"></div>
 
-    <!-- Conteúdo Principal -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <div class="page-wrapper">
         <main id="main-content">
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb" id="breadcrumb" aria-label="Navegação">
-                <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
-                <i class="fas fa-chevron-right"></i>
-                <a href="dashboard.html">Dashboard</a>
-                <i class="fas fa-chevron-right"></i>
-                <span>Memória Rápida</span>
-            </nav>
+            <div class="container">
+                <!-- Navigation Breadcrumb -->
+                <nav class="nav-breadcrumb" aria-label="Navegação">
+                    <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <a href="dashboard.html">Dashboard</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <span class="current">Memória Rápida</span>
+                </nav>
 
-            <!-- Page Header -->
-            <div class="page-header">
-                <button class="back-btn" onclick="window.location.href='dashboard.html'" title="Voltar ao início">
-                    <i class="fas fa-home"></i>
-                </button>
-                <div class="page-title">
-                    <h1><i class="fas fa-bolt"></i> Memória Rápida</h1>
-                    <p>Teste sua velocidade respondendo o máximo de questões em 15 minutos</p>
-                </div>
-            </div>
-
-            <!-- Configuração -->
-            <div id="config-area">
-                <!-- Stats -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label"><i class="fas fa-play"></i> Jogos Realizados</div>
-                        <div class="stat-value" id="games-played">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label"><i class="fas fa-trophy"></i> Melhor Pontuação</div>
-                        <div class="stat-value success" id="best-score">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label"><i class="fas fa-percent"></i> Melhor Taxa</div>
-                        <div class="stat-value warning" id="best-accuracy">0%</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label"><i class="fas fa-fire"></i> Melhor Sequência</div>
-                        <div class="stat-value" id="best-streak">0</div>
-                    </div>
-                </div>
-
-                <!-- Config Card -->
-                <div class="quiz-card">
-                    <h2><i class="fas fa-cog"></i> Configuração do Quiz</h2>
-                    <p>Escolha o tópico e inicie o desafio de velocidade</p>
-
-                    <!-- Topic Selection -->
-                    <div class="form-group">
-                        <label for="topicSelect">
-                            <i class="fas fa-book"></i>
-                            <span>Tópico</span>
-                        </label>
-                        <select id="topicSelect">
-                            <option value="">Todos os Tópicos</option>
-                            <option value="anatomia">Anatomia e Fisiologia</option>
-                            <option value="farmacologia">Farmacologia</option>
-                            <option value="patologia">Patologia</option>
-                            <option value="microbiologia">Microbiologia</option>
-                            <option value="bioquimica">Bioquímica</option>
-                            <option value="imunologia">Imunologia</option>
-                            <option value="saude-publica">Saúde Pública</option>
-                            <option value="enfermagem-basica">Enfermagem Básica</option>
-                            <option value="enfermagem-medica">Enfermagem Médica</option>
-                            <option value="enfermagem-cirurgica">Enfermagem Cirúrgica</option>
-                        </select>
-                    </div>
-
-                    <!-- Start Button -->
-                    <button class="btn-primary" id="startQuizBtn">
-                        <i class="fas fa-play"></i>
-                        Iniciar Memória Rápida
+                <!-- Page Header -->
+                <div class="page-header">
+                    <button class="back-btn" onclick="window.location.href='dashboard.html'" title="Voltar">
+                        <i class="fas fa-arrow-left"></i>
                     </button>
-                </div>
-            </div>
-
-            <!-- Área do Quiz -->
-            <div id="quiz-area">
-                <!-- Quiz Header -->
-                <div class="quiz-card quiz-header">
-                    <div class="quiz-progress">
-                        <div class="quiz-progress-info">
-                            <span id="question-counter">Questão 1</span>
-                            <span id="score-display">Acertos: 0</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    <div class="timer-display" id="timer-display">
-                        <i class="fas fa-stopwatch"></i>
-                        <span id="timer">15:00</span>
+                    <div class="page-title">
+                        <h1><i class="fas fa-bolt"></i> Memória Rápida</h1>
+                        <p>Teste sua velocidade respondendo o máximo de questões em 15 minutos</p>
                     </div>
                 </div>
 
-                <!-- Question Card -->
-                <div class="question-card">
-                    <div class="question-number" id="question-number">Questão 1</div>
-                    <div class="question-text" id="question-text">Carregando questão...</div>
-                    
-                    <div class="question-actions">
-                        <button class="action-btn" id="btn-read-question" onclick="QuizManager.readCurrentQuestion()">
-                            <i class="fas fa-volume-up"></i> Ler Questão
-                        </button>
-                        <button class="action-btn" id="btn-read-alternatives" onclick="QuizManager.readAlternatives()">
-                            <i class="fas fa-headphones"></i> Ler Alternativas
-                        </button>
-                        <button class="action-btn" id="btn-stop-reading" onclick="QuizManager.stopReading()" style="display: none;">
-                            <i class="fas fa-stop"></i> Parar Leitura
-                        </button>
+                <!-- Configuração -->
+                <div id="config-area">
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label"><i class="fas fa-play"></i> Jogos Realizados</div>
+                            <div class="stat-value" id="games-played">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label"><i class="fas fa-trophy"></i> Melhor Pontuação</div>
+                            <div class="stat-value success" id="best-score">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label"><i class="fas fa-percent"></i> Melhor Taxa</div>
+                            <div class="stat-value warning" id="best-accuracy">0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label"><i class="fas fa-fire"></i> Melhor Sequência</div>
+                            <div class="stat-value" id="best-streak">0</div>
+                        </div>
                     </div>
 
-                    <div class="options-list" id="options-list">
-                        <!-- Options will be rendered here -->
+                    <!-- Config Card -->
+                    <div class="quiz-card">
+                        <h2><i class="fas fa-cog"></i> Configuração do Quiz</h2>
+                        <p>Escolha o tópico e inicie o desafio de velocidade</p>
+
+                        <!-- Topic Selection -->
+                        <div class="form-group">
+                            <label for="topicSelect">
+                                <i class="fas fa-book"></i>
+                                <span>Tópico</span>
+                            </label>
+                            <select id="topicSelect">
+                                <option value="">Todos os Tópicos</option>
+                                <option value="anatomia">Anatomia e Fisiologia</option>
+                                <option value="farmacologia">Farmacologia</option>
+                                <option value="patologia">Patologia</option>
+                                <option value="microbiologia">Microbiologia</option>
+                                <option value="bioquimica">Bioquímica</option>
+                                <option value="imunologia">Imunologia</option>
+                                <option value="saude-publica">Saúde Pública</option>
+                                <option value="enfermagem-basica">Enfermagem Básica</option>
+                                <option value="enfermagem-medica">Enfermagem Médica</option>
+                                <option value="enfermagem-cirurgica">Enfermagem Cirúrgica</option>
+                            </select>
+                        </div>
+
+                        <!-- Start Button -->
+                        <button class="btn-primary" id="startQuizBtn">
+                            <i class="fas fa-play"></i>
+                            Iniciar Memória Rápida
+                        </button>
                     </div>
                 </div>
 
-                <!-- Navigation -->
-                <div class="quiz-navigation">
-                    <button class="nav-btn next" id="btn-next" onclick="QuizManager.nextQuestion()">
-                        Próxima <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Área de Resultados -->
-            <div id="results-area">
-                <div class="results-card">
-                    <div class="results-icon" id="results-icon">⚡</div>
-                    <h2 class="results-title" id="results-title">Desafio Completo!</h2>
-                    <p class="results-subtitle" id="results-subtitle">Você respondeu o máximo que pôde!</p>
-
-                    <div class="results-stats">
-                        <div class="result-stat">
-                            <div class="stat-label">Questões Respondidas</div>
-                            <div class="stat-value" id="result-answered">0</div>
+                <!-- Área do Quiz -->
+                <div id="quiz-area">
+                    <!-- Quiz Header -->
+                    <div class="quiz-card quiz-header">
+                        <div class="quiz-progress">
+                            <div class="quiz-progress-info">
+                                <span id="question-counter">Questão 1</span>
+                                <span id="score-display">Acertos: 0</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                            </div>
                         </div>
-                        <div class="result-stat">
-                            <div class="stat-label">Acertos</div>
-                            <div class="stat-value success" id="result-correct">0</div>
-                        </div>
-                        <div class="result-stat">
-                            <div class="stat-label">Erros</div>
-                            <div class="stat-value error" id="result-wrong">0</div>
-                        </div>
-                        <div class="result-stat">
-                            <div class="stat-label">Taxa de Acerto</div>
-                            <div class="stat-value" id="result-percentage">0%</div>
-                        </div>
-                        <div class="result-stat">
-                            <div class="stat-label">Sequência</div>
-                            <div class="stat-value warning" id="result-streak">0</div>
-                        </div>
-                        <div class="result-stat">
-                            <div class="stat-label">XP Obtido</div>
-                            <div class="stat-value" id="result-xp">0</div>
+                        <div class="timer-display" id="timer-display">
+                            <i class="fas fa-stopwatch"></i>
+                            <span id="timer">15:00</span>
                         </div>
                     </div>
 
-                    <div class="results-actions">
-                        <button class="btn-primary" onclick="QuizManager.printResults()">
-                            <i class="fas fa-print"></i> Imprimir Resultados
+                    <!-- Question Card -->
+                    <div class="question-card">
+                        <div class="question-number" id="question-number">Questão 1</div>
+                        <div class="question-text" id="question-text">Carregando questão...</div>
+                        
+                        <div class="question-actions">
+                            <button class="action-btn" id="btn-read-question" onclick="QuizManager.readCurrentQuestion()">
+                                <i class="fas fa-volume-up"></i> Ler Questão
+                            </button>
+                            <button class="action-btn" id="btn-read-alternatives" onclick="QuizManager.readAlternatives()">
+                                <i class="fas fa-headphones"></i> Ler Alternativas
+                            </button>
+                            <button class="action-btn" id="btn-stop-reading" onclick="QuizManager.stopReading()" style="display: none;">
+                                <i class="fas fa-stop"></i> Parar Leitura
+                            </button>
+                        </div>
+
+                        <div class="options-list" id="options-list">
+                            <!-- Options will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="quiz-navigation">
+                        <button class="nav-btn next" id="btn-next" onclick="QuizManager.nextQuestion()">
+                            Próxima <i class="fas fa-arrow-right"></i>
                         </button>
-                        <button class="btn-primary btn-success" onclick="QuizManager.newQuiz()">
-                            <i class="fas fa-plus"></i> Novo Desafio
-                        </button>
-                        <button class="btn-primary btn-secondary" onclick="QuizManager.restartQuiz()">
-                            <i class="fas fa-redo"></i> Repetir Este
-                        </button>
-                        <button class="btn-primary btn-secondary" onclick="QuizManager.goHome()">
-                            <i class="fas fa-home"></i> Voltar ao Início
-                        </button>
+                    </div>
+                </div>
+
+                <!-- Área de Resultados -->
+                <div id="results-area">
+                    <div class="results-card">
+                        <div class="results-icon" id="results-icon">⚡</div>
+                        <h2 class="results-title" id="results-title">Desafio Completo!</h2>
+                        <p class="results-subtitle" id="results-subtitle">Você respondeu o máximo que pôde!</p>
+
+                        <div class="results-stats">
+                            <div class="result-stat">
+                                <div class="stat-label">Questões Respondidas</div>
+                                <div class="stat-value" id="result-answered">0</div>
+                            </div>
+                            <div class="result-stat">
+                                <div class="stat-label">Acertos</div>
+                                <div class="stat-value success" id="result-correct">0</div>
+                            </div>
+                            <div class="result-stat">
+                                <div class="stat-label">Erros</div>
+                                <div class="stat-value error" id="result-wrong">0</div>
+                            </div>
+                            <div class="result-stat">
+                                <div class="stat-label">Taxa de Acerto</div>
+                                <div class="stat-value" id="result-percentage">0%</div>
+                            </div>
+                            <div class="result-stat">
+                                <div class="stat-label">Sequência</div>
+                                <div class="stat-value warning" id="result-streak">0</div>
+                            </div>
+                            <div class="result-stat">
+                                <div class="stat-label">XP Obtido</div>
+                                <div class="stat-value" id="result-xp">0</div>
+                            </div>
+                        </div>
+
+                        <div class="results-actions">
+                            <button class="btn-primary" onclick="QuizManager.printResults()">
+                                <i class="fas fa-print"></i> Imprimir Resultados
+                            </button>
+                            <button class="btn-primary btn-success" onclick="QuizManager.newQuiz()">
+                                <i class="fas fa-plus"></i> Novo Desafio
+                            </button>
+                            <button class="btn-primary btn-secondary" onclick="QuizManager.restartQuiz()">
+                                <i class="fas fa-redo"></i> Repetir Este
+                            </button>
+                            <button class="btn-primary btn-secondary" onclick="QuizManager.goHome()">
+                                <i class="fas fa-home"></i> Voltar ao Início
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- COMPONENTES MODULARIZADOS -->
+    <!-- FOOTER -->
     <div id="footer-container"></div>
 
-    <!-- JavaScript dos Componentes -->
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/component-loader.js"></script>
+    <!-- JavaScript dos Componentes (carregados antes do script da página) -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
 
-    <!-- Script Principal da Memória Rápida -->
+    <!-- SCRIPT DA MEMÓRIA RÁPIDA -->
     <script>
+    (function() {
+        'use strict';
+
+        // ========================================
+        // CONFIGURAÇÃO DE CAMINHOS
+        // ========================================
+        const Config = {
+            // URL base para os arquivos HTML dos componentes
+            htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+            
+            // Componentes a carregar
+            components: [
+                { 
+                    id: 'accessibility-container', 
+                    file: 'accessibility.html',
+                    name: 'Painel de Acessibilidade'
+                },
+                { 
+                    id: 'header-container', 
+                    file: 'header.html',
+                    name: 'Cabeçalho'
+                },
+                { 
+                    id: 'footer-container', 
+                    file: 'footer.html',
+                    name: 'Rodapé'
+                }
+            ]
+        };
+
+        // ========================================
+        // CARREGADOR DE COMPONENTES
+        // ========================================
+        const ComponentLoader = {
+            async loadComponent(comp) {
+                const container = document.getElementById(comp.id);
+                
+                if (!container) {
+                    console.error('[ERRO] Container não encontrado: #' + comp.id);
+                    return false;
+                }
+
+                const fullPath = Config.htmlPath + comp.file;
+                console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
+
+                try {
+                    const response = await fetch(fullPath);
+                    
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                    }
+
+                    const html = await response.text();
+                    
+                    if (!html || html.trim() === '') {
+                        throw new Error('Arquivo vazio');
+                    }
+
+                    container.innerHTML = html;
+                    console.log('[SUCESSO] ' + comp.name + ' carregado');
+                    return true;
+
+                } catch (error) {
+                    console.error('[ERRO] ' + comp.name + ':', error.message);
+                    
+                    container.innerHTML = '<div class="component-error">' +
+                        '<h4>⚠️ Erro ao carregar: ' + comp.name + '</h4>' +
+                        '<p><strong>Arquivo:</strong> ' + comp.file + '</p>' +
+                        '<p><strong>Caminho:</strong> <code>' + fullPath + '</code></p>' +
+                        '<p><strong>Erro:</strong> ' + error.message + '</p>' +
+                        '<p style="font-size: 12px; color: #666; margin-top: 10px;">' +
+                        'Verifique se os arquivos estão na pasta correta.</p>' +
+                        '</div>';
+                    
+                    return false;
+                }
+            },
+
+            async init() {
+                console.log('========================================');
+                console.log('CARREGANDO COMPONENTES - MEMÓRIA RÁPIDA');
+                console.log('========================================');
+                
+                let allLoaded = true;
+                
+                for (const comp of Config.components) {
+                    const success = await this.loadComponent(comp);
+                    if (!success) allLoaded = false;
+                }
+
+                console.log('========================================');
+                
+                if (allLoaded) {
+                    console.log('[OK] Todos os componentes carregados!');
+                } else {
+                    console.log('[AVISO] Alguns componentes não carregaram.');
+                }
+                console.log('========================================');
+
+                // Disparar evento de componentes carregados
+                document.dispatchEvent(new CustomEvent('headerComponentsLoaded', {
+                    bubbles: true,
+                    cancelable: true
+                }));
+
+                // Inicializar Memória Rápida
+                SoundManager.init();
+                QuestionReader.init();
+                QuizManager.init();
+            }
+        };
+
         /**
          * SoundManager - Gerencia os efeitos sonoros do quiz
          */
@@ -276,26 +1293,26 @@
 
             playCorrect() {
                 this.playTone(800, 'sine', 0.15);
-                setTimeout(() => this.playTone(1000, 'sine', 0.15), 150);
-                setTimeout(() => this.playTone(1200, 'sine', 0.2), 300);
+                setTimeout(function() { this.playTone(1000, 'sine', 0.15); }.bind(this), 150);
+                setTimeout(function() { this.playTone(1200, 'sine', 0.2); }.bind(this), 300);
             },
 
             playWrong() {
                 this.playTone(300, 'sawtooth', 0.4);
-                setTimeout(() => this.playTone(250, 'sawtooth', 0.3), 200);
+                setTimeout(function() { this.playTone(250, 'sawtooth', 0.3); }.bind(this), 200);
             },
 
             playComplete() {
                 const notes = [523, 659, 784, 1047];
-                notes.forEach((freq, i) => {
-                    setTimeout(() => this.playTone(freq, 'sine', 0.3), i * 150);
-                });
+                notes.forEach(function(freq, i) {
+                    setTimeout(function() { this.playTone(freq, 'sine', 0.3); }.bind(this), i * 150);
+                }.bind(this));
             },
 
             playStart() {
                 this.playTone(440, 'sine', 0.2);
-                setTimeout(() => this.playTone(554, 'sine', 0.2), 150);
-                setTimeout(() => this.playTone(659, 'sine', 0.3), 300);
+                setTimeout(function() { this.playTone(554, 'sine', 0.2); }.bind(this), 150);
+                setTimeout(function() { this.playTone(659, 'sine', 0.3); }.bind(this), 300);
             },
 
             playTick() {
@@ -320,7 +1337,7 @@
                     this.synth = window.speechSynthesis;
                     this.loadVoices();
                     if (this.synth.onvoiceschanged !== undefined) {
-                        this.synth.onvoiceschanged = () => this.loadVoices();
+                        this.synth.onvoiceschanged = function() { this.loadVoices(); }.bind(this);
                     }
                     console.log('[QuestionReader] Inicializado');
                 }
@@ -334,12 +1351,12 @@
             getPortugueseVoice() {
                 if (!this.synth) return null;
                 const voices = this.synth.getVoices();
-                const ptBR = voices.find(v => v.lang.includes('pt-BR') || v.lang.includes('pt_BR'));
+                const ptBR = voices.find(function(v) { return v.lang.includes('pt-BR') || v.lang.includes('pt_BR'); });
                 if (ptBR) return ptBR;
-                return voices.find(v => v.lang.includes('pt'));
+                return voices.find(function(v) { return v.lang.includes('pt'); });
             },
 
-            read(text, rate = 0.9, pitch = 1) {
+            read(text, rate, pitch) {
                 if (!this.synth) {
                     console.log('[QuestionReader] Síntese de voz não suportada');
                     return;
@@ -349,40 +1366,43 @@
 
                 this.utterance = new SpeechSynthesisUtterance(text);
                 this.utterance.lang = 'pt-BR';
-                this.utterance.rate = rate;
-                this.utterance.pitch = pitch;
+                this.utterance.rate = rate || 0.9;
+                this.utterance.pitch = pitch || 1;
 
                 const voice = this.getPortugueseVoice();
                 if (voice) {
                     this.utterance.voice = voice;
                 }
 
-                this.utterance.onstart = () => {
+                this.utterance.onstart = function() {
                     this.isReading = true;
-                    document.getElementById('btn-stop-reading').style.display = 'flex';
+                    var stopBtn = document.getElementById('btn-stop-reading');
+                    if (stopBtn) stopBtn.style.display = 'flex';
                     console.log('[QuestionReader] Iniciou leitura');
-                };
+                }.bind(this);
 
-                this.utterance.onend = () => {
+                this.utterance.onend = function() {
                     this.isReading = false;
-                    document.getElementById('btn-stop-reading').style.display = 'none';
+                    var stopBtn = document.getElementById('btn-stop-reading');
+                    if (stopBtn) stopBtn.style.display = 'none';
                     console.log('[QuestionReader] Finalizou leitura');
-                };
+                }.bind(this);
 
-                this.utterance.onerror = (e) => {
+                this.utterance.onerror = function(e) {
                     this.isReading = false;
-                    document.getElementById('btn-stop-reading').style.display = 'none';
+                    var stopBtn = document.getElementById('btn-stop-reading');
+                    if (stopBtn) stopBtn.style.display = 'none';
                     console.log('[QuestionReader] Erro:', e);
-                };
+                }.bind(this);
 
                 this.synth.speak(this.utterance);
             },
 
             readQuestionWithOptions(question, options) {
-                let text = `Questão: ${question}. `;
-                options.forEach((opt, i) => {
+                let text = 'Questão: ' + question + '. ';
+                options.forEach(function(opt, i) {
                     const letter = String.fromCharCode(65 + i);
-                    text += `Alternativa ${letter}: ${opt}. `;
+                    text += 'Alternativa ' + letter + ': ' + opt + '. ';
                 });
                 this.read(text, 0.9, 1);
             },
@@ -392,7 +1412,8 @@
                     this.synth.cancel();
                 }
                 this.isReading = false;
-                document.getElementById('btn-stop-reading').style.display = 'none';
+                var stopBtn = document.getElementById('btn-stop-reading');
+                if (stopBtn) stopBtn.style.display = 'none';
             }
         };
 
@@ -419,7 +1440,7 @@
             start() {
                 if (this.interval) clearInterval(this.interval);
 
-                this.interval = setInterval(() => {
+                this.interval = setInterval(function() {
                     this.remainingSeconds--;
 
                     if (this.onTick) {
@@ -436,7 +1457,7 @@
                             this.onComplete();
                         }
                     }
-                }, 1000);
+                }.bind(this), 1000);
 
                 console.log('[Timer] Started');
             },
@@ -451,7 +1472,7 @@
             getFormattedTime() {
                 const minutes = Math.floor(this.remainingSeconds / 60);
                 const seconds = this.remainingSeconds % 60;
-                return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                return minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
             },
 
             updateDisplay() {
@@ -478,58 +1499,53 @@
             print(results) {
                 const printWindow = window.open('', '_blank');
 
-                const html = `
-                    <!DOCTYPE html>
-                    <html lang="pt-BR">
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>Resultados - Memória Rápida - ${new Date().toLocaleDateString('pt-BR')}</title>
-                        <style>
-                            * { margin: 0; padding: 0; box-sizing: border-box; }
-                            body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }
-                            h1 { color: #1A3E74; margin-bottom: 8px; border-bottom: 3px solid #1A3E74; padding-bottom: 10px; }
-                            .header-info { margin-bottom: 20px; }
-                            .header-info p { color: #666; margin: 4px 0; }
-                            .summary { 
-                                background: #f4f6f9; 
-                                padding: 20px; 
-                                border-radius: 8px; 
-                                margin-bottom: 30px;
-                                display: grid;
-                                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                                gap: 16px;
-                            }
-                            .stat { text-align: center; padding: 10px; }
-                            .stat strong { display: block; font-size: 24px; color: #1A3E74; }
-                            .stat span { font-size: 12px; color: #666; text-transform: uppercase; }
-                            .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #999; }
-                            @media print { body { padding: 20px; } }
-                        </style>
-                    </head>
-                    <body>
-                        <h1>Memória Rápida - Resultados</h1>
-                        <div class="header-info">
-                            <p><strong>Data:</strong> ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}</p>
-                            <p><strong>Tópico:</strong> ${results.topic || 'Todos os Tópicos'}</p>
-                        </div>
-                        
-                        <div class="summary">
-                            <div class="stat"><strong>${results.answered}</strong><span>Respondidas</span></div>
-                            <div class="stat"><strong>${results.correct}</strong><span>Acertos</span></div>
-                            <div class="stat"><strong>${results.wrong}</strong><span>Erros</span></div>
-                            <div class="stat"><strong>${results.percentage}%</strong><span>Acerto</span></div>
-                            <div class="stat"><strong>${results.streak}</strong><span>Sequência</span></div>
-                            <div class="stat"><strong>${results.xp}</strong><span>XP</span></div>
-                        </div>
-                        
-                        <div class="footer">
-                            <p>Gerado por Simulados de Enfermagem - https://simulados-para-enfermagem.com.br</p>
-                        </div>
-                        
-                        <script>window.onload = () => window.print();<\/script>
-                    </body>
-                    </html>
-                `;
+                const html = '<!DOCTYPE html>' +
+                    '<html lang="pt-BR">' +
+                    '<head>' +
+                    '<meta charset="UTF-8">' +
+                    '<title>Resultados - Memória Rápida - ' + new Date().toLocaleDateString('pt-BR') + '</title>' +
+                    '<style>' +
+                    '* { margin: 0; padding: 0; box-sizing: border-box; }' +
+                    'body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }' +
+                    'h1 { color: #1A3E74; margin-bottom: 8px; border-bottom: 3px solid #1A3E74; padding-bottom: 10px; }' +
+                    '.header-info { margin-bottom: 20px; }' +
+                    '.header-info p { color: #666; margin: 4px 0; }' +
+                    '.summary { ' +
+                    'background: #f4f6f9; ' +
+                    'padding: 20px; ' +
+                    'border-radius: 8px; ' +
+                    'margin-bottom: 30px;' +
+                    'display: grid;' +
+                    'grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));' +
+                    'gap: 16px;' +
+                    '}' +
+                    '.stat { text-align: center; padding: 10px; }' +
+                    '.stat strong { display: block; font-size: 24px; color: #1A3E74; }' +
+                    '.stat span { font-size: 12px; color: #666; text-transform: uppercase; }' +
+                    '.footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #999; }' +
+                    '@media print { body { padding: 20px; } }' +
+                    '</style>' +
+                    '</head>' +
+                    '<body>' +
+                    '<h1>Memória Rápida - Resultados</h1>' +
+                    '<div class="header-info">' +
+                    '<p><strong>Data:</strong> ' + new Date().toLocaleDateString('pt-BR') + ' às ' + new Date().toLocaleTimeString('pt-BR') + '</p>' +
+                    '<p><strong>Tópico:</strong> ' + (results.topic || 'Todos os Tópicos') + '</p>' +
+                    '</div>' +
+                    '<div class="summary">' +
+                    '<div class="stat"><strong>' + results.answered + '</strong><span>Respondidas</span></div>' +
+                    '<div class="stat"><strong>' + results.correct + '</strong><span>Acertos</span></div>' +
+                    '<div class="stat"><strong>' + results.wrong + '</strong><span>Erros</span></div>' +
+                    '<div class="stat"><strong>' + results.percentage + '%</strong><span>Acerto</span></div>' +
+                    '<div class="stat"><strong>' + results.streak + '</strong><span>Sequência</span></div>' +
+                    '<div class="stat"><strong>' + results.xp + '</strong><span>XP</span></div>' +
+                    '</div>' +
+                    '<div class="footer">' +
+                    '<p>Gerado por Simulados de Enfermagem - https://simulados-para-enfermagem.com.br</p>' +
+                    '</div>' +
+                    '<script>window.onload = function() { window.print(); }<\/script>' +
+                    '</body>' +
+                    '</html>';
 
                 printWindow.document.write(html);
                 printWindow.document.close();
@@ -541,159 +1557,39 @@
          */
         const QuestionBank = {
             questions: [
-                {
-                    id: 1,
-                    topic: "anatomia",
-                    question: "Qual é o principal osso do antebraço que se articula com o úmero no cotovelo?",
-                    options: ["Ulna", "Rádio", "Úmero", "Clavícula", "Escápula"],
-                    correctIndex: 0
-                },
-                {
-                    id: 2,
-                    topic: "anatomia",
-                    question: "Quantos pares de cordas vocais possuem as pregas vocais verdadeiras?",
-                    options: ["1 par", "2 pares", "3 pares", "4 pares", "5 pares"],
-                    correctIndex: 0
-                },
-                {
-                    id: 3,
-                    topic: "farmacologia",
-                    question: "Qual classe de medicamentos é comumente utilizada para tratar hipertensão arterial e atua como inibidor da enzima conversora de angiotensina (ECA)?",
-                    options: ["Betabloqueadores", "Diuréticos", "Inibidores da ECA", "Bloqueadores de canais de cálcio", "Vasodilatadores diretos"],
-                    correctIndex: 2
-                },
-                {
-                    id: 4,
-                    topic: "farmacologia",
-                    question: "A digoxina é um medicamento frequentemente utilizado em qual condição cardíaca?",
-                    options: ["Hipertensão arterial", "Insuficiência cardíaca", "Trombose venosa", "Arritmia atrial", "Angina pectoris"],
-                    correctIndex: 1
-                },
-                {
-                    id: 5,
-                    topic: "patologia",
-                    question: "O que é aterosclerose?",
-                    options: ["Inflamação dos vasos linfáticos", "Depósito de placas de gordura nas artérias", "Degeneração das células musculares cardíacas", "Obstrução das veias por coágulos", "Dilatação anormal das artérias"],
-                    correctIndex: 1
-                },
-                {
-                    id: 6,
-                    topic: "patologia",
-                    question: "Qual é a principal característica patológica do diabetes mellitus tipo 1?",
-                    options: ["Resistência à insulina", "Deficiência na produção de insulina", "Produção excessiva de glucagon", "Disfunção das células alfa", "Alterações no receptor de insulina"],
-                    correctIndex: 1
-                },
-                {
-                    id: 7,
-                    topic: "microbiologia",
-                    question: "Qual microorganismo é o agente causador da tuberculose?",
-                    options: ["Mycobacterium tuberculosis", "Streptococcus pneumoniae", "Haemophilus influenzae", "Neisseria meningitidis", "Clostridium tetani"],
-                    correctIndex: 0
-                },
-                {
-                    id: 8,
-                    topic: "microbiologia",
-                    question: "Os vírus são considerados organismos acelulares porque:",
-                    options: ["Possuem apenas DNA", "Possuem apenas RNA", "Não possuem estrutura celular completa", "São muito pequenos", "Não se reproduzem"],
-                    correctIndex: 2
-                },
-                {
-                    id: 9,
-                    topic: "saude-publica",
-                    question: "O que significa o conceito de 'Vigilância em Saúde'?",
-                    options: ["Monitoramento contínuo de doenças e seus determinantes", "Controle de vetores em áreas rurais", "Fiscalização de estabelecimentos de saúde", "Inspeção de alimentos em restaurantes", "Educação em saúde nas escolas"],
-                    correctIndex: 0
-                },
-                {
-                    id: 10,
-                    topic: "saude-publica",
-                    question: "Qual é o indicador utilizado para medir a proporção de nascidos vivos com baixo peso?",
-                    options: ["Taxa de mortalidade materna", "Taxa de natalidade", "Peso ao nascer inferior a 2.500g", "Número de consultas pré-natal", "Idade gestacional ao parto"],
-                    correctIndex: 2
-                },
-                {
-                    id: 11,
-                    topic: "enfermagem-basica",
-                    question: "Qual é a finalidade da técnica de higiene oral em pacientes acamados?",
-                    options: ["Apenas estética", "Prevenir infecções bucais e sistêmicas", "Substituir a escovação convencional", "Reduzir a sede", "Estimular o apetite"],
-                    correctIndex: 1
-                },
-                {
-                    id: 12,
-                    topic: "enfermagem-basica",
-                    question: "Ao realizar a mensuração da temperatura axilar, qual é o tempo mínimo recomendado?",
-                    options: ["2 minutos", "5 minutos", "10 minutos", "15 minutos", "1 minuto"],
-                    correctIndex: 1
-                },
-                {
-                    id: 13,
-                    topic: "enfermagem-medica",
-                    question: "Qual é a classificação da insuficiência cardíaca baseada na New York Heart Association (NYHA) que apresenta sintomas em repouso?",
-                    options: ["Classe I", "Classe II", "Classe III", "Classe IV", "Classe V"],
-                    correctIndex: 3
-                },
-                {
-                    id: 14,
-                    topic: "enfermagem-medica",
-                    question: "A pneumonia comunitária é mais frequentemente causada por qual agente etiológico?",
-                    options: ["Klebsiella pneumoniae", "Pseudomonas aeruginosa", "Streptococcus pneumoniae", "Staphylococcus aureus", "Legionella pneumophila"],
-                    correctIndex: 2
-                },
-                {
-                    id: 15,
-                    topic: "enfermagem-cirurgica",
-                    question: "Qual é o objetivo principal da avaliação pré-operatória?",
-                    options: ["Determinar o tipo de anestesia", "Identificar riscos e preparar o paciente", "Agendar a data da cirurgia", "Calcular os custos da cirurgia", "Selecionar o cirurgião"],
-                    correctIndex: 1
-                },
-                {
-                    id: 16,
-                    topic: "enfermagem-cirurgica",
-                    question: "O que é deiscência cirúrgica?",
-                    options: ["Infecção no local da incisão", "Abertura espontânea dos pontos da ferida operatória", "Acúmulo de líquido no local da cirurgia", "Sangramento excessivo pós-operatório", "Formação de queloide"],
-                    correctIndex: 1
-                },
-                {
-                    id: 17,
-                    topic: "bioquimica",
-                    question: "Qual é a principal fonte de energia para as células musculares durante exercícios intensos de curta duração?",
-                    options: ["Ácidos graxos", "Glicose", "ATP muscular e creatina fosfato", "Aminoácidos", "Cetonas"],
-                    correctIndex: 2
-                },
-                {
-                    id: 18,
-                    topic: "bioquimica",
-                    question: "A hemoglobina é uma proteína responsável pelo transporte de qual gás no sangue?",
-                    options: ["Dióxido de carbono", "Nitrogênio", "Oxigênio", "Monóxido de carbono", "Oxido nitroso"],
-                    correctIndex: 2
-                },
-                {
-                    id: 19,
-                    topic: "imunologia",
-                    question: "Qual células são responsáveis pela resposta imunitária mediada por anticorpos?",
-                    options: ["Linfócitos T", "Linfócitos B", "Neutrófilos", "Macrófagos", "Eosinófilos"],
-                    correctIndex: 1
-                },
-                {
-                    id: 20,
-                    topic: "imunologia",
-                    question: "O que são anticorpos (imunoglobulinas)?",
-                    options: ["Células de defesa", "Proteínas produzidas pelo sistema imune", "Lipídios de membrana", "Carboidratos estruturais", "Ácidos nucleicos"],
-                    correctIndex: 1
-                }
+                { id: 1, topic: "anatomia", question: "Qual é o principal osso do antebraço que se articula com o úmero no cotovelo?", options: ["Ulna", "Rádio", "Úmero", "Clavícula", "Escápula"], correctIndex: 0 },
+                { id: 2, topic: "anatomia", question: "Quantos pares de cordas vocais possuem as pregas vocais verdadeiras?", options: ["1 par", "2 pares", "3 pares", "4 pares", "5 pares"], correctIndex: 0 },
+                { id: 3, topic: "farmacologia", question: "Qual classe de medicamentos é comumente utilizada para tratar hipertensão arterial e atua como inibidor da enzima conversora de angiotensina (ECA)?", options: ["Betabloqueadores", "Diuréticos", "Inibidores da ECA", "Bloqueadores de canais de cálcio", "Vasodilatadores diretos"], correctIndex: 2 },
+                { id: 4, topic: "farmacologia", question: "A digoxina é um medicamento frequentemente utilizado em qual condição cardíaca?", options: ["Hipertensão arterial", "Insuficiência cardíaca", "Trombose venosa", "Arritmia atrial", "Angina pectoris"], correctIndex: 1 },
+                { id: 5, topic: "patologia", question: "O que é aterosclerose?", options: ["Inflamação dos vasos linfáticos", "Depósito de placas de gordura nas artérias", "Degeneração das células musculares cardíacas", "Obstrução das veias por coágulos", "Dilatação anormal das artérias"], correctIndex: 1 },
+                { id: 6, topic: "patologia", question: "Qual é a principal característica patológica do diabetes mellitus tipo 1?", options: ["Resistência à insulina", "Deficiência na produção de insulina", "Produção excessiva de glucagon", "Disfunção das células alfa", "Alterações no receptor de insulina"], correctIndex: 1 },
+                { id: 7, topic: "microbiologia", question: "Qual microorganismo é o agente causador da tuberculose?", options: ["Mycobacterium tuberculosis", "Streptococcus pneumoniae", "Haemophilus influenzae", "Neisseria meningitidis", "Clostridium tetani"], correctIndex: 0 },
+                { id: 8, topic: "microbiologia", question: "Os vírus são considerados organismos acelulares porque:", options: ["Possuem apenas DNA", "Possuem apenas RNA", "Não possuem estrutura celular completa", "São muito pequenos", "Não se reproduzem"], correctIndex: 2 },
+                { id: 9, topic: "saude-publica", question: "O que significa o conceito de 'Vigilância em Saúde'?", options: ["Monitoramento contínuo de doenças e seus determinantes", "Controle de vetores em áreas rurais", "Fiscalização de estabelecimentos de saúde", "Inspeção de alimentos em restaurantes", "Educação em saúde nas escolas"], correctIndex: 0 },
+                { id: 10, topic: "saude-publica", question: "Qual é o indicador utilizado para medir a proporção de nascidos vivos com baixo peso?", options: ["Taxa de mortalidade materna", "Taxa de natalidade", "Peso ao nascer inferior a 2.500g", "Número de consultas pré-natal", "Idade gestacional ao parto"], correctIndex: 2 },
+                { id: 11, topic: "enfermagem-basica", question: "Qual é a finalidade da técnica de higiene oral em pacientes acamados?", options: ["Apenas estética", "Prevenir infecções bucais e sistêmicas", "Substituir a escovação convencional", "Reduzir a sede", "Estimular o apetite"], correctIndex: 1 },
+                { id: 12, topic: "enfermagem-basica", question: "Ao realizar a mensuração da temperatura axilar, qual é o tempo mínimo recomendado?", options: ["2 minutos", "5 minutos", "10 minutos", "15 minutos", "1 minuto"], correctIndex: 1 },
+                { id: 13, topic: "enfermagem-medica", question: "Qual é a classificação da insuficiência cardíaca baseada na New York Heart Association (NYHA) que apresenta sintomas em repouso?", options: ["Classe I", "Classe II", "Classe III", "Classe IV", "Classe V"], correctIndex: 3 },
+                { id: 14, topic: "enfermagem-medica", question: "A pneumonia comunitária é mais frequentemente causada por qual agente etiológico?", options: ["Klebsiella pneumoniae", "Pseudomonas aeruginosa", "Streptococcus pneumoniae", "Staphylococcus aureus", "Legionella pneumophila"], correctIndex: 2 },
+                { id: 15, topic: "enfermagem-cirurgica", question: "Qual é o objetivo principal da avaliação pré-operatória?", options: ["Determinar o tipo de anestesia", "Identificar riscos e preparar o paciente", "Agendar a data da cirurgia", "Calcular os custos da cirurgia", "Selecionar o cirurgião"], correctIndex: 1 },
+                { id: 16, topic: "enfermagem-cirurgica", question: "O que é deiscência cirúrgica?", options: ["Infecção no local da incisão", "Abertura espontânea dos pontos da ferida operatória", "Acúmulo de líquido no local da cirurgia", "Sangramento excessivo pós-operatório", "Formação de queloide"], correctIndex: 1 },
+                { id: 17, topic: "bioquimica", question: "Qual é a principal fonte de energia para as células musculares durante exercícios intensos de curta duração?", options: ["Ácidos graxos", "Glicose", "ATP muscular e creatina fosfato", "Aminoácidos", "Cetonas"], correctIndex: 2 },
+                { id: 18, topic: "bioquimica", question: "A hemoglobina é uma proteína responsável pelo transporte de qual gás no sangue?", options: ["Dióxido de carbono", "Nitrogênio", "Oxigênio", "Monóxido de carbono", "Oxido nitroso"], correctIndex: 2 },
+                { id: 19, topic: "imunologia", question: "Qual células são responsáveis pela resposta imunitária mediada por anticorpos?", options: ["Linfócitos T", "Linfócitos B", "Neutrófilos", "Macrófagos", "Eosinófilos"], correctIndex: 1 },
+                { id: 20, topic: "imunologia", question: "O que são anticorpos (imunoglobulinas)?", options: ["Células de defesa", "Proteínas produzidas pelo sistema imune", "Lipídios de membrana", "Carboidratos estruturais", "Ácidos nucleicos"], correctIndex: 1 }
             ],
 
-            getAll() {
+            getAll: function() {
                 return this.questions;
             },
 
-            getByTopic(topic) {
+            getByTopic: function(topic) {
                 if (!topic) return this.questions;
-                return this.questions.filter(q => q.topic === topic);
+                return this.questions.filter(function(q) { return q.topic === topic; });
             },
 
-            shuffle(array) {
-                const shuffled = [...array];
+            shuffle: function(array) {
+                const shuffled = [].concat(array);
                 for (let i = shuffled.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -701,7 +1597,7 @@
                 return shuffled;
             },
 
-            getRandom(count, topic = '') {
+            getRandom: function(count, topic) {
                 let questions = this.getByTopic(topic);
                 questions = this.shuffle(questions);
                 return questions;
@@ -714,7 +1610,7 @@
         const QuizManager = {
             config: {
                 topic: '',
-                duration: 15 // minutos
+                duration: 15
             },
             questions: [],
             currentIndex: 0,
@@ -724,31 +1620,31 @@
             currentStreak: 0,
             bestStreak: 0,
 
-            init() {
+            init: function() {
                 this.loadStats();
                 this.setupEventListeners();
                 this.hideLoader();
                 console.log('[QuizManager] Inicializado');
             },
 
-            setupEventListeners() {
-                const topicSelect = document.getElementById('topicSelect');
+            setupEventListeners: function() {
+                var topicSelect = document.getElementById('topicSelect');
                 if (topicSelect) {
-                    topicSelect.addEventListener('change', (e) => {
+                    topicSelect.addEventListener('change', function(e) {
                         this.config.topic = e.target.value;
                         console.log('[QuizManager] Tópico selecionado:', this.config.topic);
-                    });
+                    }.bind(this));
                 }
 
-                const startBtn = document.getElementById('startQuizBtn');
+                var startBtn = document.getElementById('startQuizBtn');
                 if (startBtn) {
-                    startBtn.addEventListener('click', () => this.startQuiz());
+                    startBtn.addEventListener('click', function() { this.startQuiz(); }.bind(this));
                 }
             },
 
-            loadStats() {
+            loadStats: function() {
                 try {
-                    const stats = JSON.parse(localStorage.getItem('memoria_rapida_stats') || '{}');
+                    var stats = JSON.parse(localStorage.getItem('memoria_rapida_stats') || '{}');
                     document.getElementById('games-played').textContent = stats.games || 0;
                     document.getElementById('best-score').textContent = stats.bestScore || 0;
                     document.getElementById('best-accuracy').textContent = (stats.bestAccuracy || 0) + '%';
@@ -759,9 +1655,9 @@
                 }
             },
 
-            saveStats(answered, correct, streak) {
+            saveStats: function(answered, correct, streak) {
                 try {
-                    const stats = JSON.parse(localStorage.getItem('memoria_rapida_stats') || '{}');
+                    var stats = JSON.parse(localStorage.getItem('memoria_rapida_stats') || '{}');
                     stats.games = (stats.games || 0) + 1;
                     stats.bestScore = Math.max(stats.bestScore || 0, answered);
                     stats.bestAccuracy = Math.max(stats.bestAccuracy || 0, answered > 0 ? Math.round((correct / answered) * 100) : 0);
@@ -772,8 +1668,7 @@
                 }
             },
 
-            startQuiz() {
-                // Carregar questões
+            startQuiz: function() {
                 this.questions = QuestionBank.getRandom(999, this.config.topic);
                 
                 if (this.questions.length === 0) {
@@ -781,78 +1676,66 @@
                     return;
                 }
 
-                // Inicializar respostas
                 this.answers = [];
                 this.currentIndex = 0;
                 this.startTime = Date.now();
                 this.quizFinished = false;
                 this.currentStreak = 0;
 
-                // Mostrar área do quiz
                 document.getElementById('config-area').style.display = 'none';
                 document.getElementById('quiz-area').style.display = 'block';
                 document.getElementById('results-area').style.display = 'none';
 
-                // Inicializar timer (15 minutos fixos para Memória Rápida)
-                QuizTimer.init(15, (remaining, total) => {
+                QuizTimer.init(15, function(remaining, total) {
                     QuizTimer.updateDisplay();
-                }, () => {
+                }, function() {
                     this.finishQuiz();
-                });
+                }.bind(this));
                 QuizTimer.start();
 
-                // Inicializar som
-                SoundManager.init();
                 SoundManager.playStart();
 
-                // Renderizar primeira questão
                 this.renderQuestion();
             },
 
-            renderQuestion() {
-                // Verificar se há questões restantes
+            renderQuestion: function() {
                 if (this.currentIndex >= this.questions.length) {
                     this.finishQuiz();
                     return;
                 }
 
-                const question = this.questions[this.currentIndex];
+                var question = this.questions[this.currentIndex];
 
-                // Atualizar contador
-                document.getElementById('question-counter').textContent = 
-                    `Questão ${this.currentIndex + 1}`;
-                document.getElementById('question-number').textContent = 
-                    `Questão ${this.currentIndex + 1}`;
-                document.getElementById('score-display').textContent = 
-                    `Acertos: ${this.answers.filter(a => a && a.correct).length}`;
+                document.getElementById('question-counter').textContent = 'Questão ' + (this.currentIndex + 1);
+                document.getElementById('question-number').textContent = 'Questão ' + (this.currentIndex + 1);
+                document.getElementById('score-display').textContent = 'Acertos: ' + this.answers.filter(function(a) { return a && a.correct; }).length;
 
-                // Atualizar texto da questão
+                var progressFill = document.getElementById('progress-fill');
+                var totalQuestions = Math.min(this.questions.length, 20);
+                var progress = (this.currentIndex / totalQuestions) * 100;
+                progressFill.style.width = progress + '%';
+
                 document.getElementById('question-text').textContent = question.question;
 
-                // Renderizar opções
-                const optionsList = document.getElementById('options-list');
+                var optionsList = document.getElementById('options-list');
                 optionsList.innerHTML = '';
 
-                const letters = ['A', 'B', 'C', 'D', 'E'];
-                question.options.forEach((option, index) => {
-                    const optionEl = document.createElement('div');
+                var letters = ['A', 'B', 'C', 'D', 'E'];
+                question.options.forEach(function(option, index) {
+                    var optionEl = document.createElement('div');
                     optionEl.className = 'option-item';
-                    optionEl.onclick = () => this.selectOption(index);
-                    optionEl.innerHTML = `
-                        <span class="option-letter">${letters[index]}</span>
-                        <span class="option-text">${option}</span>
-                    `;
+                    optionEl.onclick = function() { this.selectOption(index); }.bind(this);
+                    optionEl.innerHTML = '<span class="option-letter">' + letters[index] + '</span><span class="option-text">' + option + '</span>';
                     optionsList.appendChild(optionEl);
-                });
+                }.bind(this));
             },
 
-            selectOption(index) {
+            selectOption: function(index) {
                 if (this.quizFinished) return;
 
-                const question = this.questions[this.currentIndex];
-                const isCorrect = index === question.correctIndex;
+                var question = this.questions[this.currentIndex];
+                var isCorrect = index === question.correctIndex;
 
-                // Atualizar resposta
                 this.answers[this.currentIndex] = {
                     questionId: question.id,
                     selected: index,
@@ -862,16 +1745,14 @@
                     correctIndex: question.correctIndex
                 };
 
-                // Atualizar streak
                 if (isCorrect) {
                     this.currentStreak++;
                 } else {
                     this.currentStreak = 0;
                 }
 
-                // Atualizar visual
-                const options = document.querySelectorAll('.option-item');
-                options.forEach((opt, i) => {
+                var options = document.querySelectorAll('.option-item');
+                options.forEach(function(opt, i) {
                     opt.classList.remove('selected', 'correct', 'wrong');
                     if (i === index) {
                         opt.classList.add(isCorrect ? 'correct' : 'wrong');
@@ -880,53 +1761,45 @@
                     }
                 });
 
-                // Som de feedback
                 if (isCorrect) {
                     SoundManager.playCorrect();
                 } else {
                     SoundManager.playWrong();
                 }
 
-                // Atualizar score
-                document.getElementById('score-display').textContent = 
-                    `Acertos: ${this.answers.filter(a => a && a.correct).length}`;
+                document.getElementById('score-display').textContent = 'Acertos: ' + this.answers.filter(function(a) { return a && a.correct; }).length;
 
-                // Avançar para próxima questão após breve delay
-                setTimeout(() => {
+                setTimeout(function() {
                     this.currentIndex++;
                     this.renderQuestion();
-                }, 500);
+                }.bind(this), 500);
             },
 
-            nextQuestion() {
+            nextQuestion: function() {
                 this.currentIndex++;
                 this.renderQuestion();
             },
 
-            finishQuiz() {
+            finishQuiz: function() {
                 this.quizFinished = true;
                 QuizTimer.stop();
                 QuestionReader.stop();
 
-                const endTime = Date.now();
-                const correctCount = this.answers.filter(a => a && a.correct).length;
-                const answeredCount = this.answers.filter(a => a !== undefined).length;
-                const totalQuestions = this.questions.length;
-                const percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
-                const xp = this.calculateXP(correctCount, percentage);
+                var correctCount = this.answers.filter(function(a) { return a && a.correct; }).length;
+                var answeredCount = this.answers.filter(function(a) { return a !== undefined; }).length;
+                var percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+                var xp = this.calculateXP(correctCount, percentage);
 
-                // Atualizar resultados
                 document.getElementById('result-answered').textContent = answeredCount;
                 document.getElementById('result-correct').textContent = correctCount;
                 document.getElementById('result-wrong').textContent = answeredCount - correctCount;
-                document.getElementById('result-percentage').textContent = `${percentage}%`;
+                document.getElementById('result-percentage').textContent = percentage + '%';
                 document.getElementById('result-streak').textContent = this.currentStreak;
                 document.getElementById('result-xp').textContent = xp;
 
-                // Ícone e título
-                const icon = document.getElementById('results-icon');
-                const title = document.getElementById('results-title');
-                const subtitle = document.getElementById('results-subtitle');
+                var icon = document.getElementById('results-icon');
+                var title = document.getElementById('results-title');
+                var subtitle = document.getElementById('results-subtitle');
 
                 if (percentage >= 80) {
                     icon.textContent = '🏆';
@@ -946,13 +1819,10 @@
                     subtitle.textContent = 'A cada tentativa você melhora mais!';
                 }
 
-                // Som de completion
                 SoundManager.playComplete();
 
-                // Salvar estatísticas
                 this.saveStats(answeredCount, correctCount, this.currentStreak);
 
-                // Salvar no histórico
                 this.saveToHistory({
                     dataFinal: new Date().toISOString(),
                     percentual: percentage,
@@ -964,18 +1834,15 @@
                     topico: this.config.topic || 'Todos'
                 });
 
-                // Mostrar área de resultados
                 document.getElementById('quiz-area').style.display = 'none';
                 document.getElementById('results-area').style.display = 'block';
 
                 console.log('[QuizManager] Quiz finalizado. Respondidas:', answeredCount, 'XP:', xp);
             },
 
-            calculateXP(correct, percentage) {
-                // XP base: 20 por acerto
-                let xp = correct * 20;
+            calculateXP: function(correct, percentage) {
+                var xp = correct * 20;
                 
-                // Bônus por taxa de acerto
                 if (percentage >= 80) {
                     xp *= 1.3;
                 } else if (percentage >= 60) {
@@ -985,9 +1852,9 @@
                 return Math.round(xp);
             },
 
-            saveToHistory(result) {
+            saveToHistory: function(result) {
                 try {
-                    const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                    var historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
                     historico.unshift(result);
                     localStorage.setItem('user_historico_quizzes', JSON.stringify(historico.slice(0, 100)));
                     console.log('[QuizManager] Resultado salvo no histórico');
@@ -996,32 +1863,32 @@
                 }
             },
 
-            readCurrentQuestion() {
-                const question = this.questions[this.currentIndex];
+            readCurrentQuestion: function() {
+                var question = this.questions[this.currentIndex];
                 QuestionReader.readQuestionWithOptions(question.question, question.options);
             },
 
-            readAlternatives() {
-                const question = this.questions[this.currentIndex];
-                let text = '';
-                const letters = ['A', 'B', 'C', 'D', 'E'];
-                question.options.forEach((opt, i) => {
-                    text += `Alternativa ${letters[i]}: ${opt}. `;
+            readAlternatives: function() {
+                var question = this.questions[this.currentIndex];
+                var text = '';
+                var letters = ['A', 'B', 'C', 'D', 'E'];
+                question.options.forEach(function(opt, i) {
+                    text += 'Alternativa ' + letters[i] + ': ' + opt + '. ';
                 });
                 QuestionReader.read(text, 0.9, 1);
             },
 
-            stopReading() {
+            stopReading: function() {
                 QuestionReader.stop();
             },
 
-            printResults() {
-                const correctCount = this.answers.filter(a => a && a.correct).length;
-                const answeredCount = this.answers.filter(a => a !== undefined).length;
-                const percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
-                const xp = this.calculateXP(correctCount, percentage);
+            printResults: function() {
+                var correctCount = this.answers.filter(function(a) { return a && a.correct; }).length;
+                var answeredCount = this.answers.filter(function(a) { return a !== undefined; }).length;
+                var percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+                var xp = this.calculateXP(correctCount, percentage);
 
-                const results = {
+                var results = {
                     answered: answeredCount,
                     correct: correctCount,
                     wrong: answeredCount - correctCount,
@@ -1034,8 +1901,7 @@
                 ResultsPrinter.print(results);
             },
 
-            restartQuiz() {
-                // Repetir com as mesmas questões
+            restartQuiz: function() {
                 this.currentIndex = 0;
                 this.answers = [];
                 this.startTime = Date.now();
@@ -1045,49 +1911,52 @@
                 document.getElementById('results-area').style.display = 'none';
                 document.getElementById('quiz-area').style.display = 'block';
 
-                QuizTimer.init(15, (remaining, total) => {
+                QuizTimer.init(15, function(remaining, total) {
                     QuizTimer.updateDisplay();
-                }, () => {
+                }, function() {
                     this.finishQuiz();
-                });
+                }.bind(this));
                 QuizTimer.start();
 
                 SoundManager.playStart();
                 this.renderQuestion();
             },
 
-            newQuiz() {
-                // Novo quiz com novas questões
+            newQuiz: function() {
                 this.startQuiz();
             },
 
-            goHome() {
+            goHome: function() {
                 window.location.href = 'dashboard.html';
             },
 
-            hideLoader() {
-                setTimeout(() => {
-                    const loader = document.getElementById('loader-global');
+            hideLoader: function() {
+                setTimeout(function() {
+                    var loader = document.getElementById('loader-global');
                     if (loader) {
                         loader.classList.add('hidden');
-                        setTimeout(() => loader.style.display = 'none', 500);
+                        setTimeout(function() { loader.style.display = 'none'; }, 500);
                     }
-                }, 500);
+                }, 800);
             }
         };
 
-        // Inicializar quando o DOM estiver pronto
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                SoundManager.init();
-                QuestionReader.init();
-                QuizManager.init();
-            });
-        } else {
-            SoundManager.init();
-            QuestionReader.init();
-            QuizManager.init();
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        function init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ComponentLoader.init();
+                });
+            } else {
+                ComponentLoader.init();
+            }
         }
+
+        init();
+
+    })();
     </script>
 </body>
 </html>
