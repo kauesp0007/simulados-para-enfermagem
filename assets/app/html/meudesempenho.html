@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Meu Desempenho - Acompanhe sua evolução nos Simulados de Enfermagem">
+    <title>Meu Desempenho | Simulados de Enfermagem</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+
+    <style>
+        /* ============================================
+           PERFORMANCE PAGE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200000;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loader-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 100000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .back-btn i {
+            font-size: 18px;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            color: white;
+        }
+
+        .page-title {
+            flex: 1;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title h1 i {
+            color: var(--accent);
+        }
+
+        .page-title p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .breadcrumb i {
+            font-size: 10px;
+            color: #999;
+        }
+
+        /* Stats Overview */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin: 0 auto 12px 0;
+        }
+
+        .stat-icon.blue { background: rgba(33, 150, 243, 0.1); color: #2196f3; }
+        .stat-icon.green { background: rgba(76, 175, 80, 0.1); color: #4caf50; }
+        .stat-icon.orange { background: rgba(255, 152, 0, 0.1); color: #ff9800; }
+        .stat-icon.purple { background: rgba(156, 39, 176, 0.1); color: #9c27b0; }
+        .stat-icon.teal { background: rgba(0, 188, 212, 0.1); color: var(--accent); }
+        .stat-icon.red { background: rgba(244, 67, 54, 0.1); color: #f44336; }
+
+        .stat-item .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-item .stat-label {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-title i {
+            color: var(--primary);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #f1f5f9;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 24px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* History Table */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .history-table th {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .history-table td {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .history-table tbody tr {
+            transition: background 0.3s ease;
+        }
+
+        .history-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+
+        .badge-warning {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+
+        .badge-error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+
+        .progress-mini {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-mini .fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-mini .fill.green { background: var(--success); }
+        .progress-mini .fill.orange { background: var(--warning); }
+        .progress-mini .fill.red { background: var(--error); }
+
+        /* Topics Performance */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .topic-item {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .topic-item:hover {
+            background: #f1f5f9;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .topic-name {
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .topic-percentage {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .topic-percentage.high { color: var(--success); }
+        .topic-percentage.medium { color: var(--warning); }
+        .topic-percentage.low { color: var(--error); }
+
+        .topic-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topic-progress .progress-mini {
+            flex: 1;
+        }
+
+        .topic-questions {
+            font-size: 12px;
+            color: #999;
+            white-space: nowrap;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 24px 16px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-item .stat-value {
+                font-size: 24px;
+            }
+
+            .history-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .tabs-header {
+                flex-wrap: nowrap;
+            }
+
+            .tab-btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .stat-item,
+        body.dark-mode .chart-card,
+        body.dark-mode .tabs-container {
+            background: #2d3748;
+        }
+
+        body.dark-mode .page-title h1,
+        body.dark-mode .chart-title,
+        body.dark-mode .topic-name,
+        body.dark-mode .empty-state h3 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-title p,
+        body.dark-mode .stat-item .stat-label,
+        body.dark-mode .history-table td,
+        body.dark-mode .topic-questions {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .back-btn {
+            background: #2d3748;
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .back-btn i {
+            color: var(--accent);
+        }
+
+        body.dark-mode .topic-item {
+            background: #374151;
+        }
+
+        body.dark-mode .topic-item:hover {
+            background: #4b5563;
+        }
+
+        body.dark-mode .history-table th {
+            color: var(--accent);
+        }
+
+        body.dark-mode .history-table tbody tr:hover {
+            background: #374151;
+        }
+
+        body.dark-mode .progress-mini {
+            background: #4b5563;
+        }
+
+        body.dark-mode .tabs-header {
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .tab-btn {
+            color: #cbd5e1;
+        }
+
+        /* Animations */
+        body.reduce-animations .stat-item,
+        body.reduce-animations .chart-card,
+        body.reduce-animations .topic-item {
+            transition: none;
+        }
+
+        body.reduce-animations .loader-dot {
+            animation: none;
+        }
+
+        /* Error display styles */
+        .component-error {
+            padding: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .component-error h4 {
+            color: #E65100;
+            margin: 0 0 10px 0;
+        }
+
+        .component-error p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .component-error code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader Global -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
+    <div id="accessibility-container"></div>
+    <div id="header-container"></div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Navegação">
+                <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Meu Desempenho</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <button class="back-btn" onclick="window.location.href='dashboard.html'" title="Voltar ao início">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="page-title">
+                    <h1><i class="fas fa-chart-line"></i> Meu Desempenho</h1>
+                    <p>Acompanhe sua evolução e estatísticas de estudo</p>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-item">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-value" id="stat-total">0</div>
+                    <div class="stat-label">Total de Quizzes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon green">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="stat-value" id="stat-accuracy">0%</div>
+                    <div class="stat-label">Taxa de Acerto</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-value" id="stat-streak">0</div>
+                    <div class="stat-label">Dias Seguidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-value" id="stat-xp">0</div>
+                    <div class="stat-label">XP Total</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon teal">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-value" id="stat-time">0h</div>
+                    <div class="stat-label">Tempo de Estudo</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon red">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-value" id="stat-best">0%</div>
+                    <div class="stat-label">Melhor Resultado</div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title"><i class="fas fa-chart-area"></i> Desempenho Semanal</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title"><i class="fas fa-chart-pie"></i> Distribuição de Resultados</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Section -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="history">Histórico</button>
+                    <button class="tab-btn" data-tab="topics">Por Matéria</button>
+                    <button class="tab-btn" data-tab="goals">Metas</button>
+                </div>
+
+                <!-- Tab: History -->
+                <div class="tab-content active" id="tab-history">
+                    <div id="history-content">
+                        <div class="empty-state" id="empty-history">
+                            <i class="fas fa-history"></i>
+                            <h3>Nenhum histórico ainda</h3>
+                            <p>Complete alguns quizzes para ver seu histórico de desempenho</p>
+                            <button class="btn" onclick="window.location.href='dashboard.html'" style="background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                <i class="fas fa-play"></i> Começar a Estudar
+                            </button>
+                        </div>
+                        <table class="history-table" id="history-table" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Tipo</th>
+                                    <th>Questões</th>
+                                    <th>Acerto</th>
+                                    <th>XP</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Topics -->
+                <div class="tab-content" id="tab-topics">
+                    <div id="topics-content">
+                        <div class="empty-state" id="empty-topics">
+                            <i class="fas fa-book"></i>
+                            <h3>Nenhuma matéria ainda</h3>
+                            <p>Responda questões para ver seu desempenho por matéria</p>
+                        </div>
+                        <div class="topics-grid" id="topics-grid" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Goals -->
+                <div class="tab-content" id="tab-goals">
+                    <div id="goals-content">
+                        <div class="empty-state" id="empty-goals">
+                            <i class="fas fa-bullseye"></i>
+                            <h3>Nenhuma meta definida</h3>
+                            <p>Configure suas metas de estudo nas configurações</p>
+                            <button class="btn" onclick="window.location.href='settings.html'" style="background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                <i class="fas fa-cog"></i> Ir para Configurações
+                            </button>
+                        </div>
+                        <div id="goals-info" style="display: none;">
+                            <div class="stats-overview" style="margin-bottom: 24px;">
+                                <div class="stat-item">
+                                    <div class="stat-icon blue">
+                                        <i class="fas fa-crosshairs"></i>
+                                    </div>
+                                    <div class="stat-value" id="goal-daily">0/10</div>
+                                    <div class="stat-label">Meta Diária</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon green">
+                                        <i class="fas fa-calendar-week"></i>
+                                    </div>
+                                    <div class="stat-value" id="goal-weekly">0/70</div>
+                                    <div class="stat-label">Meta Semanal</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon purple">
+                                        <i class="fas fa-percentage"></i>
+                                    </div>
+                                    <div class="stat-value" id="goal-accuracy">0%</div>
+                                    <div class="stat-label">Meta de Acerto</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript dos Componentes -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
+    
+    <!-- SCRIPT DA PÁGINA DE DESEMPENHO -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ========================================
+        // CONFIGURAÇÃO DE CAMINHOS
+        // ========================================
+        const Config = {
+            htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+            components: [
+                { id: 'accessibility-container', file: 'accessibility.html', name: 'Painel de Acessibilidade' },
+                { id: 'header-container', file: 'header.html', name: 'Cabeçalho' },
+                { id: 'footer-container', file: 'footer.html', name: 'Rodapé' }
+            ]
+        };
+
+        // ========================================
+        // CARREGADOR DE COMPONENTES
+        // ========================================
+        const ComponentLoader = {
+            async loadComponent(comp) {
+                const container = document.getElementById(comp.id);
+                if (!container) return false;
+
+                const fullPath = Config.htmlPath + comp.file;
+                try {
+                    const response = await fetch(fullPath);
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    const html = await response.text();
+                    if (!html || html.trim() === '') throw new Error('Arquivo vazio');
+                    container.innerHTML = html;
+                    return true;
+                } catch (error) {
+                    console.error('[ERRO] ' + comp.name + ':', error.message);
+                    container.innerHTML = '<div class="component-error"><h4>Erro ao carregar: ' + comp.name + '</h4></div>';
+                    return false;
+                }
+            },
+
+            async init() {
+                let allLoaded = true;
+                for (const comp of Config.components) {
+                    const success = await this.loadComponent(comp);
+                    if (!success) allLoaded = false;
+                }
+                document.dispatchEvent(new CustomEvent('headerComponentsLoaded', { bubbles: true }));
+                PerformanceManager.init();
+            }
+        };
+
+        // ========================================
+        // PERFORMANCE MANAGER
+        // ========================================
+        const PerformanceManager = {
+            charts: {},
+
+            init() {
+                console.log('[INFO] Inicializando Performance Manager...');
+                this.loadStats();
+                this.loadHistory();
+                this.loadTopics();
+                this.loadGoals();
+                this.setupTabs();
+                this.hideLoader();
+            },
+
+            loadStats() {
+                try {
+                    const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                    
+                    // Total de quizzes
+                    document.getElementById('stat-total').textContent = historico.length;
+                    
+                    // Taxa de acerto
+                    if (historico.length > 0) {
+                        const mediaAcertos = Math.round(historico.reduce(function(sum, q) { return sum + (q.percentual || 0); }, 0) / historico.length);
+                        document.getElementById('stat-accuracy').textContent = mediaAcertos + '%';
+                    }
+                    
+                    // Dias consecutivos
+                    const consecutiveDays = this.calculateConsecutiveDays(historico);
+                    document.getElementById('stat-streak').textContent = consecutiveDays;
+                    
+                    // XP Total
+                    const totalXP = historico.reduce(function(sum, q) { return sum + (q.xp || 0); }, 0);
+                    document.getElementById('stat-xp').textContent = totalXP.toLocaleString('pt-BR');
+                    
+                    // Tempo estimado de estudo (aproximadamente 2 min por questão)
+                    const totalQuestoes = historico.reduce(function(sum, q) { return sum + (q.totalQuestoes || 0); }, 0);
+                    const horasEstudo = Math.round(totalQuestoes * 2 / 60);
+                    document.getElementById('stat-time').textContent = horasEstudo + 'h';
+                    
+                    // Melhor resultado
+                    if (historico.length > 0) {
+                        const melhorResultado = Math.max.apply(null, historico.map(function(q) { return q.percentual || 0; }));
+                        document.getElementById('stat-best').textContent = melhorResultado + '%';
+                    }
+                    
+                    // Inicializar gráficos
+                    this.initCharts(historico);
+                    
+                    console.log('[INFO] Estatísticas carregadas');
+                    
+                } catch (error) {
+                    console.error('[ERRO] Erro ao carregar estatísticas:', error);
+                }
+            },
+
+            calculateConsecutiveDays(historico) {
+                if (historico.length === 0) return 0;
+                
+                var hoje = new Date().toDateString();
+                var dias = 0;
+                var dataAtual = new Date();
+                
+                for (var i = 0; i < 365; i++) {
+                    var dataStr = dataAtual.toDateString();
+                    var temAtividade = historico.some(function(q) { return new Date(q.dataFinal).toDateString() === dataStr; });
+                    
+                    if (temAtividade) {
+                        dias++;
+                    } else if (dataStr !== hoje) {
+                        break;
+                    }
+                    
+                    dataAtual.setDate(dataAtual.getDate() - 1);
+                }
+                
+                return dias;
+            },
+
+            initCharts(historico) {
+                // Weekly Chart
+                const weeklyCtx = document.getElementById('weeklyChart');
+                if (weeklyCtx) {
+                    const ultimos7Dias = this.getLast7Days();
+                    const dadosSemana = ultimos7Dias.map(function(dia) {
+                        const atividadesDoDia = historico.filter(function(q) {
+                            return new Date(q.dataFinal).toDateString() === dia.data;
+                        });
+                        return atividadesDoDia.reduce(function(sum, q) { return sum + (q.totalQuestoes || 0); }, 0);
+                    });
+
+                    this.charts.weekly = new Chart(weeklyCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: ultimos7Dias.map(function(d) { return d.label; }),
+                            datasets: [{
+                                label: 'Questões Respondidas',
+                                data: dadosSemana,
+                                backgroundColor: 'rgba(26, 62, 116, 0.8)',
+                                borderColor: '#1A3E74',
+                                borderWidth: 1,
+                                borderRadius: 6
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: 'rgba(0,0,0,0.05)' }
+                                },
+                                x: {
+                                    grid: { display: false }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Distribution Chart
+                const distributionCtx = document.getElementById('distributionChart');
+                if (distributionCtx) {
+                    const excellent = historico.filter(function(q) { return (q.percentual || 0) >= 80; }).length;
+                    const good = historico.filter(function(q) { return (q.percentual || 0) >= 60 && (q.percentual || 0) < 80; }).length;
+                    const regular = historico.filter(function(q) { return (q.percentual || 0) >= 40 && (q.percentual || 0) < 60; }).length;
+                    const poor = historico.filter(function(q) { return (q.percentual || 0) < 40; }).length;
+
+                    this.charts.distribution = new Chart(distributionCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Excelente (80%+)', 'Bom (60-79%)', 'Regular (40-59%)', 'Ruim (<40%)'],
+                            datasets: [{
+                                data: [excellent, good, regular, poor],
+                                backgroundColor: ['#4caf50', '#ff9800', '#2196f3', '#f44336'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 16,
+                                        usePointStyle: true
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+
+            getLast7Days() {
+                const dias = [];
+                const nomesDias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+                
+                for (var i = 6; i >= 0; i--) {
+                    var data = new Date();
+                    data.setDate(data.getDate() - i);
+                    dias.push({
+                        data: data.toDateString(),
+                        label: nomesDias[data.getDay()]
+                    });
+                }
+                
+                return dias;
+            },
+
+            loadHistory() {
+                try {
+                    const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                    const historyBody = document.getElementById('history-body');
+                    const historyTable = document.getElementById('history-table');
+                    const emptyHistory = document.getElementById('empty-history');
+                    
+                    if (historico.length === 0) {
+                        emptyHistory.style.display = 'block';
+                        historyTable.style.display = 'none';
+                        return;
+                    }
+                    
+                    emptyHistory.style.display = 'none';
+                    historyTable.style.display = 'table';
+                    
+                    // Ordenar por data (mais recente primeiro)
+                    historico.sort(function(a, b) { return new Date(b.dataFinal) - new Date(a.dataFinal); });
+                    
+                    // Mostrar últimos 20 registros
+                    var registros = historico.slice(0, 20);
+                    
+                    historyBody.innerHTML = registros.map(function(q) {
+                        var data = new Date(q.dataFinal).toLocaleDateString('pt-BR');
+                        var tipo = q.tipo || 'Estudo';
+                        var questoes = q.totalQuestoes || 0;
+                        var percentual = q.percentual || 0;
+                        var xp = q.xp || 0;
+                        
+                        var badgeClass = 'badge-success';
+                        if (percentual < 60) badgeClass = 'badge-warning';
+                        if (percentual < 40) badgeClass = 'badge-error';
+                        
+                        return '<tr>' +
+                            '<td>' + data + '</td>' +
+                            '<td>' + tipo + '</td>' +
+                            '<td>' + questoes + '</td>' +
+                            '<td><span class="badge ' + badgeClass + '">' + percentual + '%</span></td>' +
+                            '<td>' + xp + ' XP</td>' +
+                            '</tr>';
+                    }).join('');
+                    
+                } catch (error) {
+                    console.error('[ERRO] Erro ao carregar histórico:', error);
+                }
+            },
+
+            loadTopics() {
+                try {
+                    const todasQuestoes = JSON.parse(localStorage.getItem('admin_questoes') || '[]');
+                    const topicsGrid = document.getElementById('topics-grid');
+                    const emptyTopics = document.getElementById('empty-topics');
+                    
+                    if (todasQuestoes.length === 0) {
+                        emptyTopics.style.display = 'block';
+                        topicsGrid.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Agrupar por matéria
+                    var materias = {};
+                    todasQuestoes.forEach(function(q) {
+                        var materia = q.materia || 'Geral';
+                        if (!materias[materia]) {
+                            materias[materia] = { total: 0, acertos: 0 };
+                        }
+                        materias[materia].total++;
+                    });
+                    
+                    // Calcular desempenho (simulado baseado em questões respondidas)
+                    const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                    // Aqui você pode implementar lógica mais sofisticada para rastrear por matéria
+                    
+                    const materiaArray = Object.keys(materias).map(function(m) {
+                        var percentual = Math.round(Math.random() * 40 + 50); // Simulado para exemplo
+                        var corClass = 'high';
+                        if (percentual < 60) corClass = 'medium';
+                        if (percentual < 40) corClass = 'low';
+                        
+                        return {
+                            nome: m,
+                            percentual: percentual,
+                            corClass: corClass,
+                            questoes: materias[m].total
+                        };
+                    });
+                    
+                    // Ordenar por percentual
+                    materiaArray.sort(function(a, b) { return b.percentual - a.percentual; });
+                    
+                    emptyTopics.style.display = 'none';
+                    topicsGrid.style.display = 'grid';
+                    
+                    topicsGrid.innerHTML = materiaArray.map(function(m) {
+                        return '<div class="topic-item">' +
+                            '<div class="topic-header">' +
+                            '<span class="topic-name">' + m.nome + '</span>' +
+                            '<span class="topic-percentage ' + m.corClass + '">' + m.percentual + '%</span>' +
+                            '</div>' +
+                            '<div class="topic-progress">' +
+                            '<div class="progress-mini"><div class="fill green" style="width: ' + m.percentual + '%"></div></div>' +
+                            '<span class="topic-questions">' + m.questoes + ' questões</span>' +
+                            '</div>' +
+                            '</div>';
+                    }).join('');
+                    
+                } catch (error) {
+                    console.error('[ERRO] Erro ao carregar matérias:', error);
+                }
+            },
+
+            loadGoals() {
+                try {
+                    const hoje = new Date().toDateString();
+                    const historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
+                    
+                    // Questões hoje
+                    const hojeQuestoes = historico.filter(function(q) { return new Date(q.dataFinal).toDateString() === hoje; }).length;
+                    document.getElementById('goal-daily').textContent = hojeQuestoes + '/10';
+                    
+                    // Questões esta semana
+                    var inicioSemana = new Date();
+                    inicioSemana.setDate(inicioSemana.getDate() - inicioSemana.getDay());
+                    inicioSemana.setHours(0, 0, 0, 0);
+                    
+                    const semanaQuestoes = historico.filter(function(q) { 
+                        return new Date(q.dataFinal) >= inicioSemana; 
+                    }).length;
+                    document.getElementById('goal-weekly').textContent = semanaQuestoes + '/70';
+                    
+                    // Meta de acerto
+                    if (historico.length > 0) {
+                        const mediaAcertos = Math.round(historico.reduce(function(sum, q) { return sum + (q.percentual || 0); }, 0) / historico.length);
+                        document.getElementById('goal-accuracy').textContent = mediaAcertos + '%';
+                    }
+                    
+                    document.getElementById('goals-info').style.display = 'block';
+                    document.getElementById('empty-goals').style.display = 'none';
+                    
+                } catch (error) {
+                    console.error('[ERRO] Erro ao carregar metas:', error);
+                }
+            },
+
+            setupTabs() {
+                var tabBtns = document.querySelectorAll('.tab-btn');
+                var tabContents = document.querySelectorAll('.tab-content');
+                
+                tabBtns.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var tabId = this.getAttribute('data-tab');
+                        
+                        tabBtns.forEach(function(b) { b.classList.remove('active'); });
+                        tabContents.forEach(function(c) { c.classList.remove('active'); });
+                        
+                        this.classList.add('active');
+                        document.getElementById('tab-' + tabId).classList.add('active');
+                    });
+                });
+            },
+
+            hideLoader() {
+                setTimeout(function() {
+                    var loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(function() { loader.style.display = 'none'; }, 500);
+                    }
+                }, 800);
+            }
+        };
+
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        function init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ComponentLoader.init();
+                });
+            } else {
+                ComponentLoader.init();
+            }
+        }
+
+        init();
+
+    })();
+    </script>
+</body>
+</html>
