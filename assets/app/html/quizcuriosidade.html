@@ -3,81 +3,717 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1A3E74">
+    <meta name="description" content="Quiz Curiosidade - Aprenda fatos interessantes sobre enfermagem e saúde">
     <title>Quiz Curiosidade | Simulados de Enfermagem</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="https://simulados-para-enfermagem.com.br/assets/images/logotipo-favicon.webp">
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones Fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
     
-    <!-- CSS do Site Externo -->
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/variables-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/header-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/footer-v4.css">
-    <link rel="stylesheet" href="https://auditeduca.github.io/Calculadoras-de-Enfermagem/assets/css/accessibility-v4.css">
+    <!-- CSS do Cabeçalho -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
     
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS de Acessibilidade -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
+    <!-- CSS do Rodapé -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary: #1A3E74; --accent: #00bcd4; --success: #4caf50; --warning: #ff9800; --error: #f44336; --light: #f4f6f9; --dark: #1f2937; }
-        body { font-family: 'Inter', sans-serif; background: var(--light); }
-        main { min-height: calc(100vh - 200px); padding: 40px 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        .page-header { margin-bottom: 40px; }
-        .page-header h1 { font-family: 'Nunito Sans', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-        .page-header p { font-size: 16px; color: #666; }
-        
-        .quiz-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; }
-        .quiz-question { font-size: 20px; font-weight: 600; margin-bottom: 24px; color: var(--primary); }
-        .quiz-options { display: grid; gap: 12px; margin-bottom: 20px; }
-        .option-btn { padding: 16px; border-radius: 8px; border: 2px solid #e2e8f0; background: white; cursor: pointer; transition: all 0.3s ease; font-weight: 600; text-align: left; }
-        .option-btn:hover { border-color: var(--primary); background: var(--light); }
-        .option-btn.correct { background: var(--success); color: white; border-color: var(--success); }
-        .option-btn.incorrect { background: var(--error); color: white; border-color: var(--error); }
-        
-        .explanation { background: #f0f7ff; border-left: 4px solid var(--primary); padding: 16px; border-radius: 8px; margin-top: 16px; }
-        .explanation strong { color: var(--primary); }
-        
-        .controls { display: flex; gap: 12px; margin-bottom: 30px; }
-        .btn { padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #152c4f; }
-        
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .stat-label { font-size: 14px; color: #666; margin-bottom: 8px; }
-        .stat-value { font-size: 28px; font-weight: 700; color: var(--primary); }
-        
-        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
-        .progress-fill { height: 100%; background: var(--primary); transition: width 0.3s ease; }
+        /* ============================================
+           QUIZ CURIOSIDADE SPECIFIC STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1A3E74;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --light: #f4f6f9;
+            --dark: #1f2937;
+            --border: #e2e8f0;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200000;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loader-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 300px);
+            padding: 40px 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 32px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid var(--border);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .back-btn i {
+            font-size: 18px;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            color: white;
+        }
+
+        .page-title {
+            flex: 1;
+        }
+
+        .page-title h1 {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .page-title h1 i {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        .page-title p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-card .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 12px;
+        }
+
+        .stat-card.primary .stat-icon {
+            background: rgba(26, 62, 116, 0.1);
+            color: var(--primary);
+        }
+
+        .stat-card.accent .stat-icon {
+            background: rgba(0, 188, 212, 0.1);
+            color: var(--accent);
+        }
+
+        .stat-card.success .stat-icon {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            min-height: 44px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #152c4f;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Card */
+        .quiz-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .quiz-card.initial-message {
+            text-align: center;
+            padding: 60px 32px;
+        }
+
+        .quiz-card.initial-message i {
+            font-size: 64px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .quiz-card.initial-message p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 24px;
+            text-align: right;
+        }
+
+        .progress-info strong {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        /* Quiz Question */
+        .quiz-question {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        /* Quiz Options */
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: rgba(26, 62, 116, 0.05);
+        }
+
+        .option-btn.correct {
+            border-color: var(--success);
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--error);
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            background: var(--light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Nunito Sans', sans-serif;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .option-letter {
+            background: var(--success);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-letter {
+            background: var(--error);
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 16px;
+            color: var(--dark);
+        }
+
+        /* Explanation */
+        .explanation {
+            margin-top: 24px;
+            padding: 20px;
+            background: #FFF3E0;
+            border-radius: 12px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #E65100;
+            margin-bottom: 12px;
+        }
+
+        .explanation-header i {
+            font-size: 18px;
+        }
+
+        .explanation-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Results Container */
+        .results-container {
+            text-align: center;
+        }
+
+        .results-icon {
+            font-size: 80px;
+            color: var(--warning);
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .results-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .results-stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat-card {
+            background: var(--light);
+            padding: 20px 40px;
+            border-radius: 12px;
+        }
+
+        .result-stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .result-stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Error display styles */
+        .component-error {
+            padding: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .component-error h4 {
+            color: #E65100;
+            margin: 0 0 10px 0;
+        }
+
+        .component-error p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .component-error code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 24px 16px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quiz-card {
+                padding: 24px;
+            }
+
+            .quiz-question {
+                font-size: 18px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .controls .btn {
+                width: 100%;
+            }
+
+            .results-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .result-stat-card {
+                padding: 16px 24px;
+            }
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #1f2937;
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-title h1 {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .page-title p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .stat-card {
+            background: #2d3748;
+        }
+
+        body.dark-mode .stat-value {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .stat-label {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .quiz-card {
+            background: #2d3748;
+        }
+
+        body.dark-mode .quiz-card.initial-message p {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .quiz-question {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .option-btn {
+            background: #1f2937;
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .option-btn:hover:not(:disabled) {
+            background: #374151;
+        }
+
+        body.dark-mode .option-text {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .progress-bar {
+            background: #4b5563;
+        }
+
+        body.dark-mode .progress-info {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .results-title {
+            color: #f0f4f8;
+        }
+
+        body.dark-mode .results-subtitle {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .result-stat-card {
+            background: #1f2937;
+        }
+
+        body.dark-mode .result-stat-label {
+            color: #cbd5e1;
+        }
+
+        /* High Contrast Mode */
+        body[data-contrast="high"] .quiz-card {
+            border: 2px solid var(--primary);
+        }
+
+        body[data-contrast="high"] .option-btn {
+            border-width: 2px;
+        }
+
+        /* Reduzir Animações */
+        body.reduce-animations .btn,
+        body.reduce-animations .option-btn {
+            transition: none;
+        }
+
+        body.reduce-animations .btn:hover,
+        body.reduce-animations .option-btn:hover {
+            transform: none;
+        }
+
+        body.reduce-animations .loader-dot {
+            animation: none;
+        }
+
+        body[data-reduce-motion="reduce"] .btn,
+        body[data-reduce-motion="reduce"] .option-btn {
+            transition: none;
+            animation: none;
+        }
+
+        body[data-reduce-motion="reduce"] .btn:hover,
+        body[data-reduce-motion="reduce"] .option-btn:hover {
+            transform: none;
+        }
     </style>
 </head>
 <body>
-    <a href="#main" class="skip-link" style="position: absolute; top: -40px; left: 0; background: var(--primary); color: white; padding: 8px; z-index: 100000;">Pular para conteúdo principal</a>
+    <!-- LOADER -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
-    <header id="header-container"></header>
-    <div id="nav-container"></div>
-    <div id="breadcrumb-container"></div>
-    
-    <main id="main">
-        <div class="container">
+    <div id="header-container"></div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="page-wrapper">
+        <main id="main-content">
+            <!-- Page Header -->
             <div class="page-header">
-                <h1><i class="fas fa-lightbulb"></i> Quiz Curiosidade</h1>
-                <p>Aprenda fatos interessantes sobre enfermagem e saúde</p>
+                <a href="dashboard.html" class="back-btn" title="Voltar">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="page-title">
+                    <h1><i class="fas fa-lightbulb"></i> Quiz Curiosidade</h1>
+                    <p>Aprenda fatos interessantes sobre enfermagem e saúde</p>
+                </div>
             </div>
 
             <!-- Estatísticas -->
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label"><i class="fas fa-play"></i> Quizzes Completados</div>
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="stat-icon"><i class="fas fa-play"></i></div>
+                    <div class="stat-label">Quizzes Completados</div>
                     <div class="stat-value" id="quizzes-completed">0</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label"><i class="fas fa-check"></i> Acertos</div>
+                <div class="stat-card accent">
+                    <div class="stat-icon"><i class="fas fa-check"></i></div>
+                    <div class="stat-label">Acertos</div>
                     <div class="stat-value" id="correct-answers">0</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label"><i class="fas fa-percent"></i> Taxa de Acerto</div>
+                <div class="stat-card success">
+                    <div class="stat-icon"><i class="fas fa-percent"></i></div>
+                    <div class="stat-label">Taxa de Acerto</div>
                     <div class="stat-value" id="accuracy">0%</div>
                 </div>
             </div>
@@ -87,37 +723,190 @@
                 <button class="btn btn-primary" onclick="QuizCuriosidade.proximoQuiz()">
                     <i class="fas fa-play"></i> Próximo Quiz
                 </button>
-                <button class="btn btn-primary" onclick="QuizCuriosidade.resetar()">
+                <button class="btn btn-secondary" onclick="QuizCuriosidade.resetar()">
                     <i class="fas fa-redo"></i> Resetar
                 </button>
             </div>
 
-            <!-- Quiz -->
+            <!-- Quiz Container -->
             <div class="quiz-card" id="quiz-container" style="display: none;">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
                 </div>
-                <div style="font-size: 12px; color: #666; margin-bottom: 16px;">
-                    <span id="current-question">1</span> de <span id="total-questions">10</span>
+                <div class="progress-info">
+                    <strong id="current-question">1</strong> de <span id="total-questions">5</span>
                 </div>
                 <div class="quiz-question" id="quiz-question"></div>
                 <div class="quiz-options" id="quiz-options"></div>
-                <div class="explanation" id="explanation" style="display: none;"></div>
+                <div class="explanation" id="explanation" style="display: none;">
+                    <div class="explanation-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Explicação</span>
+                    </div>
+                    <div class="explanation-text" id="explanation-text"></div>
+                </div>
             </div>
 
             <!-- Mensagem Inicial -->
-            <div class="quiz-card" id="initial-message">
-                <p style="text-align: center; color: #666; font-size: 16px;">
-                    <i class="fas fa-lightbulb"></i> Clique em "Próximo Quiz" para começar a aprender curiosidades!
-                </p>
+            <div class="quiz-card initial-message" id="initial-message">
+                <i class="fas fa-lightbulb"></i>
+                <p>Clique em "Próximo Quiz" para começar a aprender curiosidades!</p>
             </div>
-        </div>
-    </main>
-    
-    <footer id="footer-container"></footer>
 
-    <script src="navigation.js"></script>
+            <!-- Resultados Finais -->
+            <div class="quiz-card results-container" id="results-container" style="display: none;">
+                <div class="results-icon" id="results-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="results-title" id="results-title">Quiz Concluído!</div>
+                <div class="results-subtitle" id="results-subtitle">Parabéns!</div>
+                
+                <div class="results-stats">
+                    <div class="result-stat-card">
+                        <div class="result-stat-label">Acertos</div>
+                        <div class="result-stat-value" id="final-correct">0</div>
+                    </div>
+                    <div class="result-stat-card">
+                        <div class="result-stat-label">Total</div>
+                        <div class="result-stat-value" id="final-total">5</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="QuizCuriosidade.resetar()">
+                        <i class="fas fa-redo"></i> Tentar Novamente
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='dashboard.html'">
+                        <i class="fas fa-home"></i> Voltar ao Início
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript dos Componentes (carregados antes do script principal) -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
+    
+    <!-- SCRIPT PRINCIPAL DO QUIZ CURIOSIDADE -->
     <script>
+    (function() {
+        'use strict';
+
+        // ========================================
+        // CONFIGURAÇÃO DE CAMINHOS
+        // ========================================
+        const Config = {
+            // URL base para os arquivos HTML dos componentes
+            htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+            
+            // Componentes a carregar
+            components: [
+                { 
+                    id: 'accessibility-container', 
+                    file: 'accessibility.html',
+                    name: 'Painel de Acessibilidade'
+                },
+                { 
+                    id: 'header-container', 
+                    file: 'header.html',
+                    name: 'Cabeçalho'
+                },
+                { 
+                    id: 'footer-container', 
+                    file: 'footer.html',
+                    name: 'Rodapé'
+                }
+            ]
+        };
+
+        // ========================================
+        // CARREGADOR DE COMPONENTES
+        // ========================================
+        const ComponentLoader = {
+            async loadComponent(comp) {
+                const container = document.getElementById(comp.id);
+                
+                if (!container) {
+                    console.error('[ERRO] Container não encontrado: #' + comp.id);
+                    return false;
+                }
+
+                const fullPath = Config.htmlPath + comp.file;
+                console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
+
+                try {
+                    const response = await fetch(fullPath);
+                    
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                    }
+
+                    const html = await response.text();
+                    
+                    if (!html || html.trim() === '') {
+                        throw new Error('Arquivo vazio');
+                    }
+
+                    container.innerHTML = html;
+                    console.log('[SUCESSO] ' + comp.name + ' carregado');
+                    return true;
+
+                } catch (error) {
+                    console.error('[ERRO] ' + comp.name + ':', error.message);
+                    
+                    container.innerHTML = '<div class="component-error">' +
+                        '<h4>⚠️ Erro ao carregar: ' + comp.name + '</h4>' +
+                        '<p><strong>Arquivo:</strong> ' + comp.file + '</p>' +
+                        '<p><strong>Caminho:</strong> <code>' + fullPath + '</code></p>' +
+                        '<p><strong>Erro:</strong> ' + error.message + '</p>' +
+                        '<p style="font-size: 12px; color: #666; margin-top: 10px;">' +
+                        'Verifique se os arquivos estão na pasta correta.</p>' +
+                        '</div>';
+                    
+                    return false;
+                }
+            },
+
+            async init() {
+                console.log('========================================');
+                console.log('CARREGANDO COMPONENTES');
+                console.log('========================================');
+                
+                let allLoaded = true;
+                
+                for (const comp of Config.components) {
+                    const success = await this.loadComponent(comp);
+                    if (!success) allLoaded = false;
+                }
+
+                console.log('========================================');
+                
+                if (allLoaded) {
+                    console.log('[OK] Todos os componentes carregados!');
+                } else {
+                    console.log('[AVISO] Alguns componentes não carregaram.');
+                }
+                console.log('========================================');
+
+                // Disparar evento de componentes carregados para o header
+                document.dispatchEvent(new CustomEvent('headerComponentsLoaded', {
+                    bubbles: true,
+                    cancelable: true
+                }));
+
+                // Inicializar QuizCuriosidade
+                QuizCuriosidade.init();
+            }
+        };
+
+        // ========================================
+        // QUIZ CURIOSIDADE MANAGER
+        // ========================================
         const QuizCuriosidade = {
             quizzes: [
                 { question: 'Qual é a maior artéria do corpo humano?', options: ['Aorta', 'Veia cava', 'Carótida', 'Femoral'], correct: 0, explanation: 'A aorta é a maior artéria do corpo humano, originária do ventrículo esquerdo do coração.' },
@@ -132,7 +921,46 @@
             correctAnswers: 0,
             answered: false,
 
-            proximoQuiz() {
+            init: function() {
+                console.log('[QuizCuriosidade] Inicializando...');
+                this.loadStats();
+                this.hideLoader();
+            },
+
+            hideLoader: function() {
+                var self = this;
+                setTimeout(function() {
+                    var loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(function() { loader.style.display = 'none'; }, 500);
+                    }
+                }, 500);
+            },
+
+            loadStats: function() {
+                var completed = parseInt(localStorage.getItem('quiz_curiosidade_completed') || '0');
+                var correct = parseInt(localStorage.getItem('quiz_curiosidade_correct') || '0');
+                var total = parseInt(localStorage.getItem('quiz_curiosidade_total') || '0');
+                
+                document.getElementById('quizzes-completed').textContent = completed;
+                document.getElementById('correct-answers').textContent = correct;
+                
+                var accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+                document.getElementById('accuracy').textContent = accuracy + '%';
+            },
+
+            saveStats: function() {
+                var currentCompleted = parseInt(localStorage.getItem('quiz_curiosidade_completed') || '0');
+                var currentCorrect = parseInt(localStorage.getItem('quiz_curiosidade_correct') || '0');
+                var currentTotal = parseInt(localStorage.getItem('quiz_curiosidade_total') || '0');
+                
+                localStorage.setItem('quiz_curiosidade_completed', currentCompleted + 1);
+                localStorage.setItem('quiz_curiosidade_correct', currentCorrect + this.correctAnswers);
+                localStorage.setItem('quiz_curiosidade_total', currentTotal + this.quizzes.length);
+            },
+
+            proximoQuiz: function() {
                 if (this.answered && this.currentIndex < this.quizzes.length) {
                     this.currentIndex++;
                 }
@@ -146,6 +974,7 @@
                 this.currentQuiz = this.quizzes[this.currentIndex];
                 
                 document.getElementById('initial-message').style.display = 'none';
+                document.getElementById('results-container').style.display = 'none';
                 document.getElementById('quiz-container').style.display = 'block';
                 document.getElementById('current-question').textContent = this.currentIndex + 1;
                 document.getElementById('total-questions').textContent = this.quizzes.length;
@@ -153,92 +982,118 @@
                 document.getElementById('quiz-question').textContent = this.currentQuiz.question;
                 document.getElementById('explanation').style.display = 'none';
                 
-                const optionsContainer = document.getElementById('quiz-options');
+                var optionsContainer = document.getElementById('quiz-options');
                 optionsContainer.innerHTML = '';
                 
-                this.currentQuiz.options.forEach((option, index) => {
-                    const btn = document.createElement('button');
+                var letters = ['A', 'B', 'C', 'D'];
+                var self = this;
+                
+                this.currentQuiz.options.forEach(function(option, index) {
+                    var btn = document.createElement('button');
                     btn.className = 'option-btn';
-                    btn.textContent = option;
-                    btn.onclick = () => this.verificarResposta(index, btn);
+                    btn.innerHTML = '<span class="option-letter">' + letters[index] + '</span>' +
+                        '<span class="option-text">' + option + '</span>';
+                    btn.onclick = function() { self.verificarResposta(index, btn); };
                     optionsContainer.appendChild(btn);
                 });
             },
 
-            verificarResposta(index, btn) {
+            verificarResposta: function(index, btn) {
                 if (this.answered) return;
                 
                 this.answered = true;
                 this.totalAttempts++;
-                const isCorrect = index === this.currentQuiz.correct;
+                var isCorrect = index === this.currentQuiz.correct;
                 
                 if (isCorrect) {
                     this.correctAnswers++;
                     btn.classList.add('correct');
                 } else {
                     btn.classList.add('incorrect');
-                    document.querySelectorAll('.option-btn').forEach((b, i) => {
-                        if (i === this.currentQuiz.correct) {
+                    var self = this;
+                    document.querySelectorAll('.option-btn').forEach(function(b, i) {
+                        if (i === self.currentQuiz.correct) {
                             b.classList.add('correct');
                         }
                     });
                 }
                 
-                document.getElementById('explanation').textContent = this.currentQuiz.explanation;
+                // Desabilitar todos os botões
+                document.querySelectorAll('.option-btn').forEach(function(b) {
+                    b.disabled = true;
+                });
+                
+                document.getElementById('explanation-text').textContent = this.currentQuiz.explanation;
                 document.getElementById('explanation').style.display = 'block';
                 
-                document.querySelectorAll('.option-btn').forEach(b => b.onclick = null);
+                // Auto-avançar após 3 segundos
+                var self = this;
+                setTimeout(function() { self.proximoQuiz(); }, 3000);
+            },
+
+            mostrarResultado: function() {
+                // Salvar estatísticas
+                this.saveStats();
                 
-                setTimeout(() => this.proximoQuiz(), 3000);
-            },
-
-            mostrarResultado() {
                 document.getElementById('quiz-container').style.display = 'none';
-                document.getElementById('initial-message').innerHTML = `
-                    <div style="text-align: center;">
-                        <h2 style="font-size: 28px; margin-bottom: 16px;">🎉 Quiz Concluído!</h2>
-                        <p style="font-size: 18px; margin-bottom: 20px;">
-                            Você acertou <strong>${this.correctAnswers}</strong> de <strong>${this.quizzes.length}</strong> questões
-                        </p>
-                        <p style="font-size: 16px; color: #666; margin-bottom: 24px;">
-                            Taxa de acerto: <strong>${Math.round((this.correctAnswers / this.quizzes.length) * 100)}%</strong>
-                        </p>
-                        <button class="btn btn-primary" onclick="QuizCuriosidade.resetar()">
-                            <i class="fas fa-redo"></i> Tentar Novamente
-                        </button>
-                    </div>
-                `;
-                document.getElementById('initial-message').style.display = 'block';
+                document.getElementById('results-container').style.display = 'block';
+                document.getElementById('final-correct').textContent = this.correctAnswers;
+                document.getElementById('final-total').textContent = this.quizzes.length;
+                
+                // Atualizar título baseado no desempenho
+                var percentage = Math.round((this.correctAnswers / this.quizzes.length) * 100);
+                var title, icon;
+                
+                if (percentage >= 80) {
+                    title = 'Excelente!';
+                    icon = 'trophy';
+                } else if (percentage >= 60) {
+                    title = 'Muito Bom!';
+                    icon = 'star';
+                } else if (percentage >= 40) {
+                    title = 'Bom Trabalho!';
+                    icon = 'thumbs-up';
+                } else {
+                    title = 'Continue Estudando!';
+                    icon = 'book';
+                }
+                
+                document.getElementById('results-title').textContent = title;
+                document.getElementById('results-icon').innerHTML = '<i class="fas fa-' + icon + '"></i>';
+                document.getElementById('results-subtitle').textContent = 'Você acertou ' + this.correctAnswers + ' de ' + this.quizzes.length + ' questões (' + percentage + '%)';
+                
+                // Recarregar estatísticas
+                this.loadStats();
             },
 
-            atualizarEstatisticas() {
-                document.getElementById('quizzes-completed').textContent = 
-                    (parseInt(localStorage.getItem('quiz_curiosidade_completed') || '0') + 1);
-                localStorage.setItem('quiz_curiosidade_completed', document.getElementById('quizzes-completed').textContent);
-            },
-
-            resetar() {
+            resetar: function() {
                 this.currentIndex = 0;
                 this.totalAttempts = 0;
                 this.correctAnswers = 0;
                 this.answered = false;
+                
                 document.getElementById('quiz-container').style.display = 'none';
-                document.getElementById('initial-message').innerHTML = `
-                    <p style="text-align: center; color: #666; font-size: 16px;">
-                        <i class="fas fa-lightbulb"></i> Clique em "Próximo Quiz" para começar a aprender curiosidades!
-                    </p>
-                `;
+                document.getElementById('results-container').style.display = 'none';
                 document.getElementById('initial-message').style.display = 'block';
             }
         };
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                if (Navigation.init) Navigation.init();
-            });
-        } else {
-            if (Navigation.init) Navigation.init();
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        function init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ComponentLoader.init();
+                });
+            } else {
+                ComponentLoader.init();
+            }
         }
+
+        init();
+
+    })();
     </script>
 </body>
 </html>
