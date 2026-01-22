@@ -20,10 +20,11 @@
     <!-- Ícones FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- CSS dos Componentes -->
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
-    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
 
     <style>
         /* ============================================
@@ -635,6 +636,32 @@
             color: #666;
         }
 
+        /* Error display styles */
+        .component-error {
+            padding: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .component-error h4 {
+            color: #E65100;
+            margin: 0 0 10px 0;
+        }
+
+        .component-error p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .component-error code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .main-grid {
@@ -918,292 +945,426 @@
     <!-- FOOTER -->
     <div id="footer-container"></div>
 
-    <!-- SCRIPTS DOS COMPONENTES -->
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/component-loader.js"></script>
+    <!-- JavaScript dos Componentes -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
 
-    <!-- SCRIPTS DA PÁGINA -->
+    <!-- SCRIPT DA PÁGINA -->
     <script>
-        (function() {
-            'use strict';
+    (function() {
+        'use strict';
 
-            /**
-             * ConcursosManager - Gerencia concursos públicos
-             */
-            const ConcursosManager = {
-                concursos: [],
-                concursosFiltrados: [],
-                usuarioConcursos: [],
-                filtroEstado: null,
-                filtroStatus: null,
-
-                init() {
-                    console.log('[ConcursosManager] Inicializando...');
-                    this.carregarConcursos();
-                    this.carregarConcursosUsuario();
-                    this.renderizar();
-                    this.atualizarEstatisticas();
-                    this.configurarBusca();
-                    this.esconderLoader();
+        // ========================================
+        // CONFIGURAÇÃO DE CAMINHOS
+        // ========================================
+        var Config = {
+            // URL base para os arquivos HTML dos componentes
+            htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+            
+            // Componentes a carregar
+            components: [
+                { 
+                    id: 'accessibility-container', 
+                    file: 'accessibility.html',
+                    name: 'Painel de Acessibilidade'
                 },
-
-                carregarConcursos() {
-                    try {
-                        const dados = localStorage.getItem('admin_concursos');
-                        this.concursos = dados ? JSON.parse(dados) : [];
-                        this.concursosFiltrados = [...this.concursos];
-                        console.log(`[ConcursosManager] ${this.concursos.length} concursos carregados`);
-                    } catch (error) {
-                        console.error('[ConcursosManager] Erro ao carregar concursos:', error);
-                        this.concursos = [];
-                    }
+                { 
+                    id: 'header-container', 
+                    file: 'header.html',
+                    name: 'Cabeçalho'
                 },
+                { 
+                    id: 'footer-container', 
+                    file: 'footer.html',
+                    name: 'Rodapé'
+                }
+            ]
+        };
 
-                carregarConcursosUsuario() {
-                    try {
-                        const dados = localStorage.getItem('user_meus_concursos');
-                        this.usuarioConcursos = dados ? JSON.parse(dados) : [];
-                    } catch (error) {
-                        console.error('[ConcursosManager] Erro ao carregar concursos do usuário:', error);
-                        this.usuarioConcursos = [];
-                    }
-                },
+        // ========================================
+        // CARREGADOR DE COMPONENTES
+        // ========================================
+        var ComponentLoader = {
+            loadComponent: function(comp) {
+                var container = document.getElementById(comp.id);
+                
+                if (!container) {
+                    console.error('[ERRO] Container não encontrado: #' + comp.id);
+                    return Promise.resolve(false);
+                }
 
-                salvarConcursosUsuario() {
-                    localStorage.setItem('user_meus_concursos', JSON.stringify(this.usuarioConcursos));
-                },
+                var fullPath = Config.htmlPath + comp.file;
+                console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
 
-                configurarBusca() {
-                    const searchInput = document.getElementById('search-input');
-                    if (searchInput) {
-                        searchInput.addEventListener('input', () => this.buscar());
-                    }
-                },
-
-                buscar() {
-                    const termo = document.getElementById('search-input').value.toLowerCase();
-                    
-                    // Mapeamento de estados por região
-                    const regioes = {
-                        'Norte': ['AM', 'PA', 'AC', 'RO', 'RR', 'AP', 'TO'],
-                        'Nordeste': ['MA', 'PI', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA'],
-                        'Centro-Oeste': ['MT', 'MS', 'GO', 'DF'],
-                        'Sudeste': ['SP', 'RJ', 'MG', 'ES'],
-                        'Sul': ['PR', 'SC', 'RS']
-                    };
-                    
-                    this.concursosFiltrados = this.concursos.filter(concurso => {
-                        const matchBusca = !termo || 
-                            concurso.titulo.toLowerCase().includes(termo) ||
-                            concurso.instituicao.toLowerCase().includes(termo) ||
-                            concurso.cidade.toLowerCase().includes(termo);
-                        
-                        const matchEstado = !this.filtroEstado || concurso.estado === this.filtroEstado;
-                        const matchStatus = !this.filtroStatus || concurso.status === this.filtroStatus;
-                        
-                        // Filtrar por região do mapa
-                        let matchRegiao = true;
-                        if (this.filtroRegiao) {
-                            const estadosDaRegiao = regioes[this.filtroRegiao] || [];
-                            matchRegiao = estadosDaRegiao.includes(concurso.estado);
+                return fetch(fullPath)
+                    .then(function(response) {
+                        if (!response.ok) {
+                            throw new Error('HTTP ' + response.status + ': ' + response.statusText);
                         }
+                        return response.text();
+                    })
+                    .then(function(html) {
+                        if (!html || html.trim() === '') {
+                            throw new Error('Arquivo vazio');
+                        }
+                        container.innerHTML = html;
+                        console.log('[SUCESSO] ' + comp.name + ' carregado');
+                        return true;
+                    })
+                    .catch(function(error) {
+                        console.error('[ERRO] ' + comp.name + ':', error.message);
                         
-                        return matchBusca && matchEstado && matchStatus && matchRegiao;
+                        container.innerHTML = '<div class="component-error">' +
+                            '<h4>⚠️ Erro ao carregar: ' + comp.name + '</h4>' +
+                            '<p><strong>Arquivo:</strong> ' + comp.file + '</p>' +
+                            '<p><strong>Caminho:</strong> <code>' + fullPath + '</code></p>' +
+                            '<p><strong>Erro:</strong> ' + error.message + '</p>' +
+                            '<p style="font-size: 12px; color: #666; margin-top: 10px;">' +
+                            'Verifique se os arquivos estão na pasta correta.</p>' +
+                            '</div>';
+                        
+                        return false;
                     });
+            },
 
-                    this.renderizar();
-                },
+            init: function() {
+                console.log('========================================');
+                console.log('CARREGANDO COMPONENTES');
+                console.log('========================================');
+                
+                var promises = Config.components.map(function(comp) {
+                    return this.loadComponent(comp);
+                }, this);
 
-                toggleFiltros() {
-                    console.log('[ConcursosManager] Abrir painel de filtros');
-                    // Implementar painel de filtros modal
-                },
+                Promise.all(promises)
+                    .then(function(results) {
+                        var allLoaded = results.every(function(success) { return success; });
+                        
+                        console.log('========================================');
+                        
+                        if (allLoaded) {
+                            console.log('[OK] Todos os componentes carregados!');
+                        } else {
+                            console.log('[AVISO] Alguns componentes não carregaram.');
+                        }
+                        console.log('========================================');
 
-                adicionarConcurso(concursoId) {
-                    const concurso = this.concursos.find(c => c.id === concursoId);
-                    if (concurso && !this.usuarioConcursos.find(c => c.id === concursoId)) {
-                        this.usuarioConcursos.push({
-                            ...concurso,
-                            adicionadoEm: new Date().toISOString()
-                        });
-                        this.salvarConcursosUsuario();
-                        this.renderizar();
-                        this.atualizarEstatisticas();
-                        console.log(`[ConcursosManager] Concurso ${concursoId} adicionado`);
+                        // Disparar evento de componentes carregados para o header
+                        document.dispatchEvent(new CustomEvent('headerComponentsLoaded', {
+                            bubbles: true,
+                            cancelable: true
+                        }));
+
+                        // Inicializar ConcursosManager
+                        ConcursosManager.init();
+                    })
+                    .catch(function(error) {
+                        console.error('[ERRO] Erro ao carregar componentes:', error);
+                        // Mesmo com erro, inicializar a página
+                        ConcursosManager.init();
+                    });
+            }
+        };
+
+        // ========================================
+        // CONCURSOS MANAGER
+        // ========================================
+        var ConcursosManager = {
+            concursos: [],
+            concursosFiltrados: [],
+            usuarioConcursos: [],
+            filtroEstado: null,
+            filtroStatus: null,
+
+            init: function() {
+                console.log('[ConcursosManager] Inicializando...');
+                this.carregarConcursos();
+                this.carregarConcursosUsuario();
+                this.renderizar();
+                this.atualizarEstatisticas();
+                this.configurarBusca();
+                this.esconderLoader();
+            },
+
+            carregarConcursos: function() {
+                try {
+                    var dados = localStorage.getItem('admin_concursos');
+                    this.concursos = dados ? JSON.parse(dados) : [];
+                    this.concursosFiltrados = [].concat(this.concursos);
+                    console.log('[ConcursosManager] ' + this.concursos.length + ' concursos carregados');
+                } catch (error) {
+                    console.error('[ConcursosManager] Erro ao carregar concursos:', error);
+                    this.concursos = [];
+                }
+            },
+
+            carregarConcursosUsuario: function() {
+                try {
+                    var dados = localStorage.getItem('user_meus_concursos');
+                    this.usuarioConcursos = dados ? JSON.parse(dados) : [];
+                } catch (error) {
+                    console.error('[ConcursosManager] Erro ao carregar concursos do usuário:', error);
+                    this.usuarioConcursos = [];
+                }
+            },
+
+            salvarConcursosUsuario: function() {
+                localStorage.setItem('user_meus_concursos', JSON.stringify(this.usuarioConcursos));
+            },
+
+            configurarBusca: function() {
+                var searchInput = document.getElementById('search-input');
+                if (searchInput) {
+                    searchInput.addEventListener('input', function() {
+                        ConcursosManager.buscar();
+                    });
+                }
+            },
+
+            buscar: function() {
+                var termo = document.getElementById('search-input').value.toLowerCase();
+                
+                // Mapeamento de estados por região
+                var regioes = {
+                    'Norte': ['AM', 'PA', 'AC', 'RO', 'RR', 'AP', 'TO'],
+                    'Nordeste': ['MA', 'PI', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA'],
+                    'Centro-Oeste': ['MT', 'MS', 'GO', 'DF'],
+                    'Sudeste': ['SP', 'RJ', 'MG', 'ES'],
+                    'Sul': ['PR', 'SC', 'RS']
+                };
+                
+                var self = this;
+                this.concursosFiltrados = this.concursos.filter(function(concurso) {
+                    var matchBusca = !termo || 
+                        concurso.titulo.toLowerCase().indexOf(termo) !== -1 ||
+                        concurso.instituicao.toLowerCase().indexOf(termo) !== -1 ||
+                        concurso.cidade.toLowerCase().indexOf(termo) !== -1;
+                    
+                    var matchEstado = !self.filtroEstado || concurso.estado === self.filtroEstado;
+                    var matchStatus = !self.filtroStatus || concurso.status === self.filtroStatus;
+                    
+                    // Filtrar por região do mapa
+                    var matchRegiao = true;
+                    if (self.filtroRegiao) {
+                        var estadosDaRegiao = regioes[self.filtroRegiao] || [];
+                        matchRegiao = estadosDaRegiao.indexOf(concurso.estado) !== -1;
                     }
-                },
+                    
+                    return matchBusca && matchEstado && matchStatus && matchRegiao;
+                });
 
-                removerConcurso(concursoId) {
-                    this.usuarioConcursos = this.usuarioConcursos.filter(c => c.id !== concursoId);
+                this.renderizar();
+            },
+
+            toggleFiltros: function() {
+                console.log('[ConcursosManager] Abrir painel de filtros');
+                // Implementar painel de filtros modal
+            },
+
+            adicionarConcurso: function(concursoId) {
+                var concurso = this.concursos.find(function(c) { return c.id === concursoId; });
+                if (concurso && !this.usuarioConcursos.find(function(c) { return c.id === concursoId; })) {
+                    this.usuarioConcursos.push({
+                        id: concurso.id,
+                        titulo: concurso.titulo,
+                        instituicao: concurso.instituicao,
+                        cidade: concurso.cidade,
+                        estado: concurso.estado,
+                        dataFim: concurso.dataFim,
+                        vagas: concurso.vagas,
+                        status: concurso.status,
+                        nacional: concurso.nacional,
+                        link: concurso.link,
+                        adicionadoEm: new Date().toISOString()
+                    });
                     this.salvarConcursosUsuario();
                     this.renderizar();
-                    console.log(`[ConcursosManager] Concurso ${concursoId} removido`);
-                },
-
-                estaAdicionado(concursoId) {
-                    return this.usuarioConcursos.some(c => c.id === concursoId);
-                },
-
-                atualizarEstatisticas() {
-                    const abertos = this.concursos.filter(c => c.status === 'aberto').length;
-                    const nacionais = this.concursos.filter(c => c.nacional === true).length;
-                    const totalVagas = this.concursos.reduce((sum, c) => sum + (parseInt(c.vagas) || 0), 0);
-                    
-                    // Calcular inscrições que terminam em breve (menos de 7 dias)
-                    const hoje = new Date();
-                    const seteDias = new Date(hoje.getTime() + 7 * 24 * 60 * 60 * 1000);
-                    const proximas = this.concursos.filter(c => {
-                        if (c.status !== 'aberto' || !c.dataFim) return false;
-                        const dataFim = new Date(c.dataFim);
-                        return dataFim >= hoje && dataFim <= seteDias;
-                    }).length;
-
-                    if (document.getElementById('stat-total')) {
-                        document.getElementById('stat-total').textContent = this.concursos.length;
-                    }
-                    if (document.getElementById('stat-abertos')) {
-                        document.getElementById('stat-abertos').textContent = abertos;
-                    }
-                    if (document.getElementById('stat-nacionais')) {
-                        document.getElementById('stat-nacionais').textContent = nacionais;
-                    }
-                    if (document.getElementById('proximos-inscricoes')) {
-                        document.getElementById('proximos-inscricoes').textContent = proximas;
-                    }
-                    if (document.getElementById('total-vagas')) {
-                        document.getElementById('total-vagas').textContent = totalVagas.toLocaleString('pt-BR');
-                    }
-                },
-
-                renderizar() {
-                    const container = document.getElementById('concursos-container');
-                    const emptyState = document.getElementById('empty-state');
-
-                    if (!container) return;
-
-                    if (this.concursosFiltrados.length === 0) {
-                        container.innerHTML = '';
-                        if (emptyState) {
-                            emptyState.style.display = 'block';
-                        }
-                        return;
-                    }
-
-                    if (emptyState) {
-                        emptyState.style.display = 'none';
-                    }
-
-                    container.innerHTML = this.concursosFiltrados.map(concurso => {
-                        const adicionado = this.estaAdicionado(concurso.id);
-                        return `
-                            <div class="concurso-card">
-                                <div class="concurso-header">
-                                    <div class="concurso-title">${concurso.titulo}</div>
-                                    <div class="concurso-instituicao">${concurso.instituicao}</div>
-                                </div>
-
-                                <div class="concurso-info">
-                                    <i class="fas fa-map-pin"></i>
-                                    <span>${concurso.cidade}, ${concurso.estado}</span>
-                                </div>
-
-                                <div class="concurso-info">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>Inscrições até ${this.formatarData(concurso.dataFim)}</span>
-                                </div>
-
-                                <div class="concurso-meta">
-                                    <div class="concurso-vagas">
-                                        <strong>${concurso.vagas}</strong> vagas
-                                    </div>
-                                    <div class="concurso-status ${concurso.status}">
-                                        ${this.formatarStatus(concurso.status)}
-                                    </div>
-                                </div>
-
-                                <div class="concurso-actions">
-                                    ${adicionado ? `
-                                        <button class="action-btn remove" onclick="ConcursosManager.removerConcurso('${concurso.id}')">
-                                            <i class="fas fa-trash"></i>
-                                            Remover
-                                        </button>
-                                    ` : `
-                                        <button class="action-btn add" onclick="ConcursosManager.adicionarConcurso('${concurso.id}')">
-                                            <i class="fas fa-check"></i>
-                                            Adicionar
-                                        </button>
-                                    `}
-                                    ${concurso.link ? `
-                                        <a href="${concurso.link}" target="_blank" class="action-btn link">
-                                            <i class="fas fa-external-link-alt"></i>
-                                            Link
-                                        </a>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-                },
-
-                formatarData(data) {
-                    if (!data) return 'Data não informada';
-                    const d = new Date(data);
-                    return d.toLocaleDateString('pt-BR');
-                },
-
-                formatarStatus(status) {
-                    const statusMap = {
-                        'aberto': 'Aberto',
-                        'fechado': 'Fechado',
-                        'resultado': 'Resultado'
-                    };
-                    return statusMap[status] || status;
-                },
-
-                filtrarPorRegiao(regiao) {
-                    console.log(`[ConcursosManager] Filtrando por região: ${regiao}`);
-                    
-                    // Toggle selection
-                    if (this.filtroRegiao === regiao) {
-                        this.filtroRegiao = null;
-                    } else {
-                        this.filtroRegiao = regiao;
-                    }
-                    
-                    // Update SVG selection
-                    document.querySelectorAll('.brazil-map .region').forEach(path => {
-                        path.classList.remove('selected');
-                        if (path.dataset.region === this.filtroRegiao) {
-                            path.classList.add('selected');
-                        }
-                    });
-                    
-                    this.buscar();
-                },
-
-                esconderLoader() {
-                    setTimeout(() => {
-                        const loader = document.getElementById('loader-global');
-                        if (loader) {
-                            loader.classList.add('hidden');
-                            setTimeout(() => loader.style.display = 'none', 500);
-                        }
-                    }, 800);
+                    this.atualizarEstatisticas();
+                    console.log('[ConcursosManager] Concurso ' + concursoId + ' adicionado');
                 }
-            };
+            },
 
-            // Expor para uso global
-            window.ConcursosManager = ConcursosManager;
+            removerConcurso: function(concursoId) {
+                this.usuarioConcursos = this.usuarioConcursos.filter(function(c) { return c.id !== concursoId; });
+                this.salvarConcursosUsuario();
+                this.renderizar();
+                console.log('[ConcursosManager] Concerto ' + concursoId + ' removido');
+            },
 
-            // Inicializar quando o DOM estiver pronto
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => ConcursosManager.init());
-            } else {
-                ConcursosManager.init();
+            estaAdicionado: function(concursoId) {
+                return this.usuarioConcursos.some(function(c) { return c.id === concursoId; });
+            },
+
+            atualizarEstatisticas: function() {
+                var abertos = this.concursos.filter(function(c) { return c.status === 'aberto'; }).length;
+                var nacionais = this.concursos.filter(function(c) { return c.nacional === true; }).length;
+                var totalVagas = this.concursos.reduce(function(sum, c) { return sum + (parseInt(c.vagas) || 0); }, 0);
+                
+                // Calcular inscrições que terminam em breve (menos de 7 dias)
+                var hoje = new Date();
+                var seteDias = new Date(hoje.getTime() + 7 * 24 * 60 * 60 * 1000);
+                var self = this;
+                var proximas = this.concursos.filter(function(c) {
+                    if (c.status !== 'aberto' || !c.dataFim) return false;
+                    var dataFim = new Date(c.dataFim);
+                    return dataFim >= hoje && dataFim <= seteDias;
+                }).length;
+
+                var statTotal = document.getElementById('stat-total');
+                if (statTotal) {
+                    statTotal.textContent = this.concursos.length;
+                }
+                var statAbertos = document.getElementById('stat-abertos');
+                if (statAbertos) {
+                    statAbertos.textContent = abertos;
+                }
+                var statNacionais = document.getElementById('stat-nacionais');
+                if (statNacionais) {
+                    statNacionais.textContent = nacionais;
+                }
+                var proximosInscricoes = document.getElementById('proximos-inscricoes');
+                if (proximosInscricoes) {
+                    proximosInscricoes.textContent = proximas;
+                }
+                var totalVagasEl = document.getElementById('total-vagas');
+                if (totalVagasEl) {
+                    totalVagasEl.textContent = totalVagas.toLocaleString('pt-BR');
+                }
+            },
+
+            renderizar: function() {
+                var container = document.getElementById('concursos-container');
+                var emptyState = document.getElementById('empty-state');
+
+                if (!container) return;
+
+                if (this.concursosFiltrados.length === 0) {
+                    container.innerHTML = '';
+                    if (emptyState) {
+                        emptyState.style.display = 'block';
+                    }
+                    return;
+                }
+
+                if (emptyState) {
+                    emptyState.style.display = 'none';
+                }
+
+                var self = this;
+                container.innerHTML = this.concursosFiltrados.map(function(concurso) {
+                    var adicionado = self.estaAdicionado(concurso.id);
+                    return '\
+                        <div class="concurso-card">\
+                            <div class="concurso-header">\
+                                <div class="concurso-title">' + concurso.titulo + '</div>\
+                                <div class="concurso-instituicao">' + concurso.instituicao + '</div>\
+                            </div>\
+                            <div class="concurso-info">\
+                                <i class="fas fa-map-pin"></i>\
+                                <span>' + concurso.cidade + ', ' + concurso.estado + '</span>\
+                            </div>\
+                            <div class="concurso-info">\
+                                <i class="fas fa-calendar"></i>\
+                                <span>Inscrições até ' + self.formatarData(concurso.dataFim) + '</span>\
+                            </div>\
+                            <div class="concurso-meta">\
+                                <div class="concurso-vagas">\
+                                    <strong>' + concurso.vagas + '</strong> vagas\
+                                </div>\
+                                <div class="concurso-status ' + concurso.status + '">' + self.formatarStatus(concurso.status) + '</div>\
+                            </div>\
+                            <div class="concurso-actions">\
+                                ' + (adicionado ? '\
+                                    <button class="action-btn remove" onclick="ConcursosManager.removerConcurso(\'' + concurso.id + '\')">\
+                                        <i class="fas fa-trash"></i>\
+                                        Remover\
+                                    </button>\
+                                ' : '\
+                                    <button class="action-btn add" onclick="ConcursosManager.adicionarConcurso(\'' + concurso.id + '\')">\
+                                        <i class="fas fa-check"></i>\
+                                        Adicionar\
+                                    </button>\
+                                ') + '\
+                                ' + (concurso.link ? '\
+                                    <a href="' + concurso.link + '" target="_blank" class="action-btn link">\
+                                        <i class="fas fa-external-link-alt"></i>\
+                                        Link\
+                                    </a>\
+                                ' : '') + '\
+                            </div>\
+                        </div>\
+                    ';
+                }).join('');
+            },
+
+            formatarData: function(data) {
+                if (!data) return 'Data não informada';
+                var d = new Date(data);
+                return d.toLocaleDateString('pt-BR');
+            },
+
+            formatarStatus: function(status) {
+                var statusMap = {
+                    'aberto': 'Aberto',
+                    'fechado': 'Fechado',
+                    'resultado': 'Resultado'
+                };
+                return statusMap[status] || status;
+            },
+
+            filtrarPorRegiao: function(regiao) {
+                console.log('[ConcursosManager] Filtrando por região: ' + regiao);
+                
+                // Toggle selection
+                if (this.filtroRegiao === regiao) {
+                    this.filtroRegiao = null;
+                } else {
+                    this.filtroRegiao = regiao;
+                }
+                
+                // Update SVG selection
+                var regions = document.querySelectorAll('.brazil-map .region');
+                for (var i = 0; i < regions.length; i++) {
+                    regions[i].classList.remove('selected');
+                    if (regions[i].dataset.region === this.filtroRegiao) {
+                        regions[i].classList.add('selected');
+                    }
+                }
+                
+                this.buscar();
+            },
+
+            esconderLoader: function() {
+                setTimeout(function() {
+                    var loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(function() { loader.style.display = 'none'; }, 500);
+                    }
+                }, 800);
             }
-        })();
+        };
+
+        // Expor para uso global
+        window.ConcursosManager = ConcursosManager;
+
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        function init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ComponentLoader.init();
+                });
+            } else {
+                ComponentLoader.init();
+            }
+        }
+
+        init();
+
+    })();
     </script>
 </body>
 </html>
