@@ -1,3 +1,8 @@
+/*
+ * Sistema Global de Tratamento de Erros
+ * Este arquivo deve ser incluído em TODAS as páginas HTML da plataforma
+ * para garantir tratamento consistente de erros.
+ * Uso: <script src="/assets/js/error-handler-global.js"><\/script>
  */
 
 (function() {
