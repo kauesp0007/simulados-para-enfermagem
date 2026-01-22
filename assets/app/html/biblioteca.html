@@ -20,15 +20,28 @@
     <!-- Ícones FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- CSS dos Componentes -->
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
+    
+    <!-- CSS do Cabeçalho -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
-    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+    
+    <!-- CSS de Acessibilidade -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    
+    <!-- CSS do Rodapé -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
 
     <style>
         /* ============================================
-           VARIÁVEIS CSS - ESTILO DASHBOARD(8)
+           BIBLIOTECA SPECIFIC STYLES
            ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary: #1A3E74;
             --accent: #00bcd4;
@@ -37,15 +50,6 @@
             --error: #f44336;
             --light: #f4f6f9;
             --dark: #1f2937;
-        }
-
-        /* ============================================
-           RESET E BASE
-           ============================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
 
         html {
@@ -64,27 +68,47 @@
             font-family: 'Nunito Sans', sans-serif;
         }
 
-        /* ============================================
-           ACESSIBILIDADE - DASHBOARD(8)
-           ============================================ */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
+        /* Loader Global */
+        #loader-global {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200000;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        #loader-global.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loader-dot {
+            width: 10px;
+            height: 10px;
             background: var(--primary);
-            color: white;
-            padding: 8px;
-            z-index: 100000;
-            transition: top 0.3s;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite;
         }
 
-        .skip-link:focus {
-            top: 0;
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
         }
 
-        /* ============================================
-           LAYOUT PRINCIPAL - DASHBOARD(8)
-           ============================================ */
         .page-wrapper {
             width: 100%;
             max-width: 1200px;
@@ -95,9 +119,7 @@
             padding: 40px 20px;
         }
 
-        /* ============================================
-           PAGE HEADER - DASHBOARD(8)
-           ============================================ */
+        /* Page Header */
         .page-header {
             margin-bottom: 40px;
         }
@@ -122,9 +144,7 @@
             color: #666;
         }
 
-        /* ============================================
-           SEARCH BAR - ESTILO DASHBOARD(8)
-           ============================================ */
+        /* Search Bar */
         .search-bar {
             background: white;
             padding: 24px;
@@ -189,18 +209,14 @@
             background: #152c4f;
         }
 
-        /* ============================================
-           MATERIALS GRID
-           ============================================ */
+        /* Materials Grid */
         .materials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 24px;
         }
 
-        /* ============================================
-           MATERIAL CARD - BASEADO NO FEATURE-CARD DASHBOARD(8)
-           ============================================ */
+        /* Material Card */
         .material-card {
             background: white;
             border-radius: 12px;
@@ -284,9 +300,7 @@
             gap: 10px;
         }
 
-        /* ============================================
-           BOTÕES - ESTILO DASHBOARD(8)
-           ============================================ */
+        /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -333,9 +347,7 @@
             background: #d32f2f;
         }
 
-        /* ============================================
-           EMPTY STATE - DASHBOARD(8)
-           ============================================ */
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -352,9 +364,33 @@
             font-size: 16px;
         }
 
-        /* ============================================
-           RESPONSIVIDADE - DASHBOARD(8)
-           ============================================ */
+        /* Error display styles */
+        .component-error {
+            padding: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .component-error h4 {
+            color: #E65100;
+            margin: 0 0 10px 0;
+        }
+
+        .component-error p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .component-error code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .page-wrapper {
                 padding: 24px 16px;
@@ -398,9 +434,7 @@
             }
         }
 
-        /* ============================================
-           DARK MODE - DASHBOARD(8)
-           ============================================ */
+        /* Dark Mode */
         body.dark-mode {
             background: #1f2937;
             color: #f0f4f8;
@@ -474,9 +508,7 @@
             background: #6b7280;
         }
 
-        /* ============================================
-           HIGH CONTRAST MODE
-           ============================================ */
+        /* High Contrast Mode */
         body[data-contrast="high"] .material-card {
             border: 2px solid var(--primary);
         }
@@ -485,9 +517,7 @@
             border: 2px solid var(--primary);
         }
 
-        /* ============================================
-           REDUZIR ANIMAÇÕES - DASHBOARD(8)
-           ============================================ */
+        /* Reduzir Animações */
         body.reduce-animations .material-card,
         body.reduce-animations .btn,
         body.reduce-animations .filter-btn {
@@ -506,16 +536,22 @@
     </style>
 </head>
 <body>
-    <!-- Skip Link -->
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+    <!-- LOADER -->
+    <div id="loader-global">
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
 
     <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
     <div id="header-container"></div>
 
     <!-- CONTEÚDO PRINCIPAL -->
-    <main id="main">
-        <div class="page-wrapper">
+    <div class="page-wrapper">
+        <main id="main-content">
             <div class="page-header">
                 <h1><i class="fas fa-book-open"></i> Biblioteca</h1>
                 <p>Acervo completo de materiais de estudo para enfermagem</p>
@@ -736,46 +772,179 @@
                 <p>Nenhum material encontrado</p>
                 <p style="font-size: 14px; margin-top: 8px;">Tente ajustar sua busca ou filtros</p>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <!-- FOOTER -->
     <div id="footer-container"></div>
 
-    <!-- SCRIPTS DOS COMPONENTES -->
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/component-loader.js"></script>
-
-    <!-- Script da Biblioteca -->
+    <!-- JavaScript dos Componentes (carregados antes do script principal) -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
+    
+    <!-- SCRIPT DA BIBLIOTECA -->
     <script>
+    (function() {
+        'use strict';
+
+        // ========================================
+        // CONFIGURAÇÃO DE CAMINHOS
+        // ========================================
+        const Config = {
+            // URL base para os arquivos HTML dos componentes
+            htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+            
+            // Componentes a carregar
+            components: [
+                { 
+                    id: 'accessibility-container', 
+                    file: 'accessibility.html',
+                    name: 'Painel de Acessibilidade'
+                },
+                { 
+                    id: 'header-container', 
+                    file: 'header.html',
+                    name: 'Cabeçalho'
+                },
+                { 
+                    id: 'footer-container', 
+                    file: 'footer.html',
+                    name: 'Rodapé'
+                }
+            ]
+        };
+
+        // ========================================
+        // CARREGADOR DE COMPONENTES
+        // ========================================
+        const ComponentLoader = {
+            async loadComponent(comp) {
+                const container = document.getElementById(comp.id);
+                
+                if (!container) {
+                    console.error('[ERRO] Container não encontrado: #' + comp.id);
+                    return false;
+                }
+
+                const fullPath = Config.htmlPath + comp.file;
+                console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
+
+                try {
+                    const response = await fetch(fullPath);
+                    
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                    }
+
+                    const html = await response.text();
+                    
+                    if (!html || html.trim() === '') {
+                        throw new Error('Arquivo vazio');
+                    }
+
+                    container.innerHTML = html;
+                    console.log('[SUCESSO] ' + comp.name + ' carregado');
+                    return true;
+
+                } catch (error) {
+                    console.error('[ERRO] ' + comp.name + ':', error.message);
+                    
+                    container.innerHTML = '<div class="component-error">' +
+                        '<h4>⚠️ Erro ao carregar: ' + comp.name + '</h4>' +
+                        '<p><strong>Arquivo:</strong> ' + comp.file + '</p>' +
+                        '<p><strong>Caminho:</strong> <code>' + fullPath + '</code></p>' +
+                        '<p><strong>Erro:</strong> ' + error.message + '</p>' +
+                        '<p style="font-size: 12px; color: #666; margin-top: 10px;">' +
+                        'Verifique se os arquivos estão na pasta correta.</p>' +
+                        '</div>';
+                    
+                    return false;
+                }
+            },
+
+            async init() {
+                console.log('========================================');
+                console.log('CARREGANDO COMPONENTES');
+                console.log('========================================');
+                
+                let allLoaded = true;
+                
+                for (const comp of Config.components) {
+                    const success = await this.loadComponent(comp);
+                    if (!success) allLoaded = false;
+                }
+
+                console.log('========================================');
+                
+                if (allLoaded) {
+                    console.log('[OK] Todos os componentes carregados!');
+                } else {
+                    console.log('[AVISO] Alguns componentes não carregaram.');
+                }
+                console.log('========================================');
+
+                // Disparar evento de componentes carregados para o header
+                document.dispatchEvent(new CustomEvent('headerComponentsLoaded', {
+                    bubbles: true,
+                    cancelable: true
+                }));
+
+                // Inicializar Biblioteca
+                Biblioteca.init();
+            }
+        };
+
+        // ========================================
+        // BIBLIOTECA MANAGER
+        // ========================================
         const Biblioteca = {
             filtroAtivo: 'todos',
-            init() {
+
+            init: function() {
+                console.log('[Biblioteca] Inicializando...');
                 this.carregarFavoritos();
+                this.hideLoader();
             },
-            filtrar(categoria, btn) {
+
+            hideLoader: function() {
+                var self = this;
+                setTimeout(function() {
+                    var loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(function() { loader.style.display = 'none'; }, 500);
+                    }
+                }, 500);
+            },
+
+            filtrar: function(categoria, btn) {
                 this.filtroAtivo = categoria;
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                var self = this;
+                document.querySelectorAll('.filter-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                });
                 btn.classList.add('active');
                 this.aplicarFiltros();
             },
-            buscar() {
+
+            buscar: function() {
                 this.aplicarFiltros();
             },
-            aplicarFiltros() {
-                const searchTerm = document.getElementById('search-input').value.toLowerCase();
-                const cards = document.querySelectorAll('.material-card');
-                let visibleCount = 0;
 
-                cards.forEach(card => {
-                    const categoria = card.getAttribute('data-category');
-                    const titulo = card.querySelector('.material-title').textContent.toLowerCase();
-                    const desc = card.querySelector('.material-desc').textContent.toLowerCase();
+            aplicarFiltros: function() {
+                var searchTerm = document.getElementById('search-input').value.toLowerCase();
+                var cards = document.querySelectorAll('.material-card');
+                var visibleCount = 0;
+                var self = this;
+
+                cards.forEach(function(card) {
+                    var categoria = card.getAttribute('data-category');
+                    var titulo = card.querySelector('.material-title').textContent.toLowerCase();
+                    var desc = card.querySelector('.material-desc').textContent.toLowerCase();
                     
-                    const passaFiltro = (this.filtroAtivo === 'todos' || categoria === this.filtroAtivo);
-                    const passaBusca = titulo.includes(searchTerm) || desc.includes(searchTerm);
+                    var passaFiltro = (self.filtroAtivo === 'todos' || categoria === self.filtroAtivo);
+                    var passaBusca = titulo.indexOf(searchTerm) !== -1 || desc.indexOf(searchTerm) !== -1;
                     
                     if (passaFiltro && passaBusca) {
                         card.style.display = 'flex';
@@ -785,22 +954,24 @@
                     }
                 });
 
-                const emptyState = document.getElementById('empty-state');
+                var emptyState = document.getElementById('empty-state');
                 if (visibleCount === 0) {
                     emptyState.style.display = 'block';
                 } else {
                     emptyState.style.display = 'none';
                 }
             },
-            abrir(id) {
+
+            abrir: function(id) {
                 alert('Abrindo material: ' + id);
             },
-            favoritar(id, btnId) {
-                const favoritos = JSON.parse(localStorage.getItem('biblioteca_favoritos') || '[]');
-                const btn = document.getElementById(btnId);
-                const icon = btn.querySelector('i');
+
+            favoritar: function(id, btnId) {
+                var favoritos = JSON.parse(localStorage.getItem('biblioteca_favoritos') || '[]');
+                var btn = document.getElementById(btnId);
+                var icon = btn.querySelector('i');
                 
-                if (favoritos.includes(id)) {
+                if (favoritos.indexOf(id) !== -1) {
                     favoritos.splice(favoritos.indexOf(id), 1);
                     icon.classList.remove('fas');
                     icon.classList.add('far');
@@ -814,12 +985,14 @@
                 
                 localStorage.setItem('biblioteca_favoritos', JSON.stringify(favoritos));
             },
-            carregarFavoritos() {
-                const favoritos = JSON.parse(localStorage.getItem('biblioteca_favoritos') || '[]');
-                favoritos.forEach(id => {
-                    const btn = document.querySelector(`[id^="fav-${id}"]`);
+
+            carregarFavoritos: function() {
+                var favoritos = JSON.parse(localStorage.getItem('biblioteca_favoritos') || '[]');
+                var self = this;
+                favoritos.forEach(function(id) {
+                    var btn = document.querySelector('[id^="fav-' + id + '"]');
                     if (btn) {
-                        const icon = btn.querySelector('i');
+                        var icon = btn.querySelector('i');
                         if (icon) {
                             icon.classList.remove('far');
                             icon.classList.add('fas');
@@ -830,11 +1003,22 @@
             }
         };
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => Biblioteca.init());
-        } else {
-            Biblioteca.init();
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        function init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ComponentLoader.init();
+                });
+            } else {
+                ComponentLoader.init();
+            }
         }
+
+        init();
+
+    })();
     </script>
 </body>
 </html>
