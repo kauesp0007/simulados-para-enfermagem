@@ -91,7 +91,7 @@
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
 
     <!-- Sistema Global de Tratamento de Erros -->
-    <script src="https://simulados-para-enfermagem.com.br/assets/app/js/error-handler-global.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/js/error-handler-global.js"></script>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLGJ0L0GZE"></script>
@@ -963,7 +963,7 @@
                                 '<div class="exam-countdown-item-content">' +
                                 '<div class="exam-countdown-item-title">' + this.escapeHtml(concurso.titulo || 'Concurso') + '</div>' +
                                 '<div class="exam-countdown-item-date">Prova: ' + this.formatExamDate(concurso.dataProva) + '</div></div>' +
-                                '<div class="exam-countdown-item-days" style="background:' + styles.badgeBg + ';color:' + styles.badgeColor + ';" aria-label="' + (daysRemaining < 0 ? Math.abs(daysRemaining) + ' dias atrasado' : daysRemaining + ' dias") + '">' +
+                                '<div class="exam-countdown-item-days" style="background:' + styles.badgeBg + ';color:' + styles.badgeColor + ';" aria-label="' + (daysRemaining < 0 ? Math.abs(daysRemaining) + ' dias atrasado' : daysRemaining + ' dias') + '">' +
                                 (daysRemaining < 0 ? '+' + Math.abs(daysRemaining) : daysRemaining) + '</div></div>';
                         }
 
