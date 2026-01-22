@@ -20,14 +20,21 @@
     <!-- Ícones FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- CSS dos Componentes -->
+    <!-- CSS dos Componentes Modularizados -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
+    
+    <!-- CSS do Cabeçalho -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
-    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
+    
+    <!-- CSS de Acessibilidade -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
+    
+    <!-- CSS do Rodapé -->
+    <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
 
     <style>
         /* ============================================
-           RESET E BASE
+           DESAFIO INVERSO SPECIFIC STYLES
            ============================================ */
         * {
             margin: 0;
@@ -59,22 +66,6 @@
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Nunito Sans', sans-serif;
-        }
-
-        /* Skip Link para Acessibilidade */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--primary);
-            color: white;
-            padding: 8px;
-            z-index: 100000;
-            transition: top 0.3s;
-        }
-
-        .skip-link:focus {
-            top: 0;
         }
 
         /* Loader Global */
@@ -109,30 +100,15 @@
             animation: dotPulse 1.4s ease-in-out infinite;
         }
 
-        .loader-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .loader-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .loader-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .loader-dot:nth-child(1) { animation-delay: 0s; }
+        .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes dotPulse {
-            0%, 80%, 100% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-            40% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
         }
 
-        /* Layout Principal */
         .page-wrapper {
             width: 100%;
             max-width: 1200px;
@@ -148,62 +124,6 @@
             margin: 0 auto;
         }
 
-        /* Breadcrumb Navigation */
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-
-        .breadcrumb a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--accent);
-        }
-
-        .breadcrumb i {
-            font-size: 12px;
-        }
-
-        .breadcrumb .current {
-            color: #666;
-        }
-
-        /* Navigation Breadcrumb */
-        .nav-breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .nav-breadcrumb a {
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-breadcrumb a:hover {
-            color: var(--accent);
-        }
-
-        .nav-breadcrumb span {
-            color: #666;
-        }
-
-        /* Page Header */
         .page-header {
             margin-bottom: 32px;
         }
@@ -225,6 +145,37 @@
 
         .page-header p {
             font-size: 16px;
+            color: #666;
+        }
+
+        /* Navigation Breadcrumb */
+        .nav-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .nav-breadcrumb span {
+            color: #666;
+        }
+
+        .nav-breadcrumb .current {
             color: #666;
         }
 
@@ -279,6 +230,7 @@
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 12px 24px;
             border-radius: 8px;
@@ -289,30 +241,36 @@
             text-decoration: none;
             font-size: 15px;
             font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: white;
+            min-width: 140px;
+            min-height: 44px;
+            box-sizing: border-box;
         }
 
         .btn:hover {
+            background: #152c4f;
             transform: translateY(-2px);
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #152c4f;
-        }
-
         .btn-secondary {
+            display: inline-block;
+            padding: 10px 20px;
             background: white;
             color: var(--primary);
             border: 2px solid var(--primary);
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 14px;
         }
 
         .btn-secondary:hover {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
         }
 
         /* Challenge Card */
@@ -590,6 +548,31 @@
             transition: none;
             animation: none;
         }
+
+        .component-error {
+            padding: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .component-error h4 {
+            color: #E65100;
+            margin: 0 0 10px 0;
+        }
+
+        .component-error p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .component-error code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -602,9 +585,6 @@
         </div>
     </div>
 
-    <!-- SKIP LINK -->
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-
     <!-- CONTAINERS PARA COMPONENTES MODULARES -->
     <div id="accessibility-container"></div>
     <div id="header-container"></div>
@@ -615,9 +595,9 @@
             <div class="container">
                 <!-- Navigation Breadcrumb -->
                 <nav class="nav-breadcrumb" aria-label="Navegação">
-                    <a href="index.html"><i class="fas fa-home"></i> Início</a>
+                    <a href="dashboard.html"><i class="fas fa-home"></i> Início</a>
                     <span><i class="fas fa-chevron-right"></i></span>
-                    <a href="dashboard (8)-corrigido.html">Dashboard</a>
+                    <a href="dashboard.html">Dashboard</a>
                     <span><i class="fas fa-chevron-right"></i></span>
                     <span class="current">Desafio Inverso</span>
                 </nav>
@@ -646,10 +626,10 @@
 
                 <!-- Controls -->
                 <div class="controls">
-                    <button class="btn btn-primary" onclick="DesafioInverso.proximoDesafio()">
+                    <button class="btn" onclick="DesafioInverso.proximoDesafio()">
                         <i class="fas fa-play"></i> Próximo Desafio
                     </button>
-                    <button class="btn btn-secondary" onclick="DesafioInverso.resetar()">
+                    <button class="btn-secondary" onclick="DesafioInverso.resetar()">
                         <i class="fas fa-redo"></i> Resetar
                     </button>
                 </div>
@@ -659,7 +639,7 @@
                     <i class="fas fa-lightbulb"></i>
                     <h3>Bem-vindo ao Desafio Inverso!</h3>
                     <p>Você vê a resposta e precisa encontrar a pergunta correta.<br>Teste seus conhecimentos de enfermagem de uma forma diferente.</p>
-                    <button class="btn btn-primary" onclick="DesafioInverso.proximoDesafio()">
+                    <button class="btn" onclick="DesafioInverso.proximoDesafio()">
                         <i class="fas fa-play"></i> Começar Desafio
                     </button>
                 </div>
@@ -693,160 +673,275 @@
     <!-- FOOTER -->
     <div id="footer-container"></div>
 
-    <!-- SCRIPTS DOS COMPONENTES -->
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer-loader.js"></script>
-    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/component-loader.js"></script>
+    <!-- JavaScript dos Componentes (carregados antes do script da página) -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
 
-    <!-- SCRIPTS DA PÁGINA -->
+    <!-- SCRIPT DO DESAFIO INVERSO -->
     <script>
-        (function() {
-            'use strict';
+    (function() {
+        'use strict';
 
-            /**
-             * DesafioInverso - Gerencia o jogo de desafio inverso
-             */
-            const DesafioInverso = {
-                challenges: [
-                    { answer: '60-100 bpm', options: ['Frequência cardíaca normal', 'Pressão arterial normal', 'Frequência respiratória', 'Temperatura corporal'] },
-                    { answer: '12-20 irpm', options: ['Frequência respiratória normal', 'Frequência cardíaca', 'Pressão arterial', 'Saturação de oxigênio'] },
-                    { answer: '36,5-37,5°C', options: ['Temperatura corporal normal', 'Febre', 'Hipotermia', 'Queimadura'] },
-                    { answer: '90-120 mmHg', options: ['Pressão arterial sistólica normal', 'Pressão diastólica', 'Frequência cardíaca', 'Glicemia'] },
-                    { answer: '95-100%', options: ['Saturação de oxigênio normal', 'Frequência cardíaca', 'Temperatura', 'Pressão arterial'] },
-                    { answer: '2.500-5.000/ml', options: ['Contagem normal de leucócitos', 'Plaquetas', 'Hemoglobina', 'Hematócrito'] },
-                    { answer: '11-13 g/dL', options: ['Hemoglobina feminina normal', 'Hemoglobina masculina', 'Plaquetas', 'Glicemia'] },
-                    { answer: '40-50%', options: ['Hematócrito normal', 'Hemoglobina', 'Glicemia', 'Colesterol'] },
-                    { answer: '70-100 mg/dL', options: ['Glicemia de jejum normal', 'Glicemia pós-prandial', 'Hemoglobina', 'Colesterol'] },
-                    { answer: '200-500 ml', options: ['Volume normal de bolsa de sangue', 'Volume de soro', 'Urina por micção', 'Líquido cerebrospinal'] }
-                ],
-                currentChallenge: null,
-                totalAttempts: 0,
-                correctAnswers: 0,
-
-                init() {
-                    console.log('[DesafioInverso] Inicializando...');
-                    this.carregarEstatisticas();
-                    this.esconderLoader();
+        // ========================================
+        // CONFIGURAÇÃO DE CAMINHOS
+        // ========================================
+        const Config = {
+            // URL base para os arquivos HTML dos componentes
+            htmlPath: 'https://simulados-para-enfermagem.com.br/assets/components/html/',
+            
+            // Componentes a carregar
+            components: [
+                { 
+                    id: 'accessibility-container', 
+                    file: 'accessibility.html',
+                    name: 'Painel de Acessibilidade'
                 },
-
-                proximoDesafio() {
-                    this.currentChallenge = this.challenges[Math.floor(Math.random() * this.challenges.length)];
-                    const shuffled = [...this.currentChallenge.options].sort(() => Math.random() - 0.5);
-                    
-                    document.getElementById('initial-message').style.display = 'none';
-                    document.getElementById('challenge-container').style.display = 'block';
-                    document.getElementById('challenge-answer').textContent = this.currentChallenge.answer;
-                    
-                    const optionsContainer = document.getElementById('answer-options');
-                    optionsContainer.innerHTML = '';
-                    
-                    shuffled.forEach((option, index) => {
-                        const btn = document.createElement('button');
-                        btn.className = 'answer-btn';
-                        btn.innerHTML = `<i class="far fa-circle"></i> ${option}`;
-                        btn.onclick = () => this.verificarResposta(option, btn);
-                        optionsContainer.appendChild(btn);
-                    });
+                { 
+                    id: 'header-container', 
+                    file: 'header.html',
+                    name: 'Cabeçalho'
                 },
-
-                verificarResposta(selected, btn) {
-                    this.totalAttempts++;
-                    const isCorrect = selected === this.currentChallenge.options[0];
-                    
-                    // Disable all buttons
-                    document.querySelectorAll('.answer-btn').forEach(b => {
-                        b.onclick = null;
-                        b.style.cursor = 'default';
-                    });
-                    
-                    if (isCorrect) {
-                        this.correctAnswers++;
-                        btn.classList.add('correct');
-                        btn.innerHTML = `<i class="fas fa-check-circle"></i> ${selected}`;
-                    } else {
-                        btn.classList.add('incorrect');
-                        btn.innerHTML = `<i class="fas fa-times-circle"></i> ${selected}`;
-                        // Highlight correct answer
-                        document.querySelectorAll('.answer-btn').forEach(b => {
-                            if (b.textContent.includes(this.currentChallenge.options[0])) {
-                                b.classList.add('correct');
-                                b.innerHTML = `<i class="fas fa-check-circle"></i> ${this.currentChallenge.options[0]}`;
-                            }
-                        });
-                    }
-                    
-                    this.salvarEstatisticas();
-                    this.atualizarEstatisticas();
-                    
-                    setTimeout(() => this.proximoDesafio(), 2000);
-                },
-
-                atualizarEstatisticas() {
-                    document.getElementById('challenges-completed').textContent = this.totalAttempts;
-                    document.getElementById('correct-answers').textContent = this.correctAnswers;
-                    const accuracy = this.totalAttempts > 0 ? Math.round((this.correctAnswers / this.totalAttempts) * 100) : 0;
-                    document.getElementById('accuracy').textContent = accuracy + '%';
-                },
-
-                salvarEstatisticas() {
-                    const dados = {
-                        totalAttempts: this.totalAttempts,
-                        correctAnswers: this.correctAnswers,
-                        ultimaAtualizacao: new Date().toISOString()
-                    };
-                    localStorage.setItem('desafioinverso_stats', JSON.stringify(dados));
-                },
-
-                carregarEstatisticas() {
-                    try {
-                        const dados = localStorage.getItem('desafioinverso_stats');
-                        if (dados) {
-                            const parsed = JSON.parse(dados);
-                            this.totalAttempts = parsed.totalAttempts || 0;
-                            this.correctAnswers = parsed.correctAnswers || 0;
-                            this.atualizarEstatisticas();
-                        }
-                    } catch (error) {
-                        console.error('[DesafioInverso] Erro ao carregar estatísticas:', error);
-                    }
-                },
-
-                resetar() {
-                    if (!confirm('Tem certeza que deseja resetar suas estatísticas?')) {
-                        return;
-                    }
-                    
-                    this.currentChallenge = null;
-                    this.totalAttempts = 0;
-                    this.correctAnswers = 0;
-                    document.getElementById('challenge-container').style.display = 'none';
-                    document.getElementById('initial-message').style.display = 'block';
-                    localStorage.removeItem('desafioinverso_stats');
-                    this.atualizarEstatisticas();
-                },
-
-                esconderLoader() {
-                    setTimeout(() => {
-                        const loader = document.getElementById('loader-global');
-                        if (loader) {
-                            loader.classList.add('hidden');
-                            setTimeout(() => loader.style.display = 'none', 500);
-                        }
-                    }, 800);
+                { 
+                    id: 'footer-container', 
+                    file: 'footer.html',
+                    name: 'Rodapé'
                 }
-            };
+            ]
+        };
 
-            // Expor para uso global
-            window.DesafioInverso = DesafioInverso;
+        // ========================================
+        // CARREGADOR DE COMPONENTES
+        // ========================================
+        const ComponentLoader = {
+            async loadComponent(comp) {
+                const container = document.getElementById(comp.id);
+                
+                if (!container) {
+                    console.error('[ERRO] Container não encontrado: #' + comp.id);
+                    return false;
+                }
 
-            // Inicializar quando o DOM estiver pronto
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => DesafioInverso.init());
-            } else {
+                const fullPath = Config.htmlPath + comp.file;
+                console.log('[INFO] Carregando: ' + comp.name + ' (' + fullPath + ')');
+
+                try {
+                    const response = await fetch(fullPath);
+                    
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                    }
+
+                    const html = await response.text();
+                    
+                    if (!html || html.trim() === '') {
+                        throw new Error('Arquivo vazio');
+                    }
+
+                    container.innerHTML = html;
+                    console.log('[SUCESSO] ' + comp.name + ' carregado');
+                    return true;
+
+                } catch (error) {
+                    console.error('[ERRO] ' + comp.name + ':', error.message);
+                    
+                    container.innerHTML = '<div class="component-error">' +
+                        '<h4>⚠️ Erro ao carregar: ' + comp.name + '</h4>' +
+                        '<p><strong>Arquivo:</strong> ' + comp.file + '</p>' +
+                        '<p><strong>Caminho:</strong> <code>' + fullPath + '</code></p>' +
+                        '<p><strong>Erro:</strong> ' + error.message + '</p>' +
+                        '<p style="font-size: 12px; color: #666; margin-top: 10px;">' +
+                        'Verifique se os arquivos estão na pasta correta.</p>' +
+                        '</div>';
+                    
+                    return false;
+                }
+            },
+
+            async init() {
+                console.log('========================================');
+                console.log('CARREGANDO COMPONENTES - DESAFIO INVERSO');
+                console.log('========================================');
+                
+                let allLoaded = true;
+                
+                for (const comp of Config.components) {
+                    const success = await this.loadComponent(comp);
+                    if (!success) allLoaded = false;
+                }
+
+                console.log('========================================');
+                
+                if (allLoaded) {
+                    console.log('[OK] Todos os componentes carregados!');
+                } else {
+                    console.log('[AVISO] Alguns componentes não carregaram.');
+                }
+                console.log('========================================');
+
+                // Disparar evento de componentes carregados
+                document.dispatchEvent(new CustomEvent('headerComponentsLoaded', {
+                    bubbles: true,
+                    cancelable: true
+                }));
+
+                // Inicializar Desafio Inverso
                 DesafioInverso.init();
             }
-        })();
+        };
+
+        // ========================================
+        // DESAFIO INVERSO - LÓGICA DO JOGO
+        // ========================================
+        const DesafioInverso = {
+            challenges: [
+                { answer: '60-100 bpm', options: ['Frequência cardíaca normal', 'Pressão arterial normal', 'Frequência respiratória', 'Temperatura corporal'] },
+                { answer: '12-20 irpm', options: ['Frequência respiratória normal', 'Frequência cardíaca', 'Pressão arterial', 'Saturação de oxigênio'] },
+                { answer: '36,5-37,5°C', options: ['Temperatura corporal normal', 'Febre', 'Hipotermia', 'Queimadura'] },
+                { answer: '90-120 mmHg', options: ['Pressão arterial sistólica normal', 'Pressão diastólica', 'Frequência cardíaca', 'Glicemia'] },
+                { answer: '95-100%', options: ['Saturação de oxigênio normal', 'Frequência cardíaca', 'Temperatura', 'Pressão arterial'] },
+                { answer: '2.500-5.000/ml', options: ['Contagem normal de leucócitos', 'Plaquetas', 'Hemoglobina', 'Hematócrito'] },
+                { answer: '11-13 g/dL', options: ['Hemoglobina feminina normal', 'Hemoglobina masculina', 'Plaquetas', 'Glicemia'] },
+                { answer: '40-50%', options: ['Hematócrito normal', 'Hemoglobina', 'Glicemia', 'Colesterol'] },
+                { answer: '70-100 mg/dL', options: ['Glicemia de jejum normal', 'Glicemia pós-prandial', 'Hemoglobina', 'Colesterol'] },
+                { answer: '200-500 ml', options: ['Volume normal de bolsa de sangue', 'Volume de soro', 'Urina por micção', 'Líquido cerebrospinal'] }
+            ],
+            currentChallenge: null,
+            totalAttempts: 0,
+            correctAnswers: 0,
+
+            init() {
+                console.log('[DesafioInverso] Inicializando...');
+                this.carregarEstatisticas();
+                this.esconderLoader();
+            },
+
+            proximoDesafio() {
+                this.currentChallenge = this.challenges[Math.floor(Math.random() * this.challenges.length)];
+                const shuffled = [...this.currentChallenge.options].sort(() => Math.random() - 0.5);
+                
+                document.getElementById('initial-message').style.display = 'none';
+                document.getElementById('challenge-container').style.display = 'block';
+                document.getElementById('challenge-answer').textContent = this.currentChallenge.answer;
+                
+                const optionsContainer = document.getElementById('answer-options');
+                optionsContainer.innerHTML = '';
+                
+                shuffled.forEach((option, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'answer-btn';
+                    btn.innerHTML = '<i class="far fa-circle"></i> ' + option;
+                    btn.onclick = function() { DesafioInverso.verificarResposta(option, btn); };
+                    optionsContainer.appendChild(btn);
+                });
+            },
+
+            verificarResposta(selected, btn) {
+                this.totalAttempts++;
+                const isCorrect = selected === this.currentChallenge.options[0];
+                
+                // Disable all buttons
+                document.querySelectorAll('.answer-btn').forEach(function(b) {
+                    b.onclick = null;
+                    b.style.cursor = 'default';
+                });
+                
+                if (isCorrect) {
+                    this.correctAnswers++;
+                    btn.classList.add('correct');
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> ' + selected;
+                } else {
+                    btn.classList.add('incorrect');
+                    btn.innerHTML = '<i class="fas fa-times-circle"></i> ' + selected;
+                    // Highlight correct answer
+                    document.querySelectorAll('.answer-btn').forEach(function(b) {
+                        if (b.textContent.includes(this.currentChallenge.options[0])) {
+                            b.classList.add('correct');
+                            b.innerHTML = '<i class="fas fa-check-circle"></i> ' + this.currentChallenge.options[0];
+                        }
+                    }.bind(this));
+                }
+                
+                this.salvarEstatisticas();
+                this.atualizarEstatisticas();
+                
+                setTimeout(function() { this.proximoDesafio(); }.bind(this), 2000);
+            },
+
+            atualizarEstatisticas() {
+                document.getElementById('challenges-completed').textContent = this.totalAttempts;
+                document.getElementById('correct-answers').textContent = this.correctAnswers;
+                const accuracy = this.totalAttempts > 0 ? Math.round((this.correctAnswers / this.totalAttempts) * 100) : 0;
+                document.getElementById('accuracy').textContent = accuracy + '%';
+            },
+
+            salvarEstatisticas() {
+                const dados = {
+                    totalAttempts: this.totalAttempts,
+                    correctAnswers: this.correctAnswers,
+                    ultimaAtualizacao: new Date().toISOString()
+                };
+                localStorage.setItem('desafioinverso_stats', JSON.stringify(dados));
+            },
+
+            carregarEstatisticas() {
+                try {
+                    const dados = localStorage.getItem('desafioinverso_stats');
+                    if (dados) {
+                        const parsed = JSON.parse(dados);
+                        this.totalAttempts = parsed.totalAttempts || 0;
+                        this.correctAnswers = parsed.correctAnswers || 0;
+                        this.atualizarEstatisticas();
+                    }
+                } catch (error) {
+                    console.error('[DesafioInverso] Erro ao carregar estatísticas:', error);
+                }
+            },
+
+            resetar() {
+                if (!confirm('Tem certeza que deseja resetar suas estatísticas?')) {
+                    return;
+                }
+                
+                this.currentChallenge = null;
+                this.totalAttempts = 0;
+                this.correctAnswers = 0;
+                document.getElementById('challenge-container').style.display = 'none';
+                document.getElementById('initial-message').style.display = 'block';
+                localStorage.removeItem('desafioinverso_stats');
+                this.atualizarEstatisticas();
+            },
+
+            esconderLoader() {
+                setTimeout(function() {
+                    const loader = document.getElementById('loader-global');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                        setTimeout(function() { loader.style.display = 'none'; }, 500);
+                    }
+                }, 800);
+            }
+        };
+
+        // Expor para uso global
+        window.DesafioInverso = DesafioInverso;
+
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        function init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ComponentLoader.init();
+                });
+            } else {
+                ComponentLoader.init();
+            }
+        }
+
+        init();
+
+    })();
     </script>
 </body>
 </html>
