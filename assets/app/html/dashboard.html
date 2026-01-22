@@ -45,10 +45,10 @@
     <meta name="twitter:image" content="https://simulados-para-enfermagem.com.br/assets/images/og-dashboard.jpg">
 
     <!-- Mobile App -->
-    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Simulados">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <!-- Performance: Preconnect e DNS Prefetch -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,14 +84,11 @@
     <!-- Ícones FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- CSS Componentes com tratamento de erros -->
+    <!-- CSS Componentes -->
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/components.css">
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/header.css">
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/accessibility.css">
     <link rel="stylesheet" href="https://simulados-para-enfermagem.com.br/assets/components/css/footer.css">
-
-    <!-- Sistema Global de Tratamento de Erros -->
-    <script src="https://simulados-para-enfermagem.com.br/assets/js/error-handler-global.js"></script>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLGJ0L0GZE"></script>
@@ -380,294 +377,559 @@
         .stat-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
         }
 
-        .stat-card-icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
-            color: var(--primary);
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .stat-card-title {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 500;
+        .stat-card:hover::before { opacity: 1; }
+
+        .stat-label {
+            font-size: 0.8125rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
-        .stat-card-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .stat-card-change {
-            font-size: 0.75rem;
-            margin-top: 8px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            width: fit-content;
-        }
-
-        .stat-card-change.positive {
-            background: #ECFDF5;
-            color: #059669;
-        }
-
-        .stat-card-change.negative {
-            background: #FEF2F2;
-            color: #DC2626;
-        }
-
-        /* Exam Countdown */
-        .exam-countdown-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 48px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .exam-countdown-section h2 {
-            font-size: 1.5rem;
-            margin-bottom: 24px;
-            color: var(--primary);
-        }
-
-        .exam-countdown-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .exam-countdown-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background: var(--bg-body);
-            border-radius: 8px;
-            transition: var(--transition-base);
-        }
-
-        .exam-countdown-item:hover {
-            background: #f0f1f3;
-        }
-
-        .exam-countdown-item-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .exam-countdown-item-content {
-            flex: 1;
-        }
-
-        .exam-countdown-item-title {
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 4px;
-        }
-
-        .exam-countdown-item-date {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .exam-countdown-item-days {
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            flex-shrink: 0;
-        }
-
-        .exam-countdown-empty {
-            text-align: center;
-            padding: 40px 24px;
-            color: var(--text-secondary);
-        }
-
-        .exam-countdown-empty i {
-            font-size: 3rem;
+            color: #546E7A;
             margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .exam-countdown-empty h4 {
-            font-size: 1.125rem;
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        .exam-countdown-empty p {
-            font-size: 0.875rem;
-            margin-bottom: 12px;
-        }
-
-        .exam-countdown-empty .action-hint a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .exam-countdown-empty .action-hint a:hover {
-            text-decoration: underline;
-        }
-
-        /* Features Grid */
-        .features-section {
-            margin-top: 48px;
-        }
-
-        .features-section h2 {
-            font-size: 1.5rem;
-            margin-bottom: 24px;
-            color: var(--primary);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition-base);
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .feature-card:hover, .feature-card:focus {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent);
-        }
-
-        .feature-card h3 {
-            font-size: 1.125rem;
-            margin-bottom: 12px;
-            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .feature-card p {
+        .stat-label i {
+            color: #00ACC1;
+            background: #E0F7FA;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            flex: 1;
         }
 
-        .feature-card .btn {
-            align-self: flex-start;
-            margin-top: auto;
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #003366;
+            line-height: 1.1;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 99px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Meta Section */
+        .meta-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .meta-label {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #003366;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-label i {
+            color: #00ACC1;
+            background: #E0F7FA;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .meta-percentage {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #0D47A1;
+            background: #E3F2FD;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .meta-section .progress-bar { height: 10px; background: #F1F3F4; border-radius: 50px; }
+        .meta-section .progress-fill { background: linear-gradient(90deg, #2196F3, #00ACC1); border-radius: 50px; }
+
+        .meta-description {
+            margin-top: 12px;
+            color: #757575;
+            font-size: 0.8125rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-description i { font-size: 0.75rem; color: #9e9e9e; }
+
+        /* Notifications */
+        .notification-page-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-notification {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition-base);
+            box-shadow: 0 2px 4px rgba(26, 62, 116, 0.2);
+        }
+
+        .btn-notification:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 62, 116, 0.3);
+        }
+
+        .btn-notification i { color: white; }
+
+        /* Exam Countdown Card */
+        .exam-countdown-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .exam-countdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .exam-countdown-label {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #003366;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .exam-countdown-label i {
+            color: #00ACC1;
+            background: #E0F7FA;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .exam-countdown-count-badge {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #0D47A1;
+            background: #E3F2FD;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .exam-countdown-list {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .exam-countdown-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-base);
+        }
+
+        .exam-countdown-item:last-child { border-bottom: none; }
+        .exam-countdown-item:hover { background: #f8fafc; }
+
+        .exam-countdown-item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            font-size: 0.9375rem;
+            flex-shrink: 0;
+        }
+
+        .exam-countdown-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .exam-countdown-item-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #1A3E74;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .exam-countdown-item-date {
+            font-size: 0.8125rem;
+            color: #6b7280;
+        }
+
+        .exam-countdown-item-days {
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-left: 12px;
+            flex-shrink: 0;
+        }
+
+        .exam-countdown-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 36px 20px;
+            text-align: center;
+        }
+
+        .exam-countdown-empty i {
+            font-size: 2rem;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+
+        .exam-countdown-empty h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1A3E74;
+            margin-bottom: 6px;
+        }
+
+        .exam-countdown-empty p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            max-width: 300px;
+        }
+
+        .exam-countdown-empty .action-hint {
+            margin-top: 12px;
+            font-size: 0.8125rem;
+            color: var(--primary);
+        }
+
+        .exam-countdown-empty .action-hint a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .exam-countdown-empty .action-hint a:hover {
+            text-decoration: underline;
+            color: var(--accent);
+        }
+
+        .exam-countdown-footer {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border-color);
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8125rem;
+            color: #6b7280;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 48px 0 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title i {
+            color: var(--primary);
+            background: var(--primary-light);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-base);
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .feature-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-card h3 i {
+            color: var(--accent);
+            background: rgba(0, 188, 212, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover h3 i {
+            background: var(--accent);
+            color: white;
+            transform: rotate(-10deg);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            flex-grow: 1;
         }
 
         /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            padding: 10px 16px;
+            width: 100%;
+            padding: 12px 20px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 0.875rem;
+            border-radius: 10px;
             font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: var(--transition-base);
+            box-shadow: 0 2px 4px rgba(26, 62, 116, 0.2);
             text-decoration: none;
         }
 
         .btn:hover {
             background: var(--primary-hover);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 62, 116, 0.3);
         }
 
-        .btn:active {
-            transform: translateY(0);
+        .btn:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 
-        .btn-secondary {
-            background: var(--bg-body);
-            color: var(--primary);
-            border: 1px solid var(--border-color);
+        .btn-outline, .btn-danger {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-base);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            text-decoration: none;
         }
 
-        .btn-secondary:hover {
-            background: #f0f1f3;
-        }
+        .btn-outline { color: var(--primary); border: 1px solid var(--primary); }
+        .btn-outline:hover { background: var(--primary-light); }
+
+        .btn-danger { color: #ef4444; border: 1px solid #ef4444; }
+        .btn-danger:hover { background: #fef2f2; }
 
         /* Component Error */
         .component-error {
             padding: 16px;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
             border-radius: 8px;
-            color: #991b1b;
-            font-size: 0.875rem;
-            margin: 16px 0;
+            color: #856404;
+            margin-bottom: 16px;
         }
 
+        /* Loading skeleton for components */
         .component-loading {
-            padding: 16px;
-            text-align: center;
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--text-secondary);
             font-size: 0.875rem;
+            gap: 8px;
         }
 
-        /* Responsivo */
+        .component-loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            --bg-body: #111827;
+            --bg-card: #1f2937;
+            --text-main: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --primary-light: rgba(59, 130, 246, 0.2);
+        }
+
+        body.dark-mode .exam-countdown-card { background: #1f2937; border-color: #374151; }
+        body.dark-mode .exam-countdown-empty h4 { color: #f9fafb; }
+        body.dark-mode .exam-countdown-item { border-color: #374151; }
+        body.dark-mode .exam-countdown-item:hover { background: rgba(59, 130, 246, 0.1); }
+        body.dark-mode .exam-countdown-item-title { color: #f9fafb; }
+        body.dark-mode .exam-countdown-item-date { color: #9ca3af; }
+        body.dark-mode .exam-countdown-footer { border-color: #374151; color: #9ca3af; }
+        body.dark-mode .btn-notification { background: #3b82f6; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
+        body.dark-mode .btn-notification:hover { background: #2563eb; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); }
+        body.dark-mode .btn-notification i { color: white; }
+        body.dark-mode .stat-card:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); }
+        body.dark-mode .component-loading { background: #1f2937; border-color: #374151; color: #9ca3af; }
+        body.dark-mode .breadcrumb-nav a:hover { color: var(--accent); }
+        body.dark-mode .breadcrumb-nav .breadcrumb-current { color: #f9fafb; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .page-wrapper {
-                padding: 24px 16px;
-            }
+            .page-wrapper { padding: 24px 16px; }
+            .dashboard-header h1 { font-size: 1.75rem; }
+            .breadcrumb-nav { font-size: 0.8125rem; gap: 6px; }
+            .notification-page-actions { flex-direction: row; justify-content: flex-start; }
+            .notification-page-actions .btn-notification { flex: 1; max-width: none; }
+            .btn-outline, .btn-danger, .btn-notification { flex: 1; justify-content: center; padding: 10px; }
+            .exam-countdown-empty p { max-width: 100%; }
+        }
 
-            .dashboard-header h1 {
-                font-size: 1.875rem;
+        /* Reduced Motion for Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .exam-countdown-item {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .exam-countdown-item-content {
-                width: 100%;
+            .svg-curve-1, .svg-curve-2, .svg-curve-3, .svg-curve-4,
+            .svg-curve-5, .svg-curve-6, .svg-curve-7, .svg-curve-8, .svg-curve-9 {
+                animation: none;
             }
         }
+
+        /* Placeholder para Anúncios (não remover) */
+        .ad-placeholder { min-height: 100px; background: #f8fafc; border: 2px dashed #e5e7eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 0.875rem; margin: 24px 0; }
     </style>
 </head>
 <body>
-    <!-- Loader Global -->
-    <div id="loader-global">
+    <!-- Noscript Fallback -->
+    <noscript>
+        <div style="padding: 20px; text-align: center; background: #fff3cd; color: #856404;">
+            <p>Por favor, habilite o JavaScript para utilizar todas as funcionalidades desta página.</p>
+        </div>
+    </noscript>
+
+    <!-- Loader -->
+    <div id="loader-global" role="status" aria-label="Carregando página">
         <div class="loader-dots">
             <div class="loader-dot"></div>
             <div class="loader-dot"></div>
@@ -675,91 +937,170 @@
         </div>
     </div>
 
-    <!-- Painel de Acessibilidade -->
-    <div id="accessibility-container" role="region" aria-label="Painel de Acessibilidade"></div>
+    <!-- Componentes Modularizados -->
+    <div id="accessibility-container" role="complementary" aria-label="Painel de acessibilidade"></div>
+    <div id="header-container" role="banner" aria-label="Cabeçalho do site"></div>
 
-    <!-- Cabeçalho -->
-    <div id="header-container" role="banner"></div>
+    <!-- ZONA DE ANÚNCIOS: Topo (728x90 ou 320x100) -->
+    <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
 
-    <!-- Conteúdo Principal -->
     <div class="page-wrapper">
-        <div class="page-svg-bg">
-            <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                <path class="svg-curve svg-curve-1" d="M0,400 Q300,300 600,400 T1200,400" stroke="#1A3E74" stroke-width="2" fill="none" opacity="0.1"/>
-                <path class="svg-curve svg-curve-2" d="M0,500 Q300,400 600,500 T1200,500" stroke="#00bcd4" stroke-width="2" fill="none" opacity="0.1"/>
-                <path class="svg-curve svg-curve-3" d="M0,300 Q300,200 600,300 T1200,300" stroke="#1A3E74" stroke-width="2" fill="none" opacity="0.1"/>
-                <path class="svg-curve svg-curve-4" d="M0,600 Q300,500 600,600 T1200,600" stroke="#00bcd4" stroke-width="2" fill="none" opacity="0.1"/>
-            </svg>
-        </div>
-
-        <!-- Breadcrumb -->
+        <!-- Breadcrumb Navigation -->
         <nav class="breadcrumb-nav" aria-label="Navegação estruturada">
             <a href="https://simulados-para-enfermagem.com.br/">Início</a>
-            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
             <span class="breadcrumb-current">Dashboard</span>
         </nav>
 
-        <!-- Header do Dashboard -->
-        <header class="dashboard-header">
-            <h1>
-                <span class="welcome-icon"><i class="fas fa-wave-hand" aria-hidden="true"></i></span>
-                <span id="welcome-message">Bem-vindo ao Dashboard!</span>
-            </h1>
-            <p>Acompanhe seu progresso e evolua nos seus estudos</p>
-        </header>
+        <div class="page-svg-bg">
+            <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="none" role="img" aria-label="Elemento decorativo de fundo">
+                <title>Background decoration</title>
+                <path class="svg-curve svg-curve-1" d="M-100,200 C300,100 600,300 1500,200" fill="none" stroke="#1A3E74" stroke-width="1" />
+                <path class="svg-curve svg-curve-2" d="M-100,400 C400,300 800,500 1600,350" fill="none" stroke="#00bcd4" stroke-width="1" />
+                <path class="svg-curve svg-curve-3" d="M-100,600 C350,500 700,700 1500,550" fill="none" stroke="#1A3E74" stroke-width="1" />
+                <path class="svg-curve svg-curve-4" d="M-100,750 C300,650 900,850 1600,700" fill="none" stroke="#00bcd4" stroke-width="1" />
+                <path class="svg-curve svg-curve-5" d="M-100,100 C200,50 500,150 1500,80" fill="none" stroke="#1A3E74" stroke-width="0.5" opacity="0.5" />
+                <path class="svg-curve svg-curve-6" d="M-100,300 C500,200 1000,400 1600,250" fill="none" stroke="#00bcd4" stroke-width="0.5" opacity="0.5" />
+                <path class="svg-curve svg-curve-7" d="M-100,500 C250,450 750,550 1500,450" fill="none" stroke="#1A3E74" stroke-width="0.5" opacity="0.5" />
+                <path class="svg-curve svg-curve-8" d="M-100,700 C400,600 1100,800 1600,650" fill="none" stroke="#00bcd4" stroke-width="0.5" opacity="0.5" />
+                <path class="svg-curve svg-curve-9" d="M-100,850 C300,800 800,900 1600,800" fill="none" stroke="#1A3E74" stroke-width="0.5" opacity="0.5" />
+            </svg>
+        </div>
 
-        <!-- Stats -->
-        <section class="stats-grid" aria-label="Estatísticas do Dashboard">
-            <article class="stat-card">
-                <div class="stat-card-icon"><i class="fas fa-book" aria-hidden="true"></i></div>
-                <div class="stat-card-title">Questões Respondidas</div>
-                <div class="stat-card-value" id="total-questions">0</div>
-                <div class="stat-card-change positive"><i class="fas fa-arrow-up" aria-hidden="true"></i> +12% este mês</div>
-            </article>
+        <main id="main-content">
+            <!-- Header do Dashboard -->
+            <header class="dashboard-header" role="region" aria-label="Cabeçalho do dashboard">
+                <h1>
+                    <svg class="welcome-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ícone de boas-vindas">
+                        <circle cx="8" cy="18" r="3" fill="#FFC107"/>
+                        <path d="M8 18 L8 14" stroke="#FFC107" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M4 12 Q8 8 12 10 L14 11 Q18 13 16 17" stroke="#FFC107" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <circle cx="12" cy="10" r="2" fill="#FFC107"/>
+                        <path d="M14 11 L17 8" stroke="#FFC107" stroke-width="2" stroke-linecap="round"/>
+                        <rect x="16" y="5" width="6" height="8" rx="1" fill="#00bcd4" opacity="0.8"/>
+                        <path d="M17 7 L21 7" stroke="#fff" stroke-width="1"/>
+                        <path d="M17 9 L21 9" stroke="#fff" stroke-width="1"/>
+                        <path d="M17 11 L21 11" stroke="#fff" stroke-width="1"/>
+                    </svg>
+                    <span id="welcome-message">Bem-vindo!</span>
+                </h1>
+                <p>Aqui está seu progresso e atividades de hoje</p>
+            </header>
 
-            <article class="stat-card">
-                <div class="stat-card-icon"><i class="fas fa-target" aria-hidden="true"></i></div>
-                <div class="stat-card-title">Taxa de Acerto</div>
-                <div class="stat-card-value">75%</div>
-                <div class="stat-card-change positive"><i class="fas fa-arrow-up" aria-hidden="true"></i> +5% em relação ao mês anterior</div>
-            </article>
+            <!-- ZONA DE ANÚNCIOS: Após Header (728x90) -->
+            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="horizontal" data-full-width-responsive="true"></ins> -->
 
-            <article class="stat-card">
-                <div class="stat-card-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
-                <div class="stat-card-title">Sequência de Dias</div>
-                <div class="stat-card-value">15</div>
-                <div class="stat-card-change positive">Mantenha o ritmo!</div>
-            </article>
+            <!-- Stats -->
+            <section class="stats-grid" role="region" aria-label="Estatísticas do usuário">
+                <article class="stat-card" tabindex="0">
+                    <div class="stat-label"><i class="fas fa-check-circle" aria-hidden="true"></i> Questões Respondidas</div>
+                    <div class="stat-value" id="total-questions" role="status" aria-live="polite">0</div>
+                </article>
+                <article class="stat-card" tabindex="0">
+                    <div class="stat-label"><i class="fas fa-bullseye" aria-hidden="true"></i> Taxa de Acerto</div>
+                    <div class="stat-value" id="accuracy-rate" role="status" aria-live="polite">0%</div>
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Taxa de acerto"><div class="progress-fill" id="accuracy-progress" style="width: 0%"></div></div>
+                </article>
+                <article class="stat-card" tabindex="0">
+                    <div class="stat-label"><i class="fas fa-fire" aria-hidden="true"></i> Dias Seguidos</div>
+                    <div class="stat-value" id="consecutive-days" role="status" aria-live="polite">0</div>
+                </article>
+            </section>
 
-            <article class="stat-card">
-                <div class="stat-card-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
-                <div class="stat-card-title">Tempo Total de Estudo</div>
-                <div class="stat-card-value">48h</div>
-                <div class="stat-card-change positive"><i class="fas fa-arrow-up" aria-hidden="true"></i> +8h este mês</div>
-            </article>
-        </section>
+            <!-- ZONA DE ANÚNCIOS: Entre Seções (300x250) -->
+            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="rectangle" data-full-width-responsive="true"></ins> -->
 
-        <!-- Exam Countdown -->
-        <section class="exam-countdown-section" aria-label="Contagem regressiva de concursos">
-            <h2><i class="fas fa-calendar-alt" aria-hidden="true"></i> Próximos Concursos</h2>
-            <div id="exam-countdown-list" class="exam-countdown-list" role="list"></div>
-            <p id="exam-countdown-info-text" style="margin-top: 16px; font-size: 0.875rem; color: #6b7280; text-align: center;"></p>
-        </section>
+            <!-- Meta Diária -->
+            <section class="meta-section" role="region" aria-label="Meta diária de estudo">
+                <div class="meta-header">
+                    <span class="meta-label"><i class="fas fa-bullseye" aria-hidden="true"></i> Meta Diária</span>
+                    <span class="meta-percentage" id="daily-percentage" role="status" aria-live="polite">0%</span>
+                </div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da meta diária"><div class="progress-fill" id="daily-progress" style="width: 0%"></div></div>
+                <p class="meta-description"><i class="fas fa-info-circle" aria-hidden="true"></i> <span id="daily-description">0 de 10 questões hoje</span></p>
+            </section>
 
-        <!-- Features -->
-        <section class="features-section" aria-label="Recursos disponíveis">
-            <h2><i class="fas fa-star" aria-hidden="true"></i> Explore Nossos Recursos</h2>
-            <div class="features-grid">
+            <!-- Ações e Notificações -->
+            <div class="notification-page-actions" role="toolbar" aria-label="Ações de notificações">
+                <button class="btn-notification" onclick="ExamCountdownManager.viewAll()" aria-label="Ver todas as notificações"><i class="fas fa-list" aria-hidden="true"></i> Ver todas</button>
+                <button class="btn-notification" onclick="ExamCountdownManager.clearAll()" aria-label="Limpar todas as notificações"><i class="fas fa-trash" aria-hidden="true"></i> Limpar</button>
+            </div>
+
+            <section class="exam-countdown-card" id="exam-countdown-card" role="region" aria-label="Notificações de concursos">
+                <div class="exam-countdown-header">
+                    <div class="exam-countdown-label"><i class="fas fa-bell" aria-hidden="true"></i> <span>Notificações</span></div>
+                    <div class="exam-countdown-count-badge" id="exam-countdown-count" role="status" aria-live="polite">0</div>
+                </div>
+                <div class="exam-countdown-list" id="exam-countdown-list" role="list" aria-label="Lista de concursos">
+                    <div class="exam-countdown-empty" role="listitem">
+                        <i class="fas fa-bell-slash" aria-hidden="true"></i>
+                        <h4>Sem notificações</h4>
+                        <p>Adicione concursos na seção "Meus Concursos" para acompanhar as datas das provas.</p>
+                        <p class="action-hint"><a href="https://simulados-para-enfermagem.com.br/assets/app/html/meusconcursos.html">Ir para Meus Concursos</a></p>
+                    </div>
+                </div>
+                <div class="exam-countdown-footer" id="exam-countdown-footer" role="status">
+                    <span id="exam-countdown-info-text">Nenhum concurso cadastrado</span>
+                </div>
+            </section>
+
+            <!-- ZONA DE ANÚNCIOS: Entre Cards (300x250) -->
+            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="rectangle" data-full-width-responsive="true"></ins> -->
+
+            <!-- SEÇÃO 1: MINHA ÁREA -->
+            <h2 class="section-title"><i class="fas fa-user" aria-hidden="true"></i> Minha Área</h2>
+            <div class="cards-grid">
                 <article class="feature-card" tabindex="0">
-                    <h3><i class="fas fa-graduation-cap" aria-hidden="true"></i> Simulados Completos</h3>
-                    <p>Realize simulados completos com questões de todas as áreas da enfermagem.</p>
-                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/simulados.html'" aria-label="Acessar simulados completos"><i class="fas fa-play" aria-hidden="true"></i> Começar</button>
+                    <h3><i class="fas fa-chart-line" aria-hidden="true"></i> Meu Desempenho</h3>
+                    <p>Visualize suas estatísticas, gráficos detalhados e evolução do aprendizado ao longo do tempo.</p>
+                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/meudesempenho.html'" aria-label="Ver desempenho"><i class="fas fa-eye" aria-hidden="true"></i> Ver Desempenho</button>
+                </article>
+                <article class="feature-card" tabindex="0">
+                    <h3><i class="fas fa-graduation-cap" aria-hidden="true"></i> Meus Concursos</h3>
+                    <p>Acompanhe os editais e concursos nos quais você está inscrito e prepare-se focadamente.</p>
+                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/meusconcursos.html'" aria-label="Ver concursos"><i class="fas fa-list" aria-hidden="true"></i> Ver Concursos</button>
                 </article>
                 <article class="feature-card" tabindex="0">
                     <h3><i class="fas fa-question-circle" aria-hidden="true"></i> Minhas Questões</h3>
-                    <p>Acesse todas as questões que você respondeu e revise suas respostas.</p>
-                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/minhasquestoes.html'" aria-label="Acessar minhas questões"><i class="fas fa-list" aria-hidden="true"></i> Ver</button>
+                    <p>Revise o histórico de questões respondidas, aprenda com erros e reforce os acertos.</p>
+                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/minhasquestoes.html'" aria-label="Consultar questões"><i class="fas fa-search" aria-hidden="true"></i> Consultar</button>
                 </article>
+                <article class="feature-card" tabindex="0">
+                    <h3><i class="fas fa-cog" aria-hidden="true"></i> Preferências</h3>
+                    <p>Ajuste seu perfil, temas de estudo e configurações gerais do sistema.</p>
+                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/configuracoes.html'" aria-label="Configurar preferências"><i class="fas fa-sliders-h" aria-hidden="true"></i> Configurar</button>
+                </article>
+            </div>
+
+            <!-- ZONA DE ANÚNCIOS: Antes de Recursos (728x90) -->
+            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+
+            <!-- SEÇÃO 2: MODO DE ESTUDO -->
+            <h2 class="section-title"><i class="fas fa-book" aria-hidden="true"></i> Modo de Estudo</h2>
+            <div class="cards-grid">
+                <article class="feature-card" tabindex="0">
+                    <h3><i class="fas fa-edit" aria-hidden="true"></i> Estudo Personalizado</h3>
+                    <p>Crie um quiz sob medida escolhendo disciplinas, bancas e quantidade de questões.</p>
+                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/estudopersonalizado.html'" aria-label="Iniciar estudo personalizado"><i class="fas fa-play" aria-hidden="true"></i> Começar</button>
+                </article>
+                <article class="feature-card" tabindex="0">
+                    <h3><i class="fas fa-list-alt" aria-hidden="true"></i> Provas Completas</h3>
+                    <p>Simule a experiência real resolvendo provas anteriores na íntegra.</p>
+                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/provascompletas.html'" aria-label="Iniciar provas completas"><i class="fas fa-play" aria-hidden="true"></i> Começar</button>
+                </article>
+                <article class="feature-card" tabindex="0">
+                    <h3><i class="fas fa-stopwatch" aria-hidden="true"></i> Simulado Real</h3>
+                    <p>Teste seus conhecimentos e gestão de tempo em um ambiente controlado.</p>
+                    <button class="btn" onclick="window.location.href='https://simulados-para-enfermagem.com.br/assets/app/html/simuladoreal.html'" aria-label="Iniciar simulado real"><i class="fas fa-play" aria-hidden="true"></i> Começar</button>
+                </article>
+            </div>
+
+            <!-- ZONA DE ANÚNCIOS: Antes de Desafios e Recursos (728x90) -->
+            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="horizontal" data-full-width-responsive="true"></ins> -->
+
+            <!-- SEÇÃO 3: DESAFIOS E RECURSOS -->
+            <h2 class="section-title"><i class="fas fa-trophy" aria-hidden="true"></i> Desafios e Recursos</h2>
+            <div class="cards-grid">
                 <article class="feature-card" tabindex="0">
                     <h3><i class="fas fa-calendar-check" aria-hidden="true"></i> Concursos Públicos</h3>
                     <p>Fique por dentro das oportunidades, datas de inscrição e editais abertos.</p>
@@ -804,36 +1145,17 @@
 
             <!-- ZONA DE ANÚNCIOS: Antes do Rodapé (728x90) -->
             <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="horizontal" data-full-width-responsive="true"></ins> -->
-        </section>
+        </main>
     </div>
 
     <!-- Footer -->
     <div id="footer-container" role="contentinfo" aria-label="Rodapé do site"></div>
 
-    <!-- Scripts dos Componentes com Tratamento de Erro -->
-    <script>
-        function loadScriptWithFallback(src) {
-            var script = document.createElement('script');
-            script.src = src;
-            script.onerror = function() {
-                console.warn('[AVISO] Falha ao carregar script: ' + src);
-            };
-            document.head.appendChild(script);
-        }
-        loadScriptWithFallback('https://simulados-para-enfermagem.com.br/assets/components/js/header.js');
-        loadScriptWithFallback('https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js');
-        loadScriptWithFallback('https://simulados-para-enfermagem.com.br/assets/components/js/footer.js');
-    </script>
-
-    <!-- Script de Tratamento de Erros Global -->
-    <script>
-        window.addEventListener('error', function(event) {
-            if (event.filename && (event.filename.includes('minimax') || event.filename.includes('alouuiteftvm'))) {
-                console.warn('[AVISO] Recurso nao encontrado:', event.filename);
-                event.preventDefault();
-            }
-        }, true);
-    </script>
+    <!-- Scripts dos Componentes -->
+    <script src="https://simulados-para-enfermagem.com.br/assets/app/js/error-handler-global.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/header.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/accessibility.js"></script>
+    <script src="https://simulados-para-enfermagem.com.br/assets/components/js/footer.js"></script>
 
     <!-- Script Principal -->
     <script>
@@ -861,24 +1183,17 @@
 
                 return fetch(Config.htmlPath + comp.file)
                     .then(function(response) {
-                        if (!response.ok) {
-                            var errorMsg = 'HTTP ' + response.status + ' - ' + response.statusText;
-                            console.warn('[AVISO] Falha ao carregar ' + comp.name + ': ' + errorMsg);
-                            throw new Error(errorMsg);
-                        }
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
                         return response.text();
                     })
                     .then(function(html) {
-                        if (!html || html.trim() === '') {
-                            console.warn('[AVISO] ' + comp.name + ' retornou conteúdo vazio');
-                            throw new Error('Conteúdo vazio');
-                        }
+                        if (!html || html.trim() === '') throw new Error('Vazio');
                         container.innerHTML = html;
                         return true;
                     })
                     .catch(function(error) {
                         console.error('[ERRO] ' + comp.name + ':', error.message);
-                        container.innerHTML = '<div class="component-error" role="alert" style="padding: 16px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; color: #991b1b; font-size: 0.875rem;">Erro ao carregar ' + comp.name + '. Por favor, recarregue a página.</div>';
+                        container.innerHTML = '<div class="component-error" role="alert">Erro ao carregar ' + comp.name + '. Por favor, recarregue a página.</div>';
                         return false;
                     });
             },
@@ -926,10 +1241,7 @@
                     var countBadge = document.getElementById('exam-countdown-count');
                     var footerInfo = document.getElementById('exam-countdown-info-text');
 
-                    if (!listContainer) {
-                        console.warn('[AVISO] Elemento exam-countdown-list não encontrado');
-                        return;
-                    }
+                    if (!listContainer) return;
 
                     if (meusConcursos.length === 0) {
                         listContainer.innerHTML = '<div class="exam-countdown-empty" role="listitem"><i class="fas fa-bell-slash" aria-hidden="true"></i><h4>Sem notificações</h4><p>Adicione concursos na seção "Meus Concursos" para acompanhar as datas das provas.</p><p class="action-hint"><a href="https://simulados-para-enfermagem.com.br/assets/app/html/meusconcursos.html">Ir para Meus Concursos</a></p></div>';
@@ -963,7 +1275,7 @@
                                 '<div class="exam-countdown-item-content">' +
                                 '<div class="exam-countdown-item-title">' + this.escapeHtml(concurso.titulo || 'Concurso') + '</div>' +
                                 '<div class="exam-countdown-item-date">Prova: ' + this.formatExamDate(concurso.dataProva) + '</div></div>' +
-                                '<div class="exam-countdown-item-days" style="background:' + styles.badgeBg + ';color:' + styles.badgeColor + ';" aria-label="' + (daysRemaining < 0 ? Math.abs(daysRemaining) + ' dias atrasado' : daysRemaining + ' dias') + '">' +
+                                '<div class="exam-countdown-item-days" style="background:' + styles.badgeBg + ';color:' + styles.badgeColor + ';" aria-label="' + (daysRemaining < 0 ? Math.abs(daysRemaining) + ' dias atrasado' : daysRemaining + ' dias") + '">' +
                                 (daysRemaining < 0 ? '+' + Math.abs(daysRemaining) : daysRemaining) + '</div></div>';
                         }
 
@@ -973,9 +1285,7 @@
 
                         listContainer.innerHTML = html;
                     }
-                } catch (e) { 
-                    console.error('Erro ao carregar notificações:', e);
-                }
+                } catch (e) { console.error('Erro ao carregar notificações:', e); }
             },
 
             escapeHtml: function(text) {
@@ -988,13 +1298,7 @@
             viewAll: function() { window.location.href = 'https://simulados-para-enfermagem.com.br/assets/app/html/meusconcursos.html'; },
 
             clearAll: function() {
-                try {
-                    if (confirm('Limpar todos os concursos inscritos?')) {
-                        localStorage.removeItem('meus_concursos');
-                        this.loadExamCountdown();
-                    }
-                } catch (e) {
-                    console.warn('Operação de confirmação não disponível:', e);
+                if (confirm('Limpar todos os concursos inscritos?')) {
                     localStorage.removeItem('meus_concursos');
                     this.loadExamCountdown();
                 }
@@ -1017,9 +1321,7 @@
                     var userData = JSON.parse(localStorage.getItem('user_data') || '{}');
                     var el = document.getElementById('welcome-message');
                     if (el && userData.nome) el.textContent = 'Olá, ' + userData.nome.split(' ')[0] + '!';
-                } catch (e) {
-                    console.warn('[AVISO] Erro ao carregar nome do usuário:', e);
-                }
+                } catch (e) {}
             },
 
             loadStats: function() {
@@ -1027,9 +1329,7 @@
                     var historico = JSON.parse(localStorage.getItem('user_historico_quizzes') || '[]');
                     var totalQ = document.getElementById('total-questions');
                     if (totalQ) totalQ.textContent = historico.length;
-                } catch (e) {
-                    console.warn('[AVISO] Erro ao carregar estatísticas:', e);
-                }
+                } catch (e) {}
             },
 
             hideLoader: function() {
@@ -1040,16 +1340,6 @@
                         setTimeout(function() { loader.style.display = 'none'; }, 500);
                     }
                 }, 800);
-            }
-        };
-
-        // Função auxiliar para confirmação segura
-        window.safeConfirm = function(message) {
-            try {
-                return confirm(message);
-            } catch (e) {
-                console.warn('[AVISO] Confirmação não disponível:', e.message);
-                return false;
             }
         };
 
