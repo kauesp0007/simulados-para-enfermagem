@@ -27,9 +27,15 @@
   </url>
 
   <url>
-    <loc>https://simulados-para-enfermagem.com.br/assets/app/html/concursospublicos.html</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://simulados-para-enfermagem.com.br/assets/app/html/concursospublicos.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://simulados-para-enfermagem.com.br/assets/app/html/concursospublicos.html" />
+    <loc>https://simulados-para-enfermagem.com.br/assets/app/html/concursos-publicos.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://simulados-para-enfermagem.com.br/assets/app/html/concursos-publicos.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simulados-para-enfermagem.com.br/assets/app/html/concursos-publicos.html" />
+  </url>
+
+  <url>
+    <loc>https://simulados-para-enfermagem.com.br/assets/app/html/configuracoes.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://simulados-para-enfermagem.com.br/assets/app/html/configuracoes.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simulados-para-enfermagem.com.br/assets/app/html/configuracoes.html" />
   </url>
 
   <url>
@@ -66,6 +72,12 @@
     <loc>https://simulados-para-enfermagem.com.br/assets/app/html/memoriarapida.html</loc>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://simulados-para-enfermagem.com.br/assets/app/html/memoriarapida.html" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://simulados-para-enfermagem.com.br/assets/app/html/memoriarapida.html" />
+  </url>
+
+  <url>
+    <loc>https://simulados-para-enfermagem.com.br/assets/app/html/meudesempenho.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://simulados-para-enfermagem.com.br/assets/app/html/meudesempenho.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simulados-para-enfermagem.com.br/assets/app/html/meudesempenho.html" />
   </url>
 
   <url>
@@ -108,12 +120,6 @@
     <loc>https://simulados-para-enfermagem.com.br/assets/app/html/quizcuriosidade.html</loc>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://simulados-para-enfermagem.com.br/assets/app/html/quizcuriosidade.html" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://simulados-para-enfermagem.com.br/assets/app/html/quizcuriosidade.html" />
-  </url>
-
-  <url>
-    <loc>https://simulados-para-enfermagem.com.br/assets/app/html/settings.html</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://simulados-para-enfermagem.com.br/assets/app/html/settings.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://simulados-para-enfermagem.com.br/assets/app/html/settings.html" />
   </url>
 
   <url>
